@@ -12,7 +12,33 @@ Jack is also a prolific learner and content creator. He maintains a Hugo-based p
 
 ## Professional Experience
 
-**Note:** LinkedIn profile was behind an authentication wall and could not be accessed directly. The following professional experience details are synthesized from GitHub profile data, personal website content, Stack Overflow history, and blog archives.
+### Current Role
+**Role:** Solution Architect (GenAI focus) at **Crédit Agricole CIB** (Corporate & Investment Bank)
+- Singapore branch — corporate and investment banking technology
+- Focus on GenAI solutions, architecture governance, and AI coding agent integration
+- LinkedIn headline excerpt: *"AI coding agents can generate software at incredible speed. But speed without architectural governance creates a growing problem: Architecture Drift."*
+
+### Previous Roles
+
+| Role | Company | Period |
+|:-----|:--------|:-------|
+| **Team Leader** | ST Electronics (Software Services) | April 2010 – May 2012 (2 yr 2 mo) |
+| **Team Leader** | Combuilder Pte Ltd | Prior to 2010 |
+| **Various roles** | Asia Fusion Technology | May 2012 – Present (multi-year tenure) |
+
+### Other Professional Affiliations
+- **Synapxe** (Singapore national HealthTech agency) — has a dedicated GitHub account (`jackliusr-synapxe`) suggesting past or current engagement with healthcare IT
+- **NCS Group** (Singtel subsidiary) — domain exposure in technology services
+
+### Career Timeline
+
+| Period | Position / Focus | Company |
+|:-------|:-----------------|:--------|
+| ~2003 – 2008 | Software Engineer | ST Electronics (Software Services) |
+| ~2008 – 2010 | Team Leader | Combuilder Pte Ltd |
+| April 2010 – May 2012 | Team Leader | ST Electronics |
+| May 2012 – ? | Various engineering/architecture roles | Asia Fusion Technology |
+| Current | Solution Architect, GenAI | Crédit Agricole CIB |
 
 ### Current Focus Areas (as of 2024–2026)
 - **AI/ML & LLMs:** Recent blog posts and repositories show deep engagement with DSPy (programmatic LLM optimization), LLM evaluation frameworks, GEPA optimization runs for financial NLP, running quantized models (Qwen3.6 GGUF) on AMD hardware via llama.cpp, and coding agents for spec-driven development.
@@ -43,6 +69,16 @@ The portfolio suggests a trajectory from:
 ---
 
 ## Education & Certifications
+
+### Formal Education
+| Institution | Details |
+|:------------|:--------|
+| **National University of Singapore (NUS)** | Degree (likely postgraduate) |
+| **Zhengzhou University** | Previous education |
+| **Tenth High School, Tanghe, Henan, China** | Secondary education |
+
+### LinkedIn Certifications & Endorsements
+- **Claude Certified Architect – Foundations Certification** (Anthropic, 2026) — noted in LinkedIn activity (March 2026)
 
 ### GitHub Certificates Repository
 Jack maintains a **[certificates](https://github.com/jackliusr/certificates)** repository that includes (as discovered from search results):
@@ -401,10 +437,14 @@ Jack's trajectory suggests natural growth into:
 | **Personal Site Posts** | 193+ tech + others |
 | **Stack Overflow Rep** | 590 |
 | **Stack Overflow Answers** | 24 |
-| **Stack Overflow Member** | ~13 years |
+|| **Current Company** | Crédit Agricole CIB |
+|| **Current Role** | Solution Architect, GenAI |
+|| **Education** | National University of Singapore, Zhengzhou University |
+|| **LinkedIn Connections** | 500+ |
+|| **Certifications** | Claude Certified Architect – Foundations (2026) |
 | **Programming Languages** | 28+ |
 | **Key Domains** | DevOps, SRE, Full-Stack, Solution Architecture, AI/ML, Cloud-Native |
 
 ---
 
-*Profile compiled on July 3, 2026. Sources: GitHub API, X/Twitter profile page, jackliusr.github.io, jackliusr.blogspot.com, stackoverflow.com, web search results. LinkedIn profile was inaccessible (requires authentication).*
+*Profile compiled on July 3, 2026. Sources: GitHub API, X/Twitter profile page, jackliusr.github.io, jackliusr.blogspot.com, stackoverflow.com, LinkedIn (via search snippets — full profile behind authwall), web search results. Chinese name from LinkedIn: 刘书瑞 (Liú Shūruì).*
