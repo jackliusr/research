@@ -133,18 +133,18 @@ Applications: hyperparameter tuning, experimental design, A/B testing.
   it withdrew from public benchmarks in 2024. Its performance edge comes from
   a highly optimized branch-and-cut engine, including:
 
-    • Concurrent LP solver: runs simplex (primal + dual) and barrier in
+    - Concurrent LP solver: runs simplex (primal + dual) and barrier in
       parallel, taking the first solution.
-    • Extensive cutting planes: Gomory, MIR, Clique, Cover, Lift-and-Project,
+    - Extensive cutting planes: Gomory, MIR, Clique, Cover, Lift-and-Project,
       RLT, and many more.
-    • Sophisticated presolve: aggregation, probing, implied bounds, singleton
+    - Sophisticated presolve: aggregation, probing, implied bounds, singleton
       row detection.
-    • Heuristics: feasibility pump, RINS, local branching, zero-objective,
+    - Heuristics: feasibility pump, RINS, local branching, zero-objective,
       and more.
-    • Automated tuning tool (gurobi_auto) that tests parameter combinations
+    - Automated tuning tool (gurobi_auto) that tests parameter combinations
       to find the best configuration for a given model.
-    • Compute Server / Cluster Manager for distributed solving.
-    • Python API is idiomatic and well-documented. User base is the largest
+    - Compute Server / Cluster Manager for distributed solving.
+    - Python API is idiomatic and well-documented. User base is the largest
       among commercial solvers.
 
   Unique features: Gurobi's "cloud" licensing (named-user, token, and
@@ -167,15 +167,15 @@ Applications: hyperparameter tuning, experimental design, A/B testing.
   and early 2000s before Gurobi's rise. It remains highly competitive,
   especially:
 
-    • Excellent network flow algorithms — CPLEX's network optimizer is
+    - Excellent network flow algorithms — CPLEX's network optimizer is
       best-in-class for pure network problems.
-    • Strong support for quadratically constrained programs (QCP).
-    • IBM ILOG CPLEX Optimization Studio (COS) provides a full IDE with
+    - Strong support for quadratically constrained programs (QCP).
+    - IBM ILOG CPLEX Optimization Studio (COS) provides a full IDE with
       the OPL (Optimization Programming Language), which integrates with
       the CP Optimizer for constraint programming.
-    • Conflict refiner for infeasible models (analogous to IIS).
-    • Distributed parallel MIP (across machines).
-    • Integration with IBM Decision Optimization on Cloud (SAAS).
+    - Conflict refiner for infeasible models (analogous to IIS).
+    - Distributed parallel MIP (across machines).
+    - Integration with IBM Decision Optimization on Cloud (SAAS).
 
   CPLEX's Python API (docplex) is well-maintained. Performance-wise, CPLEX
   trails Gurobi by roughly 5–15% on MIP benchmarks but is often faster on
@@ -195,17 +195,17 @@ Applications: hyperparameter tuning, experimental design, A/B testing.
   Xpress (formerly Dash Optimization / Xpress-MP) is the third of the "big
   three" commercial solvers. It offers:
 
-    • The Mosel programming language — a proprietary modeling language with
+    - The Mosel programming language — a proprietary modeling language with
       integrated solver access. Mosel is powerful but has a steeper learning
       curve than Python APIs.
-    • Strong in stochastic programming — Xpress has built-in support for
+    - Strong in stochastic programming — Xpress has built-in support for
       stochastic programming via the Xpress-SP module.
-    • Focus on financial services: many banks and hedge funds use Xpress for
+    - Focus on financial services: many banks and hedge funds use Xpress for
       portfolio optimization and risk management.
-    • Good MIP performance — while usually 3rd behind Gurobi and CPLEX,
+    - Good MIP performance — while usually 3rd behind Gurobi and CPLEX,
       Xpress is sometimes faster on specific problem classes (e.g., financial
       portfolio problems with SOS constraints).
-    • Xpress Insight — a web-based application platform for deploying
+    - Xpress Insight — a web-based application platform for deploying
       optimization models.
 
   FICO's acquisition of Xpress in 2014 brought optimization into the credit
@@ -225,13 +225,13 @@ Applications: hyperparameter tuning, experimental design, A/B testing.
   MOSEK is the specialist solver for convex conic optimization. It is not
   primarily an MIP solver (though it handles MISOCP); its strength is:
 
-    • Best-in-class SOCP (second-order cone programming) performance.
-    • Best-in-class SDP (semidefinite programming) performance, including
+    - Best-in-class SOCP (second-order cone programming) performance.
+    - Best-in-class SDP (semidefinite programming) performance, including
       large-scale SDP with sparse data.
-    • Exponential and power cone constraints — unique among commercial solvers.
-    • Highly robust interior-point implementation for LP — often the fastest
+    - Exponential and power cone constraints — unique among commercial solvers.
+    - Highly robust interior-point implementation for LP — often the fastest
       barrier solver for large LPs.
-    • Used heavily in finance (Markowitz portfolio optimization with
+    - Used heavily in finance (Markowitz portfolio optimization with
       transaction costs and cardinality constraints) and control theory
       (linear matrix inequalities).
 
@@ -254,11 +254,11 @@ Applications: hyperparameter tuning, experimental design, A/B testing.
   since its launch. It is now consistently ranked in the top 3–5 MIP solvers
   globally, competitive with Gurobi and CPLEX on many instances.
 
-    • Strong presolve and cutting planes.
-    • Competitive MIP performance — often faster than CPLEX on MIPLIB2017.
-    • Python-first API with a user-friendly interface.
-    • Active development with frequent releases.
-    • Growing adoption in Chinese industry and increasingly internationally.
+    - Strong presolve and cutting planes.
+    - Competitive MIP performance — often faster than CPLEX on MIPLIB2017.
+    - Python-first API with a user-friendly interface.
+    - Active development with frequent releases.
+    - Growing adoption in Chinese industry and increasingly internationally.
 
   COPT is still less known in Western markets but is a serious contender.
   It is particularly popular in Asia for supply chain and logistics
@@ -275,12 +275,12 @@ Applications: hyperparameter tuning, experimental design, A/B testing.
   HiGHS is the most successful open-source LP solver, often matching or
   exceeding commercial solvers on pure LP problems.
 
-    • Parallel simplex: runs primal and dual simplex concurrently.
-    • Interior-point (barrier) method for LP.
-    • MIP solver via branch-and-cut (less mature than LP, but improving).
-    • Developed by the University of Edinburgh with support from Google,
+    - Parallel simplex: runs primal and dual simplex concurrently.
+    - Interior-point (barrier) method for LP.
+    - MIP solver via branch-and-cut (less mature than LP, but improving).
+    - Developed by the University of Edinburgh with support from Google,
       ERGO, and others.
-    • Used as the default LP solver in Google OR-Tools.
+    - Used as the default LP solver in Google OR-Tools.
 
   On the Mittelmann LP feasibility and LP optimality benchmarks (July 2026),
   HiGHS is highly competitive, often beating CPLEX and trailing only Gurobi
@@ -299,16 +299,16 @@ Applications: hyperparameter tuning, experimental design, A/B testing.
   solver. It is also a framework for constraint integer programming (CIP),
   unifying MIP, constraint programming (CP), and SAT solving.
 
-    • Highly modular architecture with plugins for custom constraints,
+    - Highly modular architecture with plugins for custom constraints,
       branching rules, cutting plane separators, heuristics, and node
       selectors.
-    • Supports LP relaxation (via SoPlex, its built-in LP solver), and can
+    - Supports LP relaxation (via SoPlex, its built-in LP solver), and can
       use HiGHS or CPLEX as the LP subsolver.
-    • Excellent for research — its plugin system allows testing new
+    - Excellent for research — its plugin system allows testing new
       algorithmic ideas without recompiling the core.
-    • Supports mixed-integer nonlinear programming (MINLP) via NLP
+    - Supports mixed-integer nonlinear programming (MINLP) via NLP
       subsolvers (IPOPT, FilterSQP).
-    • PySCIPOpt provides a Python interface.
+    - PySCIPOpt provides a Python interface.
 
   Benchmark note: SCIP is significantly slower than Gurobi on MIP (typically
   5–50× slower depending on instance), but it is free for academic research
@@ -328,14 +328,14 @@ Applications: hyperparameter tuning, experimental design, A/B testing.
   The COIN-OR (Computational Infrastructure for Operations Research) project
   provides foundational open-source solvers:
 
-    • Clp (Coin LP): Primal and dual simplex, barrier. Solid LP performance
+    - Clp (Coin LP): Primal and dual simplex, barrier. Solid LP performance
       but slower than HiGHS.
-    • Cbc (Coin Branch-and-Cut): MIP solver built on Clp. Functional but
+    - Cbc (Coin Branch-and-Cut): MIP solver built on Clp. Functional but
       slow compared to SCIP or HiGHS's MIP mode.
-    • Used as a backend by Pyomo and other modeling systems.
-    • Cgl (Cut Generation Library) provides cutting planes used by Cbc and
+    - Used as a backend by Pyomo and other modeling systems.
+    - Cgl (Cut Generation Library) provides cutting planes used by Cbc and
       many other solvers.
-    • CoinUtils, Osi, and other utility libraries provide infrastructure.
+    - CoinUtils, Osi, and other utility libraries provide infrastructure.
 
   These are more useful as building blocks than end-user tools. They form
   the backbone of many optimization pipelines, particularly in academic
@@ -351,13 +351,13 @@ Applications: hyperparameter tuning, experimental design, A/B testing.
 
   GLPK is the GNU project's LP/MIP solver. It is:
 
-    • Pure simplex-based (no barrier for LP, though it has interior-point).
-    • Slow — roughly 50–100× slower than Gurobi on MIP, and 10–20× slower
+    - Pure simplex-based (no barrier for LP, though it has interior-point).
+    - Slow — roughly 50–100× slower than Gurobi on MIP, and 10–20× slower
       than HiGHS on LP.
-    • Very reliable and bug-free for small to medium problems.
-    • Supports the GMPL language (similar to AMPL), making it useful for
+    - Very reliable and bug-free for small to medium problems.
+    - Supports the GMPL language (similar to AMPL), making it useful for
       teaching algebraic modeling.
-    • Python binding: swiglpk (low-level), or use via PuLP.
+    - Python binding: swiglpk (low-level), or use via PuLP.
 
   Best use case: education, small models, and environments where GPL
   licensing is a requirement.
@@ -372,17 +372,17 @@ Applications: hyperparameter tuning, experimental design, A/B testing.
 
   OR-Tools is Google's operations research toolkit. Its key components:
 
-    • CP-SAT solver: A constraint programming solver based on SAT technology.
+    - CP-SAT solver: A constraint programming solver based on SAT technology.
       Extremely fast for scheduling, routing, and constraint satisfaction.
       Often outperforms MIP solvers on pure combinatorial problems.
-    • Solver wrappers: Interfaces to SCIP, Gurobi, CPLEX, HiGHS, and others.
+    - Solver wrappers: Interfaces to SCIP, Gurobi, CPLEX, HiGHS, and others.
       Provides a unified API (MPModel) for MIP problems.
-    • Routing library: Specialized vehicle routing solver with LNS (large
+    - Routing library: Specialized vehicle routing solver with LNS (large
       neighborhood search) heuristics. Supports TSP, VRP with time windows,
       capacity constraints, etc.
-    • Scheduling algorithms: Job shop, flexible job shop, employee scheduling.
-    • Assignment and knapsack solvers.
-    • Network flow algorithms: Min-cost flow, max flow, minimum cut.
+    - Scheduling algorithms: Job shop, flexible job shop, employee scheduling.
+    - Assignment and knapsack solvers.
+    - Network flow algorithms: Min-cost flow, max flow, minimum cut.
 
   OR-Tools is the go-to framework for combinatorial optimization problems
   that have a strong constraint structure. Its CP-SAT solver is particularly
@@ -408,13 +408,13 @@ global minimum. This makes them tractable even at large scale.
   problem to a standard conic form and passes it to a solver.
 
   Supported solvers (as backends):
-    • MOSEK — best for SOCP/SDP
-    • Gurobi — QP, SOCP
-    • ECOS — Embedded Conic Solver (small-to-medium problems)
-    • SCS — Splitting Conic Solver (large-scale, first-order method)
-    • Clarabel — new Rust-based conic solver
-    • CVXOPT — Python-based interior-point solver
-    • SDPT3, SeDuMi — via MATLAB bridge
+    - MOSEK — best for SOCP/SDP
+    - Gurobi — QP, SOCP
+    - ECOS — Embedded Conic Solver (small-to-medium problems)
+    - SCS — Splitting Conic Solver (large-scale, first-order method)
+    - Clarabel — new Rust-based conic solver
+    - CVXOPT — Python-based interior-point solver
+    - SDPT3, SeDuMi — via MATLAB bridge
 
   CVXPY is widely used in finance (portfolio optimization), control
   (MPC design), statistics (lasso, elastic net), and engineering.
@@ -446,13 +446,13 @@ global minimum. This makes them tractable even at large scale.
   IPOPT is the premier open-source NLP solver. It implements a primal-dual
   interior-point (barrier) method with a filter line-search. Key features:
 
-    • Solves large-scale nonlinear problems (10⁶+ variables).
-    • Requires first derivatives (gradients) — exact or finite-difference.
-    • Optional second derivatives (Hessian) for faster convergence.
-    • Interfaces to linear solvers (MUMPS, MA27, PARDISO, etc.) for the
+    - Solves large-scale nonlinear problems (10⁶+ variables).
+    - Requires first derivatives (gradients) — exact or finite-difference.
+    - Optional second derivatives (Hessian) for faster convergence.
+    - Interfaces to linear solvers (MUMPS, MA27, PARDISO, etc.) for the
       KKT system.
-    • Used as the NLP subsolver in SCIP (for MINLP) and in Pyomo.
-    • Widely used in chemical engineering, optimal control, and power
+    - Used as the NLP subsolver in SCIP (for MINLP) and in Pyomo.
+    - Widely used in chemical engineering, optimal control, and power
       systems (optimal power flow).
 
   Benchmarks: On the Mittelmann AMPL-NLP benchmark, IPOPT is the top
@@ -501,14 +501,14 @@ in-the-loop, legacy code), derivative-free methods are essential.
   search space and adapts the covariance matrix based on successful steps.
   Key features:
 
-    • State-of-the-art performance on the COCO (Comparing Continuous
+    - State-of-the-art performance on the COCO (Comparing Continuous
       Optimizers) benchmark platform.
-    • Works well on ill-conditioned, non-separable, and multi-modal
+    - Works well on ill-conditioned, non-separable, and multi-modal
       problems.
-    • No gradient information required.
-    • Variants: CMA-ES with restarts, CMA-ES with bounds (via penalization
+    - No gradient information required.
+    - Variants: CMA-ES with restarts, CMA-ES with bounds (via penalization
       or mirroring), BIPOP-CMA-ES for multi-modal landscapes.
-    • Python package `cma` provides an easy-to-use interface.
+    - Python package `cma` provides an easy-to-use interface.
 
   Applications: hyperparameter tuning, engineering design optimization,
   robotics (policy search), and scientific computing.
@@ -518,31 +518,31 @@ in-the-loop, legacy code), derivative-free methods are essential.
   Gaussian process) to model the objective and an acquisition function to
   select evaluation points. Key libraries:
 
-  • BoTorch (Facebook/Meta, PyTorch-based)
+  - BoTorch (Facebook/Meta, PyTorch-based)
       GitHub: https://github.com/pytorch/botorch (stars: 3,564, forks: 484)
       Install: pip install botorch
       Built on PyTorch, supports GPU acceleration, batch BO, multi-objective
       BO, constrained BO, and high-dimensional BO (via random embeddings or
       additive GPs). Used internally at Meta for production tuning.
 
-  • BayesianOptimization (Python)
+  - BayesianOptimization (Python)
       GitHub: https://github.com/bayesian-optimization/BayesianOptimization
         (stars: 8,663, forks: 1,600)
       Install: pip install bayesian-optimization
       Simple implementation — good for getting started. Uses Gaussian
       processes with Expected Improvement.
 
-  • GPyOpt (SheffieldML)
+  - GPyOpt (SheffieldML)
       GitHub: https://github.com/SheffieldML/GPyOpt (stars: 947, forks: 260)
       Install: pip install gpyopt
       Built on GPy. Supports a variety of acquisition functions and batch
       optimization.
 
-  • Spearmint (Hutter Lab)
+  - Spearmint (Hutter Lab)
       GitHub: https://github.com/HIPS/Spearmint
       One of the earliest BO packages. Still functional but less maintained.
 
-  • Hyperopt
+  - Hyperopt
       GitHub: https://github.com/hyperopt/hyperopt (stars: 7,587, forks: 1,075)
       Install: pip install hyperopt
       Uses Tree-structured Parzen Estimators (TPE) — a Bayesian optimization
@@ -555,13 +555,13 @@ in-the-loop, legacy code), derivative-free methods are essential.
 ### SciPy Direct Search Methods
   Available in `scipy.optimize` (stars: 14,799, forks: 5,788):
 
-    • Nelder-Mead (simplex) — Simple, robust, but slow for high dimensions.
-    • Powell's method — Conjugate direction search, no derivatives needed.
-    • COBYLA (Constrained Optimization BY Linear Approximations) —
+    - Nelder-Mead (simplex) — Simple, robust, but slow for high dimensions.
+    - Powell's method — Conjugate direction search, no derivatives needed.
+    - COBYLA (Constrained Optimization BY Linear Approximations) —
       Handles constraints via linear approximations.
-    • Differential evolution — Global optimization, population-based.
-    • dual_annealing — Simulated annealing variant.
-    • SHGO (simplicial homology global optimization).
+    - Differential evolution — Global optimization, population-based.
+    - dual_annealing — Simulated annealing variant.
+    - SHGO (simplicial homology global optimization).
 
   These are solid choices for small-to-medium problems where gradient
   computation is infeasible. For large-scale problems, CMA-ES or
@@ -574,11 +574,11 @@ in-the-loop, legacy code), derivative-free methods are essential.
   Nevergrad is a comprehensive derivative-free optimization library that
   provides 400+ algorithms, including:
 
-    • Evolution strategies (ES, PSO, DE, CMA-ES variants).
-    • Bayesian optimization and TPE.
-    • Bandit optimization (optimistic, hyperopt-like).
-    • Parametrization tools for complex search spaces.
-    • Automatic algorithm selection and portfolio allocation.
+    - Evolution strategies (ES, PSO, DE, CMA-ES variants).
+    - Bayesian optimization and TPE.
+    - Bandit optimization (optimistic, hyperopt-like).
+    - Parametrization tools for complex search spaces.
+    - Automatic algorithm selection and portfolio allocation.
 
   Nevergrad is used at Meta for hyperparameter tuning and has won multiple
   black-box optimization competitions (e.g., NeurIPS 2020 Black-Box
@@ -604,7 +604,7 @@ typically inspired by natural phenomena.
 
 ### Genetic Algorithms (GA)
 
-  • DEAP (Distributed Evolutionary Algorithms in Python)
+  - DEAP (Distributed Evolutionary Algorithms in Python)
       GitHub: https://github.com/DEAP/deap (stars: 6,412, forks: 1,162)
       Install: pip install deap
       The most comprehensive evolutionary computation framework in Python.
@@ -612,59 +612,59 @@ typically inspired by natural phenomena.
       optimization (NSGA-II, SPEA2). Highly modular — you define the
       genetic operators yourself.
 
-  • PyGAD
+  - PyGAD
       GitHub: https://github.com/ahmedfgad/GeneticAlgorithmPython
         (stars: 2,209, forks: 501)
       Install: pip install pygad
       Simpler API than DEAP, designed for ease of use. Supports feature
       selection, neural network weight optimization, and parameter tuning.
 
-  • ga (SciPy)
+  - ga (SciPy)
       `scipy.optimize.differential_evolution` is a GA variant (real-coded).
 
 ### Particle Swarm Optimization (PSO)
 
-  • PySwarms
+  - PySwarms
       GitHub: https://github.com/ljvmiranda921/pyswarms (stars: 1,392, forks: 339)
       Install: pip install pyswarms
       Research toolkit for PSO. Supports global best, local best, and
       quantum PSO variants. Includes visualization tools.
 
-  • Simple PSO via scipy
+  - Simple PSO via scipy
       `scipy.optimize.dual_annealing` uses a generalized simulated
       annealing approach but can incorporate swarm elements.
 
 ### Simulated Annealing
 
-  • `scipy.optimize.dual_annealing` provides a robust SA implementation
+  - `scipy.optimize.dual_annealing` provides a robust SA implementation
     with local search refinement.
-  • Custom SA implementations are common for specific problems (e.g.,
+  - Custom SA implementations are common for specific problems (e.g.,
     `simanneal` package).
 
 ### Ant Colony Optimization (ACO)
 
-  • ACO-Pants (Python implementation for TSP).
-  • ACOTSP (C implementation by Stützle).
-  • More commonly, researchers implement ACO from scratch for specific
+  - ACO-Pants (Python implementation for TSP).
+  - ACOTSP (C implementation by Stützle).
+  - More commonly, researchers implement ACO from scratch for specific
     routing problems.
 
 ### Differential Evolution
 
-  • `scipy.optimize.differential_evolution` — Best DE implementation in
+  - `scipy.optimize.differential_evolution` — Best DE implementation in
     Python. Supports constraints, parallel evaluation, and various
     mutation/crossover strategies.
 
 ### Practical Uses
 
-  • Scheduling: Job shop scheduling, employee rostering, timetabling.
-  • Routing: Vehicle routing (especially with many constraints), traveling
+  - Scheduling: Job shop scheduling, employee rostering, timetabling.
+  - Routing: Vehicle routing (especially with many constraints), traveling
     salesman.
-  • Engineering design: Aerodynamic shape parameterization, circuit layout.
-  • Feature selection: Wrapper methods with GA to find optimal feature
+  - Engineering design: Aerodynamic shape parameterization, circuit layout.
+  - Feature selection: Wrapper methods with GA to find optimal feature
     subsets.
-  • Neural architecture search: Evolutionary NAS (e.g., AmoebaNet by
+  - Neural architecture search: Evolutionary NAS (e.g., AmoebaNet by
     Google Brain).
-  • Hyperparameter optimization: GA and PSO are competitive with Bayesian
+  - Hyperparameter optimization: GA and PSO are competitive with Bayesian
     methods on some problem landscapes.
 
 ## 6. OPTIMIZATION IN MACHINE LEARNING / AI
@@ -674,52 +674,52 @@ typically inspired by natural phenomena.
 First-order methods use gradient information to minimize the loss function.
 They are the workhorse of deep learning.
 
-  • SGD (Stochastic Gradient Descent): The original method — updates
+  - SGD (Stochastic Gradient Descent): The original method — updates
     parameters using the gradient of a minibatch. Learning rate tuning is
     critical.
 
-  • Momentum (Polyak, 1964): Accumulates a velocity term to smooth
+  - Momentum (Polyak, 1964): Accumulates a velocity term to smooth
     updates and accelerate convergence.
 
-  • Nesterov Accelerated Gradient (Nesterov, 1983): "Look ahead" momentum
+  - Nesterov Accelerated Gradient (Nesterov, 1983): "Look ahead" momentum
     variant. Provably optimal convergence rate for convex optimization.
 
-  • AdaGrad (Duchi et al., 2011): Per-parameter learning rates based on
+  - AdaGrad (Duchi et al., 2011): Per-parameter learning rates based on
     the sum of squared gradients. Good for sparse features but the
     accumulation causes premature learning rate decay.
 
-  • RMSProp (Hinton, 2012): Uses exponential moving average of squared
+  - RMSProp (Hinton, 2012): Uses exponential moving average of squared
     gradients to normalize updates. Fixes AdaGrad's aggressive decay.
 
-  • Adam (Kingma & Ba, 2015): Combines momentum and RMSProp with bias
+  - Adam (Kingma & Ba, 2015): Combines momentum and RMSProp with bias
     correction. The default optimizer for most deep learning. Extensions:
     AdamW (decouples weight decay, Loshchilov & Hutter, 2019).
 
-  • AdaBelief (Zhuang et al., 2020): Modifies Adam to use the belief in
+  - AdaBelief (Zhuang et al., 2020): Modifies Adam to use the belief in
     the gradient direction. Often more stable.
 
-  • Lion (Chen et al., 2023): Evolved by symbolic program search from the
+  - Lion (Chen et al., 2023): Evolved by symbolic program search from the
     Google Brain team. Simple update: sign(x * grad) only. Symbolically
     derived — fewer hyperparameters than Adam.
 
-  • Sophia (Liu et al., 2023): Uses Hessian diagonal information via a
+  - Sophia (Liu et al., 2023): Uses Hessian diagonal information via a
     Hutchinson trace estimator. Preconditioned gradient for faster
     convergence, especially in LLM training.
 
   Implementations:
-    • PyTorch: `torch.optim.SGD`, `torch.optim.Adam`, `torch.optim.AdamW`,
+    - PyTorch: `torch.optim.SGD`, `torch.optim.Adam`, `torch.optim.AdamW`,
       `torch.optim.RMSprop`, `torch.optim.Adagrad`, `torch.optim.LBFGS`.
-    • TensorFlow/Keras: `keras.optimizers.Adam`, `keras.optimizers.SGD`,
+    - TensorFlow/Keras: `keras.optimizers.Adam`, `keras.optimizers.SGD`,
       `keras.optimizers.RMSprop`.
-    • JAX/Flax: `optax` library provides a comprehensive set of gradient
+    - JAX/Flax: `optax` library provides a comprehensive set of gradient
       transformation combinators.
 
   Learning Rate Scheduling:
-    • Cosine annealing (Loshchilov & Hutter, 2017): Cosine-shaped LR decay
+    - Cosine annealing (Loshchilov & Hutter, 2017): Cosine-shaped LR decay
       with periodic restarts.
-    • Warmup: Linear increase from 0 to max LR over first K steps.
-    • OneCycle (Smith, 2018): Triangular LR schedule with gradual decay.
-    • ReduceLROnPlateau: Reduces LR when validation loss plateaus.
+    - Warmup: Linear increase from 0 to max LR over first K steps.
+    - OneCycle (Smith, 2018): Triangular LR schedule with gradual decay.
+    - ReduceLROnPlateau: Reduces LR when validation loss plateaus.
 
 ### 6.2 Second-Order Methods
 
@@ -727,28 +727,28 @@ Second-order methods use curvature information (Hessian) to accelerate
 convergence. They are less common in deep learning due to the O(n²) memory
 cost of storing the Hessian, but are important for specific use cases.
 
-  • L-BFGS (Limited-memory Broyden–Fletcher–Goldfarb–Shanno):
+  - L-BFGS (Limited-memory Broyden–Fletcher–Goldfarb–Shanno):
     Approximates the inverse Hessian. Available in PyTorch (`torch.optim.
     LBFGS`), SciPy (`scipy.optimize.minimize(method='L-BFGS-B')`). Used
     for small-batch or full-batch optimization (e.g., neural ODE training,
     fine-tuning small models).
 
-  • KFAC (Kronecker-Factored Approximate Curvature):
+  - KFAC (Kronecker-Factored Approximate Curvature):
     Approximates the Fisher information matrix using Kronecker-product
     factorization. Implementations: `kfac` (various packages), used in
     distributed training at DeepMind/Google.
 
-  • Hessian-free optimization (Martens, 2010):
+  - Hessian-free optimization (Martens, 2010):
     Uses conjugate gradient to compute approximate Newton steps without
     explicitly forming the Hessian. Historically important but rarely
     used today.
 
-  • Sophia (mentioned above) is a recent bridge — it uses Hessian
+  - Sophia (mentioned above) is a recent bridge — it uses Hessian
     diagonal estimates without the full memory cost.
 
 ### 6.3 Hyperparameter Optimization
 
-  • Optuna (Preferred Networks)
+  - Optuna (Preferred Networks)
       GitHub: https://github.com/optuna/optuna (stars: 14,447, forks: 1,349)
       Install: pip install optuna
       Define-by-Run API — most popular Python HPO framework. Supports
@@ -756,14 +756,14 @@ cost of storing the Hessian, but are important for specific use cases.
       (early stopping of bad trials), multi-objective optimization,
       distributed execution, visualization dashboard.
 
-  • Hyperopt (James Bergstra)
+  - Hyperopt (James Bergstra)
       GitHub: https://github.com/hyperopt/hyperopt (stars: 7,587, forks: 1,075)
       Install: pip install hyperopt
       Pioneered TPE-based hyperparameter optimization. Supports
       MongoTrials for distributed execution. Less maintained than Optuna
       in 2026.
 
-  • Ray Tune (Anyscale / UC Berkeley)
+  - Ray Tune (Anyscale / UC Berkeley)
       Website: https://docs.ray.io/en/latest/tune
       Install: pip install ray[tune]
       Part of the Ray ecosystem for distributed computing. Supports all
@@ -771,14 +771,14 @@ cost of storing the Hessian, but are important for specific use cases.
       with PyTorch, TensorFlow, and JAX. Best for large-scale distributed
       HPO.
 
-  • SMAC3 (University of Freiburg)
+  - SMAC3 (University of Freiburg)
       GitHub: https://github.com/automl/SMAC3
       Install: pip install smac
       Sequential model-based optimization. Uses random forests (not GPs)
       as the surrogate model, which works well for high-dimensional and
       mixed-type search spaces (common in algorithm configuration).
 
-  • NNI (Microsoft Neural Network Intelligence)
+  - NNI (Microsoft Neural Network Intelligence)
       GitHub: https://github.com/microsoft/nni (stars: 14,359, forks: 1,858)
       Install: pip install nni
       Microsoft's AutoML toolkit. Supports HPO (TPE, CMA-ES, grid, random),
@@ -787,33 +787,33 @@ cost of storing the Hessian, but are important for specific use cases.
 
 ### 6.4 Neural Architecture Search (NAS)
 
-  • DARTS (Differentiable Architecture Search, Liu et al., 2019):
+  - DARTS (Differentiable Architecture Search, Liu et al., 2019):
     Relaxes architecture search to continuous optimization, solved by
     bilevel optimization (train weights + architecture parameters).
     Implementations in NNI and AutoML frameworks.
 
-  • ENAS (Efficient NAS, Pham et al., 2018):
+  - ENAS (Efficient NAS, Pham et al., 2018):
     Parameter sharing across architectures for efficiency.
 
-  • Google AutoML:
+  - Google AutoML:
     Cloud-based NAS using reinforcement learning or evolutionary search.
 
-  • Microsoft NNI:
+  - Microsoft NNI:
     Supports most NAS methods (DARTS, ENAS, SPOS, ProxylessNAS).
 
-  • KerasTuner:
+  - KerasTuner:
     Simple hyperparameter search for Keras models.
 
 ### 6.5 Reinforcement Learning Optimization
 
   RL can be viewed as optimization of a reward function through interaction:
 
-  • Policy Gradient Methods: REINFORCE (Williams, 1992), A2C, PPO (Schulman
+  - Policy Gradient Methods: REINFORCE (Williams, 1992), A2C, PPO (Schulman
     et al., 2017). PPO is the most widely used due to its stability.
-  • SAC (Soft Actor-Critic, Haarnoja et al., 2018): Maximum entropy RL for
+  - SAC (Soft Actor-Critic, Haarnoja et al., 2018): Maximum entropy RL for
     continuous control.
-  • DQN (Mnih et al., 2013): Q-learning with deep neural networks.
-  • Evolutionary RL: Uses CMA-ES or GA to evolve policy parameters directly,
+  - DQN (Mnih et al., 2013): Q-learning with deep neural networks.
+  - Evolutionary RL: Uses CMA-ES or GA to evolve policy parameters directly,
     bypassing backpropagation.
 
   RL is a rapidly growing field with applications in robotics, game playing,
@@ -823,57 +823,57 @@ cost of storing the Hessian, but are important for specific use cases.
 
 ### 7.1 Supply Chain / Logistics
 
-  • Google OR-Tools (CP-SAT, Routing Library):
+  - Google OR-Tools (CP-SAT, Routing Library):
     Vehicle routing (TSP, VRP, CVRP, VRPTW), job shop scheduling, employee
     scheduling. The routing library uses LNS heuristics that scale to
     hundreds of vehicles and thousands of stops.
 
-  • IBM ILOG CP Optimizer:
+  - IBM ILOG CP Optimizer:
     Constraint programming solver (part of CPLEX Studio). Uses interval
     variables and sequence variables for scheduling. Excellent for
     project scheduling and resource-constrained scheduling.
 
-  • Gurobi (MIP for Supply Chain):
+  - Gurobi (MIP for Supply Chain):
     Facility location (p-median, p-center), inventory optimization (s,S
     policies), network design (multi-echelon), production planning (lot
     sizing).
 
-  • Lokad (forecasting + optimization):
+  - Lokad (forecasting + optimization):
     Combines probabilistic demand forecasting with inventory optimization.
     Uses a specialized DSL (Envision) and is cloud-native.
 
-  • Coupa / Llamasoft (now part of Coupa):
+  - Coupa / Llamasoft (now part of Coupa):
     Supply chain design and optimization (network flow, inventory
     positioning, transportation optimization). The industry standard for
     strategic supply chain design.
 
 ### 7.2 Finance
 
-  • Portfolio Optimization:
+  - Portfolio Optimization:
     CVXPY + MOSEK/Gurobi for mean-variance optimization, risk parity,
     Black-Litterman. Common models: minimum variance, maximum Sharpe,
     conditional value-at-risk (CVaR) minimization.
 
-  • Algorithmic Trading:
+  - Algorithmic Trading:
     Execution optimization (VWAP, TWAP, implementation shortfall) uses
     convex optimization (CVXPY, MOSEK) for optimal trade scheduling.
 
-  • Risk Management:
+  - Risk Management:
     Counterparty credit risk (CVA/DVA optimization), margin optimization,
     stress testing — all use LP/MIP (Gurobi, CPLEX).
 
-  • Derivatives Pricing:
+  - Derivatives Pricing:
     Calibration of stochastic volatility models (Heston, SABR) —
     nonlinear least squares (scipy, Ceres Solver).
 
-  • Commercial Platforms:
+  - Commercial Platforms:
     QRM (Quantitative Risk Management) — CVA, PFE calculations.
     Numerix — derivatives pricing and risk.
     Murex — front-to-back office risk and trading.
 
 ### 7.3 Energy / Power Systems
 
-  • PyPSA (Python for Power System Analysis):
+  - PyPSA (Python for Power System Analysis):
       GitHub: https://github.com/PyPSA/PyPSA (stars: 2,043, forks: 662)
       Install: pip install pypsa
       Open-source framework for power system modeling and optimization.
@@ -881,60 +881,60 @@ cost of storing the Hessian, but are important for specific use cases.
       expansion planning, and market modeling. Uses Pyomo or native LP
       solvers (linopy wrapper around HiGHS, Gurobi).
 
-  • GridLAB-D:
+  - GridLAB-D:
       Open-source simulation of power distribution systems. Includes
       optimization for distributed energy resource (DER) scheduling.
 
-  • PLEXOS (commercial, Energy Exemplar):
+  - PLEXOS (commercial, Energy Exemplar):
       Integrated energy market simulation and optimization. Used by most
       US ISOs/RTOs for production cost modeling and capacity expansion.
       Internally uses Gurobi, CPLEX, or Xpress.
 
-  • Gurobi / RAMP (unit commitment):
+  - Gurobi / RAMP (unit commitment):
       RAMP (UC Berkeley) is an open-source stochastic unit commitment
       model using Gurobi. Widely used in power systems research.
 
 ### 7.4 Engineering
 
-  • COMSOL Multiphysics:
+  - COMSOL Multiphysics:
     PDE-constrained optimization (topology optimization, parameter
     estimation, shape optimization). Uses gradient-based solvers
     (SNOPT, IPOPT) with adjoint sensitivity analysis.
 
-  • ANSYS Mechanical:
+  - ANSYS Mechanical:
     Topology optimization, shape optimization, and parameter optimization
     for structural design. Uses built-in gradient-based and gradient-free
     methods.
 
-  • OpenMDAO (NASA):
+  - OpenMDAO (NASA):
       Website: https://openmdao.org
       Open-source Multidisciplinary Design Analysis and Optimization
       (MDAO) framework. Used for aircraft design, wind turbine design,
       and spacecraft trajectory optimization. Supports gradient-based
       and gradient-free optimization with coupled systems.
 
-  • Dakota (Sandia National Labs):
+  - Dakota (Sandia National Labs):
     Multidisciplinary optimization toolkit for engineering design.
     Supports optimization, UQ, sensitivity analysis, and surrogate-based
     optimization.
 
 ### 7.5 Process Systems Engineering
 
-  • GAMS (General Algebraic Modeling System):
+  - GAMS (General Algebraic Modeling System):
     Commercial algebraic modeling with extensive solver support. Dominant
     in energy, economics, and process engineering (refinery optimization).
     Has CAPEX/OPEX cost models for chemical processes.
 
-  • AMPL:
+  - AMPL:
     Algebraic modeling (see Section 8 for details).
 
-  • Pyomo:
+  - Pyomo:
     Python-based algebraic modeling (see Section 8).
 
-  • CasADi:
+  - CasADi:
     Symbolic framework for optimal control (see Section 8).
 
-  • GEKKO:
+  - GEKKO:
     Python package for dynamic optimization (see Section 8).
 
 ## 8. OPTIMIZATION MODELING LANGUAGES AND ENVIRONMENTS
@@ -988,14 +988,14 @@ cost of storing the Hessian, but are important for specific use cases.
   them with any supported solver.
 
   Key features:
-    • Supports LP, MIP, NLP, MINLP, and stochastic programming.
-    • Concrete (immediate data) and Abstract (separable model/data) models.
-    • Automatic differentiation for NLP gradients (via PyNumero or AMPL
+    - Supports LP, MIP, NLP, MINLP, and stochastic programming.
+    - Concrete (immediate data) and Abstract (separable model/data) models.
+    - Automatic differentiation for NLP gradients (via PyNumero or AMPL
       solver interface).
-    • PySP — stochastic programming extension (scenario-based).
-    • GDP (Generalized Disjunctive Programming) support.
-    • Parallel decomposition schemes (Lagrangian decomposition, Benders).
-    • Strong integration with Jupyter notebooks.
+    - PySP — stochastic programming extension (scenario-based).
+    - GDP (Generalized Disjunctive Programming) support.
+    - Parallel decomposition schemes (Lagrangian decomposition, Benders).
+    - Strong integration with Jupyter notebooks.
 
   Pyomo is the standard choice for academic research and is increasingly
   used in industry for prototyping and production.
@@ -1013,13 +1013,13 @@ cost of storing the Hessian, but are important for specific use cases.
   just-in-time compilation, making model construction extremely fast for
   large problems. Key advantages:
 
-    • Very fast model construction (often 10–100× faster than Pyomo for
+    - Very fast model construction (often 10–100× faster than Pyomo for
       large sparse problems).
-    • Direct access to solver internals via MathOptInterface (MOI).
-    • Callbacks for lazy constraints, user cuts, and heuristic solutions.
-    • Supports almost all solvers via the MOI ecosystem.
-    • Duality analysis and sensitivity computation.
-    • Strong community and growing adoption in academia.
+    - Direct access to solver internals via MathOptInterface (MOI).
+    - Callbacks for lazy constraints, user cuts, and heuristic solutions.
+    - Supports almost all solvers via the MOI ecosystem.
+    - Duality analysis and sensitivity computation.
+    - Strong community and growing adoption in academia.
 
   JuMP is particularly strong when you need to solve many similar models
   quickly (e.g., in stochastic programming with many scenarios) or when
@@ -1060,10 +1060,10 @@ cost of storing the Hessian, but are important for specific use cases.
   differential/algebraic equation (DAE) systems. Uses the APMonitor
   backend (remote or local). Applications:
 
-    • Model Predictive Control (MPC).
-    • Chemical process optimization (reactors, distillation columns).
-    • Parameter estimation (dynamic data reconciliation).
-    • Combined simulation + optimization.
+    - Model Predictive Control (MPC).
+    - Chemical process optimization (reactors, distillation columns).
+    - Parameter estimation (dynamic data reconciliation).
+    - Combined simulation + optimization.
 
   GEKKO supports MIP, NLP, and dynamic optimization. The APMonitor backend
   can be run locally or on their cloud server.
@@ -1081,13 +1081,13 @@ cost of storing the Hessian, but are important for specific use cases.
   construct procedurally.
 
   Key features:
-    • Forward and reverse-mode automatic differentiation.
-    • Interfaces to IPOPT, KNITRO, WORHP, Bonmin, and other NLP/MINLP
+    - Forward and reverse-mode automatic differentiation.
+    - Interfaces to IPOPT, KNITRO, WORHP, Bonmin, and other NLP/MINLP
       solvers.
-    • Direct collocation and multiple-shooting for optimal control.
-    • NMPC (Nonlinear Model Predictive Control) — widely used in robotics
+    - Direct collocation and multiple-shooting for optimal control.
+    - NMPC (Nonlinear Model Predictive Control) — widely used in robotics
       and automotive control.
-    • Can generate self-contained C code for embedded optimization.
+    - Can generate self-contained C code for embedded optimization.
 
   CasADi is the de facto standard for research in optimal control and is
   used extensively in academia (MPC, trajectory optimization, robotics).
@@ -1175,82 +1175,82 @@ Which solver or framework should you choose? The answer depends on your
 problem type, budget, and performance requirements.
 
 ### Linear Programming (LP)
-  • Best (free): HiGHS — competitive with commercial solvers on LP.
+  - Best (free): HiGHS — competitive with commercial solvers on LP.
     Parallel simplex handles large LPs well. Available via `highspy`.
-  • Best (commercial): Gurobi — concurrent LP (simplex + barrier in
+  - Best (commercial): Gurobi — concurrent LP (simplex + barrier in
     parallel) is fastest overall.
-  • Education: GLPK — free, simple, GPL-licensed.
-  • Embedded/limited resources: ECOS (small convex LPs).
+  - Education: GLPK — free, simple, GPL-licensed.
+  - Embedded/limited resources: ECOS (small convex LPs).
 
 ### Mixed-Integer Programming (MIP)
-  • Best overall: Gurobi — industry gold standard. Fastest presolve,
+  - Best overall: Gurobi — industry gold standard. Fastest presolve,
     cutting planes, and heuristics.
-  • Best free: SCIP — most capable open-source MIP solver. Use with
+  - Best free: SCIP — most capable open-source MIP solver. Use with
     PySCIPOpt.
-  • Constraint-heavy (scheduling, packing): OR-Tools CP-SAT often
+  - Constraint-heavy (scheduling, packing): OR-Tools CP-SAT often
     outperforms MIP solvers on pure combinatorial problems.
-  • Budget constrained: HiGHS (MIP mode — improving but not yet
+  - Budget constrained: HiGHS (MIP mode — improving but not yet
     competitive with SCIP).
 
 ### Convex QP / SOCP / SDP
-  • Best overall: MOSEK — fastest and most robust for conic optimization.
-  • Free (moderate accuracy): SCS — ADMM-based, scales to millions of
+  - Best overall: MOSEK — fastest and most robust for conic optimization.
+  - Free (moderate accuracy): SCS — ADMM-based, scales to millions of
     variables.
-  • Free (small, accurate): ECOS — embedded interior-point solver.
-  • Ease of use: CVXPY + any backend — write the problem, choose the
+  - Free (small, accurate): ECOS — embedded interior-point solver.
+  - Ease of use: CVXPY + any backend — write the problem, choose the
     solver. CVXPY handles DCP verification automatically.
-  • Finance (portfolio): MOSEK or CVXPY+MOSEK.
+  - Finance (portfolio): MOSEK or CVXPY+MOSEK.
 
 ### Nonlinear Programming (NLP)
-  • Best free: IPOPT — interior-point method, scales well, widely used.
-  • Best commercial: KNITRO — artelys.com. Multiple algorithms
+  - Best free: IPOPT — interior-point method, scales well, widely used.
+  - Best commercial: KNITRO — artelys.com. Multiple algorithms
     (interior-point, active-set, SQP). Often faster and more robust
     than IPOPT.
-  • Large-scale: IPOPT + MUMPS/PARDISO. Can handle 10⁶+ variables.
-  • Optimal control: CasADi + IPOPT/KNITRO.
+  - Large-scale: IPOPT + MUMPS/PARDISO. Can handle 10⁶+ variables.
+  - Optimal control: CasADi + IPOPT/KNITRO.
 
 ### Black-Box / Derivative-Free Optimization
-  • Continuous black-box: CMA-ES (`cma` package) — best all-round
+  - Continuous black-box: CMA-ES (`cma` package) — best all-round
     for continuous, expensive functions.
-  • Expensive evaluations (simulations): Bayesian optimization with
+  - Expensive evaluations (simulations): Bayesian optimization with
     BoTorch or GPyOpt. GP surrogate + acquisition function minimizes
     evaluations.
-  • Mixed domains / many algorithms: Nevergrad — 400+ algorithms,
+  - Mixed domains / many algorithms: Nevergrad — 400+ algorithms,
     auto-selection.
-  • Hyperparameter tuning: Optuna (easy, well-integrated), Ray Tune
+  - Hyperparameter tuning: Optuna (easy, well-integrated), Ray Tune
     (distributed), Hyperopt (TPE).
-  • Constrained black-box: NOMAD (MADS algorithm).
+  - Constrained black-box: NOMAD (MADS algorithm).
 
 ### Routing / Scheduling
-  • Vehicle routing: OR-Tools routing library — LNS heuristics, handles
+  - Vehicle routing: OR-Tools routing library — LNS heuristics, handles
     dozens of constraints (time windows, capacity, durations).
-  • Scheduling (job shop, employee): OR-Tools CP-SAT — powerful interval
+  - Scheduling (job shop, employee): OR-Tools CP-SAT — powerful interval
     variables and cumulative constraints.
-  • General constraint programming: OR-Tools CP-SAT or IBM CP Optimizer.
+  - General constraint programming: OR-Tools CP-SAT or IBM CP Optimizer.
 
 ### Large-Scale Deep Learning Training
-  • First-order optimizer: AdamW — default choice for most architectures.
-  • LR schedule: Cosine annealing with linear warmup.
-  • For LLM training: Sophia (uses Hessian diagonal) shows faster
+  - First-order optimizer: AdamW — default choice for most architectures.
+  - LR schedule: Cosine annealing with linear warmup.
+  - For LLM training: Sophia (uses Hessian diagonal) shows faster
     convergence on large models.
-  • Hyperparameter tuning: Optuna (define-by-run, pruning) or Ray Tune
+  - Hyperparameter tuning: Optuna (define-by-run, pruning) or Ray Tune
     (distributed, PBT, HyperBand).
-  • Architecture search: NNI (Microsoft) or KerasTuner.
+  - Architecture search: NNI (Microsoft) or KerasTuner.
 
 ### Research / Prototyping
-  • Pyomo: Python-native, supports the widest range of solvers, great
+  - Pyomo: Python-native, supports the widest range of solvers, great
     for teaching and research.
-  • JuMP: If you are comfortable with Julia, JuMP offers dramatically
+  - JuMP: If you are comfortable with Julia, JuMP offers dramatically
     faster model construction and tight solver integration.
-  • CVXPY: For convex optimization problems — the DCP rules catch
+  - CVXPY: For convex optimization problems — the DCP rules catch
     mistakes early.
-  • CasADi: For optimal control and robotics research.
+  - CasADi: For optimal control and robotics research.
 
 ### Education
-  • GLPK: Free, simple, GMPL syntax teaches algebraic modeling.
-  • CVXPY: Teaches convex optimization concepts via DCP.
-  • Pyomo: Teaches optimization alongside Python programming skills.
-  • AMPL (student version): Free, clean syntax, excellent documentation.
+  - GLPK: Free, simple, GMPL syntax teaches algebraic modeling.
+  - CVXPY: Teaches convex optimization concepts via DCP.
+  - Pyomo: Teaches optimization alongside Python programming skills.
+  - AMPL (student version): Free, clean syntax, excellent documentation.
 
 ### Summary Decision Flowchart
 
@@ -1280,96 +1280,96 @@ problem type, budget, and performance requirements.
 ## 11. REFERENCES AND FURTHER READING
 
 ### Benchmark Sites
-  • Hans Mittelmann's Decision Tree for Optimization Software
+  - Hans Mittelmann's Decision Tree for Optimization Software
     https://plato.asu.edu/guide.html
     The most comprehensive collection of optimization software links and
     benchmarks. Includes LP, MILP, NLP, SOCP, SDP, and MINLP benchmarks
     updated regularly.
 
-  • Mittelmann Benchmarks (main index)
+  - Mittelmann Benchmarks (main index)
     https://plato.asu.edu/bench.html
     Includes LPopt, LPfeas, MIPFEAS, MILP, SOCP, SDP, QP, AMPL-NLP, and
     MINLP benchmarks. Most results updated through mid-2026.
 
-  • MIPLIB (Mixed Integer Programming LIBrary)
+  - MIPLIB (Mixed Integer Programming LIBrary)
     https://miplib.zib.de
     The standard benchmark library for MIP solvers. MIPLIB2017 is the
     current version.
 
-  • COCO Platform (Comparing Continuous Optimizers)
+  - COCO Platform (Comparing Continuous Optimizers)
     https://github.com/numbbo/coco
     Benchmark platform for black-box continuous optimization.
 
 ### Solver Official Documentation
-  • Gurobi Documentation:    https://docs.gurobi.com
-  • CPLEX Documentation:     https://www.ibm.com/docs/en/icos
-  • Xpress Documentation:    https://www.fico.com/fico-xpress-optimization/docs
-  • MOSEK Documentation:     https://docs.mosek.com
-  • HiGHS Documentation:     https://highs.dev
-  • SCIP Documentation:      https://www.scipopt.org/doc
-  • OR-Tools Documentation:  https://developers.google.com/optimization
-  • CVXPY Documentation:     https://www.cvxpy.org
-  • Pyomo Documentation:     https://www.pyomo.org/documentation
-  • JuMP Documentation:      https://jump.dev/JuMP.jl/stable
-  • CasADi Documentation:    https://web.casadi.org/docs
+  - Gurobi Documentation:    https://docs.gurobi.com
+  - CPLEX Documentation:     https://www.ibm.com/docs/en/icos
+  - Xpress Documentation:    https://www.fico.com/fico-xpress-optimization/docs
+  - MOSEK Documentation:     https://docs.mosek.com
+  - HiGHS Documentation:     https://highs.dev
+  - SCIP Documentation:      https://www.scipopt.org/doc
+  - OR-Tools Documentation:  https://developers.google.com/optimization
+  - CVXPY Documentation:     https://www.cvxpy.org
+  - Pyomo Documentation:     https://www.pyomo.org/documentation
+  - JuMP Documentation:      https://jump.dev/JuMP.jl/stable
+  - CasADi Documentation:    https://web.casadi.org/docs
 
 ### Key GitHub Repositories
   (Stars as of July 2026 — see Section 9 for individual counts)
 
-  • OR-Tools:              https://github.com/google/or-tools
-  • Optuna:                https://github.com/optuna/optuna
-  • CVXPY:                 https://github.com/cvxpy/cvxpy
-  • DEAP:                  https://github.com/DEAP/deap
-  • Pyomo:                 https://github.com/Pyomo/pyomo
-  • HiGHS:                 https://github.com/ERGO-Code/HiGHS
-  • SCIP:                  https://github.com/scipopt/scip
-  • BoTorch:               https://github.com/pytorch/botorch
-  • Nevergrad:             https://github.com/facebookresearch/nevergrad
-  • CMA-ES:                https://github.com/CMA-ES/pycma
-  • BayesianOptimization:  https://github.com/bayesian-optimization/BayesianOptimization
-  • JuMP.jl:               https://github.com/jump-dev/JuMP.jl
-  • CasADi:                https://github.com/casadi/casadi
-  • GEKKO:                 https://github.com/BYU-PRISM/GEKKO
-  • NNI:                   https://github.com/microsoft/nni
-  • Hyperopt:              https://github.com/hyperopt/hyperopt
-  • IPOPT:                 https://github.com/coin-or/Ipopt
-  • Clp:                   https://github.com/coin-or/Clp
-  • Cbc:                   https://github.com/coin-or/Cbc
-  • PyPSA:                 https://github.com/PyPSA/PyPSA
-  • SciPy:                 https://github.com/scipy/scipy
-  • PyTorch:               https://github.com/pytorch/pytorch
+  - OR-Tools:              https://github.com/google/or-tools
+  - Optuna:                https://github.com/optuna/optuna
+  - CVXPY:                 https://github.com/cvxpy/cvxpy
+  - DEAP:                  https://github.com/DEAP/deap
+  - Pyomo:                 https://github.com/Pyomo/pyomo
+  - HiGHS:                 https://github.com/ERGO-Code/HiGHS
+  - SCIP:                  https://github.com/scipopt/scip
+  - BoTorch:               https://github.com/pytorch/botorch
+  - Nevergrad:             https://github.com/facebookresearch/nevergrad
+  - CMA-ES:                https://github.com/CMA-ES/pycma
+  - BayesianOptimization:  https://github.com/bayesian-optimization/BayesianOptimization
+  - JuMP.jl:               https://github.com/jump-dev/JuMP.jl
+  - CasADi:                https://github.com/casadi/casadi
+  - GEKKO:                 https://github.com/BYU-PRISM/GEKKO
+  - NNI:                   https://github.com/microsoft/nni
+  - Hyperopt:              https://github.com/hyperopt/hyperopt
+  - IPOPT:                 https://github.com/coin-or/Ipopt
+  - Clp:                   https://github.com/coin-or/Clp
+  - Cbc:                   https://github.com/coin-or/Cbc
+  - PyPSA:                 https://github.com/PyPSA/PyPSA
+  - SciPy:                 https://github.com/scipy/scipy
+  - PyTorch:               https://github.com/pytorch/pytorch
 
 ### Books
-  • Boyd & Vandenberghe (2004) — "Convex Optimization"
+  - Boyd & Vandenberghe (2004) — "Convex Optimization"
     Cambridge University Press. Free PDF: https://web.stanford.edu/~boyd/cvxbook
     The definitive text on convex optimization.
 
-  • Bertsimas & Tsitsiklis (1997) — "Introduction to Linear Optimization"
+  - Bertsimas & Tsitsiklis (1997) — "Introduction to Linear Optimization"
     Athena Scientific. The standard LP/introductory optimization textbook.
 
-  • Nocedal & Wright (2006) — "Numerical Optimization"
+  - Nocedal & Wright (2006) — "Numerical Optimization"
     Springer. The standard reference for numerical optimization methods.
 
-  • Wolsey (1998) — "Integer Programming"
+  - Wolsey (1998) — "Integer Programming"
     Wiley. Comprehensive treatment of integer programming theory.
 
-  • Williams (2013) — "Model Building in Mathematical Programming"
+  - Williams (2013) — "Model Building in Mathematical Programming"
     Wiley. Practical guide to constructing optimization models.
 
-  • Sutton & Barto (2018) — "Reinforcement Learning: An Introduction"
+  - Sutton & Barto (2018) — "Reinforcement Learning: An Introduction"
     MIT Press. The standard RL textbook (covers RL as optimization).
 
-  • Goodfellow, Bengio & Courville (2016) — "Deep Learning"
+  - Goodfellow, Bengio & Courville (2016) — "Deep Learning"
     MIT Press. Chapter 8 covers optimization for deep learning.
 
 ### Conferences and Journals
-  • INFORMS Annual Meeting (operations research)
-  • International Conference on Machine Learning (ICML)
-  • Neural Information Processing Systems (NeurIPS)
-  • Mathematical Optimization Society (MOS) conferences
-  • Journal: Mathematical Programming (Series A & B)
-  • Journal: Operations Research
-  • Journal: Optimization and Engineering
-  • Journal: Journal of Global Optimization
+  - INFORMS Annual Meeting (operations research)
+  - International Conference on Machine Learning (ICML)
+  - Neural Information Processing Systems (NeurIPS)
+  - Mathematical Optimization Society (MOS) conferences
+  - Journal: Mathematical Programming (Series A & B)
+  - Journal: Operations Research
+  - Journal: Optimization and Engineering
+  - Journal: Journal of Global Optimization
 
 ## END OF ANALYSIS
