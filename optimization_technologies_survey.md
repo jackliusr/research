@@ -1,13 +1,9 @@
-================================================================================
- OPTIMIZATION TECHNOLOGIES AND FRAMEWORKS: A COMPREHENSIVE SURVEY
-================================================================================
+# OPTIMIZATION TECHNOLOGIES AND FRAMEWORKS: A COMPREHENSIVE SURVEY
  Author: Hermes Agent Research
  Date: July 2026
  License: Free to distribute with attribution
-================================================================================
 
-TABLE OF CONTENTS
------------------
+### TABLE OF CONTENTS
   1. Overview of the Optimization Landscape
   2. Mathematical Programming Solvers
      2.1  Gurobi
@@ -30,9 +26,7 @@ TABLE OF CONTENTS
  10. Decision Guide
  11. References and Further Reading
 
-================================================================================
-1. OVERVIEW OF THE OPTIMIZATION LANDSCAPE
-================================================================================
+## 1. OVERVIEW OF THE OPTIMIZATION LANDSCAPE
 
 Optimization is the mathematical discipline of selecting the best element (with
 respect to some criterion) from a set of available alternatives. Formally, an
@@ -48,7 +42,7 @@ The feasible set is {x ∈ X | g_i(x) ≤ 0, h_j(x) = 0}. A point x* is globally
 optimal if f(x*) ≤ f(x) for all feasible x, and locally optimal if this holds
 only in a neighborhood of x*.
 
---- 1.1 Major Categories of Optimization ---
+### 1.1 Major Categories of Optimization
 
 Linear Programming (LP): f and all constraints are linear. Solved efficiently
 by the simplex method (Dantzig, 1947) or interior-point methods (Karmarkar,
@@ -99,7 +93,7 @@ functions. Uses a Gaussian process surrogate model and an acquisition function
 (Expected Improvement, Upper Confidence Bound) to decide where to sample next.
 Applications: hyperparameter tuning, experimental design, A/B testing.
 
---- 1.2 Real-World Applications Across Industries ---
+### 1.2 Real-World Applications Across Industries
 
   Logistics / Supply Chain: Vehicle routing (VRP), warehouse location,
   inventory optimization, fleet assignment. Companies like UPS and Amazon use
@@ -124,12 +118,9 @@ Applications: hyperparameter tuning, experimental design, A/B testing.
   Manufacturing: Production scheduling, cutting stock, assembly line balancing,
   quality control. MIP and constraint programming are widely used.
 
-================================================================================
-2. MATHEMATICAL PROGRAMMING SOLVERS
-================================================================================
+## 2. MATHEMATICAL PROGRAMMING SOLVERS
 
-2.1 Gurobi
------------
+### 2.1 Gurobi
   Type:       LP, QP, MIP, MIQP, MIQCP, SOCP
   Language:   C, Python, R, Java, MATLAB, Julia (via JuMP)
   License:    Commercial (free academic licenses)
@@ -165,8 +156,7 @@ Applications: hyperparameter tuning, experimental design, A/B testing.
   MIPLIB2017 instances in the shortest time. Even today, its MIP performance
   is considered the baseline to beat.
 
-2.2 CPLEX (IBM)
-----------------
+### 2.2 CPLEX (IBM)
   Type:       LP, QP, MIP, MIQP, QCQP, SOCP
   Language:   C, Python, Java, C++, .NET (C#)
   License:    Commercial (free academic via IBM Academic Initiative)
@@ -195,8 +185,7 @@ Applications: hyperparameter tuning, experimental design, A/B testing.
   request, making direct public comparisons harder. However, internal
   benchmarks suggest CPLEX remains within striking distance of Gurobi.
 
-2.3 Xpress (FICO)
-------------------
+### 2.3 Xpress (FICO)
   Type:       LP, QP, MIP, MIQP, SOCP
   Language:   Mosel (proprietary DSL), Python, C, Java, .NET
   License:    Commercial (free academic via FICO Academic Program)
@@ -226,8 +215,7 @@ Applications: hyperparameter tuning, experimental design, A/B testing.
   Benchmark note: Xpress also withdrew from Mittelmann's benchmarks in 2018
   alongside CPLEX.
 
-2.4 MOSEK
-----------
+### 2.4 MOSEK
   Type:       LP, QP, SOCP, SDP, exponential and power cone programming
   Language:   C, Python, Java, MATLAB, R, Julia (via JuMP)
   License:    Commercial (free academic licenses)
@@ -255,8 +243,7 @@ Applications: hyperparameter tuning, experimental design, A/B testing.
   de facto standard for convex conic optimization in both industry and
   academia.
 
-2.5 COPT (Cardinal Operations)
--------------------------------
+### 2.5 COPT (Cardinal Operations)
   Type:       LP, MIP, QP
   Language:   Python (primary), C, C++
   License:    Commercial
@@ -277,8 +264,7 @@ Applications: hyperparameter tuning, experimental design, A/B testing.
   It is particularly popular in Asia for supply chain and logistics
   optimization.
 
-2.6 HiGHS
-----------
+### 2.6 HiGHS
   Type:       LP, QP, MIP
   Language:   C++ (core), Python (highspy), Julia, R, C
   License:    Open source (MIT license)
@@ -301,8 +287,7 @@ Applications: hyperparameter tuning, experimental design, A/B testing.
   and COPT among mainstream solvers. For MIP, it is weaker than SCIP and
   far behind Gurobi, but it is the best open-source choice for LP.
 
-2.7 SCIP
----------
+### 2.7 SCIP
   Type:       MIP, MINLP, Constraint Integer Programming
   Language:   C (core), Python (PySCIPOpt), Julia
   License:    Open source (ZIB Academic License — free for non-commercial)
@@ -331,8 +316,7 @@ Applications: hyperparameter tuning, experimental design, A/B testing.
   SCIP Optimization Suite release includes updates from the Zuse Institute
   Berlin.
 
-2.8 Clp / Cbc (COIN-OR)
--------------------------
+### 2.8 Clp / Cbc (COIN-OR)
   Type:       Clp (LP), Cbc (MIP)
   Language:   C++ (core), Python (CyLP, Pyomo)
   License:    Open source (Eclipse Public License / Common Public License)
@@ -357,8 +341,7 @@ Applications: hyperparameter tuning, experimental design, A/B testing.
   the backbone of many optimization pipelines, particularly in academic
   settings.
 
-2.9 GLPK (GNU Linear Programming Kit)
----------------------------------------
+### 2.9 GLPK (GNU Linear Programming Kit)
   Type:       LP, MIP
   Language:   C (core), GMPL (GNU MathProg Language)
   License:    Open source (GNU GPLv3)
@@ -379,8 +362,7 @@ Applications: hyperparameter tuning, experimental design, A/B testing.
   Best use case: education, small models, and environments where GPL
   licensing is a requirement.
 
-2.10 Google OR-Tools
----------------------
+### 2.10 Google OR-Tools
   Type:       Wrapper (LP, MIP, CP), CP-SAT (native)
   Language:   Python, C++, Java, .NET
   License:    Open source (Apache 2.0)
@@ -410,14 +392,12 @@ Applications: hyperparameter tuning, experimental design, A/B testing.
   Unique: OR-Tools is not a single solver but an integrated framework. It
   excels at problems where a pure MIP formulation would be cumbersome.
 
-================================================================================
-3. NONLINEAR CONVEX OPTIMIZATION
-================================================================================
+## 3. NONLINEAR CONVEX OPTIMIZATION
 
 Convex optimization problems have the property that every local minimum is a
 global minimum. This makes them tractable even at large scale.
 
---- CVXPY ---
+### CVXPY
   Website:   https://www.cvxpy.org
   GitHub:    https://github.com/cvxpy/cvxpy (stars: 6,272, forks: 1,184)
   Install:   pip install cvxpy
@@ -439,7 +419,7 @@ global minimum. This makes them tractable even at large scale.
   CVXPY is widely used in finance (portfolio optimization), control
   (MPC design), statistics (lasso, elastic net), and engineering.
 
---- CVXOPT ---
+### CVXOPT
   Website:   https://cvxopt.org
   Install:   pip install cvxopt
 
@@ -447,7 +427,7 @@ global minimum. This makes them tractable even at large scale.
   It provides its own interior-point solver. Useful for custom solver
   development and small-to-medium problems.
 
---- Convex.jl (Julia) ---
+### Convex.jl (Julia)
   Website:   https://jump.dev/Convex.jl
   GitHub:    https://github.com/jump-dev/Convex.jl
 
@@ -455,7 +435,7 @@ global minimum. This makes them tractable even at large scale.
   MathOptInterface. Benefits from Julia's speed (compilation) for large
   problem construction.
 
---- IPOPT (Interior Point OPTimizer) ---
+### IPOPT (Interior Point OPTimizer)
   Type:       NLP (continuous, large-scale)
   Language:   C++ (core), Python (via pyomo/cyipopt)
   License:    Open source (EPL 2.0)
@@ -479,7 +459,7 @@ global minimum. This makes them tractable even at large scale.
   open-source solver and competitive with commercial solvers (KNITRO,
   CONOPT, SNOPT) on many problem classes.
 
---- SDPT3 and SeDuMi ---
+### SDPT3 and SeDuMi
   Type:       SDP (semidefinite programming)
   Language:   MATLAB
   License:    Open source (academic)
@@ -491,7 +471,7 @@ global minimum. This makes them tractable even at large scale.
   widely cited (1000s of academic papers) and are still useful for
   moderate-sized SDP problems. MOSEK has largely replaced them in industry.
 
---- ECOS and SCS ---
+### ECOS and SCS
   Type:       Conic optimization (SOCP, SDP)
   Language:   C (core), Python (via cvxpy)
   License:    MIT / BSD
@@ -505,14 +485,12 @@ global minimum. This makes them tractable even at large scale.
   large-scale conic problems. Scales to millions of variables but gives
   lower accuracy (suitable when moderate precision is acceptable).
 
-================================================================================
-4. DERIVATIVE-FREE / BLACK-BOX OPTIMIZATION
-================================================================================
+## 4. DERIVATIVE-FREE / BLACK-BOX OPTIMIZATION
 
 When gradients are unavailable (e.g., simulation-based optimization, hardware-
 in-the-loop, legacy code), derivative-free methods are essential.
 
---- CMA-ES (Covariance Matrix Adaptation Evolution Strategy) ---
+### CMA-ES (Covariance Matrix Adaptation Evolution Strategy)
   Language:   Python (cma package), C, MATLAB
   License:    Open source (BSD)
   Website:    https://github.com/CMA-ES/pycma (stars: 1,333, forks: 199)
@@ -535,7 +513,7 @@ in-the-loop, legacy code), derivative-free methods are essential.
   Applications: hyperparameter tuning, engineering design optimization,
   robotics (policy search), and scientific computing.
 
---- Bayesian Optimization ---
+### Bayesian Optimization
   Bayesian optimization uses a probabilistic surrogate model (typically a
   Gaussian process) to model the objective and an acquisition function to
   select evaluation points. Key libraries:
@@ -574,7 +552,7 @@ in-the-loop, legacy code), derivative-free methods are essential.
   also used in experimental design, materials science, drug discovery,
   and A/B testing.
 
---- SciPy Direct Search Methods ---
+### SciPy Direct Search Methods
   Available in `scipy.optimize` (stars: 14,799, forks: 5,788):
 
     • Nelder-Mead (simplex) — Simple, robust, but slow for high dimensions.
@@ -589,7 +567,7 @@ in-the-loop, legacy code), derivative-free methods are essential.
   computation is infeasible. For large-scale problems, CMA-ES or
   Bayesian optimization are preferred.
 
---- Nevergrad (Meta/Facebook) ---
+### Nevergrad (Meta/Facebook)
   GitHub:    https://github.com/facebookresearch/nevergrad (stars: 4,195, forks: 369)
   Install:   pip install nevergrad
 
@@ -606,7 +584,7 @@ in-the-loop, legacy code), derivative-free methods are essential.
   black-box optimization competitions (e.g., NeurIPS 2020 Black-Box
   Optimization Challenge).
 
---- NOMAD ---
+### NOMAD
   Type:       Black-box optimization (MADS algorithm)
   Language:   C++ (core), Python (via PyNomad)
   License:    LGPL (open source)
@@ -619,14 +597,12 @@ in-the-loop, legacy code), derivative-free methods are essential.
   both equality and inequality constraints via progressive barrier or
   extreme barrier approaches.
 
-================================================================================
-5. METAHEURISTICS AND NATURE-INSPIRED ALGORITHMS
-================================================================================
+## 5. METAHEURISTICS AND NATURE-INSPIRED ALGORITHMS
 
 Metaheuristics are high-level strategies for exploring search spaces,
 typically inspired by natural phenomena.
 
---- Genetic Algorithms (GA) ---
+### Genetic Algorithms (GA)
 
   • DEAP (Distributed Evolutionary Algorithms in Python)
       GitHub: https://github.com/DEAP/deap (stars: 6,412, forks: 1,162)
@@ -646,7 +622,7 @@ typically inspired by natural phenomena.
   • ga (SciPy)
       `scipy.optimize.differential_evolution` is a GA variant (real-coded).
 
---- Particle Swarm Optimization (PSO) ---
+### Particle Swarm Optimization (PSO)
 
   • PySwarms
       GitHub: https://github.com/ljvmiranda921/pyswarms (stars: 1,392, forks: 339)
@@ -658,27 +634,27 @@ typically inspired by natural phenomena.
       `scipy.optimize.dual_annealing` uses a generalized simulated
       annealing approach but can incorporate swarm elements.
 
---- Simulated Annealing ---
+### Simulated Annealing
 
   • `scipy.optimize.dual_annealing` provides a robust SA implementation
     with local search refinement.
   • Custom SA implementations are common for specific problems (e.g.,
     `simanneal` package).
 
---- Ant Colony Optimization (ACO) ---
+### Ant Colony Optimization (ACO)
 
   • ACO-Pants (Python implementation for TSP).
   • ACOTSP (C implementation by Stützle).
   • More commonly, researchers implement ACO from scratch for specific
     routing problems.
 
---- Differential Evolution ---
+### Differential Evolution
 
   • `scipy.optimize.differential_evolution` — Best DE implementation in
     Python. Supports constraints, parallel evaluation, and various
     mutation/crossover strategies.
 
---- Practical Uses ---
+### Practical Uses
 
   • Scheduling: Job shop scheduling, employee rostering, timetabling.
   • Routing: Vehicle routing (especially with many constraints), traveling
@@ -691,11 +667,9 @@ typically inspired by natural phenomena.
   • Hyperparameter optimization: GA and PSO are competitive with Bayesian
     methods on some problem landscapes.
 
-================================================================================
-6. OPTIMIZATION IN MACHINE LEARNING / AI
-================================================================================
+## 6. OPTIMIZATION IN MACHINE LEARNING / AI
 
---- 6.1 First-Order Optimization Methods ---
+### 6.1 First-Order Optimization Methods
 
 First-order methods use gradient information to minimize the loss function.
 They are the workhorse of deep learning.
@@ -747,7 +721,7 @@ They are the workhorse of deep learning.
     • OneCycle (Smith, 2018): Triangular LR schedule with gradual decay.
     • ReduceLROnPlateau: Reduces LR when validation loss plateaus.
 
---- 6.2 Second-Order Methods ---
+### 6.2 Second-Order Methods
 
 Second-order methods use curvature information (Hessian) to accelerate
 convergence. They are less common in deep learning due to the O(n²) memory
@@ -772,7 +746,7 @@ cost of storing the Hessian, but are important for specific use cases.
   • Sophia (mentioned above) is a recent bridge — it uses Hessian
     diagonal estimates without the full memory cost.
 
---- 6.3 Hyperparameter Optimization ---
+### 6.3 Hyperparameter Optimization
 
   • Optuna (Preferred Networks)
       GitHub: https://github.com/optuna/optuna (stars: 14,447, forks: 1,349)
@@ -811,7 +785,7 @@ cost of storing the Hessian, but are important for specific use cases.
       NAS (DARTS, ENAS, one-shot), model compression, and feature
       engineering.
 
---- 6.4 Neural Architecture Search (NAS) ---
+### 6.4 Neural Architecture Search (NAS)
 
   • DARTS (Differentiable Architecture Search, Liu et al., 2019):
     Relaxes architecture search to continuous optimization, solved by
@@ -830,7 +804,7 @@ cost of storing the Hessian, but are important for specific use cases.
   • KerasTuner:
     Simple hyperparameter search for Keras models.
 
---- 6.5 Reinforcement Learning Optimization ---
+### 6.5 Reinforcement Learning Optimization
 
   RL can be viewed as optimization of a reward function through interaction:
 
@@ -845,11 +819,9 @@ cost of storing the Hessian, but are important for specific use cases.
   RL is a rapidly growing field with applications in robotics, game playing,
   recommender systems, and autonomous driving.
 
-================================================================================
-7. DOMAIN-SPECIFIC OPTIMIZATION FRAMEWORKS
-================================================================================
+## 7. DOMAIN-SPECIFIC OPTIMIZATION FRAMEWORKS
 
---- 7.1 Supply Chain / Logistics ---
+### 7.1 Supply Chain / Logistics
 
   • Google OR-Tools (CP-SAT, Routing Library):
     Vehicle routing (TSP, VRP, CVRP, VRPTW), job shop scheduling, employee
@@ -875,7 +847,7 @@ cost of storing the Hessian, but are important for specific use cases.
     positioning, transportation optimization). The industry standard for
     strategic supply chain design.
 
---- 7.2 Finance ---
+### 7.2 Finance
 
   • Portfolio Optimization:
     CVXPY + MOSEK/Gurobi for mean-variance optimization, risk parity,
@@ -899,7 +871,7 @@ cost of storing the Hessian, but are important for specific use cases.
     Numerix — derivatives pricing and risk.
     Murex — front-to-back office risk and trading.
 
---- 7.3 Energy / Power Systems ---
+### 7.3 Energy / Power Systems
 
   • PyPSA (Python for Power System Analysis):
       GitHub: https://github.com/PyPSA/PyPSA (stars: 2,043, forks: 662)
@@ -922,7 +894,7 @@ cost of storing the Hessian, but are important for specific use cases.
       RAMP (UC Berkeley) is an open-source stochastic unit commitment
       model using Gurobi. Widely used in power systems research.
 
---- 7.4 Engineering ---
+### 7.4 Engineering
 
   • COMSOL Multiphysics:
     PDE-constrained optimization (topology optimization, parameter
@@ -946,7 +918,7 @@ cost of storing the Hessian, but are important for specific use cases.
     Supports optimization, UQ, sensitivity analysis, and surrogate-based
     optimization.
 
---- 7.5 Process Systems Engineering ---
+### 7.5 Process Systems Engineering
 
   • GAMS (General Algebraic Modeling System):
     Commercial algebraic modeling with extensive solver support. Dominant
@@ -965,11 +937,9 @@ cost of storing the Hessian, but are important for specific use cases.
   • GEKKO:
     Python package for dynamic optimization (see Section 8).
 
-================================================================================
-8. OPTIMIZATION MODELING LANGUAGES AND ENVIRONMENTS
-================================================================================
+## 8. OPTIMIZATION MODELING LANGUAGES AND ENVIRONMENTS
 
---- AMPL ---
+### AMPL
   Type:       Algebraic modeling language (commercial)
   Website:    https://ampl.com
   Solver interfaces: Gurobi, CPLEX, Xpress, MOSEK, HiGHS, IPOPT, KNITRO,
@@ -987,7 +957,7 @@ cost of storing the Hessian, but are important for specific use cases.
   support. The free student version allows solving with HiGHS and a subset
   of features.
 
---- GAMS ---
+### GAMS
   Type:       Algebraic modeling language (commercial)
   Website:    https://www.gams.com
   Solver interfaces: Gurobi, CPLEX, Xpress, MOSEK, IPOPT, CONOPT, SNOPT,
@@ -1003,7 +973,7 @@ cost of storing the Hessian, but are important for specific use cases.
   stronger support for stochastic programming (via DECIS, LINDO) and
   complementarity problems (MCP, MPEC).
 
---- Pyomo (Python) ---
+### Pyomo (Python)
   Type:       Python-based algebraic modeling (open source)
   Website:    https://www.pyomo.org
   GitHub:     https://github.com/Pyomo/pyomo (stars: 2,483, forks: 582)
@@ -1030,7 +1000,7 @@ cost of storing the Hessian, but are important for specific use cases.
   Pyomo is the standard choice for academic research and is increasingly
   used in industry for prototyping and production.
 
---- JuMP (Julia) ---
+### JuMP (Julia)
   Type:       Julia-based algebraic modeling (open source)
   Website:    https://jump.dev
   GitHub:     https://github.com/jump-dev/JuMP.jl (stars: 2,450, forks: 419)
@@ -1055,10 +1025,10 @@ cost of storing the Hessian, but are important for specific use cases.
   quickly (e.g., in stochastic programming with many scenarios) or when
   you need fine-grained control over solver interaction.
 
---- CVXPY (Python) ---
+### CVXPY (Python)
   (Covered in Section 3 — disciplined convex programming)
 
---- CVXR (R) ---
+### CVXR (R)
   Type:       R-based convex modeling (open source)
   Website:    https://cvxr.rbind.io
   GitHub:     https://github.com/cvxr/CVXR
@@ -1069,7 +1039,7 @@ cost of storing the Hessian, but are important for specific use cases.
   R equivalent of CVXPY. Uses the same DCP rules. Popular in finance and
   econometrics communities.
 
---- Convex.jl (Julia) ---
+### Convex.jl (Julia)
   Type:       Julia convex modeling (open source)
   Website:    https://jump.dev/Convex.jl
   GitHub:     https://github.com/jump-dev/Convex.jl
@@ -1079,7 +1049,7 @@ cost of storing the Hessian, but are important for specific use cases.
 
   Julia equivalent of CVXPY. Built on JuMP/MathOptInterface.
 
---- GEKKO (Python) ---
+### GEKKO (Python)
   Type:       Mixed-integer and differential algebraic optimization
   Website:    https://gekko.readthedocs.io
   GitHub:     https://github.com/BYU-PRISM/GEKKO (stars: 707, forks: 120)
@@ -1098,7 +1068,7 @@ cost of storing the Hessian, but are important for specific use cases.
   GEKKO supports MIP, NLP, and dynamic optimization. The APMonitor backend
   can be run locally or on their cloud server.
 
---- CasADi ---
+### CasADi
   Type:       Symbolic framework for optimal control and NLP
   Website:    https://web.casadi.org
   GitHub:     https://github.com/casadi/casadi (stars: 2,246, forks: 450)
@@ -1122,9 +1092,7 @@ cost of storing the Hessian, but are important for specific use cases.
   CasADi is the de facto standard for research in optimal control and is
   used extensively in academia (MPC, trajectory optimization, robotics).
 
-================================================================================
-9. COMPARISON MATRIX
-================================================================================
+## 9. COMPARISON MATRIX
 
 Below is a comparison of 22+ solvers and frameworks across key dimensions.
 
@@ -1132,127 +1100,81 @@ Note: Stars as of July 2026 (GitHub). Performance rankings based on Hans
 Mittelmann benchmarks (http://plato.asu.edu/bench.html). "Stars" = "—" for
 closed-source solvers.
 
-Solver Name         | Type(s)           | License         | Python? | Languages
-                    |                    |                 | API?    | (native)
+Solver Name | Type(s) | License | Python? API? | Languages (native)
 --------------------|--------------------|-----------------|---------|----------------
-Gurobi              | LP, QP, MIP, MIQCP| Commercial      | Yes     | C, Py, R, Java,
-                    | SOCP              | (free academic) |         | MATLAB, Julia
+Gurobi | LP, QP, MIP, MIQCP SOCP | Commercial (free academic) | Yes | C, Py, R, Java, MATLAB, Julia
 --------------------|--------------------|-----------------|---------|----------------
-CPLEX (IBM)         | LP, QP, MIP, QCP  | Commercial      | Yes     | C, Py, Java,
-                    | SOCP              | (free academic) |         | C++, .NET
+CPLEX (IBM) | LP, QP, MIP, QCP SOCP | Commercial (free academic) | Yes | C, Py, Java, C++, .NET
 --------------------|--------------------|-----------------|---------|----------------
-Xpress (FICO)       | LP, QP, MIP, SOCP | Commercial      | Yes     | Mosel, C, Py,
-                    |                    | (free academic) |         | Java, .NET
+Xpress (FICO) | LP, QP, MIP, SOCP | Commercial (free academic) | Yes | Mosel, C, Py, Java, .NET
 --------------------|--------------------|-----------------|---------|----------------
-MOSEK               | LP, QP, SOCP, SDP | Commercial      | Yes     | C, Py, Java,
-                    | Exp/Power cone     | (free academic) |         | MATLAB, R
+MOSEK | LP, QP, SOCP, SDP Exp/Power cone | Commercial (free academic) | Yes | C, Py, Java, MATLAB, R
 --------------------|--------------------|-----------------|---------|----------------
-COPT                | LP, MIP, QP       | Commercial      | Yes     | Py, C, C++
-                    |                    |                 |         |
+COPT | LP, MIP, QP | Commercial | Yes | Py, C, C++
 --------------------|--------------------|-----------------|---------|----------------
-HiGHS               | LP, QP, MIP       | MIT (OSS)       | Yes     | C++, Py, R,
-                    |                    |                 |         | Julia, C
+HiGHS | LP, QP, MIP | MIT (OSS) | Yes | C++, Py, R, Julia, C
 --------------------|--------------------|-----------------|---------|----------------
-SCIP                | MIP, MINLP, CIP   | ZIB Academic    | Yes     | C, Py, Julia
-                    |                    | (free non-com)  |         |
+SCIP | MIP, MINLP, CIP | ZIB Academic (free non-com) | Yes | C, Py, Julia
 --------------------|--------------------|-----------------|---------|----------------
-Clp / Cbc (COIN-OR) | LP (Clp), MIP(Cbc)| EPL (OSS)       | Yes     | C++, Py
-                    |                    |                 |         |
+Clp / Cbc (COIN-OR) | LP (Clp), MIP(Cbc) | EPL (OSS) | Yes | C++, Py
 --------------------|--------------------|-----------------|---------|----------------
-GLPK                | LP, MIP           | GPL (OSS)       | Partial | C, GMPL
-                    |                    |                 |         |
+GLPK | LP, MIP | GPL (OSS) | Partial | C, GMPL
 --------------------|--------------------|-----------------|---------|----------------
-OR-Tools (CP-SAT)   | CP-SAT, wrappers  | Apache 2.0 (OSS)| Yes     | Py, C++,
-                    | LP, MIP, Routing  |                 |         | Java, .NET
+OR-Tools (CP-SAT) | CP-SAT, wrappers LP, MIP, Routing | Apache 2.0 (OSS) | Yes | Py, C++, Java, .NET
 --------------------|--------------------|-----------------|---------|----------------
-IPOPT               | NLP (continuous)  | EPL 2.0 (OSS)   | Yes     | C++, Py
-                    |                    |                 |         |
+IPOPT | NLP (continuous) | EPL 2.0 (OSS) | Yes | C++, Py
 --------------------|--------------------|-----------------|---------|----------------
-CVXPY               | Convex (DCP)      | Apache 2.0 (OSS)| Yes     | Py only
-                    | LP, QP, SOCP, SDP |                 |         | (embeds solvers)
+CVXPY | Convex (DCP) LP, QP, SOCP, SDP | Apache 2.0 (OSS) | Yes | Py only (embeds solvers)
 --------------------|--------------------|-----------------|---------|----------------
-Pyomo               | Modeling (LP/MIP/  | BSD (OSS)       | Yes     | Py only
-                    | NLP/MINLP)        |                 |         |
+Pyomo | Modeling (LP/MIP/ NLP/MINLP) | BSD (OSS) | Yes | Py only
 --------------------|--------------------|-----------------|---------|----------------
-JuMP                | Modeling (LP/MIP/  | MIT (OSS)       | No      | Julia only
-                    | NLP/MINLP/SDP)    |                 |         |
+JuMP | Modeling (LP/MIP/ NLP/MINLP/SDP) | MIT (OSS) | No | Julia only
 --------------------|--------------------|-----------------|---------|----------------
-CMA-ES              | Black-box cont.   | BSD (OSS)       | Yes     | Py, C, MATLAB
-                    | (evolution strat) |                 |         |
+CMA-ES | Black-box cont. (evolution strat) | BSD (OSS) | Yes | Py, C, MATLAB
 --------------------|--------------------|-----------------|---------|----------------
-BoTorch             | Bayesian Optim.   | MIT (OSS)       | Yes     | Py (PyTorch)
-                    | (PyTorch-based)   |                 |         |
+BoTorch | Bayesian Optim. (PyTorch-based) | MIT (OSS) | Yes | Py (PyTorch)
 --------------------|--------------------|-----------------|---------|----------------
-Nevergrad           | Black-box (400+   | MIT (OSS)       | Yes     | Py only
-                    | algos)            |                 |         |
+Nevergrad | Black-box (400+ algos) | MIT (OSS) | Yes | Py only
 --------------------|--------------------|-----------------|---------|----------------
-Optuna              | HPO (TPE, CMA,    | MIT (OSS)       | Yes     | Py only
-                    | grid, random)     |                 |         |
+Optuna | HPO (TPE, CMA, grid, random) | MIT (OSS) | Yes | Py only
 --------------------|--------------------|-----------------|---------|----------------
-DEAP                | GA, GP, ES, PSO   | LGPL (OSS)      | Yes     | Py only
-                    | (evolutionary)    |                 |         |
+DEAP | GA, GP, ES, PSO (evolutionary) | LGPL (OSS) | Yes | Py only
 --------------------|--------------------|-----------------|---------|----------------
-CasADi              | Optimal control,  | LGPL (OSS)      | Yes     | Py, MATLAB,
-                    | NLP (symbolic)    |                 |         | Octave
+CasADi | Optimal control, NLP (symbolic) | LGPL (OSS) | Yes | Py, MATLAB, Octave
 --------------------|--------------------|-----------------|---------|----------------
-GEKKO               | Mixed-integer +   | MIT (OSS)       | Yes     | Py only
-                    | DAE optimization  |                 |         |
+GEKKO | Mixed-integer + DAE optimization | MIT (OSS) | Yes | Py only
 --------------------|--------------------|-----------------|---------|----------------
 
-Solver Name         | Parallel   | Best Use Case              | Perf. Ranking
-                    | Support    |                            | (category)
+Solver Name | Parallel Support | Best Use Case | Perf. Ranking (category)
 --------------------|------------|----------------------------|--------------------
-Gurobi              | Yes (conc. | MIP, LP, QP (general)      | #1 MIP, #1 LP
-                    | LP, distr) |                            |
-CPLEX (IBM)         | Yes (distr)| LP, network flow, QCP      | #2 MIP, #2 LP
-                    |            |                            |
-Xpress (FICO)       | Yes        | Financial optimization,    | #3 MIP, #3 LP
-                    |            | stochastic programming     |
-MOSEK               | Yes (bar.) | Conic (SOCP/SDP), convex  | #1 SOCP, #1 SDP
-                    |            | QP, portfolio              |
-COPT                | Yes        | MIP (competitive with      | #3-4 MIP
-                    |            | Gurobi/CPLEX)              |
-HiGHS               | Yes (conc. | LP (best OSS), QP          | #1 OSS LP,
-                    | simplex)   |                            | #3-4 LP overall
-SCIP                | Limited    | MIP (best non-commercial)  | #1 OSS MIP,
-                    |            | MINLP, research            | #4-5 MIP overall
-Clp / Cbc (COIN-OR) | Limited    | Building custom solvers,  | #3 OSS LP,
-                    |            | Foundation libraries       | #3 OSS MIP
-GLPK                | No         | Education, small problems  | Slow (50-100×
-                    |            |                            | behind Gurobi)
-OR-Tools (CP-SAT)   | Yes (conc. | Scheduling, routing,      | #1 OSS for
-                    | threads)   | constraint satisfaction    | combinatorial
-IPOPT               | Limited    | Large NLP (continuous)    | #1 OSS NLP
-                    |            | Optimal control, MPC      |
-CVXPY               | No (solvers| Convex optimization        | N/A (modeling
-                    | may be par)|                            | language)
-Pyomo               | No (model  | Research, education,       | N/A (modeling
-                    | building)  | prototyping                | language)
-JuMP                | No (model  | Fast model construction,   | N/A (modeling
-                    | building)  | research, production       | language)
-CMA-ES              | Yes (pop.) | Continuous black-box       | #1 Black-box
-                    |            | optimization               | (continuous)
-BoTorch             | Yes (batch)| Bayesian optimization,     | #1 Bayesian
-                    |            | expensive black-box        | (research)
-Nevergrad           | Yes (pop.) | Black-box (discrete/mixed) | Top-tier
-                    |            | Hyperparameter tuning      |
-Optuna              | Yes (distr)| Hyperparameter tuning      | #1 HPO
-                    |            | (ML/AI)                    |
-DEAP                | Yes (pop.) | GA/GP/ES research,         | Widely used
-                    |            | scheduling, routing        |
-CasADi              | No (symb.  | MPC, trajectory opt.,      | #1 for optimal
-                    | graph)     | robotics control           | control
-GEKKO               | No         | Dynamic optimization,      | Specialized
-                    |            | chemical processes, MPC    |
+Gurobi | Yes (conc. LP, distr) | MIP, LP, QP (general) | #1 MIP, #1 LP
+CPLEX (IBM) | Yes (distr) | LP, network flow, QCP | #2 MIP, #2 LP
+Xpress (FICO) | Yes | Financial optimization, stochastic programming | #3 MIP, #3 LP
+MOSEK | Yes (bar.) | Conic (SOCP/SDP), convex QP, portfolio | #1 SOCP, #1 SDP
+COPT | Yes | MIP (competitive with Gurobi/CPLEX) | #3-4 MIP
+HiGHS | Yes (conc. simplex) | LP (best OSS), QP | #1 OSS LP, #3-4 LP overall
+SCIP | Limited | MIP (best non-commercial) MINLP, research | #1 OSS MIP, #4-5 MIP overall
+Clp / Cbc (COIN-OR) | Limited | Building custom solvers, Foundation libraries | #3 OSS LP, #3 OSS MIP
+GLPK | No | Education, small problems | Slow (50-100× behind Gurobi)
+OR-Tools (CP-SAT) | Yes (conc. threads) | Scheduling, routing, constraint satisfaction | #1 OSS for combinatorial
+IPOPT | Limited | Large NLP (continuous) Optimal control, MPC | #1 OSS NLP
+CVXPY | No (solvers may be par) | Convex optimization | N/A (modeling language)
+Pyomo | No (model building) | Research, education, prototyping | N/A (modeling language)
+JuMP | No (model building) | Fast model construction, research, production | N/A (modeling language)
+CMA-ES | Yes (pop.) | Continuous black-box optimization | #1 Black-box (continuous)
+BoTorch | Yes (batch) | Bayesian optimization, expensive black-box | #1 Bayesian (research)
+Nevergrad | Yes (pop.) | Black-box (discrete/mixed) Hyperparameter tuning | Top-tier
+Optuna | Yes (distr) | Hyperparameter tuning (ML/AI) | #1 HPO
+DEAP | Yes (pop.) | GA/GP/ES research, scheduling, routing | Widely used
+CasADi | No (symb. graph) | MPC, trajectory opt., robotics control | #1 for optimal control
+GEKKO | No | Dynamic optimization, chemical processes, MPC | Specialized
 
-================================================================================
-10. DECISION GUIDE
-================================================================================
+## 10. DECISION GUIDE
 
 Which solver or framework should you choose? The answer depends on your
 problem type, budget, and performance requirements.
 
---- Linear Programming (LP) ---
+### Linear Programming (LP)
   • Best (free): HiGHS — competitive with commercial solvers on LP.
     Parallel simplex handles large LPs well. Available via `highspy`.
   • Best (commercial): Gurobi — concurrent LP (simplex + barrier in
@@ -1260,7 +1182,7 @@ problem type, budget, and performance requirements.
   • Education: GLPK — free, simple, GPL-licensed.
   • Embedded/limited resources: ECOS (small convex LPs).
 
---- Mixed-Integer Programming (MIP) ---
+### Mixed-Integer Programming (MIP)
   • Best overall: Gurobi — industry gold standard. Fastest presolve,
     cutting planes, and heuristics.
   • Best free: SCIP — most capable open-source MIP solver. Use with
@@ -1270,7 +1192,7 @@ problem type, budget, and performance requirements.
   • Budget constrained: HiGHS (MIP mode — improving but not yet
     competitive with SCIP).
 
---- Convex QP / SOCP / SDP ---
+### Convex QP / SOCP / SDP
   • Best overall: MOSEK — fastest and most robust for conic optimization.
   • Free (moderate accuracy): SCS — ADMM-based, scales to millions of
     variables.
@@ -1279,7 +1201,7 @@ problem type, budget, and performance requirements.
     solver. CVXPY handles DCP verification automatically.
   • Finance (portfolio): MOSEK or CVXPY+MOSEK.
 
---- Nonlinear Programming (NLP) ---
+### Nonlinear Programming (NLP)
   • Best free: IPOPT — interior-point method, scales well, widely used.
   • Best commercial: KNITRO — artelys.com. Multiple algorithms
     (interior-point, active-set, SQP). Often faster and more robust
@@ -1287,7 +1209,7 @@ problem type, budget, and performance requirements.
   • Large-scale: IPOPT + MUMPS/PARDISO. Can handle 10⁶+ variables.
   • Optimal control: CasADi + IPOPT/KNITRO.
 
---- Black-Box / Derivative-Free Optimization ---
+### Black-Box / Derivative-Free Optimization
   • Continuous black-box: CMA-ES (`cma` package) — best all-round
     for continuous, expensive functions.
   • Expensive evaluations (simulations): Bayesian optimization with
@@ -1299,14 +1221,14 @@ problem type, budget, and performance requirements.
     (distributed), Hyperopt (TPE).
   • Constrained black-box: NOMAD (MADS algorithm).
 
---- Routing / Scheduling ---
+### Routing / Scheduling
   • Vehicle routing: OR-Tools routing library — LNS heuristics, handles
     dozens of constraints (time windows, capacity, durations).
   • Scheduling (job shop, employee): OR-Tools CP-SAT — powerful interval
     variables and cumulative constraints.
   • General constraint programming: OR-Tools CP-SAT or IBM CP Optimizer.
 
---- Large-Scale Deep Learning Training ---
+### Large-Scale Deep Learning Training
   • First-order optimizer: AdamW — default choice for most architectures.
   • LR schedule: Cosine annealing with linear warmup.
   • For LLM training: Sophia (uses Hessian diagonal) shows faster
@@ -1315,7 +1237,7 @@ problem type, budget, and performance requirements.
     (distributed, PBT, HyperBand).
   • Architecture search: NNI (Microsoft) or KerasTuner.
 
---- Research / Prototyping ---
+### Research / Prototyping
   • Pyomo: Python-native, supports the widest range of solvers, great
     for teaching and research.
   • JuMP: If you are comfortable with Julia, JuMP offers dramatically
@@ -1324,13 +1246,13 @@ problem type, budget, and performance requirements.
     mistakes early.
   • CasADi: For optimal control and robotics research.
 
---- Education ---
+### Education
   • GLPK: Free, simple, GMPL syntax teaches algebraic modeling.
   • CVXPY: Teaches convex optimization concepts via DCP.
   • Pyomo: Teaches optimization alongside Python programming skills.
   • AMPL (student version): Free, clean syntax, excellent documentation.
 
---- Summary Decision Flowchart ---
+### Summary Decision Flowchart
 
   Q1. Do you have an analytical model (gradients available)?
      YES → Q2
@@ -1355,11 +1277,9 @@ problem type, budget, and performance requirements.
   Q5. Is the problem combinatorial (routing, scheduling)?
      → OR-Tools CP-SAT or routing library.
 
-================================================================================
-11. REFERENCES AND FURTHER READING
-================================================================================
+## 11. REFERENCES AND FURTHER READING
 
---- Benchmark Sites ---
+### Benchmark Sites
   • Hans Mittelmann's Decision Tree for Optimization Software
     https://plato.asu.edu/guide.html
     The most comprehensive collection of optimization software links and
@@ -1380,7 +1300,7 @@ problem type, budget, and performance requirements.
     https://github.com/numbbo/coco
     Benchmark platform for black-box continuous optimization.
 
---- Solver Official Documentation ---
+### Solver Official Documentation
   • Gurobi Documentation:    https://docs.gurobi.com
   • CPLEX Documentation:     https://www.ibm.com/docs/en/icos
   • Xpress Documentation:    https://www.fico.com/fico-xpress-optimization/docs
@@ -1393,7 +1313,7 @@ problem type, budget, and performance requirements.
   • JuMP Documentation:      https://jump.dev/JuMP.jl/stable
   • CasADi Documentation:    https://web.casadi.org/docs
 
---- Key GitHub Repositories ---
+### Key GitHub Repositories
   (Stars as of July 2026 — see Section 9 for individual counts)
 
   • OR-Tools:              https://github.com/google/or-tools
@@ -1419,7 +1339,7 @@ problem type, budget, and performance requirements.
   • SciPy:                 https://github.com/scipy/scipy
   • PyTorch:               https://github.com/pytorch/pytorch
 
---- Books ---
+### Books
   • Boyd & Vandenberghe (2004) — "Convex Optimization"
     Cambridge University Press. Free PDF: https://web.stanford.edu/~boyd/cvxbook
     The definitive text on convex optimization.
@@ -1442,7 +1362,7 @@ problem type, budget, and performance requirements.
   • Goodfellow, Bengio & Courville (2016) — "Deep Learning"
     MIT Press. Chapter 8 covers optimization for deep learning.
 
---- Conferences and Journals ---
+### Conferences and Journals
   • INFORMS Annual Meeting (operations research)
   • International Conference on Machine Learning (ICML)
   • Neural Information Processing Systems (NeurIPS)
@@ -1452,6 +1372,4 @@ problem type, budget, and performance requirements.
   • Journal: Optimization and Engineering
   • Journal: Journal of Global Optimization
 
-================================================================================
- END OF ANALYSIS
-================================================================================
+## END OF ANALYSIS
