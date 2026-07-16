@@ -1,8 +1,10 @@
 # Ephemeral File Systems in Linux
+
 Comprehensive guide to Linux filesystems that exist only in memory or are
 automatically created/destroyed — tmpfs, ramfs, overlayfs, initramfs,
 cloud/container ephemeral storage, performance, security, and zram/zswap.
 **Author:** Jack Liu Shurui | **Repository:** [github.com/jackliusr/research](https://github.com/jackliusr/research)
+
 ---
 ## 1. Introduction
 **Ephemeral filesystems** store data only in RAM or as auto-created/destroyed
