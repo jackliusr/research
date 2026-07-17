@@ -268,7 +268,7 @@ Singapore-based contractors can bill clients in Australia, HK, and Europe where 
 ## 8. Perm vs Contract: Head-to-Head Comparison
 
 | Dimension | Permanent | Contractor | Winner |
-|---|---|---|---|---|
+|---|---|---|---|
 | **Base pay** | Fixed annual salary | Day rate × billable days | **Contract** (20–40% higher on day-rate basis) |
 | **Annual bonus** | 1–4 months (discretionary) | None (rate IS your bonus) | **Perm** (but discount heavily for discretionary nature) |
 | **Annual leave** | 18–21 days paid | Unpaid (you decide when) | **Perm** (but net comp still favours contract) |
