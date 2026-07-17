@@ -293,7 +293,7 @@ security and anti-fraud. The semi-open model offers higher quality control.
 ## 7. Mini Programs vs. Progressive Web Apps (PWAs)
 
 | Dimension | Mini Programs | PWAs |
-|---|---|---|---|
+|---|---|---|
 | **Distribution** | Inside super-app (QR, search, social) | Web URL, installable to home screen |
 | **Native APIs** | Extensive: payments, BLE, AR, NFC, phone | GPS, camera, push. No BLE/NFC |
 | **Payments** | One-call native (`wx.requestPayment()`) | Web Payment API (low adoption) or 3rd-party SDK |
