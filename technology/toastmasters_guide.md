@@ -148,7 +148,7 @@ The highest honor requires: complete 2 paths, serve as club officer for 12 month
 ### Structure (60–90 Minutes)
 
 | Section | Duration | Description |
-|---|---|---|---|
+|---|---|---|
 | **Opening** | 5 min | President or presiding officer calls meeting to order, delivers welcome remarks, recognizes guests, introduces Toastmaster of the Day. The Toastmaster then sets the meeting theme and hands the gavel to the first speaker. |
 | **Prepared Speeches** | 15–30 min | 2–4 members deliver prepared speeches from Pathways projects (typically 5–7 minutes each). Each speaker states their project objectives before speaking. After all speeches, evaluators are assigned. |
 | **Table Topics** | 15–20 min | Impromptu speaking session. The Table Topics Master poses questions or topics. Selected speakers respond for 1–2 minutes without preparation. Guests are invited to participate (optional). Develops thinking-on-your-feet skills. Members vote for Best Table Topics. |
