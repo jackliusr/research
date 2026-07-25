@@ -21,6 +21,24 @@ Production Systems → Ingestion & Transformation → Feature Engineering & Stor
 → Drift & Quality Monitoring → Loop Back → Ingestion / Transformation / Training
 ```
 
+```mermaid
+flowchart LR
+    Source[Data Sources] --> Ingest[Ingestion & ETL]
+    Ingest --> Storage[Data Warehouse / Lake]
+    Storage --> Transform[Transformation & Modeling]
+    Transform --> Serve[Consumption & ML / BI]
+    
+    Serve --> Monitor[Observability & Quality Checks]
+    Monitor --> Metric{Anomalies or Drift?}
+    
+    Metric -- Yes --> Alert[Feedback & Policy Engine]
+    Alert --> Adjust[Auto-Tune Schemas / Retrain]
+    Adjust --> Ingest
+    
+    Metric -- No --> Stable[Pipeline Healthy]
+    Stable --> Source
+```
+
 Data flows from production systems through pipelines to models and decisions, then outcomes and feedback travel back to improve the upstream stages. This contrasts with traditional **open-loop** data engineering where data flows unidirectionally from sources to consumers with no feedback path:
 
 | Aspect | Open-Loop | Closed-Loop |
