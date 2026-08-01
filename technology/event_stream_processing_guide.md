@@ -653,7 +653,7 @@ RisingWave is a newer entrant in the stream processing space, positioning itself
 ### 5.7 Technology Comparison Table
 
 | Factor | Kafka | Flink | Spark Streaming | Beam | ksqlDB | RisingWave |
-|---|---|---|---|---|---|---|---|
+|---|---|---|---|---|---|---|
 | **Processing** | Pub-sub + embedded lib | True streaming | Micro-batch | Abstraction layer | SQL on Kafka Streams | SQL streaming DB |
 | **Latency** | Sub-ms (transport) | Sub-ms to seconds | ~100ms min | Runner-dep. | Sub-ms to seconds | Sub-ms to seconds |
 | **State Mgmt** | RocksDB (Kafka Streams) | RocksDB, heap; most sophisticated | mapGroupsWithState | Runner-dep. | Kafka Streams RocksDB | System-managed |
