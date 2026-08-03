@@ -766,7 +766,7 @@ Caching (search results, extractions), rate-limit handling, cost controls, obser
 
 ### 14.4 MCP (Model Context Protocol)
 
-MCP standardizes how agents connect to tools — a research agent's entire tool set can be MCP servers: a search server (Tavily/Exa/Firecrawl all ship MCP), an extraction server, a vector-store server, a database server. Benefits: the agent framework doesn't hard-code tool integrations; tools are swappable and auditable; the same research agent can run against different search backends by swapping servers. The MCP tooling landscape (server SDKs, client support in LangChain/Claude/OpenAI stacks, governance) is covered in `mcp_framework_tools_guide.md`. For banking deployments, MCP also centralizes access control — the server, not the agent, enforces who can query what.
+MCP standardizes how agents connect to tools — a research agent's entire tool set can be MCP servers: a search server (Tavily/Exa/Firecrawl all ship MCP), an extraction server, a vector-store server, a database server. Benefits: the agent framework doesn't hard-code tool integrations; tools are swappable and auditable; the same research agent can run against different search backends by swapping servers. The MCP tooling landscape (server SDKs, client support in LangChain/Claude/OpenAI stacks, governance) is covered in `ai_llm/mcp_framework_tools_guide.md`. For banking deployments, MCP also centralizes access control — the server, not the agent, enforces who can query what.
 
 ---
 
@@ -932,6 +932,6 @@ The discipline to internalize: **research agents are judged by their citations, 
 
 ---
 
-*Series: LLM/AI Technical Guides — Research Agents. Related guides: `open_research_frameworks_guide.md` (framework catalog), `ai_llm/hierarchical_multi_agent_frameworks_guide.md`, `ai_llm/hybrid_multi_agent_systems_guide.md`, `ai_llm/advanced_rag_techniques_guide.md`, `ai_llm/rag_vs_long_context_llms_guide.md`, `ai_llm/query_rewriting_rag_guide.md`, `ai_llm/rag_optimization_techniques_guide.md`, `ai_llm/rag_frameworks_comparison_guide.md`, `ai_llm/llm_evaluation_frameworks_guide.md`, `constrained_decoding_frameworks_guide.md`, `llm_development_risks_security_guide.md`, `financial_risk_compliance_systems_guide.md`, `mcp_framework_tools_guide.md`, `ai_llm/beyond_rag_guide.md`.*
+*Series: LLM/AI Technical Guides — Research Agents. Related guides: `open_research_frameworks_guide.md` (framework catalog), `ai_llm/hierarchical_multi_agent_frameworks_guide.md`, `ai_llm/hybrid_multi_agent_systems_guide.md`, `ai_llm/advanced_rag_techniques_guide.md`, `ai_llm/rag_vs_long_context_llms_guide.md`, `ai_llm/query_rewriting_rag_guide.md`, `ai_llm/rag_optimization_techniques_guide.md`, `ai_llm/rag_frameworks_comparison_guide.md`, `ai_llm/llm_evaluation_frameworks_guide.md`, `constrained_decoding_frameworks_guide.md`, `llm_development_risks_security_guide.md`, `financial_risk_compliance_systems_guide.md`, `ai_llm/mcp_framework_tools_guide.md`, `ai_llm/beyond_rag_guide.md`.*
 
 
