@@ -863,7 +863,7 @@ Research agents map directly onto high-value banking workloads — and banking i
 | **Source reliability** | Prefer official/regulated sources — regulators, exchanges, audited filings, central banks — over blogs and aggregators. A research agent for banking should have a whitelist tier for authoritative domains. |
 | **Citation mandatory** | Every claim sourced — this is compliance, not style. The evidence ledger is the deliverable. |
 | **Audit trail** | Full research log: what was searched, read, used — for SR 11-7 model-risk reviews and MAS expectations. Traces must be retained, replayable, and attributable (which agent version, which model, which date). |
-| **Data privacy** | Research on internal data (client info, deal data) — access control, PII handling, no exfiltration to external search/LLM endpoints without approval. MCP servers as the access-control boundary (Section 14.4). |
+| **Data privacy** | Research on internal data (client info, deal data) — access control, PII handling under PDPA, no exfiltration to external search/LLM endpoints without approval. MCP servers as the access-control boundary (Section 14.4). |
 | **Cost control** | Research agents are token-hungry — budget per task, cache aggressively, route models (16.1). |
 | **Human review for high-stakes outputs** | Investment decisions, regulatory submissions — human sign-off is mandatory; the agent produces a *draft with provenance*, not a decision. |
 | **Verification** | Cross-check critical claims manually (regulator text, filings) — the agent's citation is a pointer to check, not a substitute for checking. |
