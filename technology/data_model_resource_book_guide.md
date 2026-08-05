@@ -105,7 +105,7 @@ Why bother with universal models at all? Five roles, in increasing order of stra
 1. **Accelerate design.** A team starting from a UDM begins at roughly 80% of the finished logical model. Modeling effort shifts from "drawing entities" to "validating and customizing," which compresses project timelines by weeks or months.
 2. **Standardize vocabulary.** The models come with definitions. Adopting them gives the enterprise a common data vocabulary — the same foundation a data dictionary or business glossary needs. "Customer," "product," and "account" mean the same thing in every project.
 3. **Improve quality.** The designs are battle-tested across decades of implementations. You inherit solutions to classic modeling problems (party roles, product pricing, temporal data) that teams routinely get wrong when designing from scratch.
-4. **Enable integration.** When multiple systems share the same underlying structures, mapping between them collapses from N-to-N point-to-point effort to N-to-1 via the common model. This is exactly the role a *canonical data model (CDM)* plays in a modern integration layer — see [data_models_banking_insurance_guide.md](data_models_banking_insurance_guide.md) for the CDM concept and the industry canonical models (BIAN, IBM BDW, Teradata FSLDM) that build on the same idea.
+4. **Enable integration.** When multiple systems share the same underlying structures, mapping between them collapses from N-to-N point-to-point effort to N-to-1 via the common model. This is exactly the role a *canonical data model (CDM)* plays in a modern integration layer — see [data_models_banking_insurance_guide.md](../banking/data_models_banking_insurance_guide.md) for the CDM concept and the industry canonical models (BIAN, IBM BDW, Teradata FSLDM) that build on the same idea.
 5. **Support master data management (MDM).** The PARTY model *is* a customer-master design; the PRODUCT model *is* a product-master design. UDMs give MDM programs a head start on the golden-record structures (party identities, relationships, contact mechanisms) that MDM hubs need — see the repo's MDM-related content and the Customer 360 modeling section of `data_models_banking_insurance_guide.md`.
 
 ### 2.4 UDM vs. CDM vs. Industry Model
@@ -745,10 +745,10 @@ The modern data architect should treat Silverston as the *semantic foundation* o
 
 ### Related Guides in This Repository
 
-- [data_models_banking_insurance_guide.md](data_models_banking_insurance_guide.md) — canonical banking/insurance models (BIAN, IBM BDW, Teradata FSLDM, ACORD), Data Vault, CDMs, regulatory data requirements, modeling tools and dbt.
+- [data_models_banking_insurance_guide.md](../banking/data_models_banking_insurance_guide.md) — canonical banking/insurance models (BIAN, IBM BDW, Teradata FSLDM, ACORD), Data Vault, CDMs, regulatory data requirements, modeling tools and dbt.
 - [data/data_vault_2_modeling.md](data/data_vault_2_modeling.md) — Data Vault 2.0 modeling in depth.
 - [data/types_of_dimensions_data_warehousing.md](data/types_of_dimensions_data_warehousing.md) — dimensional modeling, dimension types, and star schemas.
-- [financial_risk_compliance_systems_guide.md](financial_risk_compliance_systems_guide.md) — banking risk and compliance systems context for party/agreement/risk data.
+- [financial_risk_compliance_systems_guide.md](../banking/financial_risk_compliance_systems_guide.md) — banking risk and compliance systems context for party/agreement/risk data.
 
 ---
 

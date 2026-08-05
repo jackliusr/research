@@ -6,7 +6,7 @@
 > **Repo:** [github.com/jackliusr/research](https://github.com/jackliusr/research)
 > **Series:** LLM/AI Engineering Guides · **Topic:** Agentic Workflow & Agent Design Patterns
 > **Focus:** Banking & regulated industries (Singapore, EU, global)
-> **Companion Guides:** [Hybrid Multi-Agent Systems](ai_llm/hybrid_multi_agent_systems_guide.md) · [Hierarchical Multi-Agent Frameworks](ai_llm/hierarchical_multi_agent_frameworks_guide.md) · [Durable AI Agent Workflows](durable_ai_agent_workflows_guide.md) · [Research Agents](research_agents_guide.md) · [Beyond RAG](ai_llm/beyond_rag_guide.md) · [MCP Framework & Tools](ai_llm/mcp_framework_tools_guide.md) · [Constrained Decoding Frameworks](constrained_decoding_frameworks_guide.md) · [LLM Development Risks & Security](llm_development_risks_security_guide.md) · [Financial Risk & Compliance Systems](financial_risk_compliance_systems_guide.md) · [Payments Hub](payments_hub_guide.md)
+> **Companion Guides:** [Hybrid Multi-Agent Systems](ai_llm/hybrid_multi_agent_systems_guide.md) · [Hierarchical Multi-Agent Frameworks](ai_llm/hierarchical_multi_agent_frameworks_guide.md) · [Durable AI Agent Workflows](durable_ai_agent_workflows_guide.md) · [Research Agents](research_agents_guide.md) · [Beyond RAG](ai_llm/beyond_rag_guide.md) · [MCP Framework & Tools](ai_llm/mcp_framework_tools_guide.md) · [Constrained Decoding Frameworks](constrained_decoding_frameworks_guide.md) · [LLM Development Risks & Security](llm_development_risks_security_guide.md) · [Financial Risk & Compliance Systems](../banking/financial_risk_compliance_systems_guide.md) · [Payments Hub](../banking/payments_hub_guide.md)
 > **Last Updated:** August 2026
 
 ---
@@ -126,7 +126,7 @@ Three operational corollaries: **(1)** a workflow that solves the task beats an 
 
 - **The task is well-defined with known, stable steps** — you can enumerate them in advance even if each step's *content* varies ("extract invoice fields, validate, translate, format"), and **predictability matters** (QA, demos, regulators).
 - **Latency and cost must be predictable** — you quote an SLA per transaction (see [On-Prem LLM Deployment](on_prem_llm_deployment_guide.md) for cost modeling).
-- **Compliance and auditability are required** — the process definition must be reviewable and each run must map to a documented procedure (SR 11-7 model-risk expectations, MAS guidelines — see [LLM Development Risks & Security](llm_development_risks_security_guide.md) and [Financial Risk & Compliance Systems](financial_risk_compliance_systems_guide.md)).
+- **Compliance and auditability are required** — the process definition must be reviewable and each run must map to a documented procedure (SR 11-7 model-risk expectations, MAS guidelines — see [LLM Development Risks & Security](llm_development_risks_security_guide.md) and [Financial Risk & Compliance Systems](../banking/financial_risk_compliance_systems_guide.md)).
 
 ### 3.2 Use Agents When...
 
@@ -894,7 +894,7 @@ Workflow-as-code becomes *production* workflow-as-code when the pattern runs on 
 
 ## 15. Banking Applications
 
-Banks are the canonical *workflow-first* industry: processes are defined, regulated, and audited; predictability and explainability are requirements, not preferences (MAS guidelines, EU AI Act, SR 11-7 — see [Financial Risk & Compliance Systems](financial_risk_compliance_systems_guide.md) and [LLM Development Risks & Security](llm_development_risks_security_guide.md)).
+Banks are the canonical *workflow-first* industry: processes are defined, regulated, and audited; predictability and explainability are requirements, not preferences (MAS guidelines, EU AI Act, SR 11-7 — see [Financial Risk & Compliance Systems](../banking/financial_risk_compliance_systems_guide.md) and [LLM Development Risks & Security](llm_development_risks_security_guide.md)).
 
 ### 15.1 Account Opening
 
@@ -945,7 +945,7 @@ The credit memo is drafted by a generator and scored by an evaluator against the
                            fixed pipeline) rubric)
 ```
 
-The screen→evaluate→report chain is deterministic by design: screening decisions must be reproducible and defensible — a screening result that changes run-to-run is a regulatory liability. See [Financial Risk & Compliance Systems](financial_risk_compliance_systems_guide.md) for the surrounding control framework.
+The screen→evaluate→report chain is deterministic by design: screening decisions must be reproducible and defensible — a screening result that changes run-to-run is a regulatory liability. See [Financial Risk & Compliance Systems](../banking/financial_risk_compliance_systems_guide.md) for the surrounding control framework.
 
 ### 15.5 Trade Processing
 
@@ -959,7 +959,7 @@ The screen→evaluate→report chain is deterministic by design: screening decis
                            anomalies)
 ```
 
-Each stage is a bounded, observable step; LLMs contribute at the enrich stage (extracting/normalizing trade details) under strict schema constraints. Routing is a deterministic table, not a model decision — settlement paths are business rules. See [Payments Hub](payments_hub_guide.md) for the hub-and-saga architecture.
+Each stage is a bounded, observable step; LLMs contribute at the enrich stage (extracting/normalizing trade details) under strict schema constraints. Routing is a deterministic table, not a model decision — settlement paths are business rules. See [Payments Hub](../banking/payments_hub_guide.md) for the hub-and-saga architecture.
 
 ### 15.6 The Banking Pattern Preference
 
@@ -984,7 +984,7 @@ The most expensive error in the field: an open-ended-looking task that is actual
 
 ### 16.2 Over-Orchestration (BPMN Hell)
 
-The mirror image: a workflow so fine-grained that orchestration overhead dwarfs the work — 40 nodes for a task with 4 real steps, a graph nobody can trace (the [Payments Hub](payments_hub_guide.md) calls this out for integration design; it applies equally to LLM workflows). **Fix:** keep the graph at the granularity of *business steps*; fold micro-steps into their parent step; if the graph needs a legend, it is too big.
+The mirror image: a workflow so fine-grained that orchestration overhead dwarfs the work — 40 nodes for a task with 4 real steps, a graph nobody can trace (the [Payments Hub](../banking/payments_hub_guide.md) calls this out for integration design; it applies equally to LLM workflows). **Fix:** keep the graph at the granularity of *business steps*; fold micro-steps into their parent step; if the graph needs a legend, it is too big.
 
 ### 16.3 Workflow Without Validation Gates
 
@@ -1086,4 +1086,4 @@ The catalog will keep evolving — frameworks will package it, regulators will c
 3. Wang et al. — *Self-Consistency Improves Chain of Thought Reasoning in Language Models* (2022): majority voting over samples — basis of the voting parallelization form (see [Advanced RAG Techniques](ai_llm/advanced_rag_techniques_guide.md)).
 4. Asai et al. — *Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection* (2023): self-reflection with retrieval grounding (see [Advanced RAG Techniques](ai_llm/advanced_rag_techniques_guide.md)).
 5. Anthropic — *Effective Guardrails for Language Models* (2025): agent guardrail taxonomy (input/output/tool/agent-level).
-6. Companion guides (this series): [Hybrid Multi-Agent Systems](ai_llm/hybrid_multi_agent_systems_guide.md) · [Hierarchical Multi-Agent Frameworks](ai_llm/hierarchical_multi_agent_frameworks_guide.md) · [Durable AI Agent Workflows](durable_ai_agent_workflows_guide.md) · [Research Agents](research_agents_guide.md) · [Beyond RAG](ai_llm/beyond_rag_guide.md) · [MCP Framework & Tools](ai_llm/mcp_framework_tools_guide.md) · [Constrained Decoding Frameworks](constrained_decoding_frameworks_guide.md) · [LLM Development Risks & Security](llm_development_risks_security_guide.md) · [Financial Risk & Compliance Systems](financial_risk_compliance_systems_guide.md) · [Payments Hub](payments_hub_guide.md) · [On-Prem LLM Deployment](on_prem_llm_deployment_guide.md) · [RAG Frameworks Comparison](ai_llm/rag_frameworks_comparison_guide.md)
+6. Companion guides (this series): [Hybrid Multi-Agent Systems](ai_llm/hybrid_multi_agent_systems_guide.md) · [Hierarchical Multi-Agent Frameworks](ai_llm/hierarchical_multi_agent_frameworks_guide.md) · [Durable AI Agent Workflows](durable_ai_agent_workflows_guide.md) · [Research Agents](research_agents_guide.md) · [Beyond RAG](ai_llm/beyond_rag_guide.md) · [MCP Framework & Tools](ai_llm/mcp_framework_tools_guide.md) · [Constrained Decoding Frameworks](constrained_decoding_frameworks_guide.md) · [LLM Development Risks & Security](llm_development_risks_security_guide.md) · [Financial Risk & Compliance Systems](../banking/financial_risk_compliance_systems_guide.md) · [Payments Hub](../banking/payments_hub_guide.md) · [On-Prem LLM Deployment](on_prem_llm_deployment_guide.md) · [RAG Frameworks Comparison](ai_llm/rag_frameworks_comparison_guide.md)

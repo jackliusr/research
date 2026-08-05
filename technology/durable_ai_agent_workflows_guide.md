@@ -6,7 +6,7 @@
 > **Repo:** [github.com/jackliusr/research](https://github.com/jackliusr/research)
 > **Series:** LLM/AI Engineering Guides · **Topic:** AI Agent Infrastructure / Workflow Orchestration
 > **Focus:** Banking & regulated industries (Singapore, EU, global)
-> **Companion Guides:** [Hybrid Multi-Agent Systems](ai_llm/hybrid_multi_agent_systems_guide.md) · [Hierarchical Multi-Agent Frameworks](ai_llm/hierarchical_multi_agent_frameworks_guide.md) · [Research Agents](research_agents_guide.md) · [Agent Runtime Cache Design](ai_llm/agent_runtime_cache_design_guide.md) · [MCP Framework & Tools](ai_llm/mcp_framework_tools_guide.md) · [Event Stream Processing](event_stream_processing_guide.md) · [LLM Latency Optimization](ai_llm/llm_latency_optimization_guide.md) · [Beyond RAG](ai_llm/beyond_rag_guide.md) · [LLM Development Risks & Security](llm_development_risks_security_guide.md) · [Payments Hub](payments_hub_guide.md) · [Financial Risk & Compliance Systems](financial_risk_compliance_systems_guide.md)
+> **Companion Guides:** [Hybrid Multi-Agent Systems](ai_llm/hybrid_multi_agent_systems_guide.md) · [Hierarchical Multi-Agent Frameworks](ai_llm/hierarchical_multi_agent_frameworks_guide.md) · [Research Agents](research_agents_guide.md) · [Agent Runtime Cache Design](ai_llm/agent_runtime_cache_design_guide.md) · [MCP Framework & Tools](ai_llm/mcp_framework_tools_guide.md) · [Event Stream Processing](event_stream_processing_guide.md) · [LLM Latency Optimization](ai_llm/llm_latency_optimization_guide.md) · [Beyond RAG](ai_llm/beyond_rag_guide.md) · [LLM Development Risks & Security](llm_development_risks_security_guide.md) · [Payments Hub](../banking/payments_hub_guide.md) · [Financial Risk & Compliance Systems](../banking/financial_risk_compliance_systems_guide.md)
 > **Last Updated:** August 2026
 
 ---
@@ -551,7 +551,7 @@ class TransferSaga:
 
 ### 14.3 The Saga Pattern for Agents
 
-The [Payments Hub guide](payments_hub_guide.md) discusses sagas for payment flows — the same pattern applies to agent workflows, with an extra wrinkle: **compensating an LLM activity means compensating its side effects, not the inference.** An LLM call that only produced text has no side effect to undo; an LLM-driven action (an email sent, a hold placed, an order submitted) does. The durable version: every agent activity with side effects registers a compensation, and the workflow's failure path is as tested as its success path (Section 32).
+The [Payments Hub guide](../banking/payments_hub_guide.md) discusses sagas for payment flows — the same pattern applies to agent workflows, with an extra wrinkle: **compensating an LLM activity means compensating its side effects, not the inference.** An LLM call that only produced text has no side effect to undo; an LLM-driven action (an email sent, a hold placed, an order submitted) does. The durable version: every agent activity with side effects registers a compensation, and the workflow's failure path is as tested as its success path (Section 32).
 
 Banking rule of thumb: **any agent step that moves money, changes a limit, or sends external communication must have a registered compensation.**
 
@@ -733,7 +733,7 @@ Long generations (multi-minute streaming responses) exceed typical activity time
 
 The single most important durability rule for agents: **every tool with side effects must be idempotent.** Because activities are at-least-once (may retry), a non-idempotent tool duplicates side effects: two payments, two emails, two tickets. The mechanics:
 
-- **Idempotency keys:** every side-effecting call carries a key derived from the workflow/activity context (e.g., `payment-<workflow_id>-<activity_id>`). The tool stores the key and returns the original result on a repeated call with the same key. See the [Payments Hub guide](payments_hub_guide.md) for the full idempotency-key design.
+- **Idempotency keys:** every side-effecting call carries a key derived from the workflow/activity context (e.g., `payment-<workflow_id>-<activity_id>`). The tool stores the key and returns the original result on a repeated call with the same key. See the [Payments Hub guide](../banking/payments_hub_guide.md) for the full idempotency-key design.
 - **Banking absolute:** money movement MUST be idempotent — a retried transfer activity must not double-debit. The payment ID dedup is non-negotiable (same pattern as payment rails' own idempotency).
 - **Examples:**
   - Create payment → dedup on `payment_request_id`; retry returns the original payment reference.
@@ -977,7 +977,7 @@ class LoanApprovalAgent:
 | Duplicate application event | Two parallel runs, double disbursement risk | Workflow ID dedup; one run |
 | Disbursement retried | Double payment risk | Idempotency key; one payment |
 
-**Fraud-screen integration:** the fraud step is a candidate for a child workflow (parallel vendor checks) reusing the [Financial Fraud Detection at Scale guide](financial_fraud_detection_at_scale_guide.md) models; durable execution makes the screen *repeatable evidence* — the same inputs always produce the recorded result, so a fraud decision can be replayed and defended in audit.
+**Fraud-screen integration:** the fraud step is a candidate for a child workflow (parallel vendor checks) reusing the [Financial Fraud Detection at Scale guide](../banking/financial_fraud_detection_at_scale_guide.md) models; durable execution makes the screen *repeatable evidence* — the same inputs always produce the recorded result, so a fraud decision can be replayed and defended in audit.
 
 ---
 ## 29. The Workflow History as an Audit Trail
@@ -999,7 +999,7 @@ For banking, the workflow event history is not a debugging artifact — it is **
 
 ### 29.3 Practical Compliance Design
 
-Set retention/archival policies that match the jurisdiction's record-keeping horizon (MAS, GDPR, EU record rules); treat the history store as regulated data (encryption at rest, access control, no deletion paths); and export histories to the bank's enterprise archive for multi-year custody. See [Financial Risk & Compliance Systems](financial_risk_compliance_systems_guide.md) for the surrounding control framework.
+Set retention/archival policies that match the jurisdiction's record-keeping horizon (MAS, GDPR, EU record rules); treat the history store as regulated data (encryption at rest, access control, no deletion paths); and export histories to the bank's enterprise archive for multi-year custody. See [Financial Risk & Compliance Systems](../banking/financial_risk_compliance_systems_guide.md) for the surrounding control framework.
 
 ---
 ## 30. Operational Concerns
@@ -1111,9 +1111,9 @@ The practice: put every LLM and tool call in an activity; keep workflow code det
 - [LLM Latency Optimization](ai_llm/llm_latency_optimization_guide.md) — retry/backoff guidance for LLM calls
 - [Beyond RAG](ai_llm/beyond_rag_guide.md) — memory systems for agents
 - [LLM Development Risks & Security](llm_development_risks_security_guide.md) — excessive agency, HITL for consequential actions
-- [Payments Hub](payments_hub_guide.md) — sagas, idempotency keys, money-movement safety
-- [Financial Fraud Detection at Scale](financial_fraud_detection_at_scale_guide.md) — fraud-screening models for agent steps
-- [Financial Risk & Compliance Systems](financial_risk_compliance_systems_guide.md) — SR 11-7, BCBS 239, model governance
+- [Payments Hub](../banking/payments_hub_guide.md) — sagas, idempotency keys, money-movement safety
+- [Financial Fraud Detection at Scale](../banking/financial_fraud_detection_at_scale_guide.md) — fraud-screening models for agent steps
+- [Financial Risk & Compliance Systems](../banking/financial_risk_compliance_systems_guide.md) — SR 11-7, BCBS 239, model governance
 - [On-Prem LLM Deployment](on_prem_llm_deployment_guide.md) — self-hosted LLM cost analysis
 - [RAG Frameworks Comparison](ai_llm/rag_frameworks_comparison_guide.md) — tracing/observability tooling (LangSmith/Langfuse)
 - [Low-Latency C++ Development](low_latency_cpp_development_guide.md) — chaos/failure-injection testing discipline

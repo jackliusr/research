@@ -169,7 +169,7 @@ The table below summarizes the shift:
 Why now? The programmable business bank is the convergence of several forces:
 
 - **SME and digital-native demand for automation.** Digital-native businesses (e-commerce, SaaS, marketplaces, fintechs themselves, gig-economy platforms) run on software; a bank that only offers a portal is a manual bottleneck. They demand APIs because their finance function *is* software — reconciliation, payables, and cash management are code, not spreadsheet work.
-- **The API economy.** The general software industry normalized "API-first" products (Stripe, Twilio, AWS as the canonical examples). Business buyers now expect their bank to be as programmable as their payments processor. See the [spec-driven development guide](spec_driven_development_frameworks_guide.md) for the API design discipline this implies.
+- **The API economy.** The general software industry normalized "API-first" products (Stripe, Twilio, AWS as the canonical examples). Business buyers now expect their bank to be as programmable as their payments processor. See the [spec-driven development guide](../technology/spec_driven_development_frameworks_guide.md) for the API design discipline this implies.
 - **Fintech competition.** Business banking fintechs (Mercury, Brex, Ramp, Qonto, Tide, Revolut Business, Airwallex, Aspire) built programmability from day one and set the experience bar — free international transfers, instant virtual cards, automated reconciliation — that incumbent banks must match.
 - **Open banking.** PSD2/PSD3 in Europe, open finance momentum in the UK, and MAS' openness in Singapore forced banks to open read/write APIs and normalized the idea that account data and payment initiation are API resources (see the open banking discussion in the [core banking guide](core_banking_systems_guide.md)).
 - **Instant payments rails.** Real-time payment schemes (FAST in Singapore, SEPA Instant in Europe, FedNow/Real-Time Payments in the US, UPI in India) make *money movement itself* an event-driven, low-latency capability — the substrate that programmable payments need. See the [payments hub guide](payments_hub_guide.md) and the [Mojaloop guide](mojaloop_guide.md) for the rails and hub patterns.
@@ -289,7 +289,7 @@ The design tension running through this layer: **automation speed vs. control as
 
 The data layer is what makes all the other layers *useful inside the customer's software*:
 
-- **Real-time transaction feeds.** Webhooks and event streams (see the [event stream processing guide](event_stream_processing_guide.md)) push every account event — payment received, payment sent, card authorized, balance changed, VA created — to the customer's endpoint. The customer subscribes; the bank emits. This replaces polling and file downloads.
+- **Real-time transaction feeds.** Webhooks and event streams (see the [event stream processing guide](../technology/event_stream_processing_guide.md)) push every account event — payment received, payment sent, card authorized, balance changed, VA created — to the customer's endpoint. The customer subscribes; the bank emits. This replaces polling and file downloads.
 - **Enriched transaction data.** Transactions carry structured metadata: merchant name and category, counterparty, invoice/URN references, FX details, custom tags. Enrichment (the Stripe/Helcim-style categorization of raw bank data) is applied in the bank so the customer receives usable data, not raw statements.
 - **Accounting integrations.** One-click sync to QuickBooks, Xero, Netsuite, and other ledgers — transactions, invoices, and payments flow into the books automatically. For SMEs this *is* the reconciliation story: the bank is the bookkeeper's data source.
 - **ERP/TMS integrations.** Deeper integrations for mid-market/corporate: SAP, Oracle, NetSuite ERP connectivity; TMS integrations (Kyriba, FIS Integrity, GTreasury) using the bank's APIs or file-based adapters (EBICS, SWIFT for Corporates) — the programmable bank supports both API-native and legacy-connectivity customers.
@@ -301,7 +301,7 @@ The data layer is where the programmable bank competes on *integrations*, not ju
 
 The developer platform is the programmable bank's *front door* — and its product discipline:
 
-- **API documentation.** OpenAPI/Swagger-described, versioned, with examples and guides. API-first means the docs are a product surface, maintained with the rigor of a UI. See the [spec-driven development guide](spec_driven_development_frameworks_guide.md) for the spec-first workflow that keeps docs and implementation in sync.
+- **API documentation.** OpenAPI/Swagger-described, versioned, with examples and guides. API-first means the docs are a product surface, maintained with the rigor of a UI. See the [spec-driven development guide](../technology/spec_driven_development_frameworks_guide.md) for the spec-first workflow that keeps docs and implementation in sync.
 - **SDKs.** Client libraries (TypeScript/Python/Go/Java, plus no-code/Excel) so a finance developer integrates in hours, not weeks.
 - **Sandbox.** A fully functional test environment with fake money and deterministic scenarios, so integration is safe and instant. Sandbox-to-production parity is a trust feature.
 - **Webhooks.** Event subscription management: endpoints, retries, signatures, replay. (The event backbone, Section 5.7, serves these.)
@@ -591,7 +591,7 @@ The programmable bank's front door (the analog of the enterprise AI gateway for 
 
 ### 5.6 The Rules / Automation Engine
 
-The component that makes the bank *programmable* rather than just API-enabled: a workflow/orchestration engine that executes customer-defined rules and conditions. See [agentic_workflows_guide.md](agentic_workflows_guide.md) and [durable_ai_agent_workflows_guide.md](durable_ai_agent_workflows_guide.md) for the durable-workflow patterns this reuses:
+The component that makes the bank *programmable* rather than just API-enabled: a workflow/orchestration engine that executes customer-defined rules and conditions. See [agentic_workflows_guide.md](../technology/agentic_workflows_guide.md) and [durable_ai_agent_workflows_guide.md](../technology/durable_ai_agent_workflows_guide.md) for the durable-workflow patterns this reuses:
 
 - **Rules:** declarative rules on accounts/payments/cards (limits, approvals, sweeps, holds) — compiled to the enforcement points (payment path, authorization path, ledger postings).
 - **Workflows:** multi-step processes (approval chains, conditional payment lifecycles, onboarding journeys) as durable state machines — the bank executes the customer's money workflows durably: retries, timeouts, compensation, audit trail.
@@ -600,7 +600,7 @@ The component that makes the bank *programmable* rather than just API-enabled: a
 
 ### 5.7 The Event Backbone
 
-The nervous system — see [event_stream_processing_guide.md](event_stream_processing_guide.md). Everything the programmable bank does emits events: `account.created`, `va.allocated`, `payment.submitted`, `payment.settled`, `card.authorized`, `balance.changed`, `compliance.alert`, `fx.trade.executed`. The backbone:
+The nervous system — see [event_stream_processing_guide.md](../technology/event_stream_processing_guide.md). Everything the programmable bank does emits events: `account.created`, `va.allocated`, `payment.submitted`, `payment.settled`, `card.authorized`, `balance.changed`, `compliance.alert`, `fx.trade.executed`. The backbone:
 
 - **Powers webhooks** (customer-facing event delivery with signatures/retries — the customer's software *is* a subscriber).
 - **Feeds internal consumers**: AML monitoring (every transaction), rules engine (triggers), data platform (ETL), reconciliation, BI.
@@ -795,7 +795,7 @@ Programmable business banking is possible *now* because five enablers matured in
 1. **Instant payments rails.** Real-time schemes make money movement event-driven and low-latency — the substrate for programmable payments. See [mojaloop_guide.md](mojaloop_guide.md) and [payments_hub_guide.md](payments_hub_guide.md).
 2. **Cloud + API infrastructure.** Cloud cores, managed event streaming (Kafka), API gateways, and DevOps make the Section 5 architecture buildable by a small team in months — impossible a decade ago.
 3. **Open banking.** Regulatory opening of account data and payment initiation normalized API banking and built the talent/expectation base (see [core_banking_systems_guide.md](core_banking_systems_guide.md)).
-4. **DLT/tokenization.** Tokenized deposits and programmable money experiments (JPM Coin, Orchid, BIS/central-bank work) prove the *next* money form and create the standards conversation — see [blockchain_technology_guide.md](blockchain_technology_guide.md).
+4. **DLT/tokenization.** Tokenized deposits and programmable money experiments (JPM Coin, Orchid, BIS/central-bank work) prove the *next* money form and create the standards conversation — see [blockchain_technology_guide.md](../technology/blockchain_technology_guide.md).
 5. **Regulatory openness.** MAS' Project Orchid (purpose-bound money, sandboxes, playbook), UK/EU open finance, and sandbox regimes signal regulators *want* programmable banking — de-risking the business model.
 
 Plus the demand side: **SME digitization** — businesses run on QuickBooks/Xero/NetSuite/SAP; their finance function expects API connectivity the way it expects email. ERP/TMS connectivity demand is now a *bank-selection criterion* for mid-market companies, which is precisely what the programmable bank sells.
@@ -848,13 +848,13 @@ The single most consequential decision. Design principles:
 ### 9.4 Event-Driven Architecture
 
 - **The event backbone is non-negotiable** (Section 5.7): webhooks for customers, AML/risk consumers, rules engine, data platform, audit. Choose Kafka (or managed streaming) with per-account/VA keyed ordering and replay capability.
-- **Events are the contract.** Define the event catalog (topics, schemas, versions) as deliberately as the REST API; customers integrate against `payment.settled`, not against polling. Schema evolution (additive fields, versioning) is a compatibility discipline — see the [event stream processing guide](event_stream_processing_guide.md).
+- **Events are the contract.** Define the event catalog (topics, schemas, versions) as deliberately as the REST API; customers integrate against `payment.settled`, not against polling. Schema evolution (additive fields, versioning) is a compatibility discipline — see the [event stream processing guide](../technology/event_stream_processing_guide.md).
 - **Outbox pattern.** Emit events transactionally with the state change (outbox table → backbone) so events never lie about state.
 - **Exactly-once-ish + retries.** Webhook delivery: signed, retried with backoff, replayable from the event log.
 
 ### 9.5 API Design
 
-- **The API is the product** — design it like one: versioned, documented (OpenAPI), stable, with deprecation policy; see [spec_driven_development_frameworks_guide.md](spec_driven_development_frameworks_guide.md) for the spec-first workflow.
+- **The API is the product** — design it like one: versioned, documented (OpenAPI), stable, with deprecation policy; see [spec_driven_development_frameworks_guide.md](../technology/spec_driven_development_frameworks_guide.md) for the spec-first workflow.
 - **Resource model mirrors the customer's vocabulary** (Section 1.2): accounts/VAs, payments, cards, FX quotes, webhook subscriptions — not the bank's internal product codes.
 - **Granularity and idempotency:** batch endpoints for scale; idempotency keys; clear error semantics (validation vs. rules-blocked vs. compliance-blocked with *reasons* — "blocked by sanctions" is different from "exceeds limit").
 - **Versioning and compatibility:** customers' ERP integrations live for years; breaking changes are migration projects for *them*. Semantic versioning + long deprecation windows + sandbox migration testing.
@@ -869,7 +869,7 @@ The single most consequential decision. Design principles:
 
 ### 9.7 Security
 
-API security is bank security — the API surface *is* the attack surface (see [llm_development_risks_security_guide.md](llm_development_risks_security_guide.md) for the general API-security discipline; the analogies transfer directly):
+API security is bank security — the API surface *is* the attack surface (see [llm_development_risks_security_guide.md](../technology/llm_development_risks_security_guide.md) for the general API-security discipline; the analogies transfer directly):
 
 - **AuthN/Z:** mTLS for machine-to-machine; OAuth2 client credentials with scopes; short-lived tokens; per-customer key rotation. Scopes should be *capability-grained* (read-only vs. payments) and *resource-grained* (per-account).
 - **Webhook security:** signed payloads (HMAC), replay protection (timestamps/nonces), TLS everywhere.
@@ -939,7 +939,7 @@ The novel governance question: when compliance *is* code (rules, thresholds, aut
 
 Programmable banking is data-intensive; residency rules bite:
 
-- **Customer data residency:** accounts, transactions, and KYC data for customers in a jurisdiction generally must reside (and be processed) in that jurisdiction — SG data for SG customers, EU data under GDPR in the EU, etc. The architecture must be *regional* (per-jurisdiction data planes) even when the code is global — the same pattern as [on_prem_llm_deployment_guide.md](on_prem_llm_deployment_guide.md) describes for regulated AI data.
+- **Customer data residency:** accounts, transactions, and KYC data for customers in a jurisdiction generally must reside (and be processed) in that jurisdiction — SG data for SG customers, EU data under GDPR in the EU, etc. The architecture must be *regional* (per-jurisdiction data planes) even when the code is global — the same pattern as [on_prem_llm_deployment_guide.md](../technology/on_prem_llm_deployment_guide.md) describes for regulated AI data.
 - **Cross-border flows:** payments cross borders by nature; the *data* (references, counterparties, enrichment) crosses with them — data-transfer agreements (EU SCCs, etc.) and transfer-impact assessments apply to the bank's own processing, not just the customer's.
 - **Cloud implications:** hyperscaler regions and sovereignty offerings (EU data residency, GCC, etc.) become selection criteria; "cloud region per jurisdiction" is the default architecture for a multi-country programmable bank.
 - **Third-party risk:** BaaS partners and processors hold data too; residency commitments must be contractual and verifiable (Section 9.7).
@@ -972,7 +972,7 @@ The end-state of the Section 5 architecture: **every bank function is an API** �
 
 ### 11.4 AI-Driven Banking Workflows
 
-The convergence of programmable banking with AI agents (see [durable_ai_agent_workflows_guide.md](durable_ai_agent_workflows_guide.md) and [agentic_workflows_guide.md](agentic_workflows_guide.md)):
+The convergence of programmable banking with AI agents (see [durable_ai_agent_workflows_guide.md](../technology/durable_ai_agent_workflows_guide.md) and [agentic_workflows_guide.md](../technology/agentic_workflows_guide.md)):
 
 - **Agents initiating payments:** an AI agent (in the customer's ERP or the bank's own products) initiates, checks, and schedules payments against the payment APIs — the programmable bank is the *execution layer* for agentic finance (agents as the next "customer software").
 - **Agents approving:** rule-governed approval delegation — an agent reviews and approves within encoded authority (limits, policies), with the approval itself recorded and auditable; human approval remains for out-of-policy cases (the rules engine *is* the agent's authority boundary).
@@ -1031,17 +1031,17 @@ Regulation evolves from "allow" to "define": purpose-bound-money standards (MAS 
 - [core_banking_systems_guide.md](core_banking_systems_guide.md) — cores, BaaS/composable banking, embedded finance, digital banks (Trust, GXS, MariBank, ANEXT), build-vs-buy-vs-BaaS.
 - [payments_hub_guide.md](payments_hub_guide.md) — payment orchestration, ISO 20022, real-time payments, the payments hub architecture.
 - [mojaloop_guide.md](mojaloop_guide.md) — real-time interoperable payment rails (the instant-payment substrate).
-- [spec_driven_development_frameworks_guide.md](spec_driven_development_frameworks_guide.md) — OpenAPI/spec-first API design (the API discipline of the programmable bank).
+- [spec_driven_development_frameworks_guide.md](../technology/spec_driven_development_frameworks_guide.md) — OpenAPI/spec-first API design (the API discipline of the programmable bank).
 - [banking_limits_domain_guide.md](banking_limits_domain_guide.md) — limits/velocity/approval domain model and governance (the rules engine's control layer).
-- [event_stream_processing_guide.md](event_stream_processing_guide.md) — Kafka, event-driven architecture, stream processing (the event backbone).
+- [event_stream_processing_guide.md](../technology/event_stream_processing_guide.md) — Kafka, event-driven architecture, stream processing (the event backbone).
 - [data_models_banking_insurance_guide.md](data_models_banking_insurance_guide.md) — banking ledger/data modeling (VA sub-ledger design).
 - [financial_risk_compliance_systems_guide.md](financial_risk_compliance_systems_guide.md) — KYC/AML/screening systems (compliance engines).
 - [nasdaq_calypso_guide.md](nasdaq_calypso_guide.md) — treasury management systems (the traditional treasury side the programmable bank automates).
-- [blockchain_technology_guide.md](blockchain_technology_guide.md) — DLT/tokenization (tokenized deposits, programmable money rails).
+- [blockchain_technology_guide.md](../technology/blockchain_technology_guide.md) — DLT/tokenization (tokenized deposits, programmable money rails).
 - [oracle_banking_microservices_architecture_guide.md](oracle_banking_microservices_architecture_guide.md) — banking microservices patterns.
-- [durable_ai_agent_workflows_guide.md](durable_ai_agent_workflows_guide.md) / [agentic_workflows_guide.md](agentic_workflows_guide.md) — durable workflow orchestration (the rules/automation engine; AI-agent banking convergence).
-- [llm_development_risks_security_guide.md](llm_development_risks_security_guide.md) — API security discipline (analogies for the bank's API security).
-- [on_prem_llm_deployment_guide.md](on_prem_llm_deployment_guide.md) — data residency/sovereignty patterns (regulated data planes).
+- [durable_ai_agent_workflows_guide.md](../technology/durable_ai_agent_workflows_guide.md) / [agentic_workflows_guide.md](../technology/agentic_workflows_guide.md) — durable workflow orchestration (the rules/automation engine; AI-agent banking convergence).
+- [llm_development_risks_security_guide.md](../technology/llm_development_risks_security_guide.md) — API security discipline (analogies for the bank's API security).
+- [on_prem_llm_deployment_guide.md](../technology/on_prem_llm_deployment_guide.md) — data residency/sovereignty patterns (regulated data planes).
 
 ---
 

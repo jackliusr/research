@@ -114,7 +114,7 @@ Banks do not build payment hubs for fun — they are expensive, multi-year progr
 
 ### 2.1 Legacy Modernization
 
-Most incumbent banks run payment systems that grew organically over 20-40 years: each product line (retail, corporate, treasury, trade) built its own payment entry points, its own messaging, its own settlement logic. The result is the classic "spaghetti" integration landscape — hundreds of point-to-point interfaces, duplicated business rules, and a payment data model that exists in slightly different forms in every system. The payments hub is the consolidation target: it becomes the single place where payment logic lives, letting the bank retire the oldest point-to-point flows and the mainframe-era batch interfaces. The migration patterns for moving off the legacy estate — strangler fig, parallel run, big bang, phased channel-by-channel cutover — are covered in the companion guide [control_m_migration_options_guide.md](control_m_migration_options_guide.md); a payments hub program is one of the largest applications of those patterns in banking.
+Most incumbent banks run payment systems that grew organically over 20-40 years: each product line (retail, corporate, treasury, trade) built its own payment entry points, its own messaging, its own settlement logic. The result is the classic "spaghetti" integration landscape — hundreds of point-to-point interfaces, duplicated business rules, and a payment data model that exists in slightly different forms in every system. The payments hub is the consolidation target: it becomes the single place where payment logic lives, letting the bank retire the oldest point-to-point flows and the mainframe-era batch interfaces. The migration patterns for moving off the legacy estate — strangler fig, parallel run, big bang, phased channel-by-channel cutover — are covered in the companion guide [control_m_migration_options_guide.md](../technology/control_m_migration_options_guide.md); a payments hub program is one of the largest applications of those patterns in banking.
 
 ### 2.2 Regulatory Requirements
 
@@ -122,7 +122,7 @@ Regulators have been the single most effective force for payment modernization:
 
 - **Real-time payments mandates** — Singapore FAST, SEPA Instant (SCT Inst), FedNow (US), UPI (India), and dozens of national schemes (PIX in Brazil, NPP in Australia, FPS in the UK) effectively *require* banks to connect to a 24/7 real-time rail. A hub is the natural integration point: one real-time submission engine, one 24/7 operations model, instead of bolting real-time onto each legacy system.
 - **ISO 20022 migration mandates** — SWIFT CBPR+ went live November 2022 (with a November 2025 end-state), CHIPS migrated in April 2024, Fedwire cut over on 14 July 2025, and MAS/MEPS+ and other FMIs are on their own roadmaps. Banks must support ISO 20022 MX messages alongside legacy MT for years. The hub is where the dual-format translation, versioning, and coexistence logic lives (see Section 5 and Section 7).
-- **Open banking** — API-driven payment initiation (PSD2 in Europe, MAS's own open banking initiatives in Singapore) forces banks to expose payment initiation as controlled APIs. API-driven payments are a first-class channel that the hub serves — see [spec_driven_development_frameworks_guide.md](spec_driven_development_frameworks_guide.md) for how banks engineer those API contracts.
+- **Open banking** — API-driven payment initiation (PSD2 in Europe, MAS's own open banking initiatives in Singapore) forces banks to expose payment initiation as controlled APIs. API-driven payments are a first-class channel that the hub serves — see [spec_driven_development_frameworks_guide.md](../technology/spec_driven_development_frameworks_guide.md) for how banks engineer those API contracts.
 
 ### 2.3 Multi-Rail Support
 
@@ -174,7 +174,7 @@ A payments hub is a layered system. The layers below are the logical architectur
 
 **Channel layer.** The front doors: mobile app, internet banking, POS, ATMs, corporate API (host-to-host), batch file upload. Channels are consumers of the hub's API, not producers of payment logic. The hub should treat every channel uniformly — a payment from the mobile app and a payment from a corporate host-to-host API are the same internal object.
 
-**API gateway.** Authenticates and authorizes callers (OAuth2/OIDC, mTLS for host-to-host), enforces rate limits and quotas, and provides a single controlled entry surface. The gateway's role here is structurally identical to an enterprise AI gateway's role for model APIs — one controlled front door, policy enforcement, observability — a parallel explored in [enterprise_ai_gateway_guide.md](enterprise_ai_gateway_guide.md).
+**API gateway.** Authenticates and authorizes callers (OAuth2/OIDC, mTLS for host-to-host), enforces rate limits and quotas, and provides a single controlled entry surface. The gateway's role here is structurally identical to an enterprise AI gateway's role for model APIs — one controlled front door, policy enforcement, observability — a parallel explored in [enterprise_ai_gateway_guide.md](../technology/enterprise_ai_gateway_guide.md).
 
 **Payments hub core.** The engines listed above. The orchestration engine is the heart: it drives each payment through the lifecycle state machine (Section 4), invoking the other engines at the right step. In packaged hubs these engines are modules; in custom builds they are microservices or workflow workers.
 
@@ -187,7 +187,7 @@ A payments hub is a layered system. The layers below are the logical architectur
 A payments hub must be **both** synchronous and asynchronous, and knowing which is a core design skill:
 
 - **Synchronous (API) paths** for fast rails: real-time payments (FAST, FedNow, SEPA Instant) require sub-second end-to-end response, so the hub's inbound processing, validation, risk checks, and submission happen inline on the API call.
-- **Asynchronous (event/message) paths** for everything after submission: rail acknowledgements, clearing reports, returns, recalls, settlement notifications arrive at unpredictable times. The hub consumes these as events (typically via Kafka — see the event-driven discussion in [event_stream_processing_guide.md](event_stream_processing_guide.md)) and updates the payment state machine.
+- **Asynchronous (event/message) paths** for everything after submission: rail acknowledgements, clearing reports, returns, recalls, settlement notifications arrive at unpredictable times. The hub consumes these as events (typically via Kafka — see the event-driven discussion in [event_stream_processing_guide.md](../technology/event_stream_processing_guide.md)) and updates the payment state machine.
 - **Batch/file paths** for legacy rails (GIRO, ACH, NEFT batches): the hub ingests files, validates line by line, and produces output files — often on a schedule with cutoffs.
 
 Designing the hub around a clear split — synchronous for the customer-facing decision, asynchronous for the settlement truth — is what keeps real-time latency targets achievable without sacrificing reliability.
@@ -401,7 +401,7 @@ The routing engine answers: *which rail should carry this payment?* The decision
 | **Channel-rail matrix** | POS card payments → card rail; app P2P → FAST; corporate payroll → GIRO batch |
 | **Compliance** | Sanctioned jurisdiction → no rail, block; high-risk → manual review |
 
-Rules are typically expressed as **decision tables** (a row per condition combination) evaluated by a rule engine, so that business users can change routing without code changes — see [drools_rule_engine_alternatives_guide.md](drools_rule_engine_alternatives_guide.md) for the rule-engine landscape. Routing must also be **fallback-capable**: if the primary rail is unavailable (scheme outage, adapter failure, participant down), the hub may route to an alternate rail that can still deliver (e.g. FAST down → GIRO same-day batch, or SWIFT → a private correspondent network) — or hold and retry with customer notification, never silently drop.
+Rules are typically expressed as **decision tables** (a row per condition combination) evaluated by a rule engine, so that business users can change routing without code changes — see [drools_rule_engine_alternatives_guide.md](../technology/drools_rule_engine_alternatives_guide.md) for the rule-engine landscape. Routing must also be **fallback-capable**: if the primary rail is unavailable (scheme outage, adapter failure, participant down), the hub may route to an alternate rail that can still deliver (e.g. FAST down → GIRO same-day batch, or SWIFT → a private correspondent network) — or hold and retry with customer notification, never silently drop.
 
 ### 6.2 Orchestration Patterns
 
@@ -416,7 +416,7 @@ Multi-step payment flows (debit → screen → convert → submit → ack → se
 
 **Callback vs polling.** Real-time rails often support callbacks (webhooks) for asynchronous outcomes; batch rails require polling or file-based reconciliation. The hub supports both and unifies them into the state machine: a callback and a poll result update the same state.
 
-**Exactly-once vs at-least-once.** In practice, hubs implement **at-least-once delivery with idempotent processing**, which is the industry-standard way to approximate exactly-once. Kafka delivers at-least-once by default; consumers deduplicate on the payment ID. True exactly-once (transactions across the event broker and the payment store) is possible but costly and rarely necessary if the state machine is idempotent. This trade-off is discussed in depth in [event_stream_processing_guide.md](event_stream_processing_guide.md).
+**Exactly-once vs at-least-once.** In practice, hubs implement **at-least-once delivery with idempotent processing**, which is the industry-standard way to approximate exactly-once. Kafka delivers at-least-once by default; consumers deduplicate on the payment ID. True exactly-once (transactions across the event broker and the payment store) is possible but costly and rarely necessary if the state machine is idempotent. This trade-off is discussed in depth in [event_stream_processing_guide.md](../technology/event_stream_processing_guide.md).
 
 ---
 
@@ -733,7 +733,7 @@ The distinction matters when choosing: a merchant building checkout should evalu
 
 | Option | What it means | Best when |
 |---|---|---|
-| **Build (custom hub)** | Assemble your own on open-source foundations: Payment Hub EE, Kafka, a rule engine (see [drools_rule_engine_alternatives_guide.md](drools_rule_engine_alternatives_guide.md)), a workflow engine (Zeebe/Camunda), and your own adapters | The bank has strong engineering, unusual rails or channels, a strategic desire to own the platform, and a multi-year horizon |
+| **Build (custom hub)** | Assemble your own on open-source foundations: Payment Hub EE, Kafka, a rule engine (see [drools_rule_engine_alternatives_guide.md](../technology/drools_rule_engine_alternatives_guide.md)), a workflow engine (Zeebe/Camunda), and your own adapters | The bank has strong engineering, unusual rails or channels, a strategic desire to own the platform, and a multi-year horizon |
 | **Buy (commercial hub)** | License a packaged hub (FIS, Volante, Temenos, ACI, Finastra) and configure it | Standard rails, tight timeline, limited internal engineering capacity, and the vendor's coverage matches the bank's roadmap |
 | **SaaS** | Use Stripe/Adyen-class platforms | Merchant/ISV payment needs, not bank-internal payment orchestration |
 | **Hybrid** | Open-source core (Payment Hub EE) + commercial adapters/translation for thin coverage | Open-source-friendly banks that still need packaged connectors or certified ISO 20022 translation |
@@ -802,7 +802,7 @@ The bank's hub is the middle of a hub-and-spoke: every channel speaks to the hub
 
 | Pattern | When | Example in the hub |
 |---|---|---|
-| **Event-driven (Kafka)** | The default for anything asynchronous | Payment events → AML monitoring, notification engine, reconciliation, analytics. See [event_stream_processing_guide.md](event_stream_processing_guide.md) |
+| **Event-driven (Kafka)** | The default for anything asynchronous | Payment events → AML monitoring, notification engine, reconciliation, analytics. See [event_stream_processing_guide.md](../technology/event_stream_processing_guide.md) |
 | **API (synchronous)** | Real-time decisions | Inbound channel calls, rail submissions for FAST/FedNow, screening calls |
 | **Batch** | Legacy rails and reporting | GIRO files, SWIFT FIN copy, overnight reports |
 | **File-based** | Statements and legacy counterparties | Nostro statements (MT950/camt.053), scheme settlement files |
@@ -866,7 +866,7 @@ A payments hub program is a bank-scale change program, not a platform rollout. T
 | **3. Select** | Build vs buy vs hybrid decision (Section 12); vendor selection if buying; PoC plan if building | Signed-off sourcing decision and business case |
 | **4. PoC** | One channel + one rail end-to-end on the chosen platform (e.g. mobile app → hub → FAST, or USSD → hub → mobile money) | Demonstrated end-to-end flow with the bank's own controls (screening, limits, audit) |
 | **5. Pilot** | One real flow in production with limited volume (e.g. internal transfers via FAST, or disbursements to one mobile money operator); parallel run against legacy where possible | Live production flow meeting latency, STP, and exception targets |
-| **6. Scale** | Add rails, channels, countries; migrate legacy flows per the [control_m_migration_options_guide.md](control_m_migration_options_guide.md) patterns (strangler/parallel/big-bang); decommission retired point-to-point integrations | All planned flows on the hub; legacy payment systems decommissioned or in managed decline |
+| **6. Scale** | Add rails, channels, countries; migrate legacy flows per the [control_m_migration_options_guide.md](../technology/control_m_migration_options_guide.md) patterns (strangler/parallel/big-bang); decommission retired point-to-point integrations | All planned flows on the hub; legacy payment systems decommissioned or in managed decline |
 | **7. Operate** | 24/7 monitoring, reconciliation, exception management, DR exercises, regulatory reporting, continuous improvement | Operating model mature: SLAs met, exceptions within target, audits clean |
 
 The phase most banks get wrong is the first: they start with vendor demos before the assess phase has produced the flow inventory and the cost baseline. The assess document is what makes the design and selection phases defensible to the board and the regulator.
@@ -877,7 +877,7 @@ The phase most banks get wrong is the first: they start with vendor demos before
 |---|---|---|
 | **Hub location** | On-prem vs cloud (private/public) | Regulated payments favor private cloud or on-prem initially (data residency, TRM expectations such as MAS Notice 644); public cloud is viable with a defensible residency and resilience design. Decision is regulatory + cost, not fashion |
 | **Event backbone** | Kafka vs traditional MQ (IBM MQ, RabbitMQ) | Kafka for the event-driven core (replay, multiple consumers, streaming reconciliation); MQ remains where guaranteed once-only consumption semantics and existing skills dominate. Many banks run both, with Kafka at the core |
-| **Orchestration approach** | BPMN workflow engine vs code vs rule-driven | Workflow engines (Zeebe/Camunda, BPMN) give visibility and change management; code gives performance and control; rules (see [drools_rule_engine_alternatives_guide.md](drools_rule_engine_alternatives_guide.md)) for routing and business rules. Use a workflow engine for the long-running lifecycle, code for hot paths, rules for decision tables — and resist drawing the whole bank in BPMN (see pitfalls) |
+| **Orchestration approach** | BPMN workflow engine vs code vs rule-driven | Workflow engines (Zeebe/Camunda, BPMN) give visibility and change management; code gives performance and control; rules (see [drools_rule_engine_alternatives_guide.md](../technology/drools_rule_engine_alternatives_guide.md)) for routing and business rules. Use a workflow engine for the long-running lifecycle, code for hot paths, rules for decision tables — and resist drawing the whole bank in BPMN (see pitfalls) |
 | **Message standards** | ISO 20022 first-class vs MT-first | Treat ISO 20022 as the canonical model and translate to MT at the edges — never the reverse. The internal canonical payment model should be richer than any message format |
 | **Idempotency** | Payment ID dedup mandatory | Every submission, retry, and callback carries the payment ID + attempt key; the store enforces uniqueness. This is the difference between a retry and a duplicate payment — non-negotiable for real-time rails |
 | **State management** | Persistent state machine vs stateless | In-flight payments must survive restarts: a persistent, recoverable state machine (DB-backed, event-sourced or workflow-engine-owned) is mandatory for 24/7 rails |
@@ -938,7 +938,7 @@ The stakes are only rising: real-time rails (FAST, FedNow, SEPA Instant, UPI) ar
 
 ---
 
-*Companion guides in this series: [apache_fineract_guide.md](apache_fineract_guide.md) (core banking), [control_m_migration_options_guide.md](control_m_migration_options_guide.md) (legacy migration), [event_stream_processing_guide.md](event_stream_processing_guide.md) (event-driven core), [financial_fraud_detection_at_scale_guide.md](financial_fraud_detection_at_scale_guide.md) (fraud), [financial_risk_compliance_systems_guide.md](financial_risk_compliance_systems_guide.md) (AML/risk), [spec_driven_development_frameworks_guide.md](spec_driven_development_frameworks_guide.md) (API contracts), [drools_rule_engine_alternatives_guide.md](drools_rule_engine_alternatives_guide.md) (routing rules), [enterprise_ai_gateway_guide.md](enterprise_ai_gateway_guide.md) (gateway pattern).*
+*Companion guides in this series: [apache_fineract_guide.md](apache_fineract_guide.md) (core banking), [control_m_migration_options_guide.md](../technology/control_m_migration_options_guide.md) (legacy migration), [event_stream_processing_guide.md](../technology/event_stream_processing_guide.md) (event-driven core), [financial_fraud_detection_at_scale_guide.md](financial_fraud_detection_at_scale_guide.md) (fraud), [financial_risk_compliance_systems_guide.md](financial_risk_compliance_systems_guide.md) (AML/risk), [spec_driven_development_frameworks_guide.md](../technology/spec_driven_development_frameworks_guide.md) (API contracts), [drools_rule_engine_alternatives_guide.md](../technology/drools_rule_engine_alternatives_guide.md) (routing rules), [enterprise_ai_gateway_guide.md](../technology/enterprise_ai_gateway_guide.md) (gateway pattern).*
 
 
 

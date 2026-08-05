@@ -429,7 +429,7 @@ a bank customer", but BIAN does **not** dictate whether the implementation uses 
 a bank-specific key, or a UUID. This is what makes BIAN **implementation- and vendor-agnostic**.
 
 **Mapping to the canonical/universe data models** (see
-[`data_model_resource_book_guide.md`](data_model_resource_book_guide.md) and
+[`data_model_resource_book_guide.md`](../technology/data_model_resource_book_guide.md) and
 [`data_models_banking_insurance_guide.md`](data_models_banking_insurance_guide.md)):
 
 | Concept | Silverston universal | BIAN BOM analog | BIAN service domains that own it |
@@ -633,7 +633,7 @@ Machine-readable, Apache-2.0-licensed, organized by release and variant:
 
 ### 9.4 API governance value
 
-For API governance (see [`spec_driven_development_frameworks_guide.md`](spec_driven_development_frameworks_guide.md)):
+For API governance (see [`spec_driven_development_frameworks_guide.md`](../technology/spec_driven_development_frameworks_guide.md)):
 BIAN gives you a **naming convention, operation vocabulary, and path structure** out of the box.
 A BIAN-aligned API strategy means: your public/internal APIs are named and shaped per Service
 Domain standards, your OpenAPI specs are BIAN-conformant, and your API portfolio maps one-to-one
@@ -731,7 +731,7 @@ The classic procurement use: **write RFPs in BIAN terms.** "We require these 40 
 across payments, cards, lending, customer management — map your product to them." Vendors respond
 with conformance matrices; you compare coverage, gaps, and overlaps *objectively*. "Can the
 vendor cover our required Service Domains?" becomes a first-class evaluation criterion. (See the
-RFP/sales-methodology context in [`sales_methodology_frameworks_guide.md`](sales_methodology_frameworks_guide.md).)
+RFP/sales-methodology context in [`sales_methodology_frameworks_guide.md`](../technology/sales_methodology_frameworks_guide.md).)
 
 ### 12.3 Integration design
 
@@ -865,12 +865,12 @@ them.
   reached; exchanges must be **idempotent and commutative**; defensive operations required.
 - For an architect: BIAN gives the *event vocabulary* (which domain owns which state changes,
   what the events mean) — the plumbing is your event backbone (Kafka etc., see
-  [`event_stream_processing_guide.md`](event_stream_processing_guide.md)).
+  [`event_stream_processing_guide.md`](../technology/event_stream_processing_guide.md)).
 
 ### 14.4 BIAN + APIs + OpenAPI
 
 Covered in §9 — BIAN is effectively a **spec-driven development framework for banking** (see
-[`spec_driven_development_frameworks_guide.md`](spec_driven_development_frameworks_guide.md)):
+[`spec_driven_development_frameworks_guide.md`](../technology/spec_driven_development_frameworks_guide.md)):
 standardized OpenAPI specs per service domain, generated from the model, so code, docs, and tests
 all derive from the standard.
 
@@ -997,7 +997,7 @@ How a practicing banking architect (the audience of this repo) uses BIAN day-to-
 - **AI/GenAI** — SL 14.0 is explicitly "AI-ready": new Service Domains for AI-enabled use cases,
   updated behavior qualifiers for AI-orchestrated workflows; BIAN positioning as the blueprint
   for integrating AI into banking operations (see the repo's LLM/AI guides for the broader
-  context, e.g. [`on_prem_llm_deployment_guide.md`](on_prem_llm_deployment_guide.md) — BIAN is
+  context, e.g. [`on_prem_llm_deployment_guide.md`](../technology/on_prem_llm_deployment_guide.md) — BIAN is
   the capability/taxonomy layer, not the AI stack itself).
 - **Cloud-native** — service domains as cloud-native microservices remain the coreless banking
   thrust (Coreless 4.0+ with AI); wireframes and PoCs feed each release.
@@ -1085,21 +1085,21 @@ Honest assessment:
 ### In this repository (cross-references)
 - [`data_models_banking_insurance_guide.md`](data_models_banking_insurance_guide.md) — BIAN as a
   canonical banking model, alongside IBM BDW, Teradata FSLDM, FIS, SAS, Oracle
-- [`data_model_resource_book_guide.md`](data_model_resource_book_guide.md) — Silverston
+- [`data_model_resource_book_guide.md`](../technology/data_model_resource_book_guide.md) — Silverston
   universals (Party, Product, Agreement, Financial Transaction) ↔ BIAN BOM
 - [`payments_hub_guide.md`](payments_hub_guide.md) — payments architecture; BIAN payment service
   domains and ISO 20022
 - [`core_banking_systems_guide.md`](core_banking_systems_guide.md) — composable banking, core
   system replacement, embedded finance
-- [`spec_driven_development_frameworks_guide.md`](spec_driven_development_frameworks_guide.md) —
+- [`spec_driven_development_frameworks_guide.md`](../technology/spec_driven_development_frameworks_guide.md) —
   OpenAPI/spec-driven API practice that BIAN APIs plug into
-- [`event_stream_processing_guide.md`](event_stream_processing_guide.md) — event plumbing for
+- [`event_stream_processing_guide.md`](../technology/event_stream_processing_guide.md) — event plumbing for
   BIAN event-driven design
 - [`oracle_banking_microservices_architecture_guide.md`](oracle_banking_microservices_architecture_guide.md) —
   Oracle OBMA BIAN mapping
 - [`financial_risk_compliance_systems_guide.md`](financial_risk_compliance_systems_guide.md) —
   MAS TRM/FEAT context (BIAN is voluntary)
-- [`on_prem_llm_deployment_guide.md`](on_prem_llm_deployment_guide.md) — AI deployment context
+- [`on_prem_llm_deployment_guide.md`](../technology/on_prem_llm_deployment_guide.md) — AI deployment context
   for BIAN's AI-ready direction
 
 ---

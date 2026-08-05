@@ -905,19 +905,19 @@ Three lessons endure for architects. First, **the binding limit is the one that 
 Companion guides in this repository:
 
 - [financial_risk_compliance_systems_guide.md](financial_risk_compliance_systems_guide.md) — credit/market/liquidity risk systems, regulatory reporting, AML landscape
-- [complex_event_processing_guide.md](complex_event_processing_guide.md) — CEP engines and breach/velocity patterns
-- [event_stream_processing_guide.md](event_stream_processing_guide.md) — Kafka-style event-driven utilization updates
-- [low_latency_cpp_development_guide.md](low_latency_cpp_development_guide.md) — sub-10ms pre-trade check engineering
+- [complex_event_processing_guide.md](../technology/complex_event_processing_guide.md) — CEP engines and breach/velocity patterns
+- [event_stream_processing_guide.md](../technology/event_stream_processing_guide.md) — Kafka-style event-driven utilization updates
+- [low_latency_cpp_development_guide.md](../technology/low_latency_cpp_development_guide.md) — sub-10ms pre-trade check engineering
 - [financial_trading_order_infrastructure.md](financial_trading_order_infrastructure.md) — OMS/EMS and order lifecycle
 - [payments_hub_guide.md](payments_hub_guide.md) — payment limits, velocity, transaction path
 - [financial_fraud_detection_at_scale_guide.md](financial_fraud_detection_at_scale_guide.md) — velocity/fraud detection at scale
 - [oracle_banking_microservices_architecture_guide.md](oracle_banking_microservices_architecture_guide.md) — Oracle Banking suite incl. OBELM limits & collateral
 - [data_models_banking_insurance_guide.md](data_models_banking_insurance_guide.md) — banking data models for limits/accounts
-- [data_model_resource_book_guide.md](data_model_resource_book_guide.md) — banking data model reference
+- [data_model_resource_book_guide.md](../technology/data_model_resource_book_guide.md) — banking data model reference
 - [apache_fineract_guide.md](apache_fineract_guide.md) — open-source core banking with limit-style product parameters
 - [end_to_end_banking_processes.md](end_to_end_banking_processes.md) — end-to-end banking processes
 - [asset_backed_trading_guide.md](asset_backed_trading_guide.md) — asset-backed trading and collateral
-- [blockchain_technology_guide.md](blockchain_technology_guide.md) — on-chain/DeFi limit mechanics
+- [blockchain_technology_guide.md](../technology/blockchain_technology_guide.md) — on-chain/DeFi limit mechanics
 
 Primary sources consulted: BCBS "Supervisory framework for measuring and controlling large exposures" (BCBS 283, April 2014; in force 1 January 2019); BIS FSI Executive Summary "The treatment of large exposures in the Basel capital standards" (2018); MAS Notice 656 "Exposures to Single Counterparty Groups for Banks Incorporated in Singapore" (2019, effective 1 October 2020); EU CRR Article 395 (as amended by CRR2); US Federal Reserve Regulation YY Subpart H (12 CFR 252.72, final rule June 2018); OCC 12 CFR 32 lending limits.
 

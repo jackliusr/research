@@ -1045,7 +1045,7 @@ The honest economics: for a **top-tier HFT** firm, 1μs on the critical path can
 The same engineering shows up in non-trading banking, with *softer* budgets but identical methods:
 
 - **Payment processing** — real-time payments (FAST, SEPA Instant, SG's FAST) require **sub-second** end-to-end and strict reliability; the hot path is DB-bound, but the event-loop and queueing discipline (Sections 5–6) governs the architecture.
-- **Fraud detection** — **sub-100ms scoring** per transaction at tens of thousands TPS; see the companion guide [financial_fraud_detection_at_scale_guide.md](financial_fraud_detection_at_scale_guide.md) for the pipeline; the latency techniques (in-memory feature stores, lock-free fan-out, pre-computed rules) are this guide's applied to scoring.
+- **Fraud detection** — **sub-100ms scoring** per transaction at tens of thousands TPS; see the companion guide [financial_fraud_detection_at_scale_guide.md](../banking/financial_fraud_detection_at_scale_guide.md) for the pipeline; the latency techniques (in-memory feature stores, lock-free fan-out, pre-computed rules) are this guide's applied to scoring.
 - **Risk aggregation / real-time limits** — portfolio and counterparty exposure computed continuously as trades and market moves stream in; low-ms targets, cache-friendly aggregation structures (Section 3.6) and incremental updates (Section 9.2) are the standard toolkit.
 
 ---

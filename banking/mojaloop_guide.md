@@ -3,7 +3,7 @@
 > **Author:** Jack Liu Shurui — Solution Architect at Crédit Agricole CIB, Singapore
 > **Context:** Payments Architecture / Financial Inclusion — Real-Time Payments, Interoperability Switches, FSPIOP API, Open Source (Mojaloop Foundation)
 > **Repository:** [github.com/jackliusr/research](https://github.com/jackliusr/research)
-> **Related Guides:** [payments_hub_guide.md](payments_hub_guide.md) · [apache_fineract_guide.md](apache_fineract_guide.md) · [financial_risk_compliance_systems_guide.md](financial_risk_compliance_systems_guide.md) · [container_certificates_guide.md](container_certificates_guide.md)
+> **Related Guides:** [payments_hub_guide.md](payments_hub_guide.md) · [apache_fineract_guide.md](apache_fineract_guide.md) · [financial_risk_compliance_systems_guide.md](financial_risk_compliance_systems_guide.md) · [container_certificates_guide.md](../technology/container_certificates_guide.md)
 > **Last Updated:** August 2026
 
 ---
@@ -892,7 +892,7 @@ Hybrid models are common: a commercial core with Mojaloop-based interoperability
 
 ### 22.3 Security Considerations
 
-- **mTLS and JWS** — manage DFSP certificates and keys with proper custody and rotation (see [container_certificates_guide.md](container_certificates_guide.md)); the signing key is a critical asset.
+- **mTLS and JWS** — manage DFSP certificates and keys with proper custody and rotation (see [container_certificates_guide.md](../technology/container_certificates_guide.md)); the signing key is a critical asset.
 - **HSM / vault** for private keys; separation of TLS vs signing keys; audit logging of all signed requests.
 - **Callback endpoint security** — the DFSP's FSPIOP callback endpoints must verify the switch's mTLS identity and JWS signatures (never trust unauthenticated callbacks).
 
