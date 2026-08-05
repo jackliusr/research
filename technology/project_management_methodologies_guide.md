@@ -1062,9 +1062,3 @@ Banking/financial services have moved from "can we do agile in a bank?" (2015–
 ---
 
 *Methodology is the least interesting thing about delivery — and the most consequential. The frameworks in this guide are vocabularies for control, learning, and evidence; the actual work is choosing the right blend, tailoring it to the risk, and keeping it honest. Facts and versions as of August 2026 — verify against official sources (PMI, PeopleCert/AXELOS, Scaled Agile Inc., Scrum.org) before certification or adoption decisions.*
-
-
-
-
-
-
