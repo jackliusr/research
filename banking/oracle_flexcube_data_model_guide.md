@@ -292,6 +292,20 @@ Balances are the performance-critical heart of the model. FLEXCUBE maintains, pe
 
 Balances are maintained in **account currency (ACY)** and derived aggregates (average balance, period balances) are stored/updated by the accounting engine; balance history tables support statements and interest calculation. The daily log/balance tables (`ACTB_DAILY_LOG`, balance-period tables such as `ACTB_DAILY_BAL` in some releases — **check the dictionary**) are partitionable by date and are the largest tables in the schema.
 
+A simplified view of how the components sit on an account record:
+
+```text
+Account 0012345678 (SGD)
+├── Ledger/book balance ........ 10,000.00   ← the GL truth
+├── Cleared balance ............  9,500.00   ← excludes uncleared items
+├── Uncleared (float) ..........    500.00   ← cheque deposited, not cleared
+├── Holds / blocks .............    200.00   ← card authorization reservation
+├── Lien .......................  1,000.00   ← security for a loan product
+└── Available balance ..........  8,800.00   ← ledger − holds − lien (usable)
+```
+
+Every posting adjusts the component set according to the transaction type and the account's rules: a cheque deposit increases uncleared first and clears later; a card authorization places a hold that releases or converts to a posting; a lien is raised and released by the collateral/limits module. Getting these semantics right is the difference between a balance that reconciles and one that doesn't — the single most common integration defect in FLEXCUBE shops.
+
 ### 4.6 Account Statuses
 
 Every account carries a status lifecycle. Documented examples on `STTM_CUST_ACCOUNT` include `NORM` (normal) and `OVER` (overdrawn); the fuller status set (release-dependent) covers: active/opened, dormant, inoperative, frozen/blocked, lien-marked, closed. Status is **state with audit** — every transition is maker-checked and stamped, which matters for both compliance (see `financial_risk_compliance_systems_guide.md` audit context) and for integration (a channel reading `ACC_STATUS` must handle the full code set).
@@ -347,6 +361,22 @@ FLEXCUBE's accounting model is textbook double-entry:
 - **Subsidiary-ledger control**: customer accounts, deposit accounts, and loan accounts are subsidiary ledgers; their totals must equal the GL control accounts. The trial balance (per branch, per currency, per GL) is produced from the GL and reconciles against the sum of account balances — the daily reconciliation that keeps the core honest.
 - **GL mapping** is product/transaction-code-driven: each product/event maps to debit and credit GL heads, which is why product setup and GL setup are inseparable in implementations.
 
+The trial balance, in essence:
+
+```sql
+-- The daily trial balance (per branch, per currency, per GL): the sum of
+-- authorized entries by GL head must net to zero across D and C.
+SELECT branch_code, gl_code, ccy,
+       SUM(CASE WHEN drcr = 'D' THEN amount ELSE 0 END) AS total_dr,
+       SUM(CASE WHEN drcr = 'C' THEN amount ELSE 0 END) AS total_cr
+FROM   actb_daily_log
+WHERE  auth_stat = 'A'                       -- authorized entries only
+GROUP  BY branch_code, gl_code, ccy
+HAVING total_dr <> total_cr;                 -- anything here is a break
+```
+
+The GL's control accounts tie the subsidiary ledgers (customer accounts, deposit contracts, loan accounts) to the GL: each product/account-class maps to a control GL, and the sum of account balances must equal the control GL balance. Finance runs this reconciliation every day; a core replacement or migration stands or falls on reproducing it (§8.2).
+
 ### 5.3 Multi-Book Accounting — Verified Status
 
 The task asks about "accounting books: statutory, tax, management, IFRS." **Verified status: the classic FCUBS core does not have a first-class multi-book (multi-GAAP) accounting architecture.** What FCUBS actually provides:
@@ -377,6 +407,19 @@ A transaction or master is **not visible to downstream processing until authoriz
 - **Back-value entries** — entries with a value date *before* the booking date (e.g., a correction booked today for value three days ago) are handled as ghost entries (`ACTB_DAILY_GHOST_LOG`) until their value date arrives, then merged into the daily log. Back-value dating is a first-class, audited mechanism — not an afterthought.
 
 **Reversals.** Errors are not deleted; they are **reversed**. A reversal posts offsetting entries (with reversal codes and a reference to the original entry), and the original entries remain in the log for audit. Reversal handling matters for reconciliation: reporting must decide whether to show gross entries, net of reversals, or both.
+
+### 5.5 The End-of-Day Data Flow
+
+The batch/EOD cycle is where the FCUBS data model does its heaviest lifting — and where most integration surprises live. The canonical overnight sequence:
+
+1. **Cut-off** — the branch stops accepting same-value-date transactions; late entries are booked for the next day (or as back-value entries).
+2. **Entry rollover** — `ACTB_DAILY_LOG` rows are moved to `ACTB_HISTORY_LOG` (the daily log starts each day clean); ghost entries whose value date has arrived are merged into the new daily log.
+3. **Interest and charges** — the interest engine computes accruals and postings per account (using the balance-history tables and rate schedules); fees post; the resulting entries are *authorized internally* and land in the accounting logs.
+4. **Revaluation** — multi-currency positions are revalued at the day's rates (FX module), producing revaluation entries.
+5. **GL close** — the GL module aggregates entries into the trial balance per branch/currency; control accounts are reconciled against subsidiary ledgers; period-end (EOM/EOY) processes close GL periods and open the next.
+6. **Output generation** — statements, advices, regulatory extracts, and the warehouse feeds are produced from the closed-day data (with `AUTH_STAT = 'A'` filters).
+
+Data-model consequences: the **history log and balance-history tables grow without bound** (partition by date, archive per retention policy); **EOD output tables** are the sanctioned reporting surface (extract from them, not from live tables); and any real-time channel that needs same-day data must read *during* the day, because after EOD the day's truth lives in the history tables. OBMA's answer to this whole cycle is §7.3 — the cycle doesn't disappear, but the *data* is available as events in real time, and EOD shrinks to period-close and reporting.
 
 ---
 
@@ -414,6 +457,21 @@ Beyond the maker/checker columns (§5.4), the schema's audit posture is:
 
 Localization is data-driven: country/region parameter tables, holiday calendars (per branch/currency), currency-specific rules (decimal places, rounding), regulatory parameters (statutory reserve ratios, reporting thresholds), and per-language description tables. Banks add country-specific tables and UDFs during implementation; the delivered dictionary plus the bank's customization *is* the deployed schema. This is why two FCUBS banks on the same release can have materially different dictionaries — and why a data dictionary inventory is a mandatory migration/reporting artifact (§9.6).
 
+### 6.7 The Characteristics at a Glance
+
+| Characteristic | FCUBS posture | Where covered |
+|---|---|---|
+| Normalization | Highly normalized; hundreds of tables per module; views as the reporting surface | §6.1 |
+| Generic vs specific | Specific tables dominate; generic type-coded tables absorb product variety | §6.2 |
+| Temporal data | Date-effective rows everywhere (rates, parameters, relationships); booking vs value date | §6.3 |
+| Multi-entity | `BRANCH_CODE` on every table; branch = books/GL/EOD unit | §6.4 |
+| Audit | Maker/checker columns, `AUTH_STAT`, `REC_STAT`, `MOD_NO`, `ONCE_AUTH` on every record | §6.5 |
+| Localization | Country/currency/language as data; bank customization adds tables | §6.6 |
+| Authorization | Structural maker-checker — nothing processes until `AUTH_STAT = 'A'` | §5.4 |
+| Extensibility | UDFs and user tables on masters; no schema-free escape hatch | §2.4 |
+
+Read together, these characteristics define the FCUBS *personality*: a strongly governed, strongly typed, audit-first relational core. Every one of them is either inverted or softened in OBMA (§7), which is the cleanest way to understand what the two platforms actually differ on.
+
 ---
 
 ## 7. The OBMA Data Model
@@ -446,6 +504,44 @@ The most profound data-model difference: **in OBMA, events are first-class data*
 - **Events as the integration contract** — downstream systems (analytics, notifications, data lake, regulatory reporting) consume events instead of querying the core. The event stream *is* the data backbone: the same facts that FCUBS would expose only as tables after EOD are available to consumers in real time.
 - **Event sourcing vs event-notification**: OBMA is primarily **event-notification with state in the database** (the service persists current state; events announce changes), not full event sourcing where the event log is the only store — but the outbox + replayable stream gives many event-sourcing benefits (audit, replay into the data lake). An architect should verify per service whether full event sourcing is used for any aggregate.
 
+**The outbox in practice.** The transactional outbox is a small, high-leverage data structure — worth sketching because it is the OBMA equivalent of the FCUBS maker/checker discipline (both exist to make data trustworthy):
+
+```sql
+-- In the SAME database transaction as the business change:
+-- 1. UPDATE account SET balance = balance - 100 WHERE account_id = :id;
+-- 2. INSERT INTO outbox (event_id, aggregate_type, aggregate_id,
+--                        event_type, payload_json, created_at)
+--    VALUES (:uuid, 'ACCOUNT', :id, 'payment.executed',
+--            '{"txnId":"...","amount":100,"ccy":"SGD","valueDate":"2026-08-05"}',
+--            SYSTIMESTAMP);
+-- COMMIT;   -- state and event are atomic
+-- A relay process then reads the outbox (in order), publishes each row to the
+-- event bus, and marks it published. At-least-once delivery + replay on failure.
+```
+
+**A domain event payload** (illustrative, versioned JSON):
+
+```json
+{
+  "eventId": "evt_9f2c…",
+  "eventType": "account.funded",
+  "eventVersion": "1.0",
+  "occurredAt": "2026-08-05T09:31:22.482Z",
+  "aggregate": { "type": "ACCOUNT", "id": "acct_88412001" },
+  "payload": {
+    "accountId": "acct_88412001",
+    "partyId": "pty_100234",
+    "productId": "savings-plus",
+    "currency": "SGD",
+    "amount": 10000.00,
+    "balanceAfter": { "ledger": 10000.00, "available": 10000.00 },
+    "valueDate": "2026-08-05", "bookingDate": "2026-08-05"
+  }
+}
+```
+
+Consumers subscribe by `eventType`; the schema is the contract. Adding a field is a version bump; breaking changes require a new event version and a migration of consumers — the same discipline as changing a FLEXCUBE table, but governed by schemas instead of DDL.
+
 ### 7.4 Read Models and CQRS
 
 To square "each service owns its data" with "queries must be fast and cross-domain":
@@ -453,6 +549,21 @@ To square "each service owns its data" with "queries must be fast and cross-doma
 - **CQRS** — commands (state changes) go to the owning service's write model; queries hit **read-optimized projections**. The write model is normalized for integrity; the read model is denormalized for query speed.
 - **Read models** are built by **consuming the event stream** (the projection pattern): e.g., a Customer 360 read model that joins party + accounts + loans + limits facts by subscribing to all domain events and maintaining a denormalized document per customer. This is the OBMA answer to the FCUBS customer-360 join graph of §3.4 — assembled asynchronously, in the query path, from events.
 - **Eventual consistency is accepted and managed**: an API may return slightly stale read-model data while the write is in flight; balance-critical reads (e.g., pre-payment authorization) go to the owning service, not the read model. The architect's job is deciding *which* reads may be eventually consistent (customer 360, statements, dashboards) and which must be strongly consistent (balance check, limit check).
+
+**A read-model sketch** — the OBMA customer 360 as an event projection:
+
+```text
+Customer 360 read model (per partyId, stored as a JSON document or denormalized rows)
+  partyId: pty_100234
+  party:   { name, type, kycStatus, ... }              ← from party.created/updated events
+  accounts: [ { accountId, productId, currency, status,
+                balances: { ledger, available } } ]     ← from account.opened/funded events
+  deposits: [ { depositId, tenor, rate, maturity } ]    ← from deposit.booked events
+  loans:    [ { loanId, facilityId, outstanding } ]     ← from loan.disbursed events
+  limits:   [ { limitId, type, utilization } ]          ← from limit.utilization events
+```
+
+The projection is *built* by consuming the event stream and *kept fresh* by the same stream; rebuilding it is a replay, not a migration. This is the CQRS answer to the FCUBS join graph of §3.4 — and it is why OBMA can serve a 360 view without cross-service table access.
 
 ### 7.5 The Data Model per Domain
 
@@ -471,6 +582,17 @@ OBMA's domain decomposition (party, product, account, transaction, limit, collat
 
 - **Silverston**: OBMA's domain model maps *cleanly* onto the universal model — PARTY (Party service), PRODUCT (Product Factory), AGREEMENT + ACCOUNT (Accounts service), FINANCIAL TRANSACTION (Transactions service). Where FCUBS collapses AGREEMENT into the account, OBMA restores the four-level chain (§4.9 table). This is no accident: the OBP/OBMA design was built with exactly the definition→instance→activity discipline that `data_model_resource_book_guide.md` §9.2 describes.
 - **BIAN**: OBMA's service domains align to **BIAN service domains and business objects** (see `bian_banking_architecture_guide.md` §6, the Business Object Model): Party ↔ `Party`/`Customer` BOM, Accounts ↔ `Account` (with `AccountBalance`, `AccountLimit` objects), Product Factory ↔ `Product`/`ProductDirectory`, Transactions ↔ `Payment`/`FinancialTransaction`, Limits ↔ `LimitCheck`/`LimitDefinition`. The API payloads (§7.7) are the practical BIAN alignment: OBMA's OpenAPI data definitions are the vendor's concrete take on BIAN's semantic APIs (BIAN guide §9).
+
+| BIAN service domain / BOM object (illustrative) | OBMA service | FCUBS equivalent |
+|---|---|---|
+| `Party` / `PartyRelationship` | Party Management | `STTM_CUSTOMER` + CIF relationship tables |
+| `Product` / `ProductDirectory` | Product Factory | `STTM_PRODUCT` + parameter tables |
+| `Account` / `AccountBalance` / `AccountLimit` | Accounts | `STTM_CUST_ACCOUNT` + balance components |
+| `PaymentExecution` / `PaymentOrder` | Payments / Transactions | `FT*` tables + `ACTB_DAILY_LOG` |
+| `LimitCheck` / `LimitDefinition` | Limits | FLEXCUBE limits & collateral module |
+| `FinancialTransaction` / `LedgerPosting` | Transactions / Accounting | `ACTB_DAILY_LOG` / `ACTB_HISTORY_LOG` |
+
+The mapping is not cosmetic: a bank that has adopted BIAN as its architecture vocabulary (common in Singapore/Asia modernization programs) can map OBMA services onto BIAN service domains almost one-for-one, whereas FCUBS requires translation at every layer (screens → tables → APIs).
 
 ### 7.7 The OBMA Data Dictionary: API Payloads vs Persisted Data
 
@@ -518,6 +640,12 @@ The migration is a **data migration plus a paradigm migration** (the OBMA guide'
 
 **Migration approaches — big-bang vs incremental/parallel run.** The OBMA guide's §14 pattern is the industry reality:
 
+| Approach | What happens | Data implications | Verdict for FCUBS→OBMA |
+|---|---|---|---|
+| **Big-bang** | All books migrate in one cutover; legacy frozen | One-time full extract/transform/load; GL continuity risk concentrated in one weekend | High risk; rarely chosen |
+| **Incremental (wave-by-wave)** | Party/accounts → payments → loans/deposits → cards/limits/trade (OBMA guide §14.3) | Per-wave mappings; the legacy system keeps serving unmigrated books; reconciliation runs daily across the boundary | The norm |
+| **Parallel run / coexistence** | Dual processing: new business on OBMA, legacy books on FCUBS, synchronized via APIs/events (OBMA guide §14.2, §14.5) | Two systems of record for overlapping books; the consolidated customer 360/balances live in the integration layer (§9.1); daily balance/GL reconciliation is mandatory | The pragmatic hybrid most banks actually run |
+
 - **Big-bang** (all books in one cutover) — rarely chosen for FCUBS→OBMA; the data volumes, the GL continuity requirement (the trial balance must reconcile on day one), and the product-factory re-creation effort make it high-risk.
 - **Incremental / parallel run (the norm)** — wave-by-wave migration (party and accounts → payments → loans/deposits → cards/limits/trade), **dual processing** with daily reconciliation of balances and positions, per-book cutover on weekends with rollback plans, and **coexistence** where FLEXCUBE keeps the legacy books while OBMA fronts new business (the OBMA guide §14.5 calls this the pragmatic hybrid — and it is also precisely the "customer 360 aggregates across systems" integration problem of §9.1).
 
@@ -549,7 +677,7 @@ The migration is a **data migration plus a paradigm migration** (the OBMA guide'
 
 - **MAS context (Singapore)** — regulatory returns (MAS 610/649, ABS reporting, large-exposure, liquidity (MAS 649) and capital frameworks) are sourced from the core's GL and product/account data; the bank's regulatory reporting platform consumes FCUBS EOD output or OBMA events per the design (see `financial_risk_compliance_systems_guide.md` §9 for the regulatory reporting system pattern).
 - **BCBS 239 data lineage** — the risk-data aggregation rules demand **end-to-end lineage** from source systems to regulatory reports. For FCUBS, lineage starts at the row level: maker/checker columns, entry logs, and GL postings are the audit source; the bank's lineage tooling must capture the FCUBS-to-warehouse-to-report path. For OBMA, lineage is *easier by construction*: the event stream is the audit trail — replaying events reconstructs any position and proves the path from business fact to report. (BCBS 239 coverage: `financial_risk_compliance_systems_guide.md` and `data_models_banking_insurance_guide.md` §5.1.)
-- **Data residency** — with FCUBS, residency is a data-center question (on-prem/Exadata). With OBMA/OBCS on OCI, residency is a **cloud-region design question**: choose OCI regions and tenancy models that keep customer data in the required jurisdiction (e.g., Singapore region for MAS-licensed banks), and use the platform's tenancy/isolation options (§7.1) to enforce it.
+- **Data residency** — with FCUBS, residency is a data-center question (on-prem/Exadata). With OBMA/OBCS on OCI, residency is a **cloud-region design question**: choose OCI regions and tenancy models that keep customer data in the required jurisdiction (e.g., Singapore region for MAS-licensed banks), and use the platform's tenancy/isolation options (§7.1) to enforce it. The practical residency checklist: which OCI region holds the system of record; where event streams and backups replicate (avoid cross-border replication of customer data unless permitted); where the data lake/OFSAA resides; and contractual data-processing terms with Oracle for SaaS (OBCS). MAS TRM expectations on data location and business continuity apply to both platforms (see `financial_risk_compliance_systems_guide.md` §11 and `core_banking_systems_guide.md` §9.5).
 
 ### 9.3 Reference Data (Currency, Rates, Holidays)
 
@@ -570,6 +698,22 @@ The mart designs on top of these models follow the canonical patterns in `data_m
 - **Customer 360 mart** — from FCUBS: join graph on `CUSTOMER_NO` (§3.4) flattened into a customer dimension with account/balance aggregates; from OBMA: the party read model + event-fed aggregates.
 - **Profitability** — product × account × transaction facts with GL-based cost/income allocation; both platforms supply the raw facts (entries, balances, product attributes); the allocation logic lives in the mart/OFSAA.
 - **Risk data** — credit risk (exposures from loans/limits/collateral), liquidity (cash-flow from dated instruments), market risk (from treasury/trading modules) — sourced from the core's product/transaction data and aggregated per the bank's risk data model (BCBS 239: see §9.2).
+
+**A mart sketch** (star schema on top of either platform):
+
+```text
+fact_account_daily            dim_customer            dim_product
+├── date_key                  ├── customer_key         ├── product_key
+├── branch_key                ├── customer_no (CIF)    ├── product_code
+├── customer_key              ├── type, segment        ├── type, currency
+├── account_key               └── kyc_risk_rating      └── rate_tier
+├── product_key
+├── ledger_balance, available_balance, lien_amount
+└── nbr_txns, txn_amount_sum          ← from ACTB_DAILY_LOG (FCUBS) or
+                                         transaction events (OBMA)
+```
+
+The customer 360 mart is the `dim_customer` hub with `fact_*` satellites (accounts, transactions, limits); profitability adds cost/income facts from GL allocations; risk adds exposure/limit facts. The same star can be fed from FCUBS tables (ETL, §9.1) or from OBMA events (streaming into the lake, §7.3) — the mart is platform-agnostic, which is exactly the point of building it on a canonical model (`data_models_banking_insurance_guide.md` §2).
 
 ### 9.6 The Architect's Data Checklist
 
@@ -661,6 +805,35 @@ CREATE TABLE actb_daily_log (
 --   VALUES ('001', '0012345678', 'CDP', 'C', 10000, SYSDATE, SYSDATE);  -- credit account
 ```
 
+**Balance components** (simplified — the real tables store per-component values and history):
+
+```sql
+CREATE TABLE acct_balance_components (          -- simplified
+    cust_ac_no     VARCHAR2(20)  NOT NULL,
+    branch_code    VARCHAR2(6)   NOT NULL,
+    ccy            VARCHAR2(3)   NOT NULL,
+    component      VARCHAR2(20)  NOT NULL,      -- LEDGER | CLEARED | UNCLEARED
+                                                -- | AVAILABLE | LIEN | HOLD
+    amount         NUMBER(24,3)  DEFAULT 0,
+    as_of_date     DATE          NOT NULL,
+    PRIMARY KEY (cust_ac_no, branch_code, component, as_of_date)
+);
+
+-- Reading the customer's position (with authorization discipline):
+SELECT c.cust_ac_no,
+       SUM(CASE WHEN b.component = 'LEDGER'   THEN b.amount END) AS ledger,
+       SUM(CASE WHEN b.component = 'AVAILABLE' THEN b.amount END) AS available,
+       SUM(CASE WHEN b.component = 'LIEN'     THEN b.amount END) AS lien
+FROM   sttm_cust_account c
+JOIN   acct_balance_components b
+  ON   b.cust_ac_no = c.cust_ac_no
+WHERE  c.cust_no = '100234'
+  AND  c.auth_stat = 'A'
+  AND  b.as_of_date = (SELECT MAX(as_of_date) FROM acct_balance_components
+                       WHERE cust_ac_no = c.cust_ac_no)
+GROUP  BY c.cust_ac_no;
+```
+
 ### 10.3 The OBMA Equivalent
 
 The same scenario on OBMA touches **services, not tables**:
@@ -672,7 +845,45 @@ The same scenario on OBMA touches **services, not tables**:
 5. **Consumers react asynchronously**: Notifications sends the welcome SMS (`account.opened` consumer); the Customer 360 **read model** updates (event consumer projecting party + account + transaction facts); OFSAA/Data Lake ingests the events for analytics; the accounting/GL integration posts the GL entries (or the bank's finance ledger consumes the events).
 6. **Audit** — the event stream + service audit records are the audit trail; no universal `AUTH_STAT` column — authorization is workflow-driven at the API layer (maker-checker can still be enforced per operation).
 
-The contrast in one line: **FCUBS = write once to `ACTB_DAILY_LOG`, read everywhere from tables; OBMA = write to your service, publish the fact, let everyone project.**
+**The API payloads** (illustrative, simplified):
+
+```json
+POST /accounts  →  201
+{
+  "partyId": "pty_100234", "productId": "savings-plus",
+  "currency": "SGD", "branch": "001"
+}
+{
+  "accountId": "acct_88412001", "agreementId": "agr_5530",
+  "status": "ACTIVE",
+  "balances": { "ledger": 0.00, "available": 0.00 }
+}
+
+POST /transactions  →  201
+{
+  "accountId": "acct_88412001", "type": "CASH_DEPOSIT",
+  "amount": 10000.00, "currency": "SGD",
+  "valueDate": "2026-08-05", "bookingDate": "2026-08-05"
+}
+{
+  "transactionId": "txn_7712003", "status": "POSTED",
+  "entries": [
+    { "drCr": "D", "glCode": "GL.CASH", "amount": 10000.00 },
+    { "drCr": "C", "accountId": "acct_88412001", "amount": 10000.00 }
+  ],
+  "balancesAfter": { "ledger": 10000.00, "available": 10000.00 }
+}
+
+Event on the bus (outbox-published): account.funded
+{
+  "eventType": "account.funded", "eventVersion": "1.0",
+  "aggregate": { "type": "ACCOUNT", "id": "acct_88412001" },
+  "payload": { "transactionId": "txn_7712003", "amount": 10000.00,
+               "currency": "SGD", "valueDate": "2026-08-05" }
+}
+```
+
+**The contrast in one line** — FCUBS = write once to `ACTB_DAILY_LOG`, read everywhere from tables; OBMA = write to your service, publish the fact, let everyone project.
 
 ---
 
