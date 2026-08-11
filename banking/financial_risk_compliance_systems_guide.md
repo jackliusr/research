@@ -131,7 +131,7 @@ For a Singapore-based institution, the Monetary Authority of Singapore (MAS) reg
 - **MAS Notice 637** (Risk Management): Sets requirements for credit risk, market risk, liquidity risk, and operational risk management. Mandates risk limit frameworks, stress testing, and independent risk oversight.
 - **MAS Notice 612** (AML/CFT): Comprehensive AML/CFT requirements covering customer due diligence, transaction monitoring, suspicious transaction reporting (STR), name screening, and record-keeping. Requires risk-based approach to AML.
 - **MAS Technology Risk Management (TRM) Guidelines**: Addresses technology resilience, cybersecurity, cloud outsourcing, and business continuity. Requires notification of significant IT incidents.
-- **MAS Notice 653** (Outsourcing): Governs outsourcing arrangements, including cloud outsourcing, requiring risk assessment, notification, and oversight of material service providers.
+- **MAS Notice 658** (Outsourcing): Governs outsourcing arrangements, including cloud outsourcing, requiring risk assessment, notification, and oversight of material service providers. (Effective 11 December 2024, replacing MAS Notice 634.)
 
 ### 2.4 European Regulations
 
@@ -917,7 +917,7 @@ Risk and compliance systems have traditionally been on-premise due to regulatory
 
 **Challenges:**
 - **Data residency**: Regulators require data to stay within jurisdiction. Cloud providers offer region-specific data centres but multi-jurisdiction banks must manage data partitioning
-- **Regulatory approval**: Outsourcing to cloud requires notification/approval (MAS Notice 653, EBA Guidelines, PRA SS 2/21). Some regulators prohibit cloud for certain tier-1 applications
+- **Regulatory approval**: Outsourcing to cloud requires notification/approval (MAS Notice 658, EBA Guidelines, PRA SS 2/21). Some regulators prohibit cloud for certain tier-1 applications
 - **Vendor lock-in**: Proprietary cloud data platforms make multi-cloud difficult; data gravity reinforces single-vendor dependency
 - **Managed services**: Increasing availability of managed risk and compliance services on cloud (SAS Cloud, Moody's Analytics Cloud, AxiomSL Cloud)
 

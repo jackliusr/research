@@ -1,6 +1,6 @@
 # Penetration Testing Execution Standard (PTES): A Comprehensive Guide
 
-> **A comprehensive guide to the Penetration Testing Execution Standard — the industry's most-referenced framework for executing penetration tests. Covers the standard's seven phases in depth (pre-engagement through reporting), the PTES Technical Guidelines, comparisons with OWASP WSTG / NIST SP 800-115 / OSSTMM, modern extensions (cloud, API, AI/LLM, MITRE ATT&CK alignment), the tooling landscape, and practical execution with a banking and regulated-industry focus (MAS TRM, MAS Notice 658, DORA, CBEST).**
+> **A comprehensive guide to the Penetration Testing Execution Standard — the industry's most-referenced framework for executing penetration tests. Covers the standard's seven phases in depth (pre-engagement through reporting), the PTES Technical Guidelines, comparisons with OWASP WSTG / NIST SP 800-115 / OSSTMM, modern extensions (cloud, API, AI/LLM, MITRE ATT&CK alignment), the tooling landscape, and practical execution with a banking and regulated-industry focus (MAS TRM, MAS FSM-N06 Cyber Hygiene, DORA, CBEST).**
 
 **Author:** Jack Liu Shurui — Solution Architect, Crédit Agricole CIB, Singapore
 **Path:** `technology/penetration_testing_execution_standard_guide.md` | **Version:** 1.0 — August 2026
@@ -678,14 +678,14 @@ Banks pentest for three converging reasons: **regulation requires it** (the driv
 - Re-test / re-assess **after significant or material changes** to critical systems (the post-change coverage point — a single annual report is not complete evidence if major changes occurred mid-year).
 - Base the program on **risk**: higher-risk, higher-criticality systems get more frequent and deeper testing.
 
-Related and newer: **MAS Notice 658 (Cyber Hygiene)** — issued 27 March 2025, effective 1 April 2026 (and re-designated FSM-N06 under the Financial Services and Markets Act regime; verify the current reference) — codifies minimum cyber-hygiene expectations for financial institutions, including periodic **security testing of critical systems by independent assessors** alongside patching, hardening, and monitoring obligations. In practice, MAS-regulated banks run an annual (or more frequent, for the largest institutions) independent penetration-testing program on critical systems, with the TRM/Notice 658 evidence file assembled from the engagement packet (§5.6) and the final report.
+Related and newer: **MAS FSM-N06 (Cyber Hygiene)** — issued under the Financial Services and Markets Act 2022 regime (the cyber-hygiene obligations; NOT to be confused with **MAS Notice 658**, which is the *outsourcing/third-party risk* notice, issued December 2023 and effective 11 December 2024) — codifies minimum cyber-hygiene expectations for financial institutions, including periodic **security testing of critical systems by independent assessors** alongside patching, hardening, and monitoring obligations. In practice, MAS-regulated banks run an annual (or more frequent, for the largest institutions) independent penetration-testing program on critical systems, with the TRM/FSM-N06 evidence file assembled from the engagement packet (§5.6) and the final report.
 
 The wider regional/global picture for a Singapore-based bank:
 
 | Instrument | Jurisdiction | Key security-testing requirement (as published — verify current text) |
 |---|---|---|
 | MAS TRM Guidelines (6th ed., 2023) | Singapore | Periodic security testing incl. pentests of critical systems; annual for internet-facing/critical internal; independent assessors; post-change retesting |
-| MAS Notice 658 / FSM-N06 (Cyber Hygiene, eff. Apr 2026) | Singapore | Minimum cyber hygiene incl. periodic security testing of critical systems by independent assessors |
+| MAS FSM-N06 (Cyber Hygiene) | Singapore | Minimum cyber hygiene incl. periodic security testing of critical systems by independent assessors (Note: MAS Notice 658 is the outsourcing/third-party risk notice, effective 11 Dec 2024 — a common mix-up) |
 | BNM RMiT (2019) | Malaysia | Annual independent penetration testing and vulnerability assessments of critical systems |
 | DORA (EU, applied Jan 2025) | EU | Threat-led penetration testing (TLPT) every 3 years for significant entities (Art. 24–26); CTAs (Cyber Threat Intelligence) |
 | CBEST (BoE) | UK | Intelligence-led penetration testing of systemic importance; CREST-administered |
@@ -962,7 +962,7 @@ PTES will not be replaced — it will be absorbed. Its seven phases are the indu
 
 ### Regulatory
 - MAS Technology Risk Management Guidelines, 6th Edition (January 2023) — mas.gov.sg (verify current edition/paragraphs)
-- MAS Notice 658 Cyber Hygiene (27 Mar 2025, effective 1 Apr 2026; re-designated FSM-N06 — verify current reference)
+- MAS FSM-N06 Cyber Hygiene (under the FSMA 2022 regime; MAS Notice 658 is the outsourcing notice, effective 11 Dec 2024 — not a cyber-hygiene notice)
 - AWS Penetration Testing policy — aws.amazon.com/security/penetration-testing (approved-service list and prohibitions — verify current)
 - Azure Penetration Testing Rules of Engagement / GCP Cloud Penetration Testing policy (verify current terms)
 - DORA (EU) Art. 24–26 TLPT; Bank of England CBEST; BNM RMiT; NYDFS 23 NYCRR 500; PCI DSS v4.0 Req. 11
