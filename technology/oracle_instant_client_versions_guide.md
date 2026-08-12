@@ -198,6 +198,9 @@ Rule of thumb: **Basic + SQL\*Plus + Tools** is the classic "CLI toolset" (~200 
 
 Download access requires an (free) Oracle account sign-in for ZIPs; RPMs via yum.oracle.com do not require a click-through.
 
+
+https://yum.oracle.com/
+
 ---
 
 ## 4. Installation
