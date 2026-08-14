@@ -412,7 +412,7 @@ A compact timeline of the agentic wave:
 ### 7.6 The era's significance
 
 The agentic era reframes RAG from a *pipeline* into a *skill*: the LLM (or a small orchestrator model) holds the retrieval capability and spends it deliberately — retrieve, check, correct, loop, stop. The three canonical papers form a clean lineage of autonomy: **Self-RAG** gave the model a *decision* to retrieve; **CRAG** gave it *correction* when retrieval fails; **Adaptive-RAG** gave it *routing* across strategies. Together they are the mechanism behind the industry's 2025–2026 shift from "RAG systems" to "agents that use retrieval" — and they are the bridge to the "RAG 2.0" discussion in §9.
----
+
 
 ## 8. The Challenges and the Debates — Long Context, Fine-Tuning, Evaluation
 
