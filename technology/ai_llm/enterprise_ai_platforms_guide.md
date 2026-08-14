@@ -147,6 +147,27 @@ End-to-end enterprise AI suites that bundle data integration, AI model developme
 | **Pegasystems AI** | Decision and workflow AI | Insurance, banking, healthcare |
 | **SAP AI Core** | AI embedded in SAP enterprise workflows | ERP, supply chain, HCM |
 
+### 2.7 Agent-Native Platforms
+
+> **Series note:** this subsection is the agent-platform category view of this survey; the dedicated "how to choose an agent platform" playbook — the full agent-native landscape, the weighted-scoring framework, and the worked bank selection — lives in [ai_agent_platform_selection_guide.md](ai_agent_platform_selection_guide.md). The build-side reference architecture is [enterprise_agentic_platform_architecture_guide.md](enterprise_agentic_platform_architecture_guide.md), and the operational discipline is [agentops_guide.md](agentops_guide.md).
+
+The platform categories above focus on general AI/LLM development. A distinct, rapidly-converging category is **agent-native platforms** — managed services or framework-plus-platform offerings purpose-built for building, deploying, and operating AI agents (tool use, multi-step loops, memory, and observability as first-class concerns). The agent-specific selection criteria (hosted vs self-hosted, model freedom, MCP support, observability, governance, lock-in) are developed in the selection guide; the category map is:
+
+| Agent-Native Platform | Vendor | Type | Hosted / Self-Hosted | Agent Focus |
+|---|---|---|---|---|
+| **LangGraph Platform** (ex-LangGraph Cloud, Oct 2025) | LangChain | Framework + platform | Both (Self-Hosted Lite) | Graph-based agent orchestration, deployment, observability |
+| **OpenAI Agents SDK** + AgentKit | OpenAI | API / code-first SDK | Hosted (BYO model — provider-agnostic, 100+ LLMs) | Agent loop, tools, handoffs; AgentKit adds deep-research agents |
+| **Copilot Studio** (autonomous agents + Agent Builder) | Microsoft | Cloud agent platform | Hosted | M365-native agents, PAYG pricing |
+| **Agentforce 2.0** (GA early 2025) | Salesforce | Enterprise app platform (CRM-native) | Hosted | Sales/service agents on the CRM data graph |
+| **Bedrock Agents** (Classic in maintenance → AgentCore runtime, Aug 2026) | AWS | Cloud agent platform | Hosted | Serverless agents over Bedrock models + tool integration |
+| **Vertex Agent Builder** + ADK (Apr 2025) + Agent Engine | Google | Cloud agent platform | Hosted | Agent development kit + managed runtime |
+| **CrewAI** (AMP / Enterprise) | CrewAI | Framework + platform | Both | Role-based multi-agent crews |
+| **AutoGen** → **AG2** fork (Nov 2024) → Microsoft Agent Framework v1.0 | Microsoft / community | Open-source framework | Self-hosted | Conversational multi-agent |
+| **smolagents** | Hugging Face | Open-source framework (~1,000 LOC) | Self-hosted | Minimal code-agent execution |
+| **Semantic Kernel** | Microsoft | Embeddable SDK | Self-hosted | Enterprise .NET/Python agent SDK |
+
+**Selection lens:** the framework-vs-platform distinction drives the first decision — a *framework* (LangGraph, CrewAI, AutoGen/AG2, smolagents, Semantic Kernel) is a library you operate; a *platform* (LangGraph Platform, Bedrock Agents, Vertex Agent Builder, Copilot Studio, Agentforce) is a managed runtime with deployment, observability, and governance built in. The weighted-scoring framework, the decision tree, and the pitfalls ("choose the platform, not the hype") are in [ai_agent_platform_selection_guide.md](ai_agent_platform_selection_guide.md).
+
 ---
 
 ## 3. Major Platforms Deep Dive
