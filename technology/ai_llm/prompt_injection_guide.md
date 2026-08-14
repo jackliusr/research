@@ -668,8 +668,8 @@ MAS FEAT principles map directly to prompt injection defense:
 10. **MAS FEAT Principles** — https://www.mas.gov.sg/-/media/MAS/News/Media-Releases/2024/FEAT-Principles.pdf
 11. **MAS Technology Risk Management** — https://www.mas.gov.sg/regulation/guidelines/technology-risk-management
 12. **PDPA Singapore** — https://www.pdpc.gov.sg/overview-of-pdpa/the-legislation/personal-data-protection-act
-13. **LLM Guard Models Guide** — [llm_guard_models_guide.md](ai_llm/llm_guard_models_guide.md)
-14. **AI Agent Drift Guide** — [ai_agent_drift_guide.md](ai_llm/ai_agent_drift_guide.md)
+13. **LLM Guard Models Guide** — [llm_guard_models_guide.md](llm_guard_models_guide.md)
+14. **AI Agent Drift Guide** — [ai_agent_drift_guide.md](ai_agent_drift_guide.md)
 
 ---
 

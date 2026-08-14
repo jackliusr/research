@@ -3,7 +3,7 @@
 > **Author:** Jack Liu Shurui · **Role:** Solution Architect, Crédit Agricole CIB
 > **Repo:** [github.com/jackliusr/research](https://github.com/jackliusr/research)
 > **Series:** LLM/AI Engineering Guides
-> **Companion Guides:** [LLM Evaluation Frameworks](llm_evaluation_frameworks_guide.md) · [LLM Evaluation vs Validation](llm_evaluation_vs_validation_guide.md) · [AI Agent Drift](ai_agent_drift_guide.md) · [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) · [Autonomous Agents](autonomous_agents_guide.md) · [Responsible AI](implementing-responsible-ai.md)
+> **Companion Guides:** [LLM Evaluation Frameworks](../llm_evaluation_frameworks_guide.md) · [LLM Evaluation vs Validation](../llm_evaluation_vs_validation_guide.md) · [AI Agent Drift](../ai_agent_drift_guide.md) · [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) · [Autonomous Agents](../autonomous_agents_guide.md) · [Responsible AI](../implementing-responsible-ai.md)
 > **Last Updated:** August 2026
 
 ---
@@ -48,7 +48,7 @@ The combination of *evaluate* (feedback functions) + *trace* (instrumentation) +
 
 - **TruEra** was founded in **2021** as an AI observability company (led by CEO William Ussler, with co-founders from the UC Berkeley AI community — verify the exact co-founder list before quoting it in a formal deck). TruEra's products evolved from traditional ML model monitoring into **generative AI observability**: evaluating and monitoring LLM apps across the full lifecycle from development to production.
 - **TruLens** was open-sourced as TruEra's self-service evaluation library, first published on PyPI in **2022** (originally as the `trulens_eval` package). It became one of the earliest widely known LLM evaluation tools, popularised together with the **RAG triad** concept (see §2).
-- **Snowflake acquisition (2025):** Snowflake entered a definitive agreement to acquire **TruEra's AI Observability Platform** (the managed enterprise product), announced in 2025. Importantly, the acquisition covered the *managed platform*, and **TruLens itself remained open source** — per the project's own statement, "since TruEra's acquisition by Snowflake, Snowflake now actively oversees and supports the development of TruLens in open source." So the current ownership situation is: **open-source project stewarded under truera/trulens, backed by Snowflake**, with the commercial observability platform living in Snowflake's data cloud (see [enterprise_ai_platforms_guide.md](enterprise_ai_platforms_guide.md)).
+- **Snowflake acquisition (2025):** Snowflake entered a definitive agreement to acquire **TruEra's AI Observability Platform** (the managed enterprise product), announced in 2025. Importantly, the acquisition covered the *managed platform*, and **TruLens itself remained open source** — per the project's own statement, "since TruEra's acquisition by Snowflake, Snowflake now actively oversees and supports the development of TruLens in open source." So the current ownership situation is: **open-source project stewarded under truera/trulens, backed by Snowflake**, with the commercial observability platform living in Snowflake's data cloud (see [enterprise_ai_platforms_guide.md](../enterprise_ai_platforms_guide.md)).
 
 > **Verification note:** the acquisition was announced in 2025; check the [Snowflake announcement](https://www.snowflake.com/en/blog/snowflake-acquires-truera-to-bring-llm-ml-observability-to-data-cloud/) for the exact close date. The fact that TruLens stayed OSS is confirmed by the project's own site and by contemporaneous reporting (InfoWorld noted TruLens was "not likely to be part of the Snowflake deal").
 
@@ -71,7 +71,7 @@ The result is a tight loop: when a score drops, you can click into the exact rec
 
 ### 1.5 TruLens vs the Alternatives (Overview)
 
-TruLens competes with a crowded field. The full comparison lives in §8 of this guide and in the series' master evaluation-tooling guide, [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md) (which covers DeepEval, LangSmith, MLflow, RAGAS, Arize Phoenix, W&B, G-Eval — **TruLens is deliberately not covered there; this guide is the dedicated TruLens deep-dive that fills that gap**). Quick orientation:
+TruLens competes with a crowded field. The full comparison lives in §8 of this guide and in the series' master evaluation-tooling guide, [llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md) (which covers DeepEval, LangSmith, MLflow, RAGAS, Arize Phoenix, W&B, G-Eval — **TruLens is deliberately not covered there; this guide is the dedicated TruLens deep-dive that fills that gap**). Quick orientation:
 
 | Tool | Type | One-line positioning |
 |------|------|----------------------|
@@ -86,7 +86,7 @@ TruLens competes with a crowded field. The full comparison lives in §8 of this 
 
 - **The RAG triad as a first-class concept** — TruLens invented/popularised the triad framing (context relevance → groundedness → answer relevance) and makes it a two-minute setup.
 - **Local and free** — a full eval + trace + dashboard stack runs entirely on your laptop or inside a bank's air-gapped environment; no SaaS account required (only the judge-model calls, which can be served by on-prem models too).
-- **Inline/streaming evaluation** — feedback functions can run as the app executes, which makes continuous in-production evaluation natural (see [ai_agent_drift_guide.md](ai_agent_drift_guide.md) for production monitoring patterns).
+- **Inline/streaming evaluation** — feedback functions can run as the app executes, which makes continuous in-production evaluation natural (see [ai_agent_drift_guide.md](../ai_agent_drift_guide.md) for production monitoring patterns).
 - **OpenTelemetry-native tracing** — portable traces to any observability backend.
 
 ### 1.7 When to Use TruLens
@@ -123,7 +123,7 @@ A RAG pipeline is a chain: **retrieve → augment → generate**. Each link can 
 2. **Hallucination (groundedness fails).** Retrieval was fine, but the LLM embellishes: it adds numbers, names, or product features that are not in the retrieved context. This is the highest-risk failure in banking — a fabricated limit, fee, or regulatory detail.
 3. **Off-topic / unhelpful answer (answer relevance fails).** The LLM understood something, retrieved something, and generated something — but not what the user asked (e.g., answering the nearest FAQ instead of the specific product question, or refusing to answer a question the knowledge base actually covers).
 
-The triad covers all three in a deliberately simple triangle: **context relevance** checks retrieval quality, **groundedness** checks generation faithfulness to context, **answer relevance** checks the final answer against the query. Satisfactory scores on all three give you confidence the app is "free from hallucination" in the RAG sense. (Note: the triad is a *necessary* quality bar, not a *sufficient* one — it says nothing about toxicity, bias, regulatory compliance, or factual correctness beyond the retrieved context; combine it with the metrics in [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md) and [implementing-responsible-ai.md](implementing-responsible-ai.md).)
+The triad covers all three in a deliberately simple triangle: **context relevance** checks retrieval quality, **groundedness** checks generation faithfulness to context, **answer relevance** checks the final answer against the query. Satisfactory scores on all three give you confidence the app is "free from hallucination" in the RAG sense. (Note: the triad is a *necessary* quality bar, not a *sufficient* one — it says nothing about toxicity, bias, regulatory compliance, or factual correctness beyond the retrieved context; combine it with the metrics in [llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md) and [implementing-responsible-ai.md](../implementing-responsible-ai.md).)
 
 ### 2.3 The Triad in Code (Sketch)
 
@@ -165,7 +165,7 @@ The pattern to notice: each feedback function declares **what it needs from the 
 
 - **Dev iteration:** run a golden question set, watch the three scores per question, fix whichever leg is weakest (retrieval vs generation vs prompt).
 - **Regression gates:** assert on triad means in CI (§6.5).
-- **Production monitoring:** score live traffic with the same feedback functions; a groundedness dip signals retrieval drift or a bad deployment (§9; [ai_agent_drift_guide.md](ai_agent_drift_guide.md)).
+- **Production monitoring:** score live traffic with the same feedback functions; a groundedness dip signals retrieval drift or a bad deployment (§9; [ai_agent_drift_guide.md](../ai_agent_drift_guide.md)).
 
 ---
 
@@ -194,7 +194,7 @@ Key elements:
 TruLens supports **two families** of feedback:
 
 1. **Programmatic (deterministic):** no LLM involved. Examples: exact/lexical matching, embedding-distance-based similarity (e.g., `EmbeddingSimilarity` comparing answer to a golden answer), `GroundTruthAgreement` (compare against labelled golden answers), regex/safety checks. Fast, cheap, reproducible — but limited to what can be computed mechanically.
-2. **Model-based (LLM-as-a-judge):** a provider LLM scores the app's behaviour with a prompt-based rubric, often with chain-of-thought reasoning (`..._with_cot_reasons`) that explains *why* a score was given. Expressive, matches human judgement better, but costs tokens and has judge-model bias/variance (see §3.4 and [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md) §3.1 on LLM-as-judge calibration).
+2. **Model-based (LLM-as-a-judge):** a provider LLM scores the app's behaviour with a prompt-based rubric, often with chain-of-thought reasoning (`..._with_cot_reasons`) that explains *why* a score was given. Expressive, matches human judgement better, but costs tokens and has judge-model bias/variance (see §3.4 and [llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md) §3.1 on LLM-as-judge calibration).
 
 The RAG triad functions are typically LLM-as-judge; `GroundTruthAgreement` and embedding similarity are typical programmatic ones.
 
@@ -222,7 +222,7 @@ Model-based feedback runs through **providers** — adapters that wrap a judge m
 | AWS Bedrock | `trulens-provider-bedrock` | `Bedrock` — important for banks on AWS landing zones |
 | Local/other models | via community and framework providers | Judge on self-hosted models keeps data on-prem (relevant for banking data residency) |
 
-Judge-model choice matters: the judge should be at least as capable as the app's generator, and judge bias (favouritism toward verbose or self-consistent answers) must be calibrated — see the judge-model selection guidance in [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md). For a bank, using a **Bedrock or self-hosted judge** (rather than a public API) keeps evaluation data inside the controlled environment — a real advantage over cloud-only eval tools.
+Judge-model choice matters: the judge should be at least as capable as the app's generator, and judge bias (favouritism toward verbose or self-consistent answers) must be calibrated — see the judge-model selection guidance in [llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md). For a bank, using a **Bedrock or self-hosted judge** (rather than a public API) keeps evaluation data inside the controlled environment — a real advantage over cloud-only eval tools.
 
 ### 3.5 Custom Feedback
 
@@ -411,7 +411,7 @@ Clicking into a record shows the full trace: the query, retrieved chunks, prompt
 
 ### 5.4 Eval Results and Time Series
 
-Feedback scores are stored per record with timestamps, so the dashboard plots **score evolution over time** — the core primitive for production monitoring and drift detection (see [ai_agent_drift_guide.md](ai_agent_drift_guide.md)). Filter by app version, date range, or metadata (e.g., product area) to see whether a model update or corpus change degraded groundedness before users complain.
+Feedback scores are stored per record with timestamps, so the dashboard plots **score evolution over time** — the core primitive for production monitoring and drift detection (see [ai_agent_drift_guide.md](../ai_agent_drift_guide.md)). Filter by app version, date range, or metadata (e.g., product area) to see whether a model update or corpus change degraded groundedness before users complain.
 
 ### 5.5 Cost and Latency
 
@@ -532,7 +532,7 @@ assert mean_answer_relevance >= 0.80
 - Wire it as a GitHub Actions / GitLab CI job: on PRs touching prompts, retrievers, or the model, run the gate; failure blocks merge.
 - **Thresholds must be calibrated** from a baseline run (pick gates from the current best version's scores minus a margin), not guessed.
 - Keep the **golden set versioned** alongside the code; eval-set drift quietly invalidates gates.
-- For the full CI/CD pattern catalogue (DeepEval's pytest runner vs LangSmith's API vs TruLens' script approach), see [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md) §15 — the honest take from that guide: *"RAGAS for metrics, DeepEval for CI ergonomics, LangSmith/TruLens for tracing"*; TruLens' CI role is the traceable gate, not the prettiest test runner.
+- For the full CI/CD pattern catalogue (DeepEval's pytest runner vs LangSmith's API vs TruLens' script approach), see [llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md) §15 — the honest take from that guide: *"RAGAS for metrics, DeepEval for CI ergonomics, LangSmith/TruLens for tracing"*; TruLens' CI role is the traceable gate, not the prettiest test runner.
 
 ### 6.6 Production — Ongoing Evaluation
 
@@ -542,7 +542,7 @@ In production, TruLens' inline/streaming feedback lets you **score live traffic 
 - **Alerting on score dips** — e.g., groundedness dropping below threshold over a window signals retrieval drift, corpus staleness, or a bad model rollout.
 - **Human review of low-scoring records** — export them for the validation team.
 
-Production monitoring and drift concepts are covered in depth in [ai_agent_drift_guide.md](ai_agent_drift_guide.md); the eval-vs-validation framing for what these scores *mean* in a regulated setting is in [llm_evaluation_vs_validation_guide.md](llm_evaluation_vs_validation_guide.md).
+Production monitoring and drift concepts are covered in depth in [ai_agent_drift_guide.md](../ai_agent_drift_guide.md); the eval-vs-validation framing for what these scores *mean* in a regulated setting is in [llm_evaluation_vs_validation_guide.md](../llm_evaluation_vs_validation_guide.md).
 
 ---
 
@@ -567,7 +567,7 @@ Production monitoring and drift concepts are covered in depth in [ai_agent_drift
 
 ### 7.4 License
 
-**MIT** — permissive, commercial-friendly, no copyleft. Verified from the repository LICENSE. This is a clean licensing position for enterprise adoption (see also [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md) §13.4 for the cost-model table across tools).
+**MIT** — permissive, commercial-friendly, no copyleft. Verified from the repository LICENSE. This is a clean licensing position for enterprise adoption (see also [llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md) §13.4 for the cost-model table across tools).
 
 ### 7.5 Development Status
 
@@ -581,7 +581,7 @@ Production monitoring and drift concepts are covered in depth in [ai_agent_drift
 
 ### 8.1 Comparison Table
 
-TruLens vs the main alternatives. This table complements (and does not duplicate) the master matrix in [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md) §14, which also covers MLflow, W&B, Galileo, Vertex/Azure eval, and Continuous Eval.
+TruLens vs the main alternatives. This table complements (and does not duplicate) the master matrix in [llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md) §14, which also covers MLflow, W&B, Galileo, Vertex/Azure eval, and Continuous Eval.
 
 | Tool | Type | RAG triad | LLM-judges | Tracing | Dashboard | Open-source | Best for |
 |------|------|-----------|------------|---------|-----------|-------------|----------|
@@ -610,7 +610,7 @@ Key differentiators in one line: **TruLens** = triad feedback functions + traces
 - **0.x → 1.x API break** — a large share of online tutorials/code shows the old `trulens_eval` API; translating is friction, and docs churn has been a real pain point (the project does maintain a compatibility shim).
 - **Scale limits** — the default SQLite store is single-user; Postgres helps, but TruLens is not built as a high-throughput distributed tracing backend — at large production scale, teams typically export OTEL spans to a dedicated backend.
 - **Not a test runner** — no pytest-native assertion UX like DeepEval; CI gates are hand-rolled scripts (fine, but you build the harness).
-- **Agent evaluation is younger** — agent tracing (multi-step tool calls, loops) works via instrumentation, but the agent-eval story (e.g., trajectory-level metrics) is less mature than the RAG story; see [autonomous_agents_guide.md](autonomous_agents_guide.md) §5 for agent-eval guidance.
+- **Agent evaluation is younger** — agent tracing (multi-step tool calls, loops) works via instrumentation, but the agent-eval story (e.g., trajectory-level metrics) is less mature than the RAG story; see [autonomous_agents_guide.md](../autonomous_agents_guide.md) §5 for agent-eval guidance.
 - **Judge-model cost and bias** — LLM-as-judge feedback costs tokens per run and inherits judge bias; needs sampling and calibration (true of every judge-based tool).
 
 ### 8.4 When to Pick What
@@ -624,7 +624,7 @@ Key differentiators in one line: **TruLens** = triad feedback functions + traces
 | Reference RAG metrics on an existing pipeline, benchmark reporting | **RAGAS** |
 | OSS production tracing platform with eval, or an Arize cloud migration path | **Arize Phoenix** |
 
-Selection detail and cost models for all of these live in [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md) §14/§18 and [rag_frameworks_comparison_guide.md](rag_frameworks_comparison_guide.md) §11.
+Selection detail and cost models for all of these live in [llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md) §14/§18 and [rag_frameworks_comparison_guide.md](rag_frameworks_comparison_guide.md) §11.
 
 ---
 
@@ -634,7 +634,7 @@ Selection detail and cost models for all of these live in [llm_evaluation_framew
 
 Crédit Agricole CIB's trade-finance desk wants a **product-support RAG assistant**: front-office users ask questions about trade-finance products (standby letters of credit, documentary credits, guarantees, FX forwards, commodity finance) and the assistant answers from the **product documentation corpus** (term sheets, operational handbooks, regulatory summaries). The requirements are strict: answers must be **accurate** (no invented fees/limits), **grounded** (traceable to a source document), and **compliant** (no advice-like language, no fabrications).
 
-This is a textbook case for the **RAG triad + TruLens**: the team needs to prove retrieval quality, generation faithfulness, and answer relevance — and needs per-answer evidence for the model-validation file (see [llm_evaluation_vs_validation_guide.md](llm_evaluation_vs_validation_guide.md) on evaluation as *validation evidence*, and [implementing-responsible-ai.md](implementing-responsible-ai.md) for the governance overlay).
+This is a textbook case for the **RAG triad + TruLens**: the team needs to prove retrieval quality, generation faithfulness, and answer relevance — and needs per-answer evidence for the model-validation file (see [llm_evaluation_vs_validation_guide.md](../llm_evaluation_vs_validation_guide.md) on evaluation as *validation evidence*, and [implementing-responsible-ai.md](../implementing-responsible-ai.md) for the governance overlay).
 
 ### 9.2 Setup
 
@@ -698,7 +698,7 @@ The v1.0 run shows the classic failure signature: **groundedness (0.58) is the w
 
 - **Leaderboard** shows the three versions with scores, latency, and cost — the material for the release decision.
 - **Record view** provides per-answer evidence: retrieved chunks, prompt, answer, and the judge's chain-of-thought reasons. This is exactly the *traceable evaluation evidence* a model-validation review wants.
-- **Time series** starts accumulating the moment the app serves traffic — the monitoring baseline for [ai_agent_drift_guide.md](ai_agent_drift_guide.md) patterns (e.g., corpus refresh drops groundedness → alert before users notice).
+- **Time series** starts accumulating the moment the app serves traffic — the monitoring baseline for [ai_agent_drift_guide.md](../ai_agent_drift_guide.md) patterns (e.g., corpus refresh drops groundedness → alert before users notice).
 
 ### 9.6 Production — Eval Gates in CI
 
@@ -721,7 +721,7 @@ For a bank, TruLens output is not just engineering telemetry — it is **validat
 - **Model validation (SR 11-7 / MAS FEAT accountability):** triad scores over a defined golden set, with per-record traces and judge reasons, document accuracy and reliability of the LLM app; the eval harness is the "independent testing" artifact.
 - **Transparency:** groundedness + context relevance demonstrate that answers trace to source documents — the machine-readable version of "we can show where this answer came from".
 - **Monitoring:** production score time series satisfy the ongoing-monitoring expectation; a groundedness dip triggers investigation and re-validation, not just a ticket.
-- **Limits to state honestly:** the triad measures *grounding in the retrieved context*, not *regulatory correctness* — a document can be retrieved faithfully and still be wrong or outdated. Pair TruLens with content-level review, human-in-the-loop sign-off on critical answers, and the broader governance in [implementing-responsible-ai.md](implementing-responsible-ai.md). The eval-vs-validation distinction — what a score means vs what a sign-off requires — is the subject of [llm_evaluation_vs_validation_guide.md](llm_evaluation_vs_validation_guide.md).
+- **Limits to state honestly:** the triad measures *grounding in the retrieved context*, not *regulatory correctness* — a document can be retrieved faithfully and still be wrong or outdated. Pair TruLens with content-level review, human-in-the-loop sign-off on critical answers, and the broader governance in [implementing-responsible-ai.md](../implementing-responsible-ai.md). The eval-vs-validation distinction — what a score means vs what a sign-off requires — is the subject of [llm_evaluation_vs_validation_guide.md](../llm_evaluation_vs_validation_guide.md).
 
 ---
 
@@ -790,6 +790,6 @@ For a bank, TruLens output is not just engineering telemetry — it is **validat
 
 ---
 
-*End of guide — cross-references: [LLM Evaluation Frameworks](llm_evaluation_frameworks_guide.md) · [Evaluation vs Validation](llm_evaluation_vs_validation_guide.md) · [AI Agent Drift](ai_agent_drift_guide.md) · [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) · [Advanced RAG Techniques](advanced_rag_techniques_guide.md) · [RAG Optimization](rag_optimization_techniques_guide.md) · [Autonomous Agents](autonomous_agents_guide.md) · [Responsible AI](implementing-responsible-ai.md)*
+*End of guide — cross-references: [LLM Evaluation Frameworks](../llm_evaluation_frameworks_guide.md) · [Evaluation vs Validation](../llm_evaluation_vs_validation_guide.md) · [AI Agent Drift](../ai_agent_drift_guide.md) · [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) · [Advanced RAG Techniques](advanced_rag_techniques_guide.md) · [RAG Optimization](rag_optimization_techniques_guide.md) · [Autonomous Agents](../autonomous_agents_guide.md) · [Responsible AI](../implementing-responsible-ai.md)*
 
 

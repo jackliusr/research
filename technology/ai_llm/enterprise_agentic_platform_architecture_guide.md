@@ -161,7 +161,7 @@ In words: applications (agents) sit on top; the orchestration layer coordinates 
 - **Routing.** The gateway routes each request to the appropriate model — cost/latency-based routing, task-classified routing, or explicit per-application routing (see §2.1.3).
 - **Fallback.** If the primary model is down, rate-limited, or returns garbage, the gateway fails over to a secondary model transparently.
 - **Rate limiting.** Per-tenant, per-agent, per-model limits, enforced centrally (the alternative — provider-side limits — hits everyone at once).
-- **Cost tracking.** Every call is metered: tokens in/out, model, price, tenant, agent. This is the raw material for FinOps (see [finops_guide.md](../technology/finops_guide.md)).
+- **Cost tracking.** Every call is metered: tokens in/out, model, price, tenant, agent. This is the raw material for FinOps (see [finops_guide.md](../finops_guide.md)).
 - **Caching.** Semantic or exact-match prompt caching at the gateway saves cost and latency (see [agent_runtime_cache_design_guide.md](agent_runtime_cache_design_guide.md)).
 - **Observation.** The gateway is the natural place to emit OpenTelemetry GenAI spans (see §4.5) and to enforce guardrails (see [llm_guard_models_guide.md](llm_guard_models_guide.md)).
 
@@ -196,7 +196,7 @@ init → run → observe → terminate
 - **Scheduling** — when an agent is triggered (API call, event, cron), the runtime schedules its execution.
 - **Retries with backoff** — transient failures (provider 429s, tool timeouts) are retried with exponential backoff and jitter.
 - **Timeouts** — per-step and per-run budgets: a step that hangs for 60s, a run that exceeds 30 minutes, a loop that exceeds N iterations — all bounded. Unbounded agents are the classic cost and reliability failure.
-- **Checkpointing / durable state** — the runtime persists agent state at step boundaries so a crash resumes from the last checkpoint rather than restarting (durable execution; see [durable_ai_agent_workflows_guide.md](../technology/durable_ai_agent_workflows_guide.md)).
+- **Checkpointing / durable state** — the runtime persists agent state at step boundaries so a crash resumes from the last checkpoint rather than restarting (durable execution; see [durable_ai_agent_workflows_guide.md](../durable_ai_agent_workflows_guide.md)).
 - **Sandboxing** — every agent runs in an isolated execution environment (see below).
 - **Lifecycle management** — start, pause, resume, kill, and the state machine in between (see §4.3).
 
@@ -231,7 +231,7 @@ Practical guidance: **hardened containers for the default tier, gVisor or Firecr
 Agents without memory are functions; agents with memory are employees. The memory layer provides both short-term and long-term state:
 
 - **Session memory (short-term).** The working context of a single conversation/run: recent messages, intermediate results, in-progress task state. Managed by the runtime (checkpointed, bounded), typically ephemeral.
-- **Enterprise memory (long-term).** The organization's accumulated, retrievable knowledge: past interactions, entity knowledge, preferences, decisions, and learned facts. Backed by a **vector store** for semantic retrieval plus structured stores for facts (see [vector_databases_guide.md](vector_databases_guide.md) for the store comparison — pgvector, Milvus, Qdrant, OpenSearch, etc.).
+- **Enterprise memory (long-term).** The organization's accumulated, retrievable knowledge: past interactions, entity knowledge, preferences, decisions, and learned facts. Backed by a **vector store** for semantic retrieval plus structured stores for facts (see [vector_databases_guide.md](rag/vector_databases_guide.md) for the store comparison — pgvector, Milvus, Qdrant, OpenSearch, etc.).
 
 The memory layer is exposed as **memory-as-a-service** rather than embedded per-application:
 
@@ -329,7 +329,7 @@ Six patterns dominate enterprise agentic architecture. They are not mutually exc
 
 ### 3.6 Event-Driven (Event-Triggered Agents)
 
-**Structure:** agents are triggered by events rather than only by synchronous requests. Enterprise events (trade booked, payment failed, document received, sanctions hit) flow through the event bus (Kafka or equivalent — see [kafka_alternatives_guide.md](../technology/kafka_alternatives_guide.md)); the runtime subscribes, instantiates agents, and executes them asynchronously, using the **outbox pattern** (write the event and the trigger atomically) to guarantee no lost triggers.
+**Structure:** agents are triggered by events rather than only by synchronous requests. Enterprise events (trade booked, payment failed, document received, sanctions hit) flow through the event bus (Kafka or equivalent — see [kafka_alternatives_guide.md](../kafka_alternatives_guide.md)); the runtime subscribes, instantiates agents, and executes them asynchronously, using the **outbox pattern** (write the event and the trigger atomically) to guarantee no lost triggers.
 
 **Why it wins:** agents become part of business processes, not islands; asynchronous processing suits long-running agents (no HTTP timeout pressure); event logs give a natural audit trail; scales with the bus.
 
@@ -358,7 +358,7 @@ Six patterns dominate enterprise agentic architecture. They are not mutually exc
 | Fallback | Fail over to backup models on error/outage/quality | Resilience; provider-outage survival |
 | Caching | Exact + semantic prompt caching (see [agent_runtime_cache_design_guide.md](agent_runtime_cache_design_guide.md)) | Cost (often 40–90% on repeat traffic); latency |
 | Rate limiting | Per-tenant/agent/model quotas | Fairness; provider-limit protection; blast-radius control |
-| Cost tracking | Per-call metering: tokens, model, price, attribution | FinOps; chargeback; anomaly detection (see [finops_guide.md](../technology/finops_guide.md)) |
+| Cost tracking | Per-call metering: tokens, model, price, attribution | FinOps; chargeback; anomaly detection (see [finops_guide.md](../finops_guide.md)) |
 | Observability | OTel GenAI spans per call; token/latency metrics | The raw material of §4.5 |
 | Guardrails | Input/output filtering, PII redaction, injection defense (see [llm_guard_models_guide.md](llm_guard_models_guide.md)) | Enforce policy at the chokepoint |
 | Key/secret management | Provider keys held centrally, rotated centrally | No keys in application code |
@@ -384,7 +384,7 @@ Selection logic: **LiteLLM self-hosted** is the default for banks wanting contro
 
 - **Synchronous** — request/response agents (Q&A, classification): fast, stateless-ish, HTTP-native. Latency budgets apply (§5.3).
 - **Asynchronous** — event-triggered agents (§3.6): queued, processed at leisure, results pushed back via events/webhooks.
-- **Long-running** — multi-hour or multi-day workflows (onboarding, investigations): durable execution with checkpointing is non-negotiable; the runtime persists state at step boundaries and resumes after crashes (see [durable_ai_agent_workflows_guide.md](../technology/durable_ai_agent_workflows_guide.md)).
+- **Long-running** — multi-hour or multi-day workflows (onboarding, investigations): durable execution with checkpointing is non-negotiable; the runtime persists state at step boundaries and resumes after crashes (see [durable_ai_agent_workflows_guide.md](../durable_ai_agent_workflows_guide.md)).
 
 The runtime also decides **concurrency and scale**: agent pods scaled horizontally; sandbox pools pre-warmed; queue depth as the backpressure signal; per-tenant isolation so one noisy LOB doesn't starve another (§5.1).
 
@@ -440,7 +440,7 @@ Every transition is recorded in the audit trail with the actor (human or policy)
 | **Semantic memory** | Accumulated | Facts, preferences, learned rules about the world | Vector store + structured store |
 | **Procedural memory** | Persistent | How to do things: workflows, policies, tool usage patterns | Prompt/tool registry, workflow definitions |
 
-**Enterprise memory** is the platform's semantic + episodic store: the vector store with retrieval APIs (hybrid search, filtering, re-ranking — see [vector_databases_guide.md](vector_databases_guide.md) and [advanced_rag_techniques_guide.md](advanced_rag_techniques_guide.md)), plus structured fact stores. Retrieval is governed: memory reads are permissioned like tool calls (an agent may only retrieve what its role allows), and memory writes are versioned so "forget" is possible and auditable.
+**Enterprise memory** is the platform's semantic + episodic store: the vector store with retrieval APIs (hybrid search, filtering, re-ranking — see [vector_databases_guide.md](rag/vector_databases_guide.md) and [advanced_rag_techniques_guide.md](rag/advanced_rag_techniques_guide.md)), plus structured fact stores. Retrieval is governed: memory reads are permissioned like tool calls (an agent may only retrieve what its role allows), and memory writes are versioned so "forget" is possible and auditable.
 
 **Memory privacy — PII redaction.** Memory that persists is a data store, and data stores attract regulators. Requirements, verified as the state of practice:
 
@@ -538,7 +538,7 @@ Streaming is the honest latency strategy: first-token time matters more than tot
 ### 5.4 Cost
 
 - **Token budgets** per agent, per tenant, per LOB — enforced at the gateway (hard caps) and monitored (soft alerts). A runaway agent loop is a cost incident, not a curiosity; per-run token ceilings and iteration caps are mandatory.
-- **Cost attribution** per agent/tenant/team from gateway metering — the basis for chargeback and for LOB-level FinOps (see [finops_guide.md](../technology/finops_guide.md)).
+- **Cost attribution** per agent/tenant/team from gateway metering — the basis for chargeback and for LOB-level FinOps (see [finops_guide.md](../finops_guide.md)).
 - **Cost levers**: model tiering/routing (cheapest sufficient model), prompt caching, context pruning, batch-vs-realtime splitting, and gateway-level spend anomaly alerts.
 
 ### 5.5 Reliability
@@ -574,8 +574,8 @@ An agentic platform that cannot talk to the enterprise is a toy. Integration is 
 ### 6.1 Integration Patterns
 
 - **APIs (REST/OpenAPI)** — the default for synchronous access: expose enterprise capabilities as well-defined APIs, and register them as tools via MCP servers. Agents call the same APIs humans' UIs call — no special back doors.
-- **Event-driven** — asynchronous integration through the enterprise event bus (Kafka or equivalent; see [kafka_alternatives_guide.md](../technology/kafka_alternatives_guide.md)): agents subscribe to business events (trade booked, payment failed) and publish results/decisions. The outbox pattern guarantees trigger delivery (§3.6).
-- **Data platforms** — read access to the warehouse/lake (via governed data services, not direct DB credentials from agents): reference data, market data, client data, transaction history. Agents retrieve through the data layer's governed APIs; memory/vector stores are populated from approved data sources (see the data-platform guides in this repo, e.g. [data_governance_guide.md](../technology/data_governance_guide.md)).
+- **Event-driven** — asynchronous integration through the enterprise event bus (Kafka or equivalent; see [kafka_alternatives_guide.md](../kafka_alternatives_guide.md)): agents subscribe to business events (trade booked, payment failed) and publish results/decisions. The outbox pattern guarantees trigger delivery (§3.6).
+- **Data platforms** — read access to the warehouse/lake (via governed data services, not direct DB credentials from agents): reference data, market data, client data, transaction history. Agents retrieve through the data layer's governed APIs; memory/vector stores are populated from approved data sources (see the data-platform guides in this repo, e.g. [data_governance_guide.md](../data_governance_guide.md)).
 
 ### 6.2 Identity Integration
 
@@ -612,7 +612,7 @@ The integration layer is itself an architecture: **enterprise service layer → 
 
 - **Kubernetes** is the platform's substrate: agent runtime, gateway, registry, memory services, and observability pipeline all deploy as workloads.
 - **Helm charts** package the platform components; a platform Helm repository versions the whole stack so environments (dev/test/prod) are reproducible.
-- **GitOps** (Argo CD / Flux / Kargo) drives deployments: the platform's desired state (catalogs, policies, routing config, agent versions) lives in git; changes go through review; drift is reconciled automatically (see [kargo_gitops_guide.md](../technology/kargo_gitops_guide.md)). GitOps is also the enforcement mechanism for policy-as-code: a policy change is a reviewed PR, and the deployed state cannot drift from it.
+- **GitOps** (Argo CD / Flux / Kargo) drives deployments: the platform's desired state (catalogs, policies, routing config, agent versions) lives in git; changes go through review; drift is reconciled automatically (see [kargo_gitops_guide.md](../kargo_gitops_guide.md)). GitOps is also the enforcement mechanism for policy-as-code: a policy change is a reviewed PR, and the deployed state cannot drift from it.
 - **Environments**: dev/test/staging/prod with promotion gates; model and prompt versioning mirrors code versioning through the same pipeline.
 
 ### 7.3 Multi-Region and Data Residency
@@ -786,7 +786,7 @@ The standards picture is consolidating fast: **MCP (tools) + A2A (agents) + Open
 - **Memory layer** — platform services for agent state: session (short-term) and enterprise (long-term) memory.
 - **Session memory** — short-term working context of a run/conversation, managed and checkpointed by the runtime.
 - **Enterprise memory** — long-term, organization-scale memory backed by vector stores and structured stores.
-- **Vector store** — database for embeddings enabling semantic retrieval (see [vector_databases_guide.md](vector_databases_guide.md)).
+- **Vector store** — database for embeddings enabling semantic retrieval (see [vector_databases_guide.md](rag/vector_databases_guide.md)).
 - **Orchestration** — coordinating what runs when: workflows, agent loops, multi-agent coordination.
 - **Workflow** — a defined sequence of steps (deterministic or agentic) executed and tracked.
 - **Multi-agent** — multiple agents coordinating (supervisor/worker, peer, or A2A) to accomplish a task (see [hybrid_multi_agent_systems_guide.md](hybrid_multi_agent_systems_guide.md)).
@@ -812,7 +812,7 @@ The standards picture is consolidating fast: **MCP (tools) + A2A (agents) + Open
 - **Policy-as-code** — governance expressed as versioned, reviewed, hard-enforced code.
 - **HITL** — human-in-the-loop: human approval checkpoints for sensitive agent actions (see [implementing-responsible-ai.md](implementing-responsible-ai.md)).
 - **Audit trail** — the immutable, attributable, reconstructible record of everything agents did.
-- **FinOps** — financial operations for cloud/AI spend: budgets, attribution, optimization (see [finops_guide.md](../technology/finops_guide.md)).
+- **FinOps** — financial operations for cloud/AI spend: budgets, attribution, optimization (see [finops_guide.md](../finops_guide.md)).
 - **Token budget** — a cap on tokens (and therefore cost) per agent/tenant/period.
 - **Autoscaling** — horizontal scaling driven by demand signals (queue depth, latency).
 - **p95 / p99** — 95th/99th percentile latency: the honest latency targets.
@@ -826,7 +826,7 @@ The standards picture is consolidating fast: **MCP (tools) + A2A (agents) + Open
 
 ---
 
-*Companion guides: [enterprise_ai_platforms_guide.md](enterprise_ai_platforms_guide.md) (the vendor/platform survey — the buy-side companion to this build-side guide), [autonomous_agents_guide.md](autonomous_agents_guide.md) (agents umbrella), [agent_scaffolding_guide.md](agent_scaffolding_guide.md) (code-level agent scaffold), [mcp_framework_tools_guide.md](mcp_framework_tools_guide.md) (MCP deep dive), [hybrid_multi_agent_systems_guide.md](hybrid_multi_agent_systems_guide.md) (multi-agent), [agent_runtime_cache_design_guide.md](agent_runtime_cache_design_guide.md) (runtime/cache), [llm_guard_models_guide.md](llm_guard_models_guide.md) (guardrails), [implementing-responsible-ai.md](implementing-responsible-ai.md) (governance), [llm_evaluation_vs_validation_guide.md](llm_evaluation_vs_validation_guide.md) (evals), [ai_agent_drift_guide.md](ai_agent_drift_guide.md) (drift), [vector_databases_guide.md](vector_databases_guide.md) (memory stores), [llm_latency_optimization_guide.md](llm_latency_optimization_guide.md) (latency/cost), and the banking set: [oracle_banking_microservices_architecture_guide.md](../banking/oracle_banking_microservices_architecture_guide.md), [financial_risk_compliance_systems_guide.md](../banking/financial_risk_compliance_systems_guide.md), [core_banking_systems_guide.md](../banking/core_banking_systems_guide.md).*
+*Companion guides: [enterprise_ai_platforms_guide.md](enterprise_ai_platforms_guide.md) (the vendor/platform survey — the buy-side companion to this build-side guide), [autonomous_agents_guide.md](autonomous_agents_guide.md) (agents umbrella), [agent_scaffolding_guide.md](agent_scaffolding_guide.md) (code-level agent scaffold), [mcp_framework_tools_guide.md](mcp_framework_tools_guide.md) (MCP deep dive), [hybrid_multi_agent_systems_guide.md](hybrid_multi_agent_systems_guide.md) (multi-agent), [agent_runtime_cache_design_guide.md](agent_runtime_cache_design_guide.md) (runtime/cache), [llm_guard_models_guide.md](llm_guard_models_guide.md) (guardrails), [implementing-responsible-ai.md](implementing-responsible-ai.md) (governance), [llm_evaluation_vs_validation_guide.md](llm_evaluation_vs_validation_guide.md) (evals), [ai_agent_drift_guide.md](ai_agent_drift_guide.md) (drift), [vector_databases_guide.md](rag/vector_databases_guide.md) (memory stores), [llm_latency_optimization_guide.md](llm_latency_optimization_guide.md) (latency/cost), and the banking set: [oracle_banking_microservices_architecture_guide.md](../banking/oracle_banking_microservices_architecture_guide.md), [financial_risk_compliance_systems_guide.md](../banking/financial_risk_compliance_systems_guide.md), [core_banking_systems_guide.md](../banking/core_banking_systems_guide.md).*
 
 *Verification note: gateway products (LiteLLM/Portkey/APIM/Kong), sandboxing (containers/gVisor/Firecracker/E2B), orchestration engines (LangGraph/Temporal/Airflow), memory services (Mem0/Letta/Zep), OTel GenAI semantic conventions, OWASP LLM Top 10 2025 + Agentic Top 10 2026, MCP (AAIF, Dec 2025), A2A (Linux Foundation, Jun 2025), and agent-identity standards (SPIFFE/WIMSE/OAuth/AIMS, NIST initiative) were verified against current sources at the time of writing. Items still evolving — A2A production maturity, OTel GenAI convention stability (experimental), and agent-identity standards convergence — are flagged as such in the text.*
 

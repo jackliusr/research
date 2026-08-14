@@ -3,7 +3,7 @@
 > **Author:** Jack Liu Shurui · **Role:** Solution Architect, Crédit Agricole CIB
 > **Repo:** [github.com/jackliusr/research](https://github.com/jackliusr/research)
 > **Series:** LLM/AI Engineering Guides
-> **Companion Guides:** [RAG Optimization Techniques](rag_optimization_techniques_guide.md) · [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) · [RAG vs HyDE](rag_vs_hyde_guide.md) · [Query Rewriting in RAG](query_rewriting_rag_guide.md) · [Constrained Decoding Frameworks](../constrained_decoding_frameworks_guide.md) · [LLM Development Risks & Security](../llm_development_risks_security_guide.md)
+> **Companion Guides:** [RAG Optimization Techniques](rag_optimization_techniques_guide.md) · [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) · [RAG vs HyDE](rag_vs_hyde_guide.md) · [Query Rewriting in RAG](query_rewriting_rag_guide.md) · [Constrained Decoding Frameworks](../../constrained_decoding_frameworks_guide.md) · [LLM Development Risks & Security](../llm_development_risks_security_guide.md)
 > **Last Updated:** July 2026
 
 ---
@@ -531,7 +531,7 @@ The remaining retrieval-side techniques are shorter, so they share this section.
 
 **RARR** (Gao et al. 2023, *Enabling Large Language Models to Generate Text with Citations*, EMNLP 2023): **attribution as a post-hoc loop** — generate the answer freely, then *search for evidence* supporting each claim, and *edit* the answer to add citations (or drop unsupported claims). Strengths: improves factual precision and gives verifiable citations; weaknesses: latency (a second full pipeline after generation) and cost; when to use: high-stakes factual answers where every claim must be attributable (§12). Related family: **attribution-aware generation** (§7.3) moves citation *into* generation rather than after it.
 
-**FLIP** (2024, *FLIP: Preference Alignment for Factuality*): use **preference alignment (RL)** to train the model to *prefer grounded answers* over fluent-but-ungrounded ones — a generation-side fine-tuning that makes faithfulness a model property rather than a prompt instruction. Weaknesses: requires fine-tuning infrastructure and preference data; when to use: when you control the model and faithfulness failures persist despite prompting (see the [fine-tuning guide](fine_tuning_frameworks_comparison_guide.md) for tooling).
+**FLIP** (2024, *FLIP: Preference Alignment for Factuality*): use **preference alignment (RL)** to train the model to *prefer grounded answers* over fluent-but-ungrounded ones — a generation-side fine-tuning that makes faithfulness a model property rather than a prompt instruction. Weaknesses: requires fine-tuning infrastructure and preference data; when to use: when you control the model and faithfulness failures persist despite prompting (see the [fine-tuning guide](../fine_tuning_frameworks_comparison_guide.md) for tooling).
 
 **REPLUG** (Shi et al. 2023, *REPLUG: Retrieval-Augmented Black-Box Language Models*, arXiv:2301.12652): the simplest possible retrieval-augmentation — *prepend* retrieved documents to the LM input ("LM as a black box"), no training needed; optionally train a *retriever* against the LM's own likelihoods (self-supervised LM-retriever training). Strengths: works with any LM, trivially simple, and the retriever-training variant anticipates 2024–2025's "LM-as-retriever" line of work; weaknesses: no adaptation of retrieval mid-generation, context-length pressure. When to use: as a fast baseline when you cannot modify the model or the pipeline; conceptually, nearly every RAG system today is "REPLUG with better retrieval."
 
@@ -582,7 +582,7 @@ LLMs attend to the **beginning and end** of their context far better than the mi
 
 **What it is:** require the generator to emit **structured citations** — every claim tied to a retrieved document (id, page, clause) — and *enforce* that citations resolve to actually-retrieved sources.
 
-**Mechanism:** prompt-level (instruct the model to cite `[n]` mapped to provided sources), schema-level (structured-output/constrained decoding — see [Constrained Decoding Frameworks](../constrained_decoding_frameworks_guide.md) — for citation spans), and verification-level (post-check that every cited source was in the retrieved set and that the claim is supported — the RARR loop, §5.13).
+**Mechanism:** prompt-level (instruct the model to cite `[n]` mapped to provided sources), schema-level (structured-output/constrained decoding — see [Constrained Decoding Frameworks](../../constrained_decoding_frameworks_guide.md) — for citation spans), and verification-level (post-check that every cited source was in the retrieved set and that the claim is supported — the RARR loop, §5.13).
 
 **Trade-offs:** citations add output tokens and can be *fabricated* unless verified (models will happily invent `[3]`); verified citations cost a post-generation check; but citations are the single cheapest way to convert "probably grounded" into "auditable" — which is why banking deployments treat them as mandatory (§12).
 
@@ -641,13 +641,13 @@ Generation-side techniques change *how the answer is produced and verified*. Gro
 
 ### 7.4 Constrained decoding for structured answers
 
-When the answer must be a schema (JSON, a fixed enum, a data-extraction form), constrain the decoder to valid outputs — grammar-constrained sampling, JSON-schema decoding, or tool/function-call schemas — instead of hoping the model formats correctly. **Fully covered in [Constrained Decoding Frameworks](../constrained_decoding_frameworks_guide.md)** (outlines, jsonformer, guidance, LMQL, Outlines, vLLM structured outputs). For RAG specifically, constrained decoding is the mechanism behind *enforced* citations (§6.6), structured extraction of entities (GraphRAG pipelines), and tool calls in agentic RAG (§8).
+When the answer must be a schema (JSON, a fixed enum, a data-extraction form), constrain the decoder to valid outputs — grammar-constrained sampling, JSON-schema decoding, or tool/function-call schemas — instead of hoping the model formats correctly. **Fully covered in [Constrained Decoding Frameworks](../../constrained_decoding_frameworks_guide.md)** (outlines, jsonformer, guidance, LMQL, Outlines, vLLM structured outputs). For RAG specifically, constrained decoding is the mechanism behind *enforced* citations (§6.6), structured extraction of entities (GraphRAG pipelines), and tool calls in agentic RAG (§8).
 
 ### 7.5 Prompt caching — pay once for shared prefixes
 
 **What it is:** cache the KV state of the *shared prefix* of prompts (system prompt + static instructions + frequently reused context) across queries, so repeated tokens cost a fraction (cached-input pricing) and prefill latency drops.
 
-**Provenance:** engineering practice (Anthropic prompt caching, OpenAI automatic caching, vLLM prefix caching, Llama.cpp cache reuse); covered in [LLM Latency Optimization](llm_latency_optimization_guide.md).
+**Provenance:** engineering practice (Anthropic prompt caching, OpenAI automatic caching, vLLM prefix caching, Llama.cpp cache reuse); covered in [LLM Latency Optimization](../llm_latency_optimization_guide.md).
 
 **Mechanism:** order the prompt so that everything static comes first — system prompt, task instructions, grounding rules, citation format — followed by the query-specific context; cache the prefix. In agentic RAG this matters doubly: every agent loop iteration re-sends the same system prompt, so caching directly cuts loop cost.
 
@@ -701,7 +701,7 @@ Agentic RAG replaces the fixed pipeline with an **agent**: an LLM that holds the
 
 **Memory-augmented RAG:** the agent keeps **conversation memory** (chat history, rewritten queries — see [Query Rewriting in RAG](query_rewriting_rag_guide.md) §9) and optionally **episodic memory** (summaries of past interactions, stored and retrieved like documents). Critical for multi-turn research ("now do the same analysis for the subsidiary").
 
-**Multi-agent RAG:** split roles across agents — a **retriever agent**, a **critic agent** (checks groundedness/relevance), a **synthesizer agent** — coordinated by an orchestrator. See [Hybrid Multi-Agent Systems](hybrid_multi_agent_systems_guide.md) and [Hierarchical Multi-Agent Frameworks](hierarchical_multi_agent_frameworks_guide.md) for the full treatment. Multi-agent RAG is rarely needed before single-agent + strong post-retrieval checks fail; it is the most expensive and least deterministic option in this guide.
+**Multi-agent RAG:** split roles across agents — a **retriever agent**, a **critic agent** (checks groundedness/relevance), a **synthesizer agent** — coordinated by an orchestrator. See [Hybrid Multi-Agent Systems](../hybrid_multi_agent_systems_guide.md) and [Hierarchical Multi-Agent Frameworks](../hierarchical_multi_agent_frameworks_guide.md) for the full treatment. Multi-agent RAG is rarely needed before single-agent + strong post-retrieval checks fail; it is the most expensive and least deterministic option in this guide.
 
 ### 8.3 Frameworks and guardrails
 
@@ -878,7 +878,7 @@ Where each technique lives in the major frameworks and libraries. "Custom" means
 | LLMLingua | `LLMLinguaCompressor` | Custom | Custom | `llmlingua` PyPI; LongLLMLingua |
 | Self-consistency | Prompt pattern | `generate` + vote | Prompt pattern | Any sampler |
 | CoVe | Custom chain | Custom | Custom | 4-step prompt flow |
-| Constrained decoding | `PydanticOutputParser`, structured output | `StructuredOutput` | `OutputAdapter` | [constrained_decoding_frameworks_guide.md](../constrained_decoding_frameworks_guide.md) |
+| Constrained decoding | `PydanticOutputParser`, structured output | `StructuredOutput` | `OutputAdapter` | [constrained_decoding_frameworks_guide.md](../../constrained_decoding_frameworks_guide.md) |
 | Prompt caching | Provider-level | Provider-level | Provider-level | Anthropic/OpenAI caching, vLLM prefix cache |
 | Agentic RAG | **LangGraph** (ReAct/plan-execute) | `ReActAgent`, `FunctionCallingAgent` | Agents (deepset) | AutoGen, CrewAI, OpenAI Assistants |
 
@@ -1053,7 +1053,7 @@ The field moves quickly — GraphRAG and LightRAG arrived in 2024, contextual re
 
 ---
 
-*End of guide. Companion material: [RAG Optimization Techniques](rag_optimization_techniques_guide.md) (the baseline playbook) · [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) (stack selection) · [RAG vs HyDE](rag_vs_hyde_guide.md) · [Query Rewriting in RAG](query_rewriting_rag_guide.md) · [Constrained Decoding Frameworks](../constrained_decoding_frameworks_guide.md) · [Hybrid Multi-Agent Systems](hybrid_multi_agent_systems_guide.md) · [LLM Development Risks & Security](../llm_development_risks_security_guide.md).*
+*End of guide. Companion material: [RAG Optimization Techniques](rag_optimization_techniques_guide.md) (the baseline playbook) · [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) (stack selection) · [RAG vs HyDE](rag_vs_hyde_guide.md) · [Query Rewriting in RAG](query_rewriting_rag_guide.md) · [Constrained Decoding Frameworks](../../constrained_decoding_frameworks_guide.md) · [Hybrid Multi-Agent Systems](../hybrid_multi_agent_systems_guide.md) · [LLM Development Risks & Security](../llm_development_risks_security_guide.md).*
 
 
 

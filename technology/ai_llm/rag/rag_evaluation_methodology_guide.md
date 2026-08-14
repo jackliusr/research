@@ -3,7 +3,7 @@
 > **Author:** Jack Liu Shurui · **Role:** Solution Architect, Crédit Agricole CIB
 > **Repo:** [github.com/jackliusr/research](https://github.com/jackliusr/research)
 > **Series:** LLM/AI Engineering Guides
-> **Companion Guides:** [RAG Evaluation Tools Comparison](rag_evaluation_tools_comparison_guide.md) (the tool head-to-head — this guide is the tool-agnostic playbook) · [LLM Evaluation Frameworks](llm_evaluation_frameworks_guide.md) (the tooling umbrella) · [TruLens](trulens_guide.md) · [Ragas](ragas_guide.md) · [LLM Evaluation vs Validation](llm_evaluation_vs_validation_guide.md) · [AI Agent Drift](ai_agent_drift_guide.md) · [Advanced RAG Techniques](advanced_rag_techniques_guide.md) · [Beyond RAG](beyond_rag_guide.md) · [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) · [RAG Optimization Techniques](rag_optimization_techniques_guide.md) · [Vector Databases](vector_databases_guide.md) · [Responsible AI](implementing-responsible-ai.md)
+> **Companion Guides:** [RAG Evaluation Tools Comparison](rag_evaluation_tools_comparison_guide.md) (the tool head-to-head — this guide is the tool-agnostic playbook) · [LLM Evaluation Frameworks](../llm_evaluation_frameworks_guide.md) (the tooling umbrella) · [TruLens](trulens_guide.md) · [Ragas](ragas_guide.md) · [LLM Evaluation vs Validation](../llm_evaluation_vs_validation_guide.md) · [AI Agent Drift](../ai_agent_drift_guide.md) · [Advanced RAG Techniques](advanced_rag_techniques_guide.md) · [Beyond RAG](beyond_rag_guide.md) · [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) · [RAG Optimization Techniques](rag_optimization_techniques_guide.md) · [Vector Databases](vector_databases_guide.md) · [Responsible AI](../implementing-responsible-ai.md)
 > **Last Updated:** August 2026
 
 ---
@@ -79,7 +79,7 @@ end-to-end score low
 
 This is the same insight TruLens' *"find where your agent fails"* tagline and Ragas' "RAG systems fail in identifiable, separable ways" philosophy are built on (see the sibling guides). The diagnostic workflow is formalised in §9.3.
 
-> **Why this matters for a bank:** in a regulated setting you cannot just say "the answer was wrong" — you must say *which stage* failed and provide per-stage evidence for the model-validation file (see [llm_evaluation_vs_validation_guide.md](llm_evaluation_vs_validation_guide.md) and [implementing-responsible-ai.md](implementing-responsible-ai.md)).
+> **Why this matters for a bank:** in a regulated setting you cannot just say "the answer was wrong" — you must say *which stage* failed and provide per-stage evidence for the model-validation file (see [llm_evaluation_vs_validation_guide.md](../llm_evaluation_vs_validation_guide.md) and [implementing-responsible-ai.md](../implementing-responsible-ai.md)).
 
 ---
 
@@ -196,7 +196,7 @@ Answer relevance is also **reference-free**. It catches *off-topic* answers (see
 1. **Context-hallucination** — the claim contradicts or goes beyond the retrieved context. Detected by **faithfulness/groundedness** (statement-support check). This is the RAG-specific hallucination the retrieval context is supposed to prevent.
 2. **Factual hallucination** — the claim is wrong *even if* the context supported it (context itself was wrong/stale, or the LLM embellished). Detected by **answer correctness against ground truth** (reference-based, §4.1) or **entity-level checks** (e.g., Ragas `context_entity_recall`; manual QA review).
 
-Detection practice: run faithfulness at the statement level (not just the aggregate) so that **each unsupported claim is captured as an artifact** — a bank's hallucination log should list the offending sentence, the question, and the retrieved context for the model-validation file ([llm_evaluation_vs_validation_guide.md](llm_evaluation_vs_validation_guide.md), [implementing-responsible-ai.md](implementing-responsible-ai.md)).
+Detection practice: run faithfulness at the statement level (not just the aggregate) so that **each unsupported claim is captured as an artifact** — a bank's hallucination log should list the offending sentence, the question, and the retrieved context for the model-validation file ([llm_evaluation_vs_validation_guide.md](../llm_evaluation_vs_validation_guide.md), [implementing-responsible-ai.md](../implementing-responsible-ai.md)).
 
 ### 3.4 Generation Metric Table
 
@@ -238,7 +238,7 @@ ANSWER:
 
 Design points that make judge prompts auditable: (1) ask for a **verdict and an evidence quote per claim**, never just a single fuzzy "rate 1–10" — the decomposition is what makes failures inspectable (a bank needs to point at *which sentence* was unsupported); (2) compute the score from verdicts rather than trusting one holistic number; (3) pin **temperature 0** and a fixed judge model + prompt version so runs are comparable; (4) keep the context verbatim — truncating it makes the judge rule on evidence the app didn't see.
 
-**Calibration — the honest caveats (see [ragas_guide.md](ragas_guide.md) §4 and [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md) for the full treatment):**
+**Calibration — the honest caveats (see [ragas_guide.md](ragas_guide.md) §4 and [llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md) for the full treatment):**
 
 - **Judge bias is real and measurable:** position bias (judges favour answers earlier in a list), verbosity bias (longer answers score higher), self-preference (a judge model favours its own family's style), sycophancy, and anchor drift across runs. Mitigate: fixed judge model and prompt version, temperature 0, score+reason format, periodic human spot-checks of judge outputs.
 - **Non-determinism:** the same sample can score differently across runs. Mitigate: repeat runs, report means *and* variance, and treat thresholds as bands (e.g., "faithfulness ≥ 0.85 ± 0.03") rather than knife-edges.
@@ -265,7 +265,7 @@ Design points that make judge prompts auditable: (1) ask for a **verdict and an 
 
 **Task success** is the outcome-based view of end-to-end quality: *did the user accomplish what they came to do?* It is the metric that connects the RAG system to the business:
 
-- **Direct measurement:** a downstream outcome — the support ticket was resolved without escalation, the trade document was located, the user did not rephrase and re-ask, the conversation ended with the user's intent fulfilled (agentic cases: the action executed — see [autonomous_agents_guide.md](autonomous_agents_guide.md) §5 on agent evals).
+- **Direct measurement:** a downstream outcome — the support ticket was resolved without escalation, the trade document was located, the user did not rephrase and re-ask, the conversation ended with the user's intent fulfilled (agentic cases: the action executed — see [autonomous_agents_guide.md](../autonomous_agents_guide.md) §5 on agent evals).
 - **Indirect signals:** no follow-up question, no "that's not what I asked", no escalation to a human, click-through on cited documents.
 - **Judged variants:** human annotators or an LLM judge rate "did this answer satisfy the user's request" — coarser than correctness but closer to value.
 
@@ -276,7 +276,7 @@ Task success is where RAG evaluation meets **product KPIs**: a RAG assistant tha
 **User satisfaction** captures the subjective layer: thumbs up/down, star ratings, survey responses, "was this helpful?" prompts, and implicit behaviour (copying the answer, staying on the page, re-asking). Key practices:
 
 - **Explicit feedback** (thumbs, ratings) is the cleanest signal but suffers from **selection bias** — angry and delighted users vote; the silent middle is the majority. Always pair it with sampling of unrated traffic.
-- **Implicit feedback** (re-ask rate, session length, escalation rate) is noisier but unbiased in coverage — and it is the basis of **online evaluation** (§7.2) and drift detection ([ai_agent_drift_guide.md](ai_agent_drift_guide.md)).
+- **Implicit feedback** (re-ask rate, session length, escalation rate) is noisier but unbiased in coverage — and it is the basis of **online evaluation** (§7.2) and drift detection ([ai_agent_drift_guide.md](../ai_agent_drift_guide.md)).
 - **Don't confuse satisfaction with quality:** users can be satisfied with a wrong answer (plausible-sounding, confident) and dissatisfied with a correct one (cautious hedging). Treat satisfaction as a product metric that *contextualises* the quality metrics, never as a replacement for them.
 
 ### 4.4 End-to-End Evaluation in Practice
@@ -375,7 +375,7 @@ Coverage is *what* the test set tests. The classic coverage dimensions for RAG:
 
 - **Question types:** single-hop factual, multi-hop (answer requires combining 2+ sources), comparative, procedural ("how do I..."), conditional ("what if...").
 - **Negations and qualifiers:** "which products do **not** require collateral", "limits **excluding** intraday facilities" — negation is a notorious LLM failure point.
-- **Out-of-scope:** queries the system should refuse or escalate ("what's the share price of Tesla?" to a trade-finance assistant) — tests the guardrails, not just the RAG path (see [llm_guard_models_guide.md](llm_guard_models_guide.md) and [implementing-responsible-ai.md](implementing-responsible-ai.md)).
+- **Out-of-scope:** queries the system should refuse or escalate ("what's the share price of Tesla?" to a trade-finance assistant) — tests the guardrails, not just the RAG path (see [llm_guard_models_guide.md](../llm_guard_models_guide.md) and [implementing-responsible-ai.md](../implementing-responsible-ai.md)).
 - **Linguistic variation:** paraphrases, synonyms, jargon vs plain language, entity variants ("SBLC" vs "standby letter of credit"), misspellings — the retriever's embedding robustness.
 - **Ambiguity:** queries that need clarification or have multiple valid answers — tests the system's handling, not its recall.
 - **Temporal/stale-data cases:** "current fees" when the corpus has versioned fee schedules — tests freshness (see §9.1 stale context).
@@ -401,7 +401,7 @@ A test set is **code** — treat it like one:
 - **Version it** (semver): test-set v1.3.0 is referenced *by the eval report* so any score is traceable to the exact questions and labels it used. A threshold breached by a test-set change is a different event from one breached by a model change.
 - **Review on a cadence:** quarterly re-review of goldens against the current corpus (products change; fee schedules change); every corpus ingestion triggers a "are the goldens still true?" check.
 - **Guard against leakage:** test questions must never be answerable *from memorisation* — and the test documents must **not be part of the indexed corpus** (if the eval set lives in the vector DB, your scores are measuring retrieval of the answer key, not retrieval of knowledge).
-- **Track provenance:** every item records who wrote it, when, and which source docs it derives from — required for the audit trail in a regulated setting ([llm_evaluation_vs_validation_guide.md](llm_evaluation_vs_validation_guide.md)).
+- **Track provenance:** every item records who wrote it, when, and which source docs it derives from — required for the audit trail in a regulated setting ([llm_evaluation_vs_validation_guide.md](../llm_evaluation_vs_validation_guide.md)).
 
 ---
 
@@ -422,7 +422,7 @@ A test set is **code** — treat it like one:
 
 - **Feedback capture:** explicit (thumbs, ratings, surveys) and implicit (re-ask rate, escalation rate, session behaviour) signals collected continuously (§4.3).
 - **Live LLM-judge scoring:** reference-free metrics (faithfulness, answer relevance) run on a **sampled subset** of production answers (100% is usually unaffordable; 5–20% stratified sampling is typical) — this is where reference-free metrics shine (§5.2).
-- **Drift detection:** monitor scores, retrieval hit patterns, and input distributions over time — corpus refresh drops groundedness, query mix shifts, embedding drift — and alert before users notice. The full production-monitoring playbook is [ai_agent_drift_guide.md](ai_agent_drift_guide.md); the RAG-relevant signals are score drift (evaluation metrics over rolling windows), retrieval drift (hit-rate/MRR on live queries), and corpus/freshness drift (stale-context detection, §9.1).
+- **Drift detection:** monitor scores, retrieval hit patterns, and input distributions over time — corpus refresh drops groundedness, query mix shifts, embedding drift — and alert before users notice. The full production-monitoring playbook is [ai_agent_drift_guide.md](../ai_agent_drift_guide.md); the RAG-relevant signals are score drift (evaluation metrics over rolling windows), retrieval drift (hit-rate/MRR on live queries), and corpus/freshness drift (stale-context detection, §9.1).
 - **Strengths:** sees reality — the actual query distribution, the actual failures; the only way to catch what offline sets missed.
 - **Weaknesses:** noisy signals (selection bias in feedback, no ground truth for correctness), unlabelled traffic needs judge metrics, alerting thresholds need calibration to avoid alert fatigue.
 
@@ -443,7 +443,7 @@ A test set is **code** — treat it like one:
 
 Run **both**, deliberately: **offline evaluation for development decisions** (which retriever, which prompt, is this PR safe to merge) and **online evaluation for production assurance** (is the deployed system still good, is the corpus still fresh, are users satisfied). The offline gate is the *pre-deployment* check; online monitoring is the *post-deployment* check — they answer different questions and neither substitutes for the other.
 
-This is the same distinction the series draws between **evaluation** and **validation** — see [llm_evaluation_vs_validation_guide.md](llm_evaluation_vs_validation_guide.md), which frames offline eval as the engineering feedback loop and online/ongoing validation as the evidence for model governance. The drift/monitoring half of the two-track model is detailed in [ai_agent_drift_guide.md](ai_agent_drift_guide.md); the tooling that supports both tracks is covered in [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md) and [rag_evaluation_tools_comparison_guide.md](rag_evaluation_tools_comparison_guide.md).
+This is the same distinction the series draws between **evaluation** and **validation** — see [llm_evaluation_vs_validation_guide.md](../llm_evaluation_vs_validation_guide.md), which frames offline eval as the engineering feedback loop and online/ongoing validation as the evidence for model governance. The drift/monitoring half of the two-track model is detailed in [ai_agent_drift_guide.md](../ai_agent_drift_guide.md); the tooling that supports both tracks is covered in [llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md) and [rag_evaluation_tools_comparison_guide.md](rag_evaluation_tools_comparison_guide.md).
 
 ---
 
@@ -494,7 +494,7 @@ The evaluation pipeline has five stages, and each produces an artifact:
 
 The infrastructure that runs this pipeline, tool-agnostically:
 
-- **The eval harness:** the runner that loads the test set, invokes the app under test, computes metrics, and emits reports. It may be a homegrown script, a CI job around Ragas/TruLens/DeepEval, or a managed platform (LangSmith, MLflow, Arize Phoenix) — the full tooling landscape is in [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md), and the head-to-head of the RAG-specific tools is in [rag_evaluation_tools_comparison_guide.md](rag_evaluation_tools_comparison_guide.md). The methodology here is deliberately independent of which harness you pick.
+- **The eval harness:** the runner that loads the test set, invokes the app under test, computes metrics, and emits reports. It may be a homegrown script, a CI job around Ragas/TruLens/DeepEval, or a managed platform (LangSmith, MLflow, Arize Phoenix) — the full tooling landscape is in [llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md), and the head-to-head of the RAG-specific tools is in [rag_evaluation_tools_comparison_guide.md](rag_evaluation_tools_comparison_guide.md). The methodology here is deliberately independent of which harness you pick.
 - **A metrics layer:** the IR metrics (§2) computed deterministically, plus the LLM-judge metrics (§3) with a pinned judge model/prompt version.
 - **Result storage:** every run's scores, per-sample records, and test-set/app versions — queryable history for trend lines and the audit trail.
 - **The CI/CD wiring:** the gate step as a CI job; fast lane (small subset, cheap metrics) on every PR, full lane (complete set) nightly or pre-release.
@@ -532,7 +532,7 @@ The failure taxonomy organises *how* RAG systems fail, so that symptoms map to m
 
 - **Missed context (recall failure):** the evidence needed to answer was never retrieved — the chunk exists in the corpus but didn't surface in top-k. Causes: bad chunking (answer split across chunk boundaries), weak embeddings, missing synonyms, `top_k` too small, filter over-restriction. Symptom: the LLM gives a vague, hedged, or invented answer because the source isn't there.
 - **Irrelevant context (precision failure):** the top-k is full of noise — related-but-useless chunks crowd out the evidence. Causes: embeddings that capture topic but not the specific question, `top_k` too large, no reranker, no relevance floor. Symptom: the LLM gets distracted — answers blend in facts from the wrong document (a known failure: LLMs are sensitive to irrelevant context — the *lost-in-the-middle* and noise-sensitivity literature; see [rag_vs_long_context_llms_guide.md](rag_vs_long_context_llms_guide.md)).
-- **Stale context (freshness failure):** the retrieved chunks are outdated — old fee schedule, superseded regulation, decommissioned product. The retrieval was *correct against the index*; the index is wrong against reality. Symptom: confident, well-grounded answers that are factually obsolete. (This is a drift/freshness problem — see [ai_agent_drift_guide.md](ai_agent_drift_guide.md) for ingestion-side monitoring.)
+- **Stale context (freshness failure):** the retrieved chunks are outdated — old fee schedule, superseded regulation, decommissioned product. The retrieval was *correct against the index*; the index is wrong against reality. Symptom: confident, well-grounded answers that are factually obsolete. (This is a drift/freshness problem — see [ai_agent_drift_guide.md](../ai_agent_drift_guide.md) for ingestion-side monitoring.)
 
 **Generation failures — the LLM mishandled the context:**
 
@@ -542,7 +542,7 @@ The failure taxonomy organises *how* RAG systems fail, so that symptoms map to m
 
 **Integration failures — the system around the LLM:**
 
-- **Latency:** retrieval + judge/reranker + generation exceeding SLOs; the retriever or a reranker is the usual suspect (see [llm_latency_optimization_guide.md](llm_latency_optimization_guide.md)).
+- **Latency:** retrieval + judge/reranker + generation exceeding SLOs; the retriever or a reranker is the usual suspect (see [llm_latency_optimization_guide.md](../llm_latency_optimization_guide.md)).
 - **Cost:** per-answer cost blown up by huge contexts, rerankers on every query, or judge metrics in the live path (see §7.2 on sampling).
 - **Formatting/output failures:** malformed citations, wrong output schema, markdown/JSON breakage, truncation, citation-to-source mismatches — integration bugs that quality metrics alone don't catch; catch them with schema/format checks in the harness.
 
@@ -552,11 +552,11 @@ The failure taxonomy organises *how* RAG systems fail, so that symptoms map to m
 |--------------|------------------------|------------------|-----|
 | **Missed context** (retrieval) | Vague/hedged answer; "I couldn't find..." on answerable questions; invented details | recall@k ↓, hit rate@k ↓, context_recall ↓ | Better chunking, better embeddings, hybrid search, larger top_k, query rewriting (see [advanced_rag_techniques_guide.md](advanced_rag_techniques_guide.md), [query_rewriting_rag_guide.md](query_rewriting_rag_guide.md)) |
 | **Irrelevant context** (retrieval) | Answer blends facts from wrong docs; confused answers | precision@k ↓, context_precision ↓, contextual relevancy ↓ | Reranker, relevance floor, smaller top_k, better chunk boundaries |
-| **Stale context** (retrieval/index) | Confident but obsolete answers (old fees) | Freshness checks, score drift over time (online), ingestion tests | Corpus refresh pipeline, versioned docs, drift alerts ([ai_agent_drift_guide.md](ai_agent_drift_guide.md)) |
+| **Stale context** (retrieval/index) | Confident but obsolete answers (old fees) | Freshness checks, score drift over time (online), ingestion tests | Corpus refresh pipeline, versioned docs, drift alerts ([ai_agent_drift_guide.md](../ai_agent_drift_guide.md)) |
 | **Hallucination** (generation) | Answer states facts not in any source | faithfulness ↓ / groundedness ↓, hallucination metric ↑ | Prompt constraints ("only use the context"), lower temperature, stronger model, verify with citations |
 | **Off-topic** (generation) | Fluent answer to the wrong question | answer relevancy ↓ | Better prompt (question-focus), query intent handling, guardrails |
 | **Incomplete** (generation/retrieval) | Partial answer to multi-part questions | answer correctness ↓ on goldens, human review; then drill down (§9.3) | Multi-hop retrieval support, decomposition, chunk linking |
-| **Latency** (integration) | Slow responses | Latency percentiles (p95/p99) in harness and production | Cache, smaller context, cheaper reranker, streaming ([llm_latency_optimization_guide.md](llm_latency_optimization_guide.md)) |
+| **Latency** (integration) | Slow responses | Latency percentiles (p95/p99) in harness and production | Cache, smaller context, cheaper reranker, streaming ([llm_latency_optimization_guide.md](../llm_latency_optimization_guide.md)) |
 | **Cost** (integration) | Rising $/answer | Cost per answer tracked per version | Context trimming, judge sampling, model tiering |
 | **Formatting** (integration) | Broken citations/output schema | Schema/format assertions in harness; citation accuracy checks | Output validation layer, citation post-processing |
 
@@ -573,7 +573,7 @@ When a score is bad, **drill down layer by layer instead of guessing** (this is 
    - Precision@k low → **irrelevant context**: inspect what noise outranks the evidence → reranker/floor.
    - Retrieval fine + generation fine + correctness still low → **test-set/scope problem**: golden answer wrong, question ambiguous, or the system's scope doesn't cover the ask (§6.3, §4.4).
 4. **Cluster by type and tag.** Group failing samples by their question-type tags (§6.3) — "all negation questions fail recall" is an actionable pattern; "17 random failures" is not.
-5. **Open the traces.** For the representative failures, read the retrieved chunks and the prompt (this is where a tracing/observability layer — TruLens, LangSmith, Langfuse — earns its keep; see [trulens_guide.md](trulens_guide.md) §4 and [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md)).
+5. **Open the traces.** For the representative failures, read the retrieved chunks and the prompt (this is where a tracing/observability layer — TruLens, LangSmith, Langfuse — earns its keep; see [trulens_guide.md](trulens_guide.md) §4 and [llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md)).
 
 The drill-down is the same pattern the RAG triad is built for — TruLens' "find where your agent fails", Ragas' separable metric families — expressed as a workflow.
 
@@ -593,7 +593,7 @@ Evaluate all three layers, separately (§1.3), because the fixes differ:
 |-------|-----------------|-----------------------|
 | **Retrieval quality** | Does the assistant retrieve the right term-sheet/handbook passages? | A trade-finance answer is only as good as the clause it cites; wrong retrieval → wrong fees/limits |
 | **Generation quality** | Is the answer faithful to the retrieved docs? Does it address the question? | Hallucinated fees/limits are the compliance risk; off-topic answers waste front-office time |
-| **End-to-end quality** | Is the final answer correct against verified references? Did the user get what they needed? | Release sign-off and the model-validation file ([llm_evaluation_vs_validation_guide.md](llm_evaluation_vs_validation_guide.md)) |
+| **End-to-end quality** | Is the final answer correct against verified references? Did the user get what they needed? | Release sign-off and the model-validation file ([llm_evaluation_vs_validation_guide.md](../llm_evaluation_vs_validation_guide.md)) |
 
 ### 10.3 Metrics
 
@@ -637,7 +637,7 @@ Latency and cost are tracked per version as integration guardrails (§9.2) but a
 1. **Every PR touching the RAG stack:** fast-lane eval (30 items, ~5 min) → gate → block merge on regression.
 2. **Nightly / pre-release:** full-lane eval (100 goldens, all metrics) → report versioned (app × test-set) → stored for trend lines.
 3. **Quarterly:** golden review + corpus refresh + full re-eval + human review sample of judge outputs (§3.5) → updated validation evidence.
-4. **Production:** sampled live scoring (faithfulness, answer relevance on 5–10% of traffic) + implicit feedback (re-ask rate, escalations) per [ai_agent_drift_guide.md](ai_agent_drift_guide.md) — the online half of the two-track model (§7.4).
+4. **Production:** sampled live scoring (faithfulness, answer relevance on 5–10% of traffic) + implicit feedback (re-ask rate, escalations) per [ai_agent_drift_guide.md](../ai_agent_drift_guide.md) — the online half of the two-track model (§7.4).
 
 ### 10.7 Results Interpretation — Reading the Scores
 
@@ -670,7 +670,7 @@ Worked diagnosis of a plausible v1.0 run (mirrors the TruLens guide's failure st
 
 **Two approaches, three families used together:** reference-based (goldens — the gate), reference-free LLM-judge (the scale), human evaluation (the gold standard — calibration and high-risk review).
 
-**Two tracks, run both:** **offline** batch evals with CI/CD gates for development decisions; **online** sampled live scoring + feedback + drift detection for production assurance (cross-refs: [ai_agent_drift_guide.md](ai_agent_drift_guide.md), [llm_evaluation_vs_validation_guide.md](llm_evaluation_vs_validation_guide.md)).
+**Two tracks, run both:** **offline** batch evals with CI/CD gates for development decisions; **online** sampled live scoring + feedback + drift detection for production assurance (cross-refs: [ai_agent_drift_guide.md](../ai_agent_drift_guide.md), [llm_evaluation_vs_validation_guide.md](../llm_evaluation_vs_validation_guide.md)).
 
 **The pipeline:** test-set (versioned, covered, leakage-guarded) → run (traced) → metrics (per layer) → report (vs baseline) → gate (thresholds) — eval-driven, eval-first, regression-blocking. 50–100 goldens for dev, 100–200+ for release gates; synthetic testsets for breadth (human-reviewed sample).
 
@@ -729,4 +729,4 @@ A RAG system is a chain, and **you cannot improve what you cannot locate** — t
 
 ---
 
-*Series note: this guide is the tool-agnostic methodology playbook; the sibling [rag_evaluation_tools_comparison_guide.md](rag_evaluation_tools_comparison_guide.md) compares the tools head-to-head, [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md) is the tooling umbrella, and [trulens_guide.md](trulens_guide.md) / [ragas_guide.md](ragas_guide.md) are the deep-dives. Production monitoring builds on [ai_agent_drift_guide.md](ai_agent_drift_guide.md); the eval-vs-validation framing lives in [llm_evaluation_vs_validation_guide.md](llm_evaluation_vs_validation_guide.md).*
+*Series note: this guide is the tool-agnostic methodology playbook; the sibling [rag_evaluation_tools_comparison_guide.md](rag_evaluation_tools_comparison_guide.md) compares the tools head-to-head, [llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md) is the tooling umbrella, and [trulens_guide.md](trulens_guide.md) / [ragas_guide.md](ragas_guide.md) are the deep-dives. Production monitoring builds on [ai_agent_drift_guide.md](../ai_agent_drift_guide.md); the eval-vs-validation framing lives in [llm_evaluation_vs_validation_guide.md](../llm_evaluation_vs_validation_guide.md).*

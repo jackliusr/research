@@ -3,7 +3,7 @@
 > **Author:** Jack Liu Shurui · **Role:** Solution Architect, Crédit Agricole CIB
 > **Repo:** [github.com/jackliusr/research](https://github.com/jackliusr/research)
 > **Series:** LLM/AI Engineering Guides — the capstone of the RAG series
-> **Companion Guides:** [Advanced RAG Techniques](advanced_rag_techniques_guide.md) · [RAG vs Long-Context LLMs](rag_vs_long_context_llms_guide.md) · [RAG Optimization Techniques](rag_optimization_techniques_guide.md) · [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) · [RAG vs HyDE](rag_vs_hyde_guide.md) · [RAG with Data Streaming](rag_with_data_streaming_guide.md) · [Knowledge Distillation](../knowledge_distillation_guide.md) · [Constrained Decoding Frameworks](../constrained_decoding_frameworks_guide.md) · [Hierarchical Multi-Agent Frameworks](hierarchical_multi_agent_frameworks_guide.md) · [Hybrid Multi-Agent Systems](hybrid_multi_agent_systems_guide.md) · [Closed-Loop Data Engineering](closed_loop_data_engineering_guide.md) · [LLM Development Risks & Security](../llm_development_risks_security_guide.md)
+> **Companion Guides:** [Advanced RAG Techniques](advanced_rag_techniques_guide.md) · [RAG vs Long-Context LLMs](rag_vs_long_context_llms_guide.md) · [RAG Optimization Techniques](rag_optimization_techniques_guide.md) · [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) · [RAG vs HyDE](rag_vs_hyde_guide.md) · [RAG with Data Streaming](rag_with_data_streaming_guide.md) · [Knowledge Distillation](../../knowledge_distillation_guide.md) · [Constrained Decoding Frameworks](../../constrained_decoding_frameworks_guide.md) · [Hierarchical Multi-Agent Frameworks](../hierarchical_multi_agent_frameworks_guide.md) · [Hybrid Multi-Agent Systems](../hybrid_multi_agent_systems_guide.md) · [Closed-Loop Data Engineering](../closed_loop_data_engineering_guide.md) · [LLM Development Risks & Security](../llm_development_risks_security_guide.md)
 > **Last Updated:** August 2026
 
 ---
@@ -58,10 +58,10 @@ This guide is the **forward-looking capstone**. Each sibling guide owns a deep d
 | [RAG Optimization Techniques](rag_optimization_techniques_guide.md) | Chunking, hybrid retrieval, reranking, evaluation playbook | The retrieval baseline that Paradigms 3–9 assume; evaluation foundations for §11 and §13 |
 | [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) | LangChain/LlamaIndex/Haystack/DSPy orchestration | Framework substrate for agentic retrieval and context engineering |
 | [RAG vs HyDE](rag_vs_hyde_guide.md) / [RAG with Data Streaming](rag_with_data_streaming_guide.md) | Query-side levers / freshness pipelines | Query rewriting feeds agentic planning; streaming feeds the freshness half of Paradigm 2 |
-| [Knowledge Distillation](../knowledge_distillation_guide.md) | KD fundamentals, reasoning distillation, banking governance | The training-side machinery for Paradigm 5 |
-| [Hierarchical Multi-Agent Frameworks](hierarchical_multi_agent_frameworks_guide.md) / [Hybrid Multi-Agent Systems](hybrid_multi_agent_systems_guide.md) | Multi-agent orchestration patterns | The orchestration substrate for Paradigm 4 |
-| [Closed-Loop Data Engineering](closed_loop_data_engineering_guide.md) | Feedback pipelines, continuous improvement | The data-side machinery for Paradigm 9 |
-| [Constrained Decoding Frameworks](../constrained_decoding_frameworks_guide.md) | Structured output, schema-enforced generation | The output discipline for Paradigm 6 and verifier loops |
+| [Knowledge Distillation](../../knowledge_distillation_guide.md) | KD fundamentals, reasoning distillation, banking governance | The training-side machinery for Paradigm 5 |
+| [Hierarchical Multi-Agent Frameworks](../hierarchical_multi_agent_frameworks_guide.md) / [Hybrid Multi-Agent Systems](../hybrid_multi_agent_systems_guide.md) | Multi-agent orchestration patterns | The orchestration substrate for Paradigm 4 |
+| [Closed-Loop Data Engineering](../closed_loop_data_engineering_guide.md) | Feedback pipelines, continuous improvement | The data-side machinery for Paradigm 9 |
+| [Constrained Decoding Frameworks](../../constrained_decoding_frameworks_guide.md) | Structured output, schema-enforced generation | The output discipline for Paradigm 6 and verifier loops |
 | [LLM Development Risks & Security](../llm_development_risks_security_guide.md) | OWASP LLM Top 10, guardrails, red teaming | The guardrail layer every agentic/memory system needs (§13.5) |
 
 ---
@@ -194,7 +194,7 @@ if checks.fail:
 answer = draft + citations
 ```
 
-Verifiers can be: a smaller cross-encoder-style model checking entailment between claims and chunks; a PRM scoring step quality; a constrained-decoding schema check ([Constrained Decoding Frameworks](../constrained_decoding_frameworks_guide.md)); or a second LLM pass with a rubric. This is strictly stronger than Self-RAG's self-reflection ([Advanced RAG Techniques](advanced_rag_techniques_guide.md)) because the verifier is a *separate* model — it does not share the generator's blind spots.
+Verifiers can be: a smaller cross-encoder-style model checking entailment between claims and chunks; a PRM scoring step quality; a constrained-decoding schema check ([Constrained Decoding Frameworks](../../constrained_decoding_frameworks_guide.md)); or a second LLM pass with a rubric. This is strictly stronger than Self-RAG's self-reflection ([Advanced RAG Techniques](advanced_rag_techniques_guide.md)) because the verifier is a *separate* model — it does not share the generator's blind spots.
 
 ### 3.6 Implications for RAG
 
@@ -251,7 +251,7 @@ The quadratic-attention alternative family: **linear attention** (attention rewr
 Make the input smaller before the model reads it:
 
 - **LLMLingua** and its descendants — prompt compression: an alignment-tuned small LM prunes tokens (and later, structured prompts) that contribute little, shrinking context 5–20x with modest quality loss. Deep-dived in [Advanced RAG Techniques](advanced_rag_techniques_guide.md).
-- **Context distillation** — train a smaller model (or a summary layer) to compress a document set into a dense representation that preserves answerability. Related to the distillation machinery in the [Knowledge Distillation](../knowledge_distillation_guide.md) guide.
+- **Context distillation** — train a smaller model (or a summary layer) to compress a document set into a dense representation that preserves answerability. Related to the distillation machinery in the [Knowledge Distillation](../../knowledge_distillation_guide.md) guide.
 - **Hierarchical summarization** — map-reduce: corpus → section summaries → document summaries → query-relevant digest. The "read-wide cheaply" pattern from [RAG vs Long-Context LLMs](rag_vs_long_context_llms_guide.md) §7.
 
 ### 4.5 KV-cache compression
@@ -409,7 +409,7 @@ Four orchestration moves separate agentic retrieval from classical RAG:
 
 ### 6.3 Frameworks
 
-All the 2025–2026 orchestration stacks support this natively; the [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) guide compares them for retrieval workloads, and the [Hierarchical Multi-Agent Frameworks](hierarchical_multi_agent_frameworks_guide.md) / [Hybrid Multi-Agent Systems](hybrid_multi_agent_systems_guide.md) guides cover the multi-agent layer above:
+All the 2025–2026 orchestration stacks support this natively; the [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) guide compares them for retrieval workloads, and the [Hierarchical Multi-Agent Frameworks](../hierarchical_multi_agent_frameworks_guide.md) / [Hybrid Multi-Agent Systems](../hybrid_multi_agent_systems_guide.md) guides cover the multi-agent layer above:
 
 - **LangGraph** — graph-defined agents; the strongest for controllable tool loops, checkpointing, and human-in-the-loop.
 - **LlamaIndex AgentWorkflow** — agent over the full LlamaIndex retrieval/query toolbox.
@@ -473,7 +473,7 @@ Agentic retrieval is **adoptable today** — it is the most mature beyond-RAG pa
 | Access control | Per-user at retrieval time | Impossible per-user (one set of weights) |
 | Security | Prompt-injection surface via context | Fine-tuning data poisoning risk |
 
-The honest synthesis (matching the [Knowledge Distillation](../knowledge_distillation_guide.md) guide's governance framing): **RAG for what changes and what must be auditable; fine-tuning for what is stable, high-volume, and performance-critical.** They are complements, not competitors — and the 2026 frontier is explicit that the best systems use both (see §7.4's RAG-then-distill).
+The honest synthesis (matching the [Knowledge Distillation](../../knowledge_distillation_guide.md) guide's governance framing): **RAG for what changes and what must be auditable; fine-tuning for what is stable, high-volume, and performance-critical.** They are complements, not competitors — and the 2026 frontier is explicit that the best systems use both (see §7.4's RAG-then-distill).
 
 ### 7.2 Knowledge injection with LoRA adapters
 
@@ -491,7 +491,7 @@ Use retrieval to select *what to train on*: instead of fine-tuning on an entire 
 
 ### 7.4 RAG-then-distill — the killer pattern for repeated queries
 
-The highest-value adoptable pattern in this paradigm, and the one the [Knowledge Distillation](../knowledge_distillation_guide.md) guide's machinery enables:
+The highest-value adoptable pattern in this paradigm, and the one the [Knowledge Distillation](../../knowledge_distillation_guide.md) guide's machinery enables:
 
 ```
 1. Generate:  run RAG on the high-volume query set (golden queries × corpus)
@@ -524,7 +524,7 @@ These lines of work — largely dormant during the RAG boom — are re-emerging 
 | kNN-LM / Memorizing-Transformer-style serving | Research | High — not productized |
 | RETRO-style retrieval-trained foundation models | Research (frontier labs) | Consume when available |
 
-**Banking angle.** Distillation has a governance catch: a fine-tuned model is a **new model**, in SR 11-7 terms — it needs validation, documentation, and monitoring like any model component (the [Knowledge Distillation](../knowledge_distillation_guide.md) guide has the full banking section). The compliant pattern: keep distilled models narrow (one domain, one task), keep the verified RAG pairs as the audit trail, and re-validate on every retrain.
+**Banking angle.** Distillation has a governance catch: a fine-tuned model is a **new model**, in SR 11-7 terms — it needs validation, documentation, and monitoring like any model component (the [Knowledge Distillation](../../knowledge_distillation_guide.md) guide has the full banking section). The compliant pattern: keep distilled models narrow (one domain, one task), keep the verified RAG pairs as the audit trail, and re-validate on every retrain.
 
 ---
 
@@ -549,7 +549,7 @@ The compression toolkit (deep-dived in [Advanced RAG Techniques](advanced_rag_te
 
 ### 8.3 Context distillation
 
-Train a smaller model to **summarize/compress** a document set into a dense context that preserves answerability — a specialized application of knowledge distillation ([Knowledge Distillation](../knowledge_distillation_guide.md)). Two forms:
+Train a smaller model to **summarize/compress** a document set into a dense context that preserves answerability — a specialized application of knowledge distillation ([Knowledge Distillation](../../knowledge_distillation_guide.md)). Two forms:
 
 - **Answer-preserving distillation** — distill "given this corpus, produce the minimal context that still answers the golden question set"; the compressed context replaces the corpus in production.
 - **Long-context teacher → short-context student** — a 1M-window model reads the full corpus and produces structured digests; the production model reads only the digest. This is how banks get long-context *quality* at short-context *cost*.
@@ -566,7 +566,7 @@ Prompt caching is the reason Paradigm 2 (long context) became economically viabl
 
 ### 8.5 Structured context and constrained output
 
-Context engineering has an output side: **structured context** (XML/schema-encoded inputs, Claude-style document blocks) and **constrained decoding** (schema-enforced outputs, JSON mode, grammar constraints — the [Constrained Decoding Frameworks](../constrained_decoding_frameworks_guide.md) guide). Together they give the model an *addressable* world: the context is a database, the answer is a typed record, and both are machine-checkable. For banks this is not a convenience — it is how you get answers that flow into downstream systems (case files, STORs, risk systems) without a parsing layer that can break.
+Context engineering has an output side: **structured context** (XML/schema-encoded inputs, Claude-style document blocks) and **constrained decoding** (schema-enforced outputs, JSON mode, grammar constraints — the [Constrained Decoding Frameworks](../../constrained_decoding_frameworks_guide.md) guide). Together they give the model an *addressable* world: the context is a database, the answer is a typed record, and both are machine-checkable. For banks this is not a convenience — it is how you get answers that flow into downstream systems (case files, STORs, risk systems) without a parsing layer that can break.
 
 ### 8.6 Context as product — the shift in mindset
 
@@ -615,7 +615,7 @@ The hybrid pattern: **symbolic constraints prune, neural retrieval ranks.** A qu
 
 ### 9.4 Logical reasoning over retrieved facts
 
-Beyond retrieving structure, use it: **rule-based verification over retrieved facts.** If the graph says X owns Y and Y owns Z, and the query asks about X's exposure to Z, the system can *derive* the answer by traversal and verify the derivation chain — no generation involved until synthesis. In regulated contexts this is a feature regulators actually trust: the reasoning is a *traceable computation*, not a model's internal inference. (This is also the logic-programming lineage — Datalog/rule engines — meeting LLMs; the [Drools rule engine guide](../drools_rule_engine_alternatives_guide.md) in this repo covers the rule-engine side for readers who want that lineage.)
+Beyond retrieving structure, use it: **rule-based verification over retrieved facts.** If the graph says X owns Y and Y owns Z, and the query asks about X's exposure to Z, the system can *derive* the answer by traversal and verify the derivation chain — no generation involved until synthesis. In regulated contexts this is a feature regulators actually trust: the reasoning is a *traceable computation*, not a model's internal inference. (This is also the logic-programming lineage — Datalog/rule engines — meeting LLMs; the [Drools rule engine guide](../../drools_rule_engine_alternatives_guide.md) in this repo covers the rule-engine side for readers who want that lineage.)
 
 ### 9.5 Ontology-grounded RAG
 
@@ -630,7 +630,7 @@ For a bank, the ontology is typically the **data model itself** — the counterp
 
 ### 9.6 Reasoning over retrieved knowledge: the KG + LLM loop
 
-The canonical architecture (fully worked in [Neo4j Complete Guide](../neo4j_complete_guide.md) in this repo for the graph side):
+The canonical architecture (fully worked in [Neo4j Complete Guide](../../neo4j_complete_guide.md) in this repo for the graph side):
 
 ```
 question
@@ -728,7 +728,7 @@ A router (Paradigm 9 gives it a feedback loop; §12 makes it the center of the a
 
 ## 11. Paradigm 9 — Self-Improving / Learning Systems
 
-**What it is.** Systems that **improve from feedback** — retrieval, generation, and corpus all become tunable by the system's own performance. This is the paradigm that closes the loop: beyond-RAG systems are not static architectures; they are *learning* architectures, and the feedback that drives them is the by-product of every production query. The data-side machinery lives in the [Closed-Loop Data Engineering](closed_loop_data_engineering_guide.md) guide; here we focus on the LLM-side loop.
+**What it is.** Systems that **improve from feedback** — retrieval, generation, and corpus all become tunable by the system's own performance. This is the paradigm that closes the loop: beyond-RAG systems are not static architectures; they are *learning* architectures, and the feedback that drives them is the by-product of every production query. The data-side machinery lives in the [Closed-Loop Data Engineering](../closed_loop_data_engineering_guide.md) guide; here we focus on the LLM-side loop.
 
 ### 11.1 The feedback sources
 
@@ -797,7 +797,7 @@ queries → router (§12) → retrieval/reasoning/memory/long-context paths
        → promote → back to production
 ```
 
-The [Closed-Loop Data Engineering](closed_loop_data_engineering_guide.md) guide covers the data-pipeline mechanics (scheduling, idempotency, backfill); this loop is its LLM-side consumer.
+The [Closed-Loop Data Engineering](../closed_loop_data_engineering_guide.md) guide covers the data-pipeline mechanics (scheduling, idempotency, backfill); this loop is its LLM-side consumer.
 
 ### 11.8 Adoptable today
 
@@ -1049,10 +1049,10 @@ The adoption guidance, one final time: **strengthen your RAG baseline, add reaso
 - [RAG vs HyDE](rag_vs_hyde_guide.md) / [RAG with Data Streaming](rag_with_data_streaming_guide.md) — query-side levers and freshness
 
 **Supporting guides (this repo):**
-- [Knowledge Distillation](../knowledge_distillation_guide.md) — the training machinery behind Paradigm 5
-- [Constrained Decoding Frameworks](../constrained_decoding_frameworks_guide.md) — structured output for Paradigm 6
-- [Hierarchical Multi-Agent Frameworks](hierarchical_multi_agent_frameworks_guide.md) / [Hybrid Multi-Agent Systems](hybrid_multi_agent_systems_guide.md) — orchestration above Paradigm 4
-- [Closed-Loop Data Engineering](closed_loop_data_engineering_guide.md) — the data pipeline behind Paradigm 9
+- [Knowledge Distillation](../../knowledge_distillation_guide.md) — the training machinery behind Paradigm 5
+- [Constrained Decoding Frameworks](../../constrained_decoding_frameworks_guide.md) — structured output for Paradigm 6
+- [Hierarchical Multi-Agent Frameworks](../hierarchical_multi_agent_frameworks_guide.md) / [Hybrid Multi-Agent Systems](../hybrid_multi_agent_systems_guide.md) — orchestration above Paradigm 4
+- [Closed-Loop Data Engineering](../closed_loop_data_engineering_guide.md) — the data pipeline behind Paradigm 9
 - [LLM Development Risks & Security](../llm_development_risks_security_guide.md) — the guardrail layer for §13.5
 
 **Primary sources cited in this guide:**
@@ -1069,4 +1069,4 @@ The adoption guidance, one final time: **strengthen your RAG baseline, add reaso
 
 ---
 
-*End of guide. Companion material: [Advanced RAG Techniques](advanced_rag_techniques_guide.md) (the RAG-side frontier) · [RAG vs Long-Context LLMs](rag_vs_long_context_llms_guide.md) (the context-window battle) · [RAG Optimization Techniques](rag_optimization_techniques_guide.md) (the baseline and eval playbook) · [Knowledge Distillation](../knowledge_distillation_guide.md) (Paradigm 5's machinery) · [Closed-Loop Data Engineering](closed_loop_data_engineering_guide.md) (Paradigm 9's data side) · [Hierarchical Multi-Agent Frameworks](hierarchical_multi_agent_frameworks_guide.md) · [Hybrid Multi-Agent Systems](hybrid_multi_agent_systems_guide.md) (Paradigm 4's orchestration) · [Constrained Decoding Frameworks](../constrained_decoding_frameworks_guide.md) (Paradigm 6's output discipline) · [LLM Development Risks & Security](../llm_development_risks_security_guide.md) (the guardrails for §13.5).*
+*End of guide. Companion material: [Advanced RAG Techniques](advanced_rag_techniques_guide.md) (the RAG-side frontier) · [RAG vs Long-Context LLMs](rag_vs_long_context_llms_guide.md) (the context-window battle) · [RAG Optimization Techniques](rag_optimization_techniques_guide.md) (the baseline and eval playbook) · [Knowledge Distillation](../../knowledge_distillation_guide.md) (Paradigm 5's machinery) · [Closed-Loop Data Engineering](../closed_loop_data_engineering_guide.md) (Paradigm 9's data side) · [Hierarchical Multi-Agent Frameworks](../hierarchical_multi_agent_frameworks_guide.md) · [Hybrid Multi-Agent Systems](../hybrid_multi_agent_systems_guide.md) (Paradigm 4's orchestration) · [Constrained Decoding Frameworks](../../constrained_decoding_frameworks_guide.md) (Paradigm 6's output discipline) · [LLM Development Risks & Security](../llm_development_risks_security_guide.md) (the guardrails for §13.5).*

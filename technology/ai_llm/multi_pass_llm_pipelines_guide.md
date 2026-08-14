@@ -2,7 +2,7 @@
 
 > A comprehensive guide to chaining multiple LLM passes for improved output quality, reliability, and complex task completion.
 >
-> Part of the LLM/AI Engineering series. Also see: [MLOps Lifecycle Guide](../mlops_lifecycle_guide.md), [LLM Compression Guide](../llm_compression_guide.md), [Guard Models Guide](../guard_models_guide.md), [ML Platform Guide](../ml_platform_guide.md).
+> Part of the LLM/AI Engineering series. Also see: [MLOps Lifecycle Guide](../mlops_lifecycle_guide.md), [LLM Compression Guide](../llm_compression_guide.md), [Guard Models Guide](llm_guard_models_guide.md), [ML Platform Guide](../ml_platform_guide.md).
 
 ---
 

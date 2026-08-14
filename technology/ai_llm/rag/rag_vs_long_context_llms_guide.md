@@ -3,7 +3,7 @@
 > **Author:** Jack Liu Shurui · **Role:** Solution Architect, Crédit Agricole CIB
 > **Repo:** [github.com/jackliusr/research](https://github.com/jackliusr/research)
 > **Series:** LLM/AI Engineering Guides
-> **Companion Guides:** [Advanced RAG Techniques](advanced_rag_techniques_guide.md) · [RAG Optimization Techniques](rag_optimization_techniques_guide.md) · [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) · [RAG vs HyDE](rag_vs_hyde_guide.md) · [Query Rewriting in RAG](query_rewriting_rag_guide.md) · [LLM Latency Optimization](llm_latency_optimization_guide.md) · [Constrained Decoding Frameworks](../constrained_decoding_frameworks_guide.md) · [LLM Development Risks & Security](../llm_development_risks_security_guide.md)
+> **Companion Guides:** [Advanced RAG Techniques](advanced_rag_techniques_guide.md) · [RAG Optimization Techniques](rag_optimization_techniques_guide.md) · [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) · [RAG vs HyDE](rag_vs_hyde_guide.md) · [Query Rewriting in RAG](query_rewriting_rag_guide.md) · [LLM Latency Optimization](../llm_latency_optimization_guide.md) · [Constrained Decoding Frameworks](../../constrained_decoding_frameworks_guide.md) · [LLM Development Risks & Security](../llm_development_risks_security_guide.md)
 > **Last Updated:** August 2026
 
 ---
@@ -63,8 +63,8 @@ This guide is the *architecture-level* comparison in the RAG series. Where the s
 | [RAG Optimization Techniques](rag_optimization_techniques_guide.md) | Chunking, hybrid retrieval, reranking, evaluation playbook | The retrieval baseline every hybrid assumes |
 | [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) | LangChain/LlamaIndex/Haystack/DSPy orchestration | Framework support for hybrid RAG + long-context (§15.4) |
 | [RAG vs HyDE](rag_vs_hyde_guide.md) / [Query Rewriting in RAG](query_rewriting_rag_guide.md) | Pre-retrieval query-side techniques | Query-side levers that also help hybrid routing |
-| [LLM Latency Optimization](llm_latency_optimization_guide.md) | Prefill/decode, speculative decoding, KV-cache tricks | The latency math in §9 builds on it |
-| [Constrained Decoding Frameworks](../constrained_decoding_frameworks_guide.md) | Structured output, JSON mode | Used for citation-enforced answers in §12 |
+| [LLM Latency Optimization](../llm_latency_optimization_guide.md) | Prefill/decode, speculative decoding, KV-cache tricks | The latency math in §9 builds on it |
+| [Constrained Decoding Frameworks](../../constrained_decoding_frameworks_guide.md) | Structured output, JSON mode | Used for citation-enforced answers in §12 |
 
 ---
 
@@ -409,7 +409,7 @@ Caching changes the long-context economics for **repeated-corpus** workloads: ca
 
 ### 8.5 Self-hosting changes the equation
 
-Self-hosted open models (Llama 3.3 70B/405B, Qwen 2.5, DeepSeek, Kimi K2) have near-zero *marginal* token cost — the cost is GPU capex, which amortizes to roughly $0.05–0.50/M effective depending on utilization. At that price, stuffing a 100k-token corpus costs ~$0.01–0.05 per query, and **long-context becomes cost-competitive with API RAG** — which is why cost-sensitive banks run long-context workloads on-prem (see the [LLM Frameworks Comparison](llm_frameworks_comparison_guide.md) and [Ollama/Xinference/LocalAI guide](ollama_xinference_localai_guide.md)). The trade moves from token price to *serving* price: 1M-token contexts need large KV caches and long prefill, so throughput per GPU collapses (the [LLM Latency Optimization](llm_latency_optimization_guide.md) guide covers the serving math).
+Self-hosted open models (Llama 3.3 70B/405B, Qwen 2.5, DeepSeek, Kimi K2) have near-zero *marginal* token cost — the cost is GPU capex, which amortizes to roughly $0.05–0.50/M effective depending on utilization. At that price, stuffing a 100k-token corpus costs ~$0.01–0.05 per query, and **long-context becomes cost-competitive with API RAG** — which is why cost-sensitive banks run long-context workloads on-prem (see the [LLM Frameworks Comparison](../llm_frameworks_comparison_guide.md) and [Ollama/Xinference/LocalAI guide](../ollama_xinference_localai_guide.md)). The trade moves from token price to *serving* price: 1M-token contexts need large KV caches and long prefill, so throughput per GPU collapses (the [LLM Latency Optimization](../llm_latency_optimization_guide.md) guide covers the serving math).
 
 ---
 
@@ -578,7 +578,7 @@ Banking query volumes are the point of §8: 1,000+ queries/day is routine, and t
 
 ### 12.10 Compliance: citations, audit trails, SR 11-7
 
-- **Citations/provenance are mandatory for regulatory answers** — the question "why did the system say this?" is a regulator question, not a feature request. **RAG is the compliant default** because retrieval traces *are* evidence (§5.7). If you use long-context, you must bolt on **forced citations** — instruct the model to answer with quoted passages + document references, verify them against the source at runtime, and drop unsupported claims (see the citation-enforcement techniques in [Advanced RAG](advanced_rag_techniques_guide.md) and [Constrained Decoding](../constrained_decoding_frameworks_guide.md) for structured citation output). Treat unverified long-context citations as hallucinations until proven otherwise.
+- **Citations/provenance are mandatory for regulatory answers** — the question "why did the system say this?" is a regulator question, not a feature request. **RAG is the compliant default** because retrieval traces *are* evidence (§5.7). If you use long-context, you must bolt on **forced citations** — instruct the model to answer with quoted passages + document references, verify them against the source at runtime, and drop unsupported claims (see the citation-enforcement techniques in [Advanced RAG](advanced_rag_techniques_guide.md) and [Constrained Decoding](../../constrained_decoding_frameworks_guide.md) for structured citation output). Treat unverified long-context citations as hallucinations until proven otherwise.
 - **Audit trails:** log the full retrieval trace (query, chunks, scores, sources) for RAG; for long-context, log the corpus version + prompt hash so an answer can be reproduced later. Both need versioned corpora.
 - **SR 11-7 / MAS model-risk documentation:** both approaches are *models* in the regulatory sense when outputs affect decisions. Document: intended use, data lineage, validation evidence (your §11.3 golden-set results), monitoring, and escalation. The decision framework of §14 doubles as the *model selection rationale* regulators will ask for — keep the A/B evidence that justified RAG vs long-context vs hybrid.
 
@@ -586,7 +586,7 @@ Banking query volumes are the point of §8: 1,000+ queries/day is routine, and t
 
 - **Long-context with an API provider = sending the full corpus to the provider.** A 2M-token prompt containing customer data, deal terms, or case files is a data-transfer event: check the provider's data-handling agreement (zero-retention terms, region of processing, sub-processor list) *before* the pilot, and note that full-corpus exposure is invisible to your own DLP controls once it is in the prompt.
 - **RAG sends only relevant chunks** — the retrieval layer is also a data-minimization layer: the provider sees ~3k tokens per query, not the corpus. For sensitive data (PII, syndicated deal terms, investigations), RAG with **access control at retrieval time** (§5.5) is the default; full corpus in context is more PII exposure risk and requires explicit sign-off.
-- **On-prem/self-host** removes the residency question for long-context (see [Ollama/Xinference/LocalAI guide](ollama_xinference_localai_guide.md)) — at the cost of owning the serving stack (KV-cache memory, prefill throughput) that §9 quantifies.
+- **On-prem/self-host** removes the residency question for long-context (see [Ollama/Xinference/LocalAI guide](../ollama_xinference_localai_guide.md)) — at the cost of owning the serving stack (KV-cache memory, prefill throughput) that §9 quantifies.
 
 ---
 
@@ -855,4 +855,4 @@ For a bank, the framing is simple: **RAG is how you stay in budget, in complianc
 
 ---
 
-*End of guide. Companion material: [Advanced RAG Techniques](advanced_rag_techniques_guide.md) (GraphRAG, agentic, adaptive routing) · [RAG Optimization Techniques](rag_optimization_techniques_guide.md) (the retrieval baseline) · [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) (stack selection) · [RAG vs HyDE](rag_vs_hyde_guide.md) · [Query Rewriting in RAG](query_rewriting_rag_guide.md) · [LLM Latency Optimization](llm_latency_optimization_guide.md) (prefill/KV-cache math) · [Constrained Decoding Frameworks](../constrained_decoding_frameworks_guide.md) (citation-structured output) · [LLM Development Risks & Security](../llm_development_risks_security_guide.md).*
+*End of guide. Companion material: [Advanced RAG Techniques](advanced_rag_techniques_guide.md) (GraphRAG, agentic, adaptive routing) · [RAG Optimization Techniques](rag_optimization_techniques_guide.md) (the retrieval baseline) · [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) (stack selection) · [RAG vs HyDE](rag_vs_hyde_guide.md) · [Query Rewriting in RAG](query_rewriting_rag_guide.md) · [LLM Latency Optimization](../llm_latency_optimization_guide.md) (prefill/KV-cache math) · [Constrained Decoding Frameworks](../../constrained_decoding_frameworks_guide.md) (citation-structured output) · [LLM Development Risks & Security](../llm_development_risks_security_guide.md).*

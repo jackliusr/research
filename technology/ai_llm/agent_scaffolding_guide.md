@@ -97,7 +97,7 @@ This guide is the **foundation layer of the agents series** — it covers the *s
 - The loop, architectures (ReAct, plan-and-execute), design patterns, control, evaluation, frameworks, and banking adoption: [autonomous_agents_guide.md](autonomous_agents_guide.md)
 - Tool standardization via MCP (the *protocol* layer under the tool scaffold): [mcp_framework_tools_guide.md](mcp_framework_tools_guide.md)
 - Runtime, state, and caching (what the loop runs on): [agent_runtime_cache_design_guide.md](agent_runtime_cache_design_guide.md)
-- Long-term memory via vector stores: [vector_databases_guide.md](vector_databases_guide.md)
+- Long-term memory via vector stores: [vector_databases_guide.md](rag/vector_databases_guide.md)
 - Guardrails, model risk, and responsible AI: [implementing-responsible-ai.md](implementing-responsible-ai.md)
 
 ---
@@ -136,7 +136,7 @@ Not every scaffold uses these exact filenames — frameworks move things around 
 | `tools.py` | **Tool registry** | `@tool`-decorated functions (name, description, JSON schema, implementation), permission annotations, the registry list passed to the model |
 | `prompts.py` | **Prompt scaffold** | The system-prompt builder: role, context, instructions, guardrails, output format; versioned prompt constants |
 | `config.yaml` | **Configuration** | Model name, temperature, max tokens, tool allowlist, memory settings, budget limits, logging level |
-| `memory.py` | **Memory layer** | Conversation buffer (short-term), summary memory (compression), vector store client (long-term — [vector_databases_guide.md](vector_databases_guide.md)) |
+| `memory.py` | **Memory layer** | Conversation buffer (short-term), summary memory (compression), vector store client (long-term — [vector_databases_guide.md](rag/vector_databases_guide.md)) |
 | `state.py` | **Agent state** | Typed conversation state (messages, context) and task state (goal, plan, progress, artifacts) |
 | `logging_setup.py` | **Observability** | Structured JSON logs, trace/span hooks (LangSmith, Langfuse), audit-log sink ([agent_runtime_cache_design_guide.md](agent_runtime_cache_design_guide.md)) |
 | `tests/` | **Testability** | Golden tests (canned input → expected tool-call sequence → expected answer), tool unit tests, config validation tests |
@@ -377,7 +377,7 @@ The memory layer pattern (architecture and caching in [agent_runtime_cache_desig
 
 - **Short-term — conversation buffer**: the raw recent messages; the scaffold owns the window policy (keep last N turns raw).
 - **Compression — summary memory**: older turns are summarized into a rolling summary ("compress, don't dump" — [autonomous_agents_guide.md](autonomous_agents_guide.md) §4). The scaffold implements the trigger (buffer full → summarize → archive) and the summary's place in the prompt.
-- **Long-term — vector memory**: facts and documents in a vector store for retrieval ([vector_databases_guide.md](vector_databases_guide.md)). The scaffold provides the client wrapper, the embedding hook, and the retrieval tool (`memory_search`) — so long-term memory arrives as *a tool the agent can call*, consistent with §5.2.
+- **Long-term — vector memory**: facts and documents in a vector store for retrieval ([vector_databases_guide.md](rag/vector_databases_guide.md)). The scaffold provides the client wrapper, the embedding hook, and the retrieval tool (`memory_search`) — so long-term memory arrives as *a tool the agent can call*, consistent with §5.2.
 - **Persistence** — the scaffold defines *where* memory lives per environment (in-memory for tests, SQLite/Redis/object store for prod) and the serialization of state for checkpoint/resume (§2.3).
 
 ### 5.5 The Config Scaffold
@@ -927,7 +927,7 @@ The through-line: **scaffolding is becoming a discipline with artifacts, standar
 15. MindStudio, *"How to Use AI Agent Skills and Plugins in Claude Code and Codex"* — https://www.mindstudio.ai/blog/how-to-use-ai-agent-skills-plugins-claude-code-codex
 16. Cloudflare agents-starter template — https://developers.cloudflare.com/agents/
 
-**Series cross-references (this repository):** [autonomous_agents_guide.md](autonomous_agents_guide.md) (umbrella — architectures §3, patterns §4, control §5, evaluation §6, frameworks §7, banking §8) · [mcp_framework_tools_guide.md](mcp_framework_tools_guide.md) · [agent_runtime_cache_design_guide.md](agent_runtime_cache_design_guide.md) · [vector_databases_guide.md](vector_databases_guide.md) · [implementing-responsible-ai.md](implementing-responsible-ai.md) · [hybrid_multi_agent_systems_guide.md](hybrid_multi_agent_systems_guide.md) · [hierarchical_multi_agent_frameworks_guide.md](hierarchical_multi_agent_frameworks_guide.md) · [ai_agent_drift_guide.md](ai_agent_drift_guide.md) · [coding_agents_research.md](coding_agents_research.md) · [llm_agent_use_cases.md](llm_agent_use_cases.md) · [china_ai_agent_frameworks.md](china_ai_agent_frameworks.md) · [enterprise_ai_platforms_guide.md](enterprise_ai_platforms_guide.md) · [prompt_injection_guide.md](prompt_injection_guide.md) · [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md) · banking series: [financial_risk_compliance_systems_guide.md](../banking/financial_risk_compliance_systems_guide.md), [core_banking_systems_guide.md](../banking/core_banking_systems_guide.md)
+**Series cross-references (this repository):** [autonomous_agents_guide.md](autonomous_agents_guide.md) (umbrella — architectures §3, patterns §4, control §5, evaluation §6, frameworks §7, banking §8) · [mcp_framework_tools_guide.md](mcp_framework_tools_guide.md) · [agent_runtime_cache_design_guide.md](agent_runtime_cache_design_guide.md) · [vector_databases_guide.md](rag/vector_databases_guide.md) · [implementing-responsible-ai.md](implementing-responsible-ai.md) · [hybrid_multi_agent_systems_guide.md](hybrid_multi_agent_systems_guide.md) · [hierarchical_multi_agent_frameworks_guide.md](hierarchical_multi_agent_frameworks_guide.md) · [ai_agent_drift_guide.md](ai_agent_drift_guide.md) · [coding_agents_research.md](coding_agents_research.md) · [llm_agent_use_cases.md](llm_agent_use_cases.md) · [china_ai_agent_frameworks.md](china_ai_agent_frameworks.md) · [enterprise_ai_platforms_guide.md](enterprise_ai_platforms_guide.md) · [prompt_injection_guide.md](prompt_injection_guide.md) · [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md) · banking series: [financial_risk_compliance_systems_guide.md](../banking/financial_risk_compliance_systems_guide.md), [core_banking_systems_guide.md](../banking/core_banking_systems_guide.md)
 
 *Verification note: facts marked "verified" above were confirmed against the cited sources during research (August 2026). Where a claim could not be confirmed (notably the existence of a repository literally named `openai/agent-scaffolding` — §3.1), it is flagged explicitly rather than asserted.*
 

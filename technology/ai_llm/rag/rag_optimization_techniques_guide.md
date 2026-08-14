@@ -3,7 +3,7 @@
 > **Author:** Jack Liu Shurui · **Role:** Solution Architect, Crédit Agricole CIB
 > **Repo:** [github.com/jackliusr/research](https://github.com/jackliusr/research)
 > **Series:** LLM/AI Engineering Guides
-> **Companion Guides:** [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) · [RAG vs HyDE](rag_vs_hyde_guide.md) · [Query Rewriting in RAG](query_rewriting_rag_guide.md) · [LLM Latency Optimization](llm_latency_optimization_guide.md) · [LLM Evaluation Frameworks](llm_evaluation_frameworks_guide.md)
+> **Companion Guides:** [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) · [RAG vs HyDE](rag_vs_hyde_guide.md) · [Query Rewriting in RAG](query_rewriting_rag_guide.md) · [LLM Latency Optimization](../llm_latency_optimization_guide.md) · [LLM Evaluation Frameworks](../llm_evaluation_frameworks_guide.md)
 > **Last Updated:** July 2026
 
 ---
@@ -39,7 +39,7 @@ This guide is the practical playbook for that process. It walks the entire pipel
 
 It is deliberately practical: configuration values, tool names, code sketches, and decision rules rather than theory. It assumes you are already running a RAG pipeline (built on LangChain, LlamaIndex, Haystack, or a managed service — see the [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) for stack selection) and now need to make it *good*.
 
-**Scope and companion guides.** This playbook covers the full optimization cycle end-to-end. Three sibling guides go deeper on specific levers and are referenced where relevant rather than duplicated: [Query Rewriting in RAG](query_rewriting_rag_guide.md) (pre-retrieval query transformations), [RAG vs HyDE](rag_vs_hyde_guide.md) (hypothetical-document embeddings), [LLM Latency Optimization](llm_latency_optimization_guide.md) (model- and serving-level latency techniques), and [LLM Evaluation Frameworks](llm_evaluation_frameworks_guide.md) (judge models, evaluation harnesses, CI integration).
+**Scope and companion guides.** This playbook covers the full optimization cycle end-to-end. Three sibling guides go deeper on specific levers and are referenced where relevant rather than duplicated: [Query Rewriting in RAG](query_rewriting_rag_guide.md) (pre-retrieval query transformations), [RAG vs HyDE](rag_vs_hyde_guide.md) (hypothetical-document embeddings), [LLM Latency Optimization](../llm_latency_optimization_guide.md) (model- and serving-level latency techniques), and [LLM Evaluation Frameworks](../llm_evaluation_frameworks_guide.md) (judge models, evaluation harnesses, CI integration).
 
 ### 1.1 The core truth: RAG quality is a chain, and chains break at the weakest link
 
@@ -684,13 +684,13 @@ Beyond the single-pass retrieve-then-read pipeline, several patterns move qualit
 | **Corrective RAG (CRAG)** | A lightweight evaluator scores retrieval quality; if weak, correct via web search or knowledge refinement before generating | Noisy corpora; when retrieval confidence varies wildly | Evaluator call + possible search |
 | **Agentic RAG** | An agent decides *whether* to retrieve, *what* to query, iterates (multi-hop), and can use tools | Multi-hop questions, heterogeneous sources, evolving information needs | Unbounded calls; needs guardrails, budgets, and tracing (§9) |
 
-**Selection rule:** single-pass RAG first; add self-reflection or CRAG when faithfulness targets are unmet and you can afford the latency; go agentic only when queries are genuinely multi-step (agent loops are expensive to run *and* to operate — see [Hybrid & Multi-Agent Systems](hybrid_multi_agent_systems_guide.md) for architecture guidance).
+**Selection rule:** single-pass RAG first; add self-reflection or CRAG when faithfulness targets are unmet and you can afford the latency; go agentic only when queries are genuinely multi-step (agent loops are expensive to run *and* to operate — see [Hybrid & Multi-Agent Systems](../hybrid_multi_agent_systems_guide.md) for architecture guidance).
 
 ---
 
 ## 8. Latency and Cost Optimization
 
-A RAG system that is correct but slow and expensive will not survive production. This section is about the pipeline-level levers; model- and serving-level techniques (speculative decoding, quantization, KV-cache tricks) are covered in [LLM Latency Optimization](llm_latency_optimization_guide.md).
+A RAG system that is correct but slow and expensive will not survive production. This section is about the pipeline-level levers; model- and serving-level techniques (speculative decoding, quantization, KV-cache tricks) are covered in [LLM Latency Optimization](../llm_latency_optimization_guide.md).
 
 ### 8.1 Where the time goes — the latency budget
 
@@ -856,7 +856,7 @@ The foundation of everything. Curate 50–200 question–answer pairs with, for 
 | **Context recall** | Retrieved context contains what's needed | Recall failure (§3.4) |
 | **Context entity recall** | Key entities in the reference answer appear in the context | Entity-level recall failures |
 
-RAGAS is LLM-judge based — you can run it on any pipeline regardless of framework (it's metric code, not a framework). See [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) for how it compares with TruLens and DeepEval, and [LLM Evaluation Frameworks](llm_evaluation_frameworks_guide.md) for judge-model selection and calibration.
+RAGAS is LLM-judge based — you can run it on any pipeline regardless of framework (it's metric code, not a framework). See [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) for how it compares with TruLens and DeepEval, and [LLM Evaluation Frameworks](../llm_evaluation_frameworks_guide.md) for judge-model selection and calibration.
 
 #### Retrieval-only metrics
 

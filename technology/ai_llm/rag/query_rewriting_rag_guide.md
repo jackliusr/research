@@ -3,7 +3,7 @@
 > **Author:** Jack Liu Shurui · **Role:** Solution Architect, Crédit Agricole CIB
 > **Repo:** [github.com/jackliusr/research](https://github.com/jackliusr/research)
 > **Series:** LLM/AI Engineering Guides
-> **Companion Guides:** [MLOps Lifecycle](mlops_lifecycle_frameworks_guide.md) · [LLM Guard Models](llm_guard_models_guide.md) · [Multi-Pass LLM Pipelines](multi_pass_llm_pipelines_guide.md) · [LLM Evaluation Frameworks](llm_evaluation_frameworks_guide.md)
+> **Companion Guides:** [MLOps Lifecycle](../../mlops_lifecycle_frameworks_guide.md) · [LLM Guard Models](../llm_guard_models_guide.md) · [Multi-Pass LLM Pipelines](../multi_pass_llm_pipelines_guide.md) · [LLM Evaluation Frameworks](../llm_evaluation_frameworks_guide.md)
 > **Last Updated:** July 2026
 
 ---

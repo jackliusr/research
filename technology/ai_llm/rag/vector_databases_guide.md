@@ -3,7 +3,7 @@
 > **Author:** Jack Liu Shurui · **Role:** Solution Architect, Crédit Agricole CIB
 > **Repo:** [github.com/jackliusr/research](https://github.com/jackliusr/research)
 > **Series:** LLM/AI Engineering Guides
-> **Companion Guides:** [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) · [RAG Optimization Techniques](rag_optimization_techniques_guide.md) · [Beyond RAG — Agent Memory](beyond_rag_guide.md) · [Advanced RAG Techniques](advanced_rag_techniques_guide.md) · [BM25 / FAISS / ScaNN Research](bm25_faiss_scann_research.md) · [Agent Runtime Cache Design](agent_runtime_cache_design_guide.md) · [On-Prem LLM Deployment](../on_prem_llm_deployment_guide.md) · [LLM Development Risks & Security](../llm_development_risks_security_guide.md)
+> **Companion Guides:** [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) · [RAG Optimization Techniques](rag_optimization_techniques_guide.md) · [Beyond RAG — Agent Memory](beyond_rag_guide.md) · [Advanced RAG Techniques](advanced_rag_techniques_guide.md) · [BM25 / FAISS / ScaNN Research](bm25_faiss_scann_research.md) · [Agent Runtime Cache Design](../agent_runtime_cache_design_guide.md) · [On-Prem LLM Deployment](../on_prem_llm_deployment_guide.md) · [LLM Development Risks & Security](../llm_development_risks_security_guide.md)
 > **Last Updated:** August 2026
 
 ---
@@ -370,7 +370,7 @@ Vector indexes are **fundamentally append-oriented**: graph edges and cluster as
 - **Hard delete** — actually remove from storage and index. Expensive: HNSW node removal requires re-linking neighbors; products either rebuild affected structures lazily or defer to compaction.
 - **Update = delete + insert** — replace the vector, mark the old one tombstoned. Note the *semantic* hazard: updating a *payload* (metadata) without the vector is cheap and indexed; updating the *vector itself* changes its position in the index.
 
-This mirrors the cache-design lessons in the [Agent Runtime Cache Design guide](agent_runtime_cache_design_guide.md) (tombstones, invalidation, deferred reclamation) — the same patterns, in a database. **Consequence for architects:** if your workload is delete-heavy (e.g., documents expire, tenants churn), either accept compaction costs, use partitioning by lifecycle (drop whole partitions — the cheapest delete of all), or choose a product with efficient deletion. "Delete 5% of a 50M-vector HNSW daily" is a design problem, not an afterthought.
+This mirrors the cache-design lessons in the [Agent Runtime Cache Design guide](../agent_runtime_cache_design_guide.md) (tombstones, invalidation, deferred reclamation) — the same patterns, in a database. **Consequence for architects:** if your workload is delete-heavy (e.g., documents expire, tenants churn), either accept compaction costs, use partitioning by lifecycle (drop whole partitions — the cheapest delete of all), or choose a product with efficient deletion. "Delete 5% of a 50M-vector HNSW daily" is a design problem, not an afterthought.
 
 ### 9.4 Persistence: WAL + snapshots
 
@@ -497,7 +497,7 @@ The four categories answer different questions: *do I want a server or a library
 
 - **Elasticsearch** — the search incumbent: dense vector fields, HNSW (and int8/BBQ quantization), kNN search, and the strongest **BM25 + dense hybrid with RRF** in the industry; mature ops, security, and observability. If you already run Elasticsearch, its kNN is usually "good enough" — see §14.
 - **OpenSearch** — the open-source fork: kNN (HNSW, IVF, and now FAISS-backed), hybrid with RRF; AWS-hosted (OpenSearch Serverless) — a common AWS-default.
-- **Redis** — Redisearch vector support: fast HNSW in a cache-grade system; great for *hot* vector lookups, less so as the system of record (memory cost, durability model). The "cache/DB hybrid" — vector caching patterns are in the [Agent Runtime Cache Design guide](agent_runtime_cache_design_guide.md).
+- **Redis** — Redisearch vector support: fast HNSW in a cache-grade system; great for *hot* vector lookups, less so as the system of record (memory cost, durability model). The "cache/DB hybrid" — vector caching patterns are in the [Agent Runtime Cache Design guide](../agent_runtime_cache_design_guide.md).
 - **MongoDB Atlas Vector Search** — vectors as first-class BSON data with an integrated ANN index; attractive when the app is already MongoDB.
 - **Azure AI Search** — managed search + vectors + hybrid + semantic reranking; the natural choice in Azure shops.
 - **Google Vertex AI Vector Search** (formerly Matching Engine) — managed ANN at Google scale (ScaNN-based); paired with Gemini embeddings.
@@ -778,7 +778,7 @@ Bank data (client information, trades, surveillance outputs) has residency and s
 
 **Embeddings can leak training/reference data.** Embedding models are trained on text; with the right techniques (inversion attacks, nearest-neighbor probing), vectors can be reverse-engineered toward the original text, and retrieval itself *reveals* which documents exist. For a bank, embeddings derived from client names, account references, or trade details are sensitive-by-derivation:
 
-- **Redact/hash before embedding** — strip identifiers (names, account numbers, email addresses) or replace with placeholders *before* the embedding step; store the mapping outside the vector store. The [Agent Runtime Cache Design guide](agent_runtime_cache_design_guide.md) covers the hashing/redaction patterns in the cache context — the same discipline applies at the embedding boundary.
+- **Redact/hash before embedding** — strip identifiers (names, account numbers, email addresses) or replace with placeholders *before* the embedding step; store the mapping outside the vector store. The [Agent Runtime Cache Design guide](../agent_runtime_cache_design_guide.md) covers the hashing/redaction patterns in the cache context — the same discipline applies at the embedding boundary.
 - **Treat the vector DB as a sensitive store** — access control, encryption, audit (§16.6) apply to the *vectors themselves*, not just the payloads.
 - **Document the derivation** for GDPR/data-protection records: "embeddings are personal data when derived from personal data" is the conservative, defensible position.
 - See the [LLM Development Risks & Security guide](../llm_development_risks_security_guide.md) for the fuller risk analysis of embeddings and retrieval.

@@ -45,7 +45,7 @@ This guide is the **umbrella reference for the agents series** in this repositor
 | [coding_agents_research.md](coding_agents_research.md) | Software engineering agents (SWE-bench, Claude Code, Devin) |
 | [china_ai_agent_frameworks.md](china_ai_agent_frameworks.md) | Chinese agent frameworks and ecosystem |
 | [mcp_framework_tools_guide.md](mcp_framework_tools_guide.md) | Model Context Protocol — tool/context standardization |
-| [pkm_llm_age_guide.md](pkm_llm_age_guide.md) | Personal knowledge management with LLMs |
+| [pkm_llm_age_guide.md](rag/pkm_llm_age_guide.md) | Personal knowledge management with LLMs |
 | [enterprise_ai_platforms_guide.md](enterprise_ai_platforms_guide.md) | Enterprise agent platforms (OpenAI, Anthropic, Google, Microsoft) |
 
 ### 1.2 The LLM-Based Agent: Model + Tools + Loop
@@ -362,7 +362,7 @@ Memory is what separates agents from "a model with extra steps." Four types, per
 | Memory type | What it holds | Implementation | Failure mode |
 |---|---|---|---|
 | **Short-term (context)** | Current task state, recent observations | The LLM context window; message history | Context overflow, recency bias, lost early steps |
-| **Long-term (knowledge)** | Facts, documents, precedents | Vector store + RAG ([vector_databases_guide.md](vector_databases_guide.md), RAG guides) | Stale/unretrieved knowledge; retrieval noise |
+| **Long-term (knowledge)** | Facts, documents, precedents | Vector store + RAG ([vector_databases_guide.md](rag/vector_databases_guide.md), RAG guides) | Stale/unretrieved knowledge; retrieval noise |
 | **Episodic (session history)** | Past sessions, prior task outcomes, reflections | Session store; Reflexion-style buffers | Cross-session leakage; privacy |
 | **Working (scratchpad)** | Intermediate reasoning, plan state, partial results | Structured state (JSON), tool results cache | State corruption, staleness |
 
@@ -370,7 +370,7 @@ Design rules:
 
 - **Match the memory to the task horizon.** Single-session tasks need only context + scratchpad; recurring tasks (a weekly compliance digest) need episodic + long-term memory.
 - **Compress, don't dump.** Summarize old turns, keep raw recent turns — the classic context-management pattern (see [agent_runtime_cache_design_guide.md](agent_runtime_cache_design_guide.md) for caching/state architecture).
-- **RAG is not a memory shortcut** — retrieval needs its own design (chunking, reranking, citation grounding): see [advanced_rag_techniques_guide.md](advanced_rag_techniques_guide.md) and the RAG series.
+- **RAG is not a memory shortcut** — retrieval needs its own design (chunking, reranking, citation grounding): see [advanced_rag_techniques_guide.md](rag/advanced_rag_techniques_guide.md) and the RAG series.
 - **Treat memory as a security surface** — long-term memory can be poisoned by injected content (Section 5.1); sessions must respect data-privacy boundaries (PII segregation, retention).
 
 ### 4.4 Planning Patterns
@@ -693,7 +693,7 @@ This section walks a complete, realistic build: a **compliance research agent** 
 - Escalate (HITL) if the question touches a *deciding* action (e.g., "should we notify?" → the agent answers "what the regulation requires", never "what we should do").
 
 **Tools (the tool belt):**
-- `search_corpus(query)` — hybrid search over the regulatory document corpus (BM25 + vector; see [vector_databases_guide.md](vector_databases_guide.md) and the RAG series).
+- `search_corpus(query)` — hybrid search over the regulatory document corpus (BM25 + vector; see [vector_databases_guide.md](rag/vector_databases_guide.md) and the RAG series).
 - `get_document(id)` — fetch a full regulation/notice (MAS notices, policy docs, internal policies).
 - `verify_citation(doc_id, clause)` — deterministic check that a cited clause exists and contains the quoted text (the anti-hallucination tool).
 - `search_web(query)` — for supplementary public sources (regulator FAQ pages), gated by the egress allowlist.
@@ -908,7 +908,7 @@ The L4 aspiration — self-improving agents that learn in the loop — faces har
 38. *MCP Framework & Tools* — [mcp_framework_tools_guide.md](mcp_framework_tools_guide.md)
 39. *Enterprise AI Platforms* — [enterprise_ai_platforms_guide.md](enterprise_ai_platforms_guide.md)
 40. *Implementing Responsible AI* — [implementing-responsible-ai.md](implementing-responsible-ai.md)
-41. *Vector Databases* — [vector_databases_guide.md](vector_databases_guide.md)
+41. *Vector Databases* — [vector_databases_guide.md](rag/vector_databases_guide.md)
 42. *Financial Risk & Compliance Systems* (banking series) — [financial_risk_compliance_systems_guide.md](../banking/financial_risk_compliance_systems_guide.md)
 43. *Prompt Injection Defenses* — [prompt_injection_guide.md](prompt_injection_guide.md)
 44. *LLM Guard Models* — [llm_guard_models_guide.md](llm_guard_models_guide.md)

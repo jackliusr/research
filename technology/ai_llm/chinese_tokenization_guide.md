@@ -3,7 +3,7 @@
 > **Author:** Jack Liu Shurui · **Role:** Solution Architect, Crédit Agricole CIB
 > **Repo:** [github.com/jackliusr/research](https://github.com/jackliusr/research)
 > **Series:** NLP/LLM Engineering Guides
-> **Companion Guides:** [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) · [Advanced RAG Techniques](advanced_rag_techniques_guide.md) · [Beyond RAG — Agent Memory](beyond_rag_guide.md) · [Vector Databases](vector_databases_guide.md) · [RAG vs Long-Context LLMs](rag_vs_long_context_llms_guide.md) · [LLM Optimization Complete Guide](llm_optimization_complete_guide.md) · [On-Prem LLM Deployment](../on_prem_llm_deployment_guide.md) · [Chinese Bank Core Systems](../../banking/chinese_bank_core_systems_guide.md) · [Tokenized Assets (banking)](../../banking/tokenized_assets_guide.md)
+> **Companion Guides:** [RAG Frameworks Comparison](rag/rag_frameworks_comparison_guide.md) · [Advanced RAG Techniques](rag/advanced_rag_techniques_guide.md) · [Beyond RAG — Agent Memory](rag/beyond_rag_guide.md) · [Vector Databases](rag/vector_databases_guide.md) · [RAG vs Long-Context LLMs](rag/rag_vs_long_context_llms_guide.md) · [LLM Optimization Complete Guide](llm_optimization_complete_guide.md) · [On-Prem LLM Deployment](../on_prem_llm_deployment_guide.md) · [Chinese Bank Core Systems](../../banking/chinese_bank_core_systems_guide.md) · [Tokenized Assets (banking)](../../banking/tokenized_assets_guide.md)
 > **Last Updated:** August 2026
 
 > **Disambiguation note.** This guide is about **Chinese *text* tokenization (中文分词)** — the NLP/LLM task of splitting Chinese text into words, characters, and model tokens. It is **not** about financial *asset* tokenization (tokenized bonds, funds, deposits) — that topic lives in the banking series, [Tokenized Assets Guide](../../banking/tokenized_assets_guide.md). The two topics share a word ("token") but nothing else. Where this guide says "tokenizer," it means the component that turns text into model vocabulary IDs; where the banking guide says "tokenization," it means representing a financial asset on a ledger.
@@ -381,12 +381,12 @@ Users of Qwen/DeepSeek-family models routinely observe that Chinese text costs *
 1. **Pick a Chinese-native model** for Chinese-heavy workloads (Qwen, DeepSeek, GLM, Baichuan, InternLM) — the cheapest mitigation by far.
 2. **Use the model's own tokenizer for counting**, never a generic rule — §11.4.
 3. **Pre-compress**: chunk by *characters* with overlap for RAG (§11.1), and consider whether common boilerplate can be moved out of the prompt (instructions vs data).
-4. **Watch context math**: 32K context with Llama-2-class tokenization holds ~13–16K Chinese chars; the same budget on Qwen2.5 holds ~26K+ chars. RAG chunk sizes and top-k must be sized per tokenizer (§11.1, and see [RAG vs Long-Context LLMs](rag_vs_long_context_llms_guide.md)).
+4. **Watch context math**: 32K context with Llama-2-class tokenization holds ~13–16K Chinese chars; the same budget on Qwen2.5 holds ~26K+ chars. RAG chunk sizes and top-k must be sized per tokenizer (§11.1, and see [RAG vs Long-Context LLMs](rag/rag_vs_long_context_llms_guide.md)).
 5. **Cost modeling**: LLM pricing is per token (input/output). A 2.8× Chinese overhead on an English-centric API is a 2.8× bill on the Chinese portion of traffic; a Chinese-native model or tokenizer-aware routing removes most of it (§11.3).
 
 ### 9.5 Practical impact on context windows and RAG
 
-The context-window implication is direct: **Chinese text fills the window faster, so effective context (in characters) depends on the tokenizer**. For RAG specifically: embedding models (§11.2) are trained on character sequences, retrieval chunk sizes are usually specified in characters for Chinese (256–512 chars ≈ 0.25–0.5K tokens on Chinese-native tokenizers, vs 0.5–1K+ tokens on English-centric ones) — so the *same* retrieval pipeline can silently double its token cost per query depending on the generation model's tokenizer. Cross-references: [Advanced RAG Techniques](advanced_rag_techniques_guide.md) for chunking strategies, [Vector Databases](vector_databases_guide.md) for embedding/retrieval plumbing, [RAG vs Long-Context LLMs](rag_vs_long_context_llms_guide.md) for the context-window trade-off.
+The context-window implication is direct: **Chinese text fills the window faster, so effective context (in characters) depends on the tokenizer**. For RAG specifically: embedding models (§11.2) are trained on character sequences, retrieval chunk sizes are usually specified in characters for Chinese (256–512 chars ≈ 0.25–0.5K tokens on Chinese-native tokenizers, vs 0.5–1K+ tokens on English-centric ones) — so the *same* retrieval pipeline can silently double its token cost per query depending on the generation model's tokenizer. Cross-references: [Advanced RAG Techniques](rag/advanced_rag_techniques_guide.md) for chunking strategies, [Vector Databases](rag/vector_databases_guide.md) for embedding/retrieval plumbing, [RAG vs Long-Context LLMs](rag/rag_vs_long_context_llms_guide.md) for the context-window trade-off.
 
 ---
 
@@ -471,11 +471,11 @@ The one-line distinction to keep: **a segmenter (jieba/HanLP/LTP) gives you word
 
 ### 11.1 Chinese RAG: chunking and retrieval
 
-Chinese RAG inherits every decision from the English playbook (see the [RAG series](rag_frameworks_comparison_guide.md) and [Vector Databases](vector_databases_guide.md)) plus three Chinese-specific ones:
+Chinese RAG inherits every decision from the English playbook (see the [RAG series](rag/rag_frameworks_comparison_guide.md) and [Vector Databases](rag/vector_databases_guide.md)) plus three Chinese-specific ones:
 
 1. **Chunk by characters, not words.** The de facto convention for Chinese chunking is **fixed-size character windows with overlap** (e.g., 256–512 characters, 10–20% overlap, splitting on sentence-ending punctuation 。！？ when possible). Word-based chunking (jieba then chunk words) is tempting but fragile: segmentation errors become chunking errors, and the embedding model was usually trained on raw characters anyway. Character-window chunking is tokenizer-agnostic and trivially reproducible.
-2. **Choose chunk size from the *generation* model's tokenizer.** The retrieval side doesn't care (the embedding model sees characters), but the prompt budget does: 512 chars ≈ 312 tokens on Qwen2.5 (0.61/char) but ≈ 1,200 tokens on GPT-2-class byte tokenizers. If you size chunks for one model and switch models, re-check the math (§9.5). For long-context models the calculus changes — see [RAG vs Long-Context LLMs](rag_vs_long_context_llms_guide.md).
-3. **Segmenting the query for hybrid search.** Traditional + lexical hybrid retrieval (BM25 over jieba-segmented text) still beats pure vector search on exact terms (account numbers, product names, regulation citations) — see [BM25 / FAISS / ScaNN Research](bm25_faiss_scann_research.md). jieba's `lcut_for_search` mode exists precisely for this: index coarse and fine units so the inverted index matches both 清华大学 and 清华. Word-level segmentation is the *one* place classical CWS still earns its keep in the LLM stack.
+2. **Choose chunk size from the *generation* model's tokenizer.** The retrieval side doesn't care (the embedding model sees characters), but the prompt budget does: 512 chars ≈ 312 tokens on Qwen2.5 (0.61/char) but ≈ 1,200 tokens on GPT-2-class byte tokenizers. If you size chunks for one model and switch models, re-check the math (§9.5). For long-context models the calculus changes — see [RAG vs Long-Context LLMs](rag/rag_vs_long_context_llms_guide.md).
+3. **Segmenting the query for hybrid search.** Traditional + lexical hybrid retrieval (BM25 over jieba-segmented text) still beats pure vector search on exact terms (account numbers, product names, regulation citations) — see [BM25 / FAISS / ScaNN Research](rag/bm25_faiss_scann_research.md). jieba's `lcut_for_search` mode exists precisely for this: index coarse and fine units so the inverted index matches both 清华大学 and 清华. Word-level segmentation is the *one* place classical CWS still earns its keep in the LLM stack.
 
 ### 11.2 Chinese embedding models
 
@@ -500,7 +500,7 @@ Per-token pricing (input/output) makes tokenizer efficiency a direct cost line:
 
 - **Token counting**: never estimate Chinese tokens with English heuristics ("1 token ≈ 4 chars"). Use the model's real tokenizer: `tiktoken` for OpenAI models; `AutoTokenizer.from_pretrained(model_id)` for open models (Qwen, DeepSeek, Llama). Count before every API call when enforcing prompt budgets; the same text can differ 3× across tokenizers (§13).
 - **Prompt design**: keep instructions/data separation tight; Chinese boilerplate (system prompts, few-shot examples) consumes the budget fast on byte-level tokenizers — on Chinese-native models it is comparatively cheap. If you must support a byte-fragmented tokenizer, minimize Chinese few-shot examples and prefer concise formulations.
-- **Context management**: track context usage in characters AND tokens; evict or summarize oldest content by measured token count, not message count (see [Agent Runtime Cache Design](agent_runtime_cache_design_guide.md) and [Beyond RAG — Agent Memory](beyond_rag_guide.md)).
+- **Context management**: track context usage in characters AND tokens; evict or summarize oldest content by measured token count, not message count (see [Agent Runtime Cache Design](agent_runtime_cache_design_guide.md) and [Beyond RAG — Agent Memory](rag/beyond_rag_guide.md)).
 
 ### 11.5 Fine-tuning Chinese models
 
@@ -709,7 +709,7 @@ def report(tokenizer, texts):
 
 ### 14.2 Longer contexts — does token efficiency matter less?
 
-Context windows grew 4K → 32K → 128K → 1M+ (Gemini-class, and open models reaching 128K–1M) — see [RAG vs Long-Context LLMs](rag_vs_long_context_llms_guide.md). Two countervailing forces keep token efficiency relevant: (1) **cost and latency scale per token** regardless of window size — a 2.8× Chinese overhead is a 2.8× bill and a 2.8× slower generation even with a 1M window; (2) **attention complexity** still grows with sequence length, so shorter sequences (better compression) directly buy inference speed and KV-cache memory. The conclusion: longer windows *relax* the context-fit constraint but *not* the economics; token efficiency remains a first-order design variable.
+Context windows grew 4K → 32K → 128K → 1M+ (Gemini-class, and open models reaching 128K–1M) — see [RAG vs Long-Context LLMs](rag/rag_vs_long_context_llms_guide.md). Two countervailing forces keep token efficiency relevant: (1) **cost and latency scale per token** regardless of window size — a 2.8× Chinese overhead is a 2.8× bill and a 2.8× slower generation even with a 1M window; (2) **attention complexity** still grows with sequence length, so shorter sequences (better compression) directly buy inference speed and KV-cache memory. The conclusion: longer windows *relax* the context-fit constraint but *not* the economics; token efficiency remains a first-order design variable.
 
 ### 14.3 Tokenizer-free models: byte-level and byte-latent
 

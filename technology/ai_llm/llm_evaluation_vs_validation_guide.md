@@ -200,7 +200,7 @@ Caveats to design around: judge bias (position, verbosity, self-preference), cos
 - **RAG evals** — split the system into retrieval and generation:
   - *Retrieval quality:* recall@k, MRR (mean reciprocal rank), hit rate — does the retriever find the right chunks?
   - *Generation quality:* faithfulness (is the answer grounded in the retrieved context?), answer relevance (does it answer the question?), context relevance, answer completeness.
-  - Full treatment in [advanced_rag_techniques_guide.md](advanced_rag_techniques_guide.md).
+  - Full treatment in [advanced_rag_techniques_guide.md](rag/advanced_rag_techniques_guide.md).
 - **Agent evals** — measure the whole trajectory, not just the final message: task success rate, tool-use correctness (right tool, right arguments), planning quality, step efficiency, recovery from errors. See [autonomous_agents_guide.md](autonomous_agents_guide.md) for the agent-evaluation frameworks.
 
 ### 2.2 The Evaluation Harness
@@ -664,7 +664,7 @@ Takeaways from the example: evaluation made the system *good* (metrics drove fou
 - [financial_risk_compliance_systems_guide.md](../banking/financial_risk_compliance_systems_guide.md) — SR 11-7, model risk management, three lines of defence, LLMs in compliance (Sections 12.3–12.4).
 - [llm_guard_models_guide.md](llm_guard_models_guide.md) — guard models and content moderation — the runtime defence that red teaming validates.
 - [ai_agent_drift_guide.md](ai_agent_drift_guide.md) — production monitoring, drift detection, ongoing evaluation after release.
-- [advanced_rag_techniques_guide.md](advanced_rag_techniques_guide.md) — RAG evaluation (retrieval quality, faithfulness, answer relevance).
+- [advanced_rag_techniques_guide.md](rag/advanced_rag_techniques_guide.md) — RAG evaluation (retrieval quality, faithfulness, answer relevance).
 - [autonomous_agents_guide.md](autonomous_agents_guide.md) — agent evaluation (task success, tool-use correctness).
 - [llm_latency_optimization_guide.md](llm_latency_optimization_guide.md) — latency as a non-functional requirement.
 - [prompt_injection_guide.md](prompt_injection_guide.md) — the injection taxonomy used in red teaming.

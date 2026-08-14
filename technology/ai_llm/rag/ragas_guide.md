@@ -3,7 +3,7 @@
 > **Author:** Jack Liu Shurui · **Role:** Solution Architect, Crédit Agricole CIB
 > **Repo:** [github.com/jackliusr/research](https://github.com/jackliusr/research)
 > **Series:** LLM/AI Engineering Guides
-> **Companion Guides:** [LLM Evaluation Frameworks](llm_evaluation_frameworks_guide.md) · [TruLens](trulens_guide.md) · [LLM Evaluation vs Validation](llm_evaluation_vs_validation_guide.md) · [AI Agent Drift](ai_agent_drift_guide.md) · [Advanced RAG Techniques](advanced_rag_techniques_guide.md) · [Beyond RAG](beyond_rag_guide.md) · [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) · [Vector Databases](vector_databases_guide.md) · [Responsible AI](implementing-responsible-ai.md)
+> **Companion Guides:** [LLM Evaluation Frameworks](../llm_evaluation_frameworks_guide.md) · [TruLens](trulens_guide.md) · [LLM Evaluation vs Validation](../llm_evaluation_vs_validation_guide.md) · [AI Agent Drift](../ai_agent_drift_guide.md) · [Advanced RAG Techniques](advanced_rag_techniques_guide.md) · [Beyond RAG](beyond_rag_guide.md) · [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) · [Vector Databases](vector_databases_guide.md) · [Responsible AI](../implementing-responsible-ai.md)
 > **Last Updated:** August 2026
 
 ---
@@ -44,7 +44,7 @@ Ragas' own tagline captures its purpose: it helps teams **"move from 'vibe check
 | **License** | Apache 2.0 | ✅ Verified — repo LICENSE |
 | **Paper** | arXiv:2309.15217, *"Ragas: Automated Evaluation of Retrieval Augmented Generation"* (Sept 2023, EACL 2024) | ✅ Verified — arXiv |
 
-> **Verification note:** the sibling guide [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md) §8 references `github.com/vibrantlabsai/ragas` — this is correct today: the project's GitHub org was renamed from **explodinggradients** to **vibrantlabsai** (the team's company is Vibrant Labs). Both URLs resolve. This guide uses `vibrantlabsai/ragas` as the canonical repo and notes the original `explodinggradients` identity in §7.
+> **Verification note:** the sibling guide [llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md) §8 references `github.com/vibrantlabsai/ragas` — this is correct today: the project's GitHub org was renamed from **explodinggradients** to **vibrantlabsai** (the team's company is Vibrant Labs). Both URLs resolve. This guide uses `vibrantlabsai/ragas` as the canonical repo and notes the original `explodinggradients` identity in §7.
 
 ### 1.2 Origin and History
 
@@ -78,14 +78,14 @@ Design philosophy: **RAG systems fail in identifiable, separable ways** — retr
 
 ### 1.5 Ragas vs the Alternatives (Overview)
 
-Full comparison in §8 of this guide and in the series' master evaluation-tooling guide, [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md) (whose ~24-line RAGAS section **this guide expands to full depth**). Quick orientation:
+Full comparison in §8 of this guide and in the series' master evaluation-tooling guide, [llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md) (whose ~24-line RAGAS section **this guide expands to full depth**). Quick orientation:
 
 | Tool | Type | One-line positioning |
 |------|------|----------------------|
 | **Ragas** | OSS library (Apache 2.0) | RAG-specific reference-free metrics + synthetic testset generation |
 | **TruLens** | OSS eval + tracing + dashboard (MIT) | The RAG triad, feedback functions, local Streamlit dashboard — see [trulens_guide.md](trulens_guide.md) |
 | **DeepEval** | OSS library (Apache 2.0) | Pytest-native LLM evaluation, 50+ metrics, includes native RagasScore integration |
-| **LangSmith** | Commercial SaaS | Integrated observability + eval + datasets for the LangChain ecosystem (RAGAS available as a built-in evaluator) — see [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md) §6 |
+| **LangSmith** | Commercial SaaS | Integrated observability + eval + datasets for the LangChain ecosystem (RAGAS available as a built-in evaluator) — see [llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md) §6 |
 | **Arize Phoenix** | OSS + cloud | Tracing + evaluation platform with drift detection |
 | **Langfuse** | OSS + cloud (MIT) | LLM-ops/tracing platform with evaluation on top |
 
@@ -100,14 +100,14 @@ Full comparison in §8 of this guide and in the series' master evaluation-toolin
 | **RAG architecture comparison** | Benchmark retrieval strategy A vs B (hybrid search, re-ranking, different chunk sizes) on the same synthetic test set |
 | **Evaluation data generation** | When you have documents but no labelled Q&A pairs — `TestsetGenerator` synthesises them (§5) |
 
-**When it is a weaker fit:** non-RAG LLM apps (Ragas' catalogue is RAG-centric); deep production observability (no built-in tracing — pair with [ai_agent_drift_guide.md](ai_agent_drift_guide.md) patterns); pytest-native cultures where DeepEval's runner fits better (§8).
+**When it is a weaker fit:** non-RAG LLM apps (Ragas' catalogue is RAG-centric); deep production observability (no built-in tracing — pair with [ai_agent_drift_guide.md](../ai_agent_drift_guide.md) patterns); pytest-native cultures where DeepEval's runner fits better (§8).
 
 ### 1.7 The Ragas Niche
 
 - **Metric depth for RAG** — the deepest RAG-specific catalogue in OSS: retrieval (precision, recall, entity recall), generation (faithfulness, relevancy, correctness, similarity), robustness (`noise_sensitivity`), plus aspect critiques and, since 0.2, agent + multimodal metrics.
 - **Research-grounded** — published at EACL 2024 with formulas and human-correlation studies in the paper; the metric definitions are not ad-hoc prompt engineering, which makes them easier to defend in a model-validation file.
 - **Reference-free by design** — the original paper's core contribution: RAG evaluation without hand-written goldens, which scales to large corpora and fast-moving product docs.
-- **Synthetic testset generation** — turns documents into evaluation datasets, closing the "no labelled data" gap that blocks most eval programmes (see [llm_evaluation_vs_validation_guide.md](llm_evaluation_vs_validation_guide.md) for why labelled eval data is the usual bottleneck).
+- **Synthetic testset generation** — turns documents into evaluation datasets, closing the "no labelled data" gap that blocks most eval programmes (see [llm_evaluation_vs_validation_guide.md](../llm_evaluation_vs_validation_guide.md) for why labelled eval data is the usual bottleneck).
 - **Pure library, composable** — no SaaS account, no vendor lock-in; scores are plain Python objects/DataFrames that plug into your existing CI, dashboards, and model-risk tooling.
 
 ---
@@ -146,7 +146,7 @@ A RAG pipeline is a chain: **retrieve → augment → generate**; each link fail
 ### 2.4 Additional Catalogues (0.2+)
 
 - **Aspect Critique** — judge-based critiques with fixed rubrics (`harmfulness`, `maliciousness`, `coherence`, `correctness`, `conciseness`) plus **custom aspects** defined in natural language (handy for bank policies, e.g., "must include a disclaimer").
-- **Agent metrics (0.2)** — for agentic RAG/agents: `tool_call_correctness`, `tool_call_error`, `tool_call_faithfulness`, `action_correctness`, `agent_goal_accuracy`. See [autonomous_agents_guide.md](autonomous_agents_guide.md) §5 for agent evaluation context.
+- **Agent metrics (0.2)** — for agentic RAG/agents: `tool_call_correctness`, `tool_call_error`, `tool_call_faithfulness`, `action_correctness`, `agent_goal_accuracy`. See [autonomous_agents_guide.md](../autonomous_agents_guide.md) §5 for agent evaluation context.
 - **Multimodal metrics (0.2)** — faithfulness and relevance for image+text inputs/outputs.
 
 ### 2.5 Metric Catalog (Reference Table)
@@ -260,7 +260,7 @@ answer_correctness  = 0.75 × factual_correctness + 0.25 × semantic_similarity(
 
 The blend rewards both *factual precision* (TP-dominated) and *semantic likeness* to the reference (via `answer_similarity`-style embedding similarity). The 0.75/0.25 weights are the historical defaults and are configurable.
 
-**What it catches:** factual errors that faithfulness cannot see — when the context was fine but the model still said the wrong number, or when the answer is grounded in an *outdated* document and contradicts the current ground truth. This is the metric to run when you have **goldens** (human-reviewed reference answers), e.g., in a regulated environment where a validation team curates a golden set (see [llm_evaluation_vs_validation_guide.md](llm_evaluation_vs_validation_guide.md) on goldens as validation evidence).
+**What it catches:** factual errors that faithfulness cannot see — when the context was fine but the model still said the wrong number, or when the answer is grounded in an *outdated* document and contradicts the current ground truth. This is the metric to run when you have **goldens** (human-reviewed reference answers), e.g., in a regulated environment where a validation team curates a golden set (see [llm_evaluation_vs_validation_guide.md](../llm_evaluation_vs_validation_guide.md) on goldens as validation evidence).
 
 ### 3.6 Metric Formulas — Summary
 
@@ -328,7 +328,7 @@ Variant: if the answer instead said *"…with a USD 500 minimum"*, S2 would fail
 
 ### 4.1 Ragas Runs on LLM Judges
 
-Most Ragas metrics are implemented as **LLM-as-a-judge** evaluations: the metric is a prompt template plus a parsing/aggregation step, executed against an underlying **evaluation (critic) LLM**. The judge model does the statement extraction, the relevance labelling, the support verification, and the correctness comparison that the formulas in §3.1–§3.5 consume. This is the same architecture family as G-Eval and TruLens' feedback functions (see [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md) §11 and [trulens_guide.md](trulens_guide.md) §3.4), with two differences:
+Most Ragas metrics are implemented as **LLM-as-a-judge** evaluations: the metric is a prompt template plus a parsing/aggregation step, executed against an underlying **evaluation (critic) LLM**. The judge model does the statement extraction, the relevance labelling, the support verification, and the correctness comparison that the formulas in §3.1–§3.5 consume. This is the same architecture family as G-Eval and TruLens' feedback functions (see [llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md) §11 and [trulens_guide.md](trulens_guide.md) §3.4), with two differences:
 
 - Ragas ships **ready-made, research-validated prompt templates** for each metric (the `faithfulness` prompt, the `context_precision` relevance prompt, etc.) rather than asking you to write your own rubrics;
 - Ragas' judge outputs are **structured** (statement lists, per-item verdicts), which the library aggregates into the scalar metrics — you rarely touch raw prompts.
@@ -346,7 +346,7 @@ Ragas is model-agnostic: any LangChain-compatible chat model can act as the judg
 
 The pattern is the same everywhere: construct the judge model, attach it to the metrics (or let Ragas default to OpenAI), run `evaluate()` (§6.3). Ragas also supports **different models per metric** — a strong judge for `answer_correctness`, a cheap local one for `context_precision`.
 
-> **Banking note:** judge-model choice is an evaluation-data-governance decision as much as a quality decision. With a self-hosted or Bedrock judge, question/answer/context text never leaves your controlled environment — the same residency argument made for [TruLens](trulens_guide.md) §1.3 and the validation framing in [llm_evaluation_vs_validation_guide.md](llm_evaluation_vs_validation_guide.md).
+> **Banking note:** judge-model choice is an evaluation-data-governance decision as much as a quality decision. With a self-hosted or Bedrock judge, question/answer/context text never leaves your controlled environment — the same residency argument made for [TruLens](trulens_guide.md) §1.3 and the validation framing in [llm_evaluation_vs_validation_guide.md](../llm_evaluation_vs_validation_guide.md).
 
 ### 4.3 Prompt-Based, Not Hard-Coded
 
@@ -372,16 +372,16 @@ Each LLM-judged metric consumes **at least one judge call per sample**; the stat
 | `context_recall` | 1 + 1 per GT statement |
 | `answer_correctness` | 1 + 1 per statement pair |
 
-Rough rule: **5 metrics × 1,000 samples ≈ 5,000–10,000+ judge calls** per full run — affordable in dev, compounding in CI (every merge runs the gate) and regression suites. Levers: the deterministic metrics (§3.6) for smoke tests, a 200-question sample for daily gates with the full set weekly, and aggressive sampling (cost models in [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md) §14).
+Rough rule: **5 metrics × 1,000 samples ≈ 5,000–10,000+ judge calls** per full run — affordable in dev, compounding in CI (every merge runs the gate) and regression suites. Levers: the deterministic metrics (§3.6) for smoke tests, a 200-question sample for daily gates with the full set weekly, and aggressive sampling (cost models in [llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md) §14).
 
 ### 4.5 Judge Quality — The Honest View
 
 Ragas' scores are only as trustworthy as the judge LLM, and the failure modes are real:
 
 - **Judge capability:** the judge should be *at least as capable* as the generator it evaluates. A weak local judge labelling relevance for answers produced by a frontier model will under-detect errors — your faithfulness scores will look better than reality.
-- **Calibration and bias:** LLM judges exhibit well-documented biases — favouring verbose/self-consistent answers, positional bias, and self-preference (judges score their own family's outputs higher). The paper and follow-up work studied judge agreement; in practice you should **calibrate**: spot-check a sample of judge verdicts against human labels and compute agreement (Cohen's kappa or similar) before trusting thresholds. See the judge-model guidance in [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md) and the human-eval discussion in [llm_evaluation_vs_validation_guide.md](llm_evaluation_vs_validation_guide.md).
+- **Calibration and bias:** LLM judges exhibit well-documented biases — favouring verbose/self-consistent answers, positional bias, and self-preference (judges score their own family's outputs higher). The paper and follow-up work studied judge agreement; in practice you should **calibrate**: spot-check a sample of judge verdicts against human labels and compute agreement (Cohen's kappa or similar) before trusting thresholds. See the judge-model guidance in [llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md) and the human-eval discussion in [llm_evaluation_vs_validation_guide.md](../llm_evaluation_vs_validation_guide.md).
 - **Variance:** LLM judges are non-deterministic (temperature, sampling). Run each metric **more than once** on small samples to estimate score variance; if variance is high relative to your threshold, either fix the judge (stronger model, lower temperature) or widen the gate margin. Ragas lets you set the judge's temperature; lower is generally better for evaluation.
-- **The honest bottom line:** Ragas metrics are *strong heuristics, not proofs* — they rank pipelines (A vs B, v1 vs v2) and catch gross failures, but do not replace human review of edge cases. Treat scores as **monitoring instruments**; back formal sign-off with the human-in-the-loop validation in [llm_evaluation_vs_validation_guide.md](llm_evaluation_vs_validation_guide.md).
+- **The honest bottom line:** Ragas metrics are *strong heuristics, not proofs* — they rank pipelines (A vs B, v1 vs v2) and catch gross failures, but do not replace human review of edge cases. Treat scores as **monitoring instruments**; back formal sign-off with the human-in-the-loop validation in [llm_evaluation_vs_validation_guide.md](../llm_evaluation_vs_validation_guide.md).
 
 ---
 
@@ -422,13 +422,13 @@ You specify the mix, e.g. `distributions={simple: 0.5, reasoning: 0.25, multi_co
 Synthetic generation is fast but not free of defects. Real-world issues to plan for:
 
 - **Surface questions:** generated questions sometimes paraphrase the document so closely that retrieval is trivially easy — inflating scores. The evolution operators mitigate this; also sample the generated set and prune trivial items.
-- **LLM artifacts:** synthetic reference answers can contain the generator's own errors; a wrong "ground truth" poisons `context_recall`/`answer_correctness`. **Human review of a sample** (10–20%) of the generated set is the standard mitigation — and in a bank, the model-validation file should record that the golden subset was human-reviewed (see [llm_evaluation_vs_validation_guide.md](llm_evaluation_vs_validation_guide.md)).
+- **LLM artifacts:** synthetic reference answers can contain the generator's own errors; a wrong "ground truth" poisons `context_recall`/`answer_correctness`. **Human review of a sample** (10–20%) of the generated set is the standard mitigation — and in a bank, the model-validation file should record that the golden subset was human-reviewed (see [llm_evaluation_vs_validation_guide.md](../llm_evaluation_vs_validation_guide.md)).
 - **Coverage:** generation coverage follows document coverage. Documents that never get indexed can never produce questions; if a product line is under-represented in the corpus, it will be under-represented in the eval set — audit the generated set's topic distribution.
 - **Drift:** a synthetic set generated once goes stale as the corpus changes; regenerate (or at least refresh) on a schedule, not just once.
 
 ### 5.5 Testset Usage — From Synthetic to Golden
 
-The generated dataset is the **evaluation dataset** for `evaluate()`. Two operating modes: 1. **Fully synthetic (fast, cheap, broad)** — run the whole generated set as-is for dev iteration, architecture comparison, and CI smoke gates. 2. **Golden subset (slow, expensive, authoritative)** — curate a smaller, human-reviewed, version-controlled subset with verified reference answers for release gates and regulatory sign-off. Ragas gives you the generation machinery; the human review step is yours (where evaluation meets validation — see [llm_evaluation_vs_validation_guide.md](llm_evaluation_vs_validation_guide.md)).
+The generated dataset is the **evaluation dataset** for `evaluate()`. Two operating modes: 1. **Fully synthetic (fast, cheap, broad)** — run the whole generated set as-is for dev iteration, architecture comparison, and CI smoke gates. 2. **Golden subset (slow, expensive, authoritative)** — curate a smaller, human-reviewed, version-controlled subset with verified reference answers for release gates and regulatory sign-off. Ragas gives you the generation machinery; the human review step is yours (where evaluation meets validation — see [llm_evaluation_vs_validation_guide.md](../llm_evaluation_vs_validation_guide.md)).
 
 ### 5.6 Generation Example (Code Sketch)
 
@@ -521,7 +521,7 @@ faithfulness.llm = ChatOpenAI(model="gpt-4o", temperature=0)   # judge for this 
 ### 6.4 Results — What You Actually Get
 
 - **Per-sample scores:** the row-level values that show *which* questions fail (export via `result.to_pandas()`, slice the worst rows — these become your debugging backlog and later your regression fixtures).
-- **Aggregated scores:** the mean per metric — headline numbers for dashboards and CI gates; report them **with sample count and judge-model + prompt versions** (a mean without context is noise — see [llm_evaluation_vs_validation_guide.md](llm_evaluation_vs_validation_guide.md)). **Score semantics:** all core metrics are [0, 1], higher = better, and thresholds must be calibrated against your own goldens (e.g., faithfulness 0.85, context recall 0.75) before encoding them as gates.
+- **Aggregated scores:** the mean per metric — headline numbers for dashboards and CI gates; report them **with sample count and judge-model + prompt versions** (a mean without context is noise — see [llm_evaluation_vs_validation_guide.md](../llm_evaluation_vs_validation_guide.md)). **Score semantics:** all core metrics are [0, 1], higher = better, and thresholds must be calibrated against your own goldens (e.g., faithfulness 0.85, context recall 0.75) before encoding them as gates.
 
 ### 6.5 CI/CD — Eval Gates
 
@@ -552,7 +552,7 @@ if fails:
 CI gate design points:
 
 - **Sample the test set for speed:** run a 100–200-question sample on every PR, the full set nightly/weekly. Judge cost per merge is the constraint (§4.4).
-- **Track, don't just assert:** persist scores (CSV/DataFrame, or push to your observability stack) so you can see *trends* — a metric degrading slowly across two weeks is how drift shows up before a hard failure (see [ai_agent_drift_guide.md](ai_agent_drift_guide.md)).
+- **Track, don't just assert:** persist scores (CSV/DataFrame, or push to your observability stack) so you can see *trends* — a metric degrading slowly across two weeks is how drift shows up before a hard failure (see [ai_agent_drift_guide.md](../ai_agent_drift_guide.md)).
 - **Version the eval spec:** the dataset, metric list, judge model, and prompt versions together form the eval specification; record it in the model-validation file when the gate is used for sign-off.
 
 ### 6.6 Usage Example — Evaluate a RAG (Complete Sketch)
@@ -601,7 +601,7 @@ Ragas is deliberately **framework-agnostic on the data side** (it evaluates what
 
 ### 7.2 Ragas Inside LangSmith
 
-LangSmith (the commercial LLM-ops platform in the LangChain ecosystem) ships a **RAGAS evaluator**: select it, point it at your dataset, and LangSmith runs the Ragas metrics server-side, attaching scores to traced runs — the "RAGAS-in-LangSmith" pattern in [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md) §6/§8. **Ragas supplies the metric mathematics; LangSmith supplies datasets, tracing, dashboards.** The *managed* option (data leaves your environment unless you self-host); running `ragas` directly keeps everything in-process — choose per data-governance requirements.
+LangSmith (the commercial LLM-ops platform in the LangChain ecosystem) ships a **RAGAS evaluator**: select it, point it at your dataset, and LangSmith runs the Ragas metrics server-side, attaching scores to traced runs — the "RAGAS-in-LangSmith" pattern in [llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md) §6/§8. **Ragas supplies the metric mathematics; LangSmith supplies datasets, tracing, dashboards.** The *managed* option (data leaves your environment unless you self-host); running `ragas` directly keeps everything in-process — choose per data-governance requirements.
 
 ### 7.3 Community
 
@@ -624,7 +624,7 @@ LangSmith (the commercial LLM-ops platform in the LangChain ecosystem) ships a *
 
 ### 8.1 The Comparison Table
 
-The series' master comparison lives in [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md); this table focuses on the RAG-evaluation-relevant axes (TruLens detail in [trulens_guide.md](trulens_guide.md), DeepEval detail in the master guide §5, LangSmith in §6):
+The series' master comparison lives in [llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md); this table focuses on the RAG-evaluation-relevant axes (TruLens detail in [trulens_guide.md](trulens_guide.md), DeepEval detail in the master guide §5, LangSmith in §6):
 
 | Axis | **Ragas** | **TruLens** | **DeepEval** | **LangSmith (RAGAS-in-LangSmith)** |
 |------|-----------|-------------|--------------|-------------------------------------|
@@ -662,9 +662,9 @@ The series' master comparison lives in [llm_evaluation_frameworks_guide.md](llm_
 | RAG triad + per-record traces + local dashboard, vendor-neutral on-prem eval | **TruLens** ([trulens_guide.md](trulens_guide.md)) |
 | Pytest-native CI culture, broad general-purpose metric library, minimal ceremony | **DeepEval** |
 | Already on LangSmith; want managed datasets + tracing + Ragas metrics in one place | **LangSmith with the RAGAS evaluator** |
-| Production drift monitoring of an LLM app | pair any of the above with [ai_agent_drift_guide.md](ai_agent_drift_guide.md) patterns |
+| Production drift monitoring of an LLM app | pair any of the above with [ai_agent_drift_guide.md](../ai_agent_drift_guide.md) patterns |
 
-A common bank pattern: **Ragas for metric depth and synthetic test sets + LangSmith (or Langfuse) for tracing**, with the eval spec recorded for validation evidence (see [llm_evaluation_vs_validation_guide.md](llm_evaluation_vs_validation_guide.md) and [implementing-responsible-ai.md](implementing-responsible-ai.md)).
+A common bank pattern: **Ragas for metric depth and synthetic test sets + LangSmith (or Langfuse) for tracing**, with the eval spec recorded for validation evidence (see [llm_evaluation_vs_validation_guide.md](../llm_evaluation_vs_validation_guide.md) and [implementing-responsible-ai.md](../implementing-responsible-ai.md)).
 
 ---
 
@@ -731,7 +731,7 @@ Re-run the eval after each change and compare `context_precision` (and re-check 
 
 ### 9.6 The Banking Context — Evaluation as Validation Evidence
 
-For a bank, this eval run is not just a dev nicety — it is **validation evidence**. The eval specification (dataset version, metric list, judge model + prompt versions, thresholds, and the per-sample scores) should be recorded in the model-validation file, alongside the human-review record of the golden set and the judge-calibration results (kappa vs human labels, §4.5). This is exactly the "evaluation as validation" framing in [llm_evaluation_vs_validation_guide.md](llm_evaluation_vs_validation_guide.md), with the governance overlay from [implementing-responsible-ai.md](implementing-responsible-ai.md): automated Ragas gates for continuous monitoring, human validation for formal sign-off. Ragas' research-grounded metric definitions (EACL 2024 paper) make the methodology easier to defend than ad-hoc rubric prompts — a real advantage when a risk or audit function asks *"how do you know the assistant doesn't hallucinate fees?"*
+For a bank, this eval run is not just a dev nicety — it is **validation evidence**. The eval specification (dataset version, metric list, judge model + prompt versions, thresholds, and the per-sample scores) should be recorded in the model-validation file, alongside the human-review record of the golden set and the judge-calibration results (kappa vs human labels, §4.5). This is exactly the "evaluation as validation" framing in [llm_evaluation_vs_validation_guide.md](../llm_evaluation_vs_validation_guide.md), with the governance overlay from [implementing-responsible-ai.md](../implementing-responsible-ai.md): automated Ragas gates for continuous monitoring, human validation for formal sign-off. Ragas' research-grounded metric definitions (EACL 2024 paper) make the methodology easier to defend than ad-hoc rubric prompts — a real advantage when a risk or audit function asks *"how do you know the assistant doesn't hallucinate fees?"*
 
 ---
 
@@ -745,9 +745,9 @@ For a bank, this eval run is not just a dev nicety — it is **validation eviden
 2. **Testset generation** — `TestsetGenerator` turns your documents into evaluation datasets (simple / reasoning / multi-context / conditional evolutions), closing the no-labelled-data gap.
 3. **`evaluate()`** — one call over a HF Dataset (`question`, `answer`, `contexts`, `ground_truth`) with your metric list yields per-sample and aggregate scores, ready for CI eval gates.
 
-**Positioning:** Ragas is the *metric-depth* option in the evaluation landscape — narrower than an observability platform (no tracing/dashboard built in), deeper than generic metric libraries. Pair it with TruLens for the triad + traces ([trulens_guide.md](trulens_guide.md)), LangSmith for managed datasets/tracing, or DeepEval for pytest-native culture ([llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md)). Its honest weaknesses: judge-LLM cost, judge variability (calibrate!), and RAG-only scope.
+**Positioning:** Ragas is the *metric-depth* option in the evaluation landscape — narrower than an observability platform (no tracing/dashboard built in), deeper than generic metric libraries. Pair it with TruLens for the triad + traces ([trulens_guide.md](trulens_guide.md)), LangSmith for managed datasets/tracing, or DeepEval for pytest-native culture ([llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md)). Its honest weaknesses: judge-LLM cost, judge variability (calibrate!), and RAG-only scope.
 
-**Final word:** if you are building a RAG system and want to know — *quantitatively, per failure mode* — whether retrieval, grounding, and relevance are actually good, Ragas is the most direct open-source path. In a bank, run it with a Bedrock or self-hosted judge, gate CI on thresholds, and file the eval spec as validation evidence ([llm_evaluation_vs_validation_guide.md](llm_evaluation_vs_validation_guide.md)) — and you have turned "the assistant seems fine" into an auditable, reproducible claim.
+**Final word:** if you are building a RAG system and want to know — *quantitatively, per failure mode* — whether retrieval, grounding, and relevance are actually good, Ragas is the most direct open-source path. In a bank, run it with a Bedrock or self-hosted judge, gate CI on thresholds, and file the eval spec as validation evidence ([llm_evaluation_vs_validation_guide.md](../llm_evaluation_vs_validation_guide.md)) — and you have turned "the assistant seems fine" into an auditable, reproducible claim.
 
 ---
 
@@ -793,4 +793,4 @@ For a bank, this eval run is not just a dev nicety — it is **validation eviden
 
 ---
 
-*Companion guides: [LLM Evaluation Frameworks](llm_evaluation_frameworks_guide.md) (master tooling comparison — RAGAS §8, DeepEval §5, LangSmith §6) · [TruLens](trulens_guide.md) (the triad + dashboard sibling deep-dive) · [LLM Evaluation vs Validation](llm_evaluation_vs_validation_guide.md) (eval as validation evidence) · [Advanced RAG Techniques](advanced_rag_techniques_guide.md) & [RAG Optimization Techniques](rag_optimization_techniques_guide.md) & [Beyond RAG](beyond_rag_guide.md) & [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) (the RAG series) · [Vector Databases](vector_databases_guide.md) (the retrieval layer) · [AI Agent Drift](ai_agent_drift_guide.md) (production monitoring) · [Autonomous Agents](autonomous_agents_guide.md) (§5 agent evals) · [Implementing Responsible AI](implementing-responsible-ai.md) (governance overlay) · [LLM Guard Models](llm_guard_models_guide.md) (safety layers).*
+*Companion guides: [LLM Evaluation Frameworks](../llm_evaluation_frameworks_guide.md) (master tooling comparison — RAGAS §8, DeepEval §5, LangSmith §6) · [TruLens](trulens_guide.md) (the triad + dashboard sibling deep-dive) · [LLM Evaluation vs Validation](../llm_evaluation_vs_validation_guide.md) (eval as validation evidence) · [Advanced RAG Techniques](advanced_rag_techniques_guide.md) & [RAG Optimization Techniques](rag_optimization_techniques_guide.md) & [Beyond RAG](beyond_rag_guide.md) & [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) (the RAG series) · [Vector Databases](vector_databases_guide.md) (the retrieval layer) · [AI Agent Drift](../ai_agent_drift_guide.md) (production monitoring) · [Autonomous Agents](../autonomous_agents_guide.md) (§5 agent evals) · [Implementing Responsible AI](../implementing-responsible-ai.md) (governance overlay) · [LLM Guard Models](../llm_guard_models_guide.md) (safety layers).*

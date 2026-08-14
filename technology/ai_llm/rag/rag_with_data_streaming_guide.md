@@ -3,7 +3,7 @@
 > **Author:** Jack Liu Shurui — Solution Architect at Crédit Agricole CIB, Singapore  
 > **Context:** LLM/AI Engineering · Real-Time Data Infrastructure — Streaming RAG, CDC, Event-Driven Indexing, Freshness  
 > **Repository:** [github.com/jackliusr/research](https://github.com/jackliusr/research)  
-> **Series:** LLM/AI Engineering Guides — bridges the [RAG series](rag_frameworks_comparison_guide.md) · [RAG vs HyDE](rag_vs_hyde_guide.md) · [RAG Optimization](rag_optimization_techniques_guide.md) and the [Event Stream Processing](event_stream_processing_guide.md) · [Closed-Loop Data Engineering](closed_loop_data_engineering_guide.md) series  
+> **Series:** LLM/AI Engineering Guides — bridges the [RAG series](rag_frameworks_comparison_guide.md) · [RAG vs HyDE](rag_vs_hyde_guide.md) · [RAG Optimization](rag_optimization_techniques_guide.md) and the [Event Stream Processing](../../event_stream_processing_guide.md) · [Closed-Loop Data Engineering](../closed_loop_data_engineering_guide.md) series  
 > **Last Updated:** July 2026
 
 ---
@@ -1050,4 +1050,4 @@ The engineering discipline is the same one the streaming world has already learn
 
 ---
 
-*Companion guides: [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) · [RAG vs HyDE](rag_vs_hyde_guide.md) · [RAG Optimization Techniques](rag_optimization_techniques_guide.md) · [Event Stream Processing](event_stream_processing_guide.md) · [Closed-Loop Data Engineering](closed_loop_data_engineering_guide.md)*
+*Companion guides: [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) · [RAG vs HyDE](rag_vs_hyde_guide.md) · [RAG Optimization Techniques](rag_optimization_techniques_guide.md) · [Event Stream Processing](../../event_stream_processing_guide.md) · [Closed-Loop Data Engineering](../closed_loop_data_engineering_guide.md)*

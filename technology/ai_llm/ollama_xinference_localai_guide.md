@@ -3,7 +3,7 @@
 > **Author:** Jack Liu Shurui · **Role:** Solution Architect, Crédit Agricole CIB
 > **Repo:** [github.com/jackliusr/research](https://github.com/jackliusr/research)
 > **Series:** LLM/AI Engineering Guides
-> **Companion Guides:** [LLM Application Frameworks](llm_frameworks_comparison_guide.md) · [RAG Frameworks](rag_frameworks_comparison_guide.md) · [Enterprise AI Gateway](enterprise_ai_gateway_guide.md) · [LLM Optimization](llm_optimization_complete_guide.md) · [Scalable AI Deployment](scalable_ai_deployment.md) · [Fine-Tuning Frameworks](fine_tuning_frameworks_comparison_guide.md)
+> **Companion Guides:** [LLM Application Frameworks](llm_frameworks_comparison_guide.md) · [RAG Frameworks](rag/rag_frameworks_comparison_guide.md) · [Enterprise AI Gateway](../enterprise_ai_gateway_guide.md) · [LLM Optimization](llm_optimization_complete_guide.md) · [Scalable AI Deployment](scalable_ai_deployment.md) · [Fine-Tuning Frameworks](fine_tuning_frameworks_comparison_guide.md)
 > **Last Updated:** August 2026
 
 ---
@@ -753,4 +753,4 @@ Local LLM serving is not a niche anymore — for a bank it is a governance decis
 
 ---
 
-*Part of the LLM/AI Engineering Guides series. Related guides: [LLM Application Frameworks](llm_frameworks_comparison_guide.md), [RAG Frameworks](rag_frameworks_comparison_guide.md), [Enterprise AI Gateway](enterprise_ai_gateway_guide.md), [LLM Optimization](llm_optimization_complete_guide.md), [Scalable AI Deployment](scalable_ai_deployment.md).*
+*Part of the LLM/AI Engineering Guides series. Related guides: [LLM Application Frameworks](llm_frameworks_comparison_guide.md), [RAG Frameworks](rag/rag_frameworks_comparison_guide.md), [Enterprise AI Gateway](../enterprise_ai_gateway_guide.md), [LLM Optimization](llm_optimization_complete_guide.md), [Scalable AI Deployment](scalable_ai_deployment.md).*

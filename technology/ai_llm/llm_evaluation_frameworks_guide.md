@@ -3,7 +3,7 @@
 > **Author:** Jack Liu Shurui · **Role:** Solution Architect, Crédit Agricole CIB
 > **Repo:** [github.com/jackliusr/research](https://github.com/jackliusr/research)
 > **Series:** LLM/AI Engineering Guides
-> **Companion Guides:** [MLOps Lifecycle](mlops_lifecycle_frameworks_guide.md) · [LLM Compression](llm_compression_alternatives_guide.md) · [Guard Models](llm_guard_models_guide.md) · [Multi-Pass LLM Pipelines](multi_pass_llm_pipelines_guide.md)
+> **Companion Guides:** [MLOps Lifecycle](../mlops_lifecycle_frameworks_guide.md) · [LLM Compression](llm_compression_alternatives_guide.md) · [Guard Models](llm_guard_models_guide.md) · [Multi-Pass LLM Pipelines](multi_pass_llm_pipelines_guide.md)
 > **Last Updated:** July 2026
 
 ---
@@ -805,7 +805,7 @@ There is no single "best" LLM evaluation framework. The right choice depends on 
 
 ### 19.5 Related Guides
 
-- [Full MLOps Lifecycle Frameworks Guide](mlops_lifecycle_frameworks_guide.md) — MLOps lifecycle, stages, tools, best practices
+- [Full MLOps Lifecycle Frameworks Guide](../mlops_lifecycle_frameworks_guide.md) — MLOps lifecycle, stages, tools, best practices
 - [LLM Compression Tools Guide](llm_compression_alternatives_guide.md) — Quantization, pruning, distillation, model merging
 - [LLM Guard Models Guide](llm_guard_models_guide.md) — Llama Guard, ShieldGemma, safety classification
 - [Multi-Pass LLM Pipelines Guide](multi_pass_llm_pipelines_guide.md) — Chaining multiple LLM passes for reliability

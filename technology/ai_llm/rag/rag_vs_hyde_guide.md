@@ -3,7 +3,7 @@
 > **Author:** Jack Liu Shurui · **Role:** Solution Architect, Crédit Agricole CIB
 > **Repo:** [github.com/jackliusr/research](https://github.com/jackliusr/research)
 > **Series:** LLM/AI Engineering Guides
-> **Companion Guides:** [Query Rewriting in RAG](query_rewriting_rag_guide.md) · [Multi-Pass LLM Pipelines](multi_pass_llm_pipelines_guide.md) · [LLM Evaluation Frameworks](llm_evaluation_frameworks_guide.md) · [LLM Latency Optimization](llm_latency_optimization_guide.md)
+> **Companion Guides:** [Query Rewriting in RAG](query_rewriting_rag_guide.md) · [Multi-Pass LLM Pipelines](../multi_pass_llm_pipelines_guide.md) · [LLM Evaluation Frameworks](../llm_evaluation_frameworks_guide.md) · [LLM Latency Optimization](../llm_latency_optimization_guide.md)
 > **Last Updated:** July 2026
 
 ---

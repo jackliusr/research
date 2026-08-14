@@ -6,7 +6,7 @@
 > **仓库：** [github.com/jackliusr/research](https://github.com/jackliusr/research)
 > **系列：** LLM/AI 工程指南（LLM/AI Engineering Series）
 > **语种说明：** 本仓库现有指南均为英文；应作者要求，本篇以中文撰写（技术术语保留英文原文），是仓库中的中文特例。规范存放位置：`technology/ai_llm/agent_runtime_cache_design_guide.md`。
-> **配套指南：** [Hybrid Multi-Agent Systems](hybrid_multi_agent_systems_guide.md) · [Beyond RAG](beyond_rag_guide.md) · [LLM Latency Optimization](llm_latency_optimization_guide.md) · [RAG vs Long-Context LLMs](rag_vs_long_context_llms_guide.md) · [RAG Optimization Techniques](rag_optimization_techniques_guide.md) · [RAG with Data Streaming](rag_with_data_streaming_guide.md) · [LLM Development Risks & Security](../llm_development_risks_security_guide.md) · [On-Prem LLM Deployment](../on_prem_llm_deployment_guide.md)
+> **配套指南：** [Hybrid Multi-Agent Systems](hybrid_multi_agent_systems_guide.md) · [Beyond RAG](rag/beyond_rag_guide.md) · [LLM Latency Optimization](llm_latency_optimization_guide.md) · [RAG vs Long-Context LLMs](rag/rag_vs_long_context_llms_guide.md) · [RAG Optimization Techniques](rag/rag_optimization_techniques_guide.md) · [RAG with Data Streaming](rag/rag_with_data_streaming_guide.md) · [LLM Development Risks & Security](../llm_development_risks_security_guide.md) · [On-Prem LLM Deployment](../on_prem_llm_deployment_guide.md)
 > **最后更新：** 2026 年 8 月
 > **阅读时长：** ~50 分钟
 
@@ -60,7 +60,7 @@ LLM Agent（如基于 LangChain、LlamaIndex、Semantic Kernel 或自研编排�
 
 在进入 Agent 特定的缓存设计之前，必须先区分模型推理层面已经存在的四种缓存。它们由推理服务/模型提供商自动或半自动管理，Agent 应用层通常"免费获得"，但设计时需要理解其边界：
 
-1. **Prompt caching（前缀缓存 / context caching）**：对**完全相同的输入前缀**（通常是系统提示 + 历史消息的开头部分）只计算一次 KV 状态，后续请求复用。Anthropic 对缓存命中的输入 token 提供最高 **90% 折扣**，OpenAI 提供 **50% 折扣**（不同模型/时段略有差异）。这是当前**成本收益比最高**的缓存手段——详见 [rag_vs_long_context_llms_guide.md](rag_vs_long_context_llms_guide.md) 中对长上下文与缓存交互的讨论。
+1. **Prompt caching（前缀缓存 / context caching）**：对**完全相同的输入前缀**（通常是系统提示 + 历史消息的开头部分）只计算一次 KV 状态，后续请求复用。Anthropic 对缓存命中的输入 token 提供最高 **90% 折扣**，OpenAI 提供 **50% 折扣**（不同模型/时段略有差异）。这是当前**成本收益比最高**的缓存手段——详见 [rag_vs_long_context_llms_guide.md](rag/rag_vs_long_context_llms_guide.md) 中对长上下文与缓存交互的讨论。
 2. **KV cache 复用**：推理框架（vLLM、TGI 等，见 [on_prem_llm_deployment_guide.md](../on_prem_llm_deployment_guide.md)）在**前缀相同的并发/连续请求**之间复用 attention 的 Key/Value 状态（如 RadixAttention、PagedAttention 的 prefix sharing），避免重复 prefill。这是服务端优化，应用层几乎无感知。
 3. **语义缓存（semantic caching，如 GPTCache）**：对查询做 embedding，与已缓存查询计算相似度，超过阈值则直接复用缓存的答案——**不调用 LLM**。这是应用层缓存，也是本指南 L1 层的核心。
 4. **结果缓存（exact-match result caching）**：对**完全相同的请求**（相同 prompt + 相同参数 + 相同模型配置）命中已有响应，直接返回。简单、零误命中风险，但命中面窄。
@@ -88,7 +88,7 @@ Agent 运行时缓存与普通 Web 缓存的最大区别：**缓存对象不止�
 
 **缓存对象：** 对话历史摘要、工作记忆（working memory）、用户画像摘要、会话状态。
 
-**动机：** 长会话中，Agent 需要反复读取/重放历史。把对话历史压缩为结构化记忆（摘要、实体、偏好）并缓存，避免每次请求都重新总结整个历史。这与 [beyond_rag_guide.md](beyond_rag_guide.md) 中第 5 范式"记忆系统（Memory Systems）"直接相关——记忆层本身就需要缓存策略来避免重复计算。
+**动机：** 长会话中，Agent 需要反复读取/重放历史。把对话历史压缩为结构化记忆（摘要、实体、偏好）并缓存，避免每次请求都重新总结整个历史。这与 [beyond_rag_guide.md](rag/beyond_rag_guide.md) 中第 5 范式"记忆系统（Memory Systems）"直接相关——记忆层本身就需要缓存策略来避免重复计算。
 
 **注意：** 记忆缓存是**会话/用户级**的，天然带隐私属性——其存储与访问必须遵循第 6 章的 PII 约束（只缓存必要的最小化信息，加密存储，严格隔离）。
 
@@ -98,7 +98,7 @@ Agent 运行时缓存与普通 Web 缓存的最大区别：**缓存对象不止�
 
 **动机：** 检索 + 重排是 Agent 链路中开销可观的环节（embedding 计算 + 向量库 ANN 搜索 + 交叉编码器重排）。**文档不变即可复用检索结果**——同一查询对同一文档集的 top-k 结果在索引更新前是确定的。
 
-**详见：** [rag_optimization_techniques_guide.md](rag_optimization_techniques_guide.md) 中关于检索优化的讨论；文档更新驱动的缓存失效见 [rag_with_data_streaming_guide.md](rag_with_data_streaming_guide.md) 的流式失效模式。
+**详见：** [rag_optimization_techniques_guide.md](rag/rag_optimization_techniques_guide.md) 中关于检索优化的讨论；文档更新驱动的缓存失效见 [rag_with_data_streaming_guide.md](rag/rag_with_data_streaming_guide.md) 的流式失效模式。
 
 ### 2.4 中间推理缓存（Intermediate Reasoning Cache）
 
@@ -213,7 +213,7 @@ Agent 全量执行（LLM + 工具 + 检索 + 推理）
 **✓ 可缓存（文档不变时）。** RAG 链路的确定性部分：同一 query 对同一版本的文档索引，向量搜索的 top-k 集合与重排分数是确定的。缓存内容 = 文档 ID 列表 + 分数 + **索引版本号**。文档集更新（新增/删除/修改 chunk）时按版本失效。
 
 - 收益点：跳过 embedding 计算、ANN 搜索、交叉编码器重排这三段最贵的检索开销。
-- 详见 [rag_optimization_techniques_guide.md](rag_optimization_techniques_guide.md)；文档变更驱动的失效事件设计见 [rag_with_data_streaming_guide.md](rag_with_data_streaming_guide.md)。
+- 详见 [rag_optimization_techniques_guide.md](rag/rag_optimization_techniques_guide.md)；文档变更驱动的失效事件设计见 [rag_with_data_streaming_guide.md](rag/rag_with_data_streaming_guide.md)。
 
 ### 4.4 嵌入向量（Embedding）
 
@@ -369,7 +369,7 @@ Agent 全量执行（LLM + 工具 + 检索 + 推理）
 
 ### 6.6 流式/实时数据
 
-**✗ 禁止缓存。** 新闻快讯、警报、系统状态更新、事件流、通知。此类数据生命周期以秒计，缓存的价值趋近于零，而"读到旧警报"的代价是真实的（用户依据过期警报做了错误决策）。流式数据的消费应直连事件源；如需防抖/聚合，用流处理（见 [rag_with_data_streaming_guide.md](rag_with_data_streaming_guide.md) 的流式架构）而非缓存。
+**✗ 禁止缓存。** 新闻快讯、警报、系统状态更新、事件流、通知。此类数据生命周期以秒计，缓存的价值趋近于零，而"读到旧警报"的代价是真实的（用户依据过期警报做了错误决策）。流式数据的消费应直连事件源；如需防抖/聚合，用流处理（见 [rag_with_data_streaming_guide.md](rag/rag_with_data_streaming_guide.md) 的流式架构）而非缓存。
 
 ### 6.7 临时性数据（一次性凭证）
 
@@ -449,7 +449,7 @@ TTL 必须与内容的"允许陈旧程度"匹配，而不是一刀切：
 **数据更新事件 → 缓存失效**，不等 TTL 自然过期：
 
 - 数据源发布变更事件（CDC、消息队列、webhook）→ 订阅方删除/刷新相关缓存键；
-- 与流式数据管道配合的模式详见 [rag_with_data_streaming_guide.md](rag_with_data_streaming_guide.md)——其"流式失效"章节讨论的是同一问题的检索侧版本；
+- 与流式数据管道配合的模式详见 [rag_with_data_streaming_guide.md](rag/rag_with_data_streaming_guide.md)——其"流式失效"章节讨论的是同一问题的检索侧版本；
 - 显式失效的粒度：键级（精确）、前缀级（`tool_name:*`）、命名空间级（整域）。
 
 ### 7.3 版本失效（Version-Based Invalidation）
@@ -953,11 +953,11 @@ def get_ttl(content_type: str) -> int:
 
 ## 15. 参考文献
 
-- [RAG vs Long-Context LLMs](rag_vs_long_context_llms_guide.md) — prompt caching、长上下文与缓存交互（本指南 1.3、3.2）
-- [Beyond RAG](beyond_rag_guide.md) — 记忆系统（Memory Systems）范式（本指南 2.2）
+- [RAG vs Long-Context LLMs](rag/rag_vs_long_context_llms_guide.md) — prompt caching、长上下文与缓存交互（本指南 1.3、3.2）
+- [Beyond RAG](rag/beyond_rag_guide.md) — 记忆系统（Memory Systems）范式（本指南 2.2）
 - [Hybrid Multi-Agent Systems](hybrid_multi_agent_systems_guide.md) — 多 Agent 上下文复制与共享检索（本指南 2.1、4.4）
-- [RAG Optimization Techniques](rag_optimization_techniques_guide.md) — 检索链路与重排优化（本指南 2.3、4.3）
-- [RAG with Data Streaming](rag_with_data_streaming_guide.md) — 事件驱动的流式失效（本指南 7.2、12.5）
+- [RAG Optimization Techniques](rag/rag_optimization_techniques_guide.md) — 检索链路与重排优化（本指南 2.3、4.3）
+- [RAG with Data Streaming](rag/rag_with_data_streaming_guide.md) — 事件驱动的流式失效（本指南 7.2、12.5）
 - [LLM Development Risks & Security](../llm_development_risks_security_guide.md) — PII、缓存投毒、不安全输出（本指南 6、8）
 - [LLM Latency Optimization](llm_latency_optimization_guide.md) — 延迟优化全景（本指南 1.2）
 - [On-Prem LLM Deployment](../on_prem_llm_deployment_guide.md) — 自托管推理的 KV cache 前缀复用（本指南 1.3）

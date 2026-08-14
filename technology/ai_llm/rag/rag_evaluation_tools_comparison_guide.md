@@ -3,7 +3,7 @@
 > **Author:** Jack Liu Shurui · **Role:** Solution Architect, Crédit Agricole CIB
 > **Repo:** [github.com/jackliusr/research](https://github.com/jackliusr/research)
 > **Series:** LLM/AI Engineering Guides
-> **Companion Guides:** [RAG Evaluation Methodology](rag_evaluation_methodology_guide.md) · [LLM Evaluation Frameworks](llm_evaluation_frameworks_guide.md) · [Ragas](ragas_guide.md) · [TruLens](trulens_guide.md) · [LLM Evaluation vs Validation](llm_evaluation_vs_validation_guide.md) · [AI Agent Drift](ai_agent_drift_guide.md) · [Advanced RAG Techniques](advanced_rag_techniques_guide.md) · [Beyond RAG](beyond_rag_guide.md) · [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) · [RAG Optimization Techniques](rag_optimization_techniques_guide.md) · [Vector Databases](vector_databases_guide.md) · [Autonomous Agents](autonomous_agents_guide.md) · [Responsible AI](implementing-responsible-ai.md)
+> **Companion Guides:** [RAG Evaluation Methodology](rag_evaluation_methodology_guide.md) · [LLM Evaluation Frameworks](../llm_evaluation_frameworks_guide.md) · [Ragas](ragas_guide.md) · [TruLens](trulens_guide.md) · [LLM Evaluation vs Validation](../llm_evaluation_vs_validation_guide.md) · [AI Agent Drift](../ai_agent_drift_guide.md) · [Advanced RAG Techniques](advanced_rag_techniques_guide.md) · [Beyond RAG](beyond_rag_guide.md) · [RAG Frameworks Comparison](rag_frameworks_comparison_guide.md) · [RAG Optimization Techniques](rag_optimization_techniques_guide.md) · [Vector Databases](vector_databases_guide.md) · [Autonomous Agents](../autonomous_agents_guide.md) · [Responsible AI](../implementing-responsible-ai.md)
 > **Last Updated:** August 2026
 
 ---
@@ -39,10 +39,10 @@ It sits inside a small family of evaluation guides in this series:
 | [rag_evaluation_methodology_guide.md](rag_evaluation_methodology_guide.md) | The **tool-agnostic methodology playbook**: how to design an evaluation for a RAG system (two-layer eval, datasets, thresholds, gates) — the "what to measure and how" that any of these tools implements |
 | [ragas_guide.md](ragas_guide.md) | The full deep-dive on RAGAS (metrics, judge setup, testset generation) |
 | [trulens_guide.md](trulens_guide.md) | The full deep-dive on TruLens (RAG triad, feedback functions, dashboard) |
-| [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md) | The **master tooling comparison** covering all the generic LLM-eval tooling (DeepEval §5, LangSmith §6, MLflow §7, RAGAS §8, Arize §9, W&B §10, G-Eval §11) |
-| [llm_evaluation_vs_validation_guide.md](llm_evaluation_vs_validation_guide.md) | The two tracks: continuous *evaluation* vs formal *validation* — and how tooling maps onto each |
+| [llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md) | The **master tooling comparison** covering all the generic LLM-eval tooling (DeepEval §5, LangSmith §6, MLflow §7, RAGAS §8, Arize §9, W&B §10, G-Eval §11) |
+| [llm_evaluation_vs_validation_guide.md](../llm_evaluation_vs_validation_guide.md) | The two tracks: continuous *evaluation* vs formal *validation* — and how tooling maps onto each |
 
-**The division of labour:** the master [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md) covers evaluation tooling broadly; this guide goes **deeper on the RAG-specific evaluation angle** — the RAG metrics each tool ships, the RAG-focused workflows (retrieval+generation scoring, testset generation, RAG tracing), and the RAG-specific selection logic. Where a topic is already covered in depth elsewhere, this guide says so and cross-references rather than duplicating.
+**The division of labour:** the master [llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md) covers evaluation tooling broadly; this guide goes **deeper on the RAG-specific evaluation angle** — the RAG metrics each tool ships, the RAG-focused workflows (retrieval+generation scoring, testset generation, RAG tracing), and the RAG-specific selection logic. Where a topic is already covered in depth elsewhere, this guide says so and cross-references rather than duplicating.
 
 > **How to use this guide:** read §1–§7 to understand each tool's RAG capabilities, §8 for the master comparison, §9 for selection guidance, and §10 for a worked selection example end-to-end. If you only have five minutes, read §1.5 (the landscape table), §8.1 (the master comparison table), and §11 (the one-page summary).
 
@@ -153,7 +153,7 @@ Practical pattern (from [ragas_guide.md](ragas_guide.md) §9): ~150 human-review
 ### 2.4 Strengths
 
 1. **Metric depth** — the deepest, most RAG-specific metric catalogue in OSS; every metric maps to a concrete failure mode and a concrete fix (rerank vs chunk vs prompt).
-2. **Research-grounded** — published, peer-reviewed metric definitions (EACL 2024); defensible methodology when risk/audit asks *"how do you know it doesn't hallucinate fees?"* (see [implementing-responsible-ai.md](implementing-responsible-ai.md)).
+2. **Research-grounded** — published, peer-reviewed metric definitions (EACL 2024); defensible methodology when risk/audit asks *"how do you know it doesn't hallucinate fees?"* (see [implementing-responsible-ai.md](../implementing-responsible-ai.md)).
 3. **Reference-free by default** — usable when no gold answers exist.
 4. **Testset generation** — `TestsetGenerator` turns your corpus into an eval dataset with no manual labelling.
 5. **Integrations** — runs with LangChain, LlamaIndex, and can send results to LangSmith / Langfuse for monitoring (§9.4's combo pattern).
@@ -246,11 +246,11 @@ TruLens' Streamlit dashboard provides: an app **leaderboard** (compare app versi
 **DeepEval** is the open-source (Apache 2.0, Python) LLM evaluation framework by **Confident AI** — the one that brought **pytest-style, test-driven development to LLM applications**: metrics return scores *and* reasoning, and `assert_test()` raises on threshold breach with the same contract as a normal pytest assertion. It is the reference implementation of the "test-driven" category from §1.3.
 
 - **Repo:** `confident-ai/deepeval` · **Docs:** deepeval.com · **Cloud layer (optional):** Confident AI (dashboards, collaboration, production monitoring).
-- It is also covered at platform level in [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md) §5; this section focuses on the RAG-specific angle.
+- It is also covered at platform level in [llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md) §5; this section focuses on the RAG-specific angle.
 
 ### 4.2 The RAG Metrics
 
-DeepEval ships a comprehensive RAG metric family (verified against the current docs and [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md) §5.2):
+DeepEval ships a comprehensive RAG metric family (verified against the current docs and [llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md) §5.2):
 
 | Metric class | Metrics | Layer |
 |--------------|---------|-------|
@@ -288,7 +288,7 @@ assert_test(test_case, [FaithfulnessMetric(threshold=0.7)])
 
 ### 4.4 Strengths
 
-1. **Test-driven** — evaluation as assertions with thresholds; the natural fit for eval-gate/CI workflows (see [llm_evaluation_vs_validation_guide.md](llm_evaluation_vs_validation_guide.md) §2 for the eval-track framing).
+1. **Test-driven** — evaluation as assertions with thresholds; the natural fit for eval-gate/CI workflows (see [llm_evaluation_vs_validation_guide.md](../llm_evaluation_vs_validation_guide.md) §2 for the eval-track framing).
 2. **CI-friendly** — pytest-native, CLI test runner, GitHub-Actions-ready; gates on every PR.
 3. **Comprehensive RAG metrics** — faithfulness, answer relevancy, contextual relevancy/precision/recall, hallucination, plus native RAGAS scores.
 4. **Model-agnostic judge** — any LLM as judge (OpenAI, Anthropic, local via Ollama/vLLM).
@@ -321,7 +321,7 @@ assert_test(test_case, [FaithfulnessMetric(threshold=0.7)])
 
 **LangSmith** is LangChain's commercial **LLM evaluation and observability platform** (SaaS, Python + TypeScript): tracing, datasets, experiments, evaluators, human annotation, and production monitoring in one hosted product. It is the reference implementation of the "integrated tracing" category — evaluation is attached to the full execution trace, so a low score is one click away from the exact retrieval step that produced it.
 
-It is covered at platform level in [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md) §6; this section focuses on its RAG-specific evaluation surface.
+It is covered at platform level in [llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md) §6; this section focuses on its RAG-specific evaluation surface.
 
 ### 5.2 RAG Evaluators
 
@@ -348,7 +348,7 @@ Since 2025 LangSmith has shipped **online evaluators**: run-level, LLM-as-judge 
 ### 5.5 Weaknesses
 
 1. **LangChain-centric** — deepest integration only within the LangChain ecosystem; less natural for raw Python or other frameworks.
-2. **Hosted only** — no self-hosted option; traces and eval data live in LangSmith's cloud (data-residency blocker for some banks — see [llm_evaluation_vs_validation_guide.md](llm_evaluation_vs_validation_guide.md) §3 on validation evidence location).
+2. **Hosted only** — no self-hosted option; traces and eval data live in LangSmith's cloud (data-residency blocker for some banks — see [llm_evaluation_vs_validation_guide.md](../llm_evaluation_vs_validation_guide.md) §3 on validation evidence location).
 3. **Cost at scale** — usage-based pricing (see §5.6); the bill grows with trace volume.
 4. **Vendor lock-in** — evaluation data accumulates in the platform; fewer built-in metric definitions than RAGAS/DeepEval (you configure or write evaluators).
 
@@ -372,7 +372,7 @@ Since 2025 LangSmith has shipped **online evaluators**: run-level, LLM-as-judge 
 
 ### 6.1 Overview
 
-**Arize Phoenix** is the open-source (Apache 2.0) **LLM observability platform** from Arize AI: tracing (OpenTelemetry-native), evaluation, embedding analysis, and drift monitoring in one self-hostable tool. **Arize AX** is the managed cloud sibling (free tier + usage-based) for team collaboration and large-scale monitoring. Phoenix is covered at platform level in [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md) §9; this section covers its RAG-specific evaluation surface.
+**Arize Phoenix** is the open-source (Apache 2.0) **LLM observability platform** from Arize AI: tracing (OpenTelemetry-native), evaluation, embedding analysis, and drift monitoring in one self-hostable tool. **Arize AX** is the managed cloud sibling (free tier + usage-based) for team collaboration and large-scale monitoring. Phoenix is covered at platform level in [llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md) §9; this section covers its RAG-specific evaluation surface.
 
 ### 6.2 RAG Evals
 
@@ -389,7 +389,7 @@ They run via the `run_evals()` API over traced data (e.g., `run_evals(dataframe=
 
 ### 6.3 Strengths
 
-1. **Production observability** — real-time dashboards, alerting, cost/latency tracking; mature drift detection inherited from Arize's ML-observability background (see [ai_agent_drift_guide.md](ai_agent_drift_guide.md)).
+1. **Production observability** — real-time dashboards, alerting, cost/latency tracking; mature drift detection inherited from Arize's ML-observability background (see [ai_agent_drift_guide.md](../ai_agent_drift_guide.md)).
 2. **Tracing + eval integrated** — OpenTelemetry-based; scores attached to traces for root-cause analysis.
 3. **Embedding analysis** — UMAP projections, clustering, outlier detection on inputs/outputs — useful for spotting retrieval-distribution shifts.
 4. **Open source + self-hostable** — data stays in-house; standards-based (OTel).
@@ -420,7 +420,7 @@ They run via the `run_evals()` API over traced data (e.g., `run_evals(dataframe=
 
 ### 7.1 W&B Weave — Evals Inside the W&B Ecosystem
 
-**Weave** is Weights & Biases' LLM toolkit (hosted SaaS, Python + TypeScript): tracing, **Weave evals**, experiment tracking, dataset versioning, and dashboards — the natural extension for teams already on W&B. Covered at platform level in [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md) §10.
+**Weave** is Weights & Biases' LLM toolkit (hosted SaaS, Python + TypeScript): tracing, **Weave evals**, experiment tracking, dataset versioning, and dashboards — the natural extension for teams already on W&B. Covered at platform level in [llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md) §10.
 
 **The Weave evals framework:** evaluation is a first-class object — you define a **dataset** (e.g., golden Q&A samples with ground-truth contexts) and **scorers** (LLM-as-judge prompts, deterministic functions, or RAGAS metrics), then call `Evaluation.evaluate(model, dataset, scorers)`; every run is logged to W&B with traces and scores. The RAG++ course materials demonstrate the canonical pattern: download a golden eval dataset, run the RAG chain through Weave tracing, score with RAGAS/LLM judges, and review in the W&B dashboard.
 
@@ -439,7 +439,7 @@ They run via the `run_evals()` API over traced data (e.g., `run_evals(dataframe=
 
 ### 7.2 MLflow — LLM Evaluation on the MLOps Platform
 
-**MLflow** (Apache 2.0, Python) is the OSS MLOps platform whose `mlflow.evaluate()` was extended to LLMs — **LLM evaluation as an extension of experiment tracking** rather than a dedicated product. Covered in [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md) §7.
+**MLflow** (Apache 2.0, Python) is the OSS MLOps platform whose `mlflow.evaluate()` was extended to LLMs — **LLM evaluation as an extension of experiment tracking** rather than a dedicated product. Covered in [llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md) §7.
 
 For RAG: `mlflow.evaluate(model=..., data=eval_df, model_type="question-answering", evaluators="default")` with column mapping for question/ground-truth; built-in metrics include ROUGE-1/2/L, BLEU, answer/sentence similarity, toxicity, and readability; **LLM-as-judge** via custom prompt-defined criteria with any model; the model-comparison UI shows side-by-side aggregates.
 
@@ -460,7 +460,7 @@ For RAG: `mlflow.evaluate(model=..., data=eval_df, model_type="question-answerin
 
 **Langfuse** (MIT license) is the open-source LLM engineering platform: **tracing** (spans, latency, cost), **scores**, **datasets**, **LLM-as-a-judge evaluations**, prompt management, and experiments — self-hostable for free (Docker Compose/Helm) or used as Langfuse Cloud (subscription + usage-based events). It is the reference implementation of the "open-source tracing" category.
 
-For RAG: every retrieval step is traced (query, top-k chunks, scores), and **LLM-as-a-judge** with rubric-guided prompts scores traces for context relevance, groundedness/faithfulness, or any custom criterion; **datasets + experiments** give a regression workflow (re-run a golden RAG dataset after a chunking/reranker change, compare scores); online evaluation scores live production traces. Because it is MIT-licensed and self-hostable, it is the standard choice when a bank wants tracing + eval with full data residency (see §9.3 and the [ai_agent_drift_guide.md](ai_agent_drift_guide.md) production-monitoring discussion).
+For RAG: every retrieval step is traced (query, top-k chunks, scores), and **LLM-as-a-judge** with rubric-guided prompts scores traces for context relevance, groundedness/faithfulness, or any custom criterion; **datasets + experiments** give a regression workflow (re-run a golden RAG dataset after a chunking/reranker change, compare scores); online evaluation scores live production traces. Because it is MIT-licensed and self-hostable, it is the standard choice when a bank wants tracing + eval with full data residency (see §9.3 and the [ai_agent_drift_guide.md](../ai_agent_drift_guide.md) production-monitoring discussion).
 
 **Strengths:** open source + self-host (data sovereignty); framework-agnostic (LangChain, LlamaIndex, raw Python, TS); cheaper at scale than hosted rivals; good eval surface (judge prompts, datasets, experiments).
 **Weaknesses:** metric depth is bring-your-own — Langfuse provides the scoring mechanism, not a deep RAG metric catalogue (pair it with RAGAS, §9.4); self-hosting adds operational load (ClickHouse-backed stack).
@@ -477,7 +477,7 @@ For RAG: every retrieval step is traced (query, top-k chunks, scores), and **LLM
 
 ### 7.4 G-Eval — The LLM-as-a-Judge Technique
 
-**G-Eval** (arXiv:2303.16634) is not a platform but the **framework for LLM-as-a-judge evaluation with chain-of-thought reasoning**: the judge LLM (1) receives evaluation criteria in natural language, (2) generates step-by-step reasoning about the output's quality, then (3) produces a score (1–5 or 1–10). CoT-before-scoring correlates better with human judgment than direct scoring. Covered in [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md) §11.
+**G-Eval** (arXiv:2303.16634) is not a platform but the **framework for LLM-as-a-judge evaluation with chain-of-thought reasoning**: the judge LLM (1) receives evaluation criteria in natural language, (2) generates step-by-step reasoning about the output's quality, then (3) produces a score (1–5 or 1–10). CoT-before-scoring correlates better with human judgment than direct scoring. Covered in [llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md) §11.
 
 In RAG evaluation, G-Eval appears as the **custom-criteria judge** — e.g., DeepEval's `GEval` metric:
 
@@ -527,7 +527,7 @@ metric = GEval(name="Banking Accuracy",
 
 **Observability (traces + dashboards + production) → Langfuse / Phoenix.** For attached-to-traces evaluation, live monitoring, and drift: Phoenix (OSS, self-hosted, embedding analysis) and Langfuse (MIT, self-hostable, datasets/experiments) lead the open-source side; LangSmith leads the hosted side with the smoothest LangChain integration and online evaluators. W&B Weave wins only if you are already committed to the W&B ecosystem.
 
-**Test-driven / CI → DeepEval.** The only tool whose native contract is an assertion that fails a build: `assert_test` + thresholds + pytest runner. RAGAS/TruLens eval gates are things you *build* around `evaluate()`/`TruSession`; DeepEval's gate *is* the tool (see [llm_evaluation_vs_validation_guide.md](llm_evaluation_vs_validation_guide.md) §2 for where gates fit).
+**Test-driven / CI → DeepEval.** The only tool whose native contract is an assertion that fails a build: `assert_test` + thresholds + pytest runner. RAGAS/TruLens eval gates are things you *build* around `evaluate()`/`TruSession`; DeepEval's gate *is* the tool (see [llm_evaluation_vs_validation_guide.md](../llm_evaluation_vs_validation_guide.md) §2 for where gates fit).
 
 **Testset generation → RAGAS.** `TestsetGenerator` (evolution/node-based) is the most mature document-to-questions generator; DeepEval's `Synthesizer` is the alternative. LangSmith/Langfuse/Phoenix manage datasets but do not generate them.
 
@@ -593,7 +593,7 @@ A repeatable four-step framework (the same shape as the methodology guide's eval
 
 **Step 3 — Pilot.** Run the top 1–2 candidates on a **real slice of your eval dataset** (the methodology guide's golden set) against the *same* RAG pipeline for one week. Score the pilot on: metric usefulness (does a low score point at a fixable failure mode?), integration effort, judge cost per sample, and dashboard/trace inspectability. Two tools can legitimately pass the pilot for different tracks.
 
-**Step 4 — Decide.** Choose per-track, document the decision (tool, version, metric list, judge model, thresholds) in the eval specification — this becomes part of the validation evidence file if you are in a regulated context (see [llm_evaluation_vs_validation_guide.md](llm_evaluation_vs_validation_guide.md) §3 and [implementing-responsible-ai.md](implementing-responsible-ai.md)). Revisit quarterly: this market moves fast.
+**Step 4 — Decide.** Choose per-track, document the decision (tool, version, metric list, judge model, thresholds) in the eval specification — this becomes part of the validation evidence file if you are in a regulated context (see [llm_evaluation_vs_validation_guide.md](../llm_evaluation_vs_validation_guide.md) §3 and [implementing-responsible-ai.md](../implementing-responsible-ai.md)). Revisit quarterly: this market moves fast.
 
 > **Anti-pattern to avoid:** picking one tool before writing down the requirements. The tools are complementary, not interchangeable — "best tool" does not exist; "best tool *for this track*" does.
 
@@ -615,7 +615,7 @@ This is the **same scenario** used across the series' evaluation guides — [rag
 | 2 | **Production monitoring** — once live, the assistant must be watched: groundedness of real traffic, latency/cost, alerts when quality drops | Needs a tracing + eval platform with online evaluation, not a metrics library |
 | 3 | **Open-source preference + data residency** — bank policy: evaluation data and traces must stay in-house; no hosted SaaS for this workload | Rules out LangSmith and W&B Weave (hosted-only); favours self-hostable OSS (RAGAS, TruLens, DeepEval, Phoenix, Langfuse) |
 | 4 | **CI eval gate** — every retrieval/chunking change runs the golden set before merge (see [rag_evaluation_methodology_guide.md](rag_evaluation_methodology_guide.md) §7 on eval gates) | Nice-to-have for DeepEval; can be built with RAGAS in a CI job |
-| 5 | **Validation evidence** — audit needs documented eval specs and per-sample scores (MAS FEAT accountability; [implementing-responsible-ai.md](implementing-responsible-ai.md)) | Any tool works if the spec + scores are exported and versioned |
+| 5 | **Validation evidence** — audit needs documented eval specs and per-sample scores (MAS FEAT accountability; [implementing-responsible-ai.md](../implementing-responsible-ai.md)) | Any tool works if the spec + scores are exported and versioned |
 
 ### 10.3 The Selection — RAGAS + Langfuse
 
@@ -673,13 +673,13 @@ The two tracks share the **same golden set and thresholds** (defined once in the
 
 ### 10.5 The Lesson — Two Tools for the Two Tracks
 
-The selection worked because it separated the **two tracks** of [llm_evaluation_vs_validation_guide.md](llm_evaluation_vs_validation_guide.md): the **evaluation track** (dev-time measurement, iteration, gates — RAGAS) and the **validation/monitoring track** (production evidence, drift, alerts — Langfuse). No single tool was the best fit for both:
+The selection worked because it separated the **two tracks** of [llm_evaluation_vs_validation_guide.md](../llm_evaluation_vs_validation_guide.md): the **evaluation track** (dev-time measurement, iteration, gates — RAGAS) and the **validation/monitoring track** (production evidence, drift, alerts — Langfuse). No single tool was the best fit for both:
 
 - RAGAS alone would leave production unmonitored.
 - Langfuse alone would leave retrieval depth shallow (its metrics are BYO).
 - Together, each does what it is best at, sharing one eval spec — and the whole setup is open source and in-house, satisfying the data-residency requirement.
 
-This "metrics framework + observability platform" pairing is the **most common production pattern** in the RAG-eval landscape (the same shape as RAGAS+LangSmith, DeepEval+Phoenix, or TruLens standalone for smaller scopes). For the formal sign-off side — who approves the model, with which evidence — see [llm_evaluation_vs_validation_guide.md](llm_evaluation_vs_validation_guide.md) §3 and the governance overlay in [implementing-responsible-ai.md](implementing-responsible-ai.md).
+This "metrics framework + observability platform" pairing is the **most common production pattern** in the RAG-eval landscape (the same shape as RAGAS+LangSmith, DeepEval+Phoenix, or TruLens standalone for smaller scopes). For the formal sign-off side — who approves the model, with which evidence — see [llm_evaluation_vs_validation_guide.md](../llm_evaluation_vs_validation_guide.md) §3 and the governance overlay in [implementing-responsible-ai.md](../implementing-responsible-ai.md).
 
 ---
 
@@ -737,6 +737,6 @@ This "metrics framework + observability platform" pairing is the **most common p
 
 ---
 
-*End of guide. Next in the series: [rag_evaluation_methodology_guide.md](rag_evaluation_methodology_guide.md) (the tool-agnostic methodology) · [llm_evaluation_frameworks_guide.md](llm_evaluation_frameworks_guide.md) (master tooling comparison) · [llm_evaluation_vs_validation_guide.md](llm_evaluation_vs_validation_guide.md) (evaluation vs validation).*
+*End of guide. Next in the series: [rag_evaluation_methodology_guide.md](rag_evaluation_methodology_guide.md) (the tool-agnostic methodology) · [llm_evaluation_frameworks_guide.md](../llm_evaluation_frameworks_guide.md) (master tooling comparison) · [llm_evaluation_vs_validation_guide.md](../llm_evaluation_vs_validation_guide.md) (evaluation vs validation).*
 
 

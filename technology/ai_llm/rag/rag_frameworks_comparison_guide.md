@@ -3,7 +3,7 @@
 > **Author:** Jack Liu Shurui · **Role:** Solution Architect, Crédit Agricole CIB
 > **Repo:** [github.com/jackliusr/research](https://github.com/jackliusr/research)
 > **Series:** LLM/AI Engineering Guides
-> **Companion Guides:** [LLM Application Frameworks](llm_frameworks_comparison_guide.md) · [RAG vs HyDE](rag_vs_hyde_guide.md) · [Query Rewriting in RAG](query_rewriting_rag_guide.md) · [LLM Evaluation Frameworks](llm_evaluation_frameworks_guide.md) · [Enterprise AI Gateway](enterprise_ai_gateway_guide.md) · [MCP Frameworks & Tools](mcp_framework_tools_guide.md)
+> **Companion Guides:** [LLM Application Frameworks](../llm_frameworks_comparison_guide.md) · [RAG vs HyDE](rag_vs_hyde_guide.md) · [Query Rewriting in RAG](query_rewriting_rag_guide.md) · [LLM Evaluation Frameworks](../llm_evaluation_frameworks_guide.md) · [Enterprise AI Gateway](../../enterprise_ai_gateway_guide.md) · [MCP Frameworks & Tools](../mcp_framework_tools_guide.md)
 > **Last Updated:** July 2026
 
 ---
@@ -819,7 +819,7 @@ Beyond framework mechanics, RAG in a bank is governed by data, risk, and complia
 
 - **PII redaction** at ingestion *and* at query time (names, account numbers, identifiers) — redact before embedding/indexing so PII never enters the vector store, and redact in prompts/responses.
 - **Access control** must be enforced at retrieval, not just at the UI: row/tenant-level filters in the vector store (Qdrant payload filters, Weaviate multi-tenancy, Postgres RLS with pgvector) so a trader only retrieves documents their entitlements allow.
-- **Audit logging** of every query, retrieved context, and generated answer — the vector store, the gateway, and the LLM call must all feed the audit trail (ties into the [Enterprise AI Gateway](enterprise_ai_gateway_guide.md) pattern).
+- **Audit logging** of every query, retrieved context, and generated answer — the vector store, the gateway, and the LLM call must all feed the audit trail (ties into the [Enterprise AI Gateway](../../enterprise_ai_gateway_guide.md) pattern).
 
 ### 15.3 Model risk governance (SR 11-7)
 
@@ -898,4 +898,4 @@ Under US FRB SR 11-7 / OCC 2011-12 (and analogous EU/APAC regimes), the RAG stac
 
 ---
 
-*End of guide. Companion references: [LLM Application Frameworks](llm_frameworks_comparison_guide.md) · [RAG vs HyDE](rag_vs_hyde_guide.md) · [Query Rewriting in RAG](query_rewriting_rag_guide.md) · [LLM Evaluation Frameworks](llm_evaluation_frameworks_guide.md) · [Enterprise AI Gateway](enterprise_ai_gateway_guide.md).*
+*End of guide. Companion references: [LLM Application Frameworks](../llm_frameworks_comparison_guide.md) · [RAG vs HyDE](rag_vs_hyde_guide.md) · [Query Rewriting in RAG](query_rewriting_rag_guide.md) · [LLM Evaluation Frameworks](../llm_evaluation_frameworks_guide.md) · [Enterprise AI Gateway](../../enterprise_ai_gateway_guide.md).*
