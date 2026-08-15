@@ -293,11 +293,12 @@ Together they decompose retrieval quality the way Ragas does ([ragas_guide.md](r
 > All LLM-judge metrics return a score in 0–1 plus `reason`/`verdicts` for auditability; each metric takes a `threshold` used by `assert_test()` for pass/fail.
 
 ### 3.7 Metric Examples — Worked Calculations
+
 **Example A — Faithfulness (statement verdicts).** Answer: *"The confirmation period is 5 business days (1). Fees are capped at 1.2% (2). Regulatory approval is required within 24 hours (3)."* Context supports (1) and (2) but not (3). Score = 2/3 ≈ **0.67** → below a 0.8 threshold → test fails. The verdicts tell the developer *exactly which sentence* is ungrounded — the fix is either retrieval (find the regulation page) or prompt (don't extrapolate).
 **Example B — Contextual relevancy (window noise).** Context has 5 statements; the judge marks 3 relevant. Score = 3/5 = **0.60**.
 **Example C — Contextual precision (ranked retrieval).** Retrieved 3 chunks; relevant ones sit at ranks 2 and 3. Precision@2 = 1/2, precision@3 = 2/3; metric ≈ (1/2 + 2/3)/2 ≈ **0.58** — the relevant info exists but is buried, so ranking needs work (reranker).
 **Example D — G-Eval (probability-weighted score).** Judge outputs: score 4 with P=0.7, score 5 with P=0.2, score 3 with P=0.1 → expectation = 4·0.7 + 5·0.2 + 3·0.1 = 2.8 + 1.0 + 0.3 = **4.1/5 → 0.82**.
----
+
 
 ## 4. Test-Driven Evaluation
 ### 4.1 `assert_test` — Unit Tests for LLM Apps
@@ -711,7 +712,7 @@ For a bank, this eval suite is not just engineering hygiene — it is **validati
 
 **Positioning:** DeepEval is the *test-driven, CI-friendly* option in the evaluation landscape — stronger than Ragas at gating (but Ragas' metric depth is available natively via `RagasScore`), more gate-native than TruLens (but TruLens has the free local dashboard and tracing), fully open-source unlike LangSmith, and bank-friendly (Apache 2.0, local execution, any judge model). Honest weaknesses: judge cost/variability (calibrate thresholds against human labels!), cloud-paywalled dashboards, and fast-moving versions (pin them).
 **Final word:** if your team wants LLM applications tested the way code is tested — unit tests, red/green, CI gates, regression suites — DeepEval is the most direct open-source path. In a bank: gate CI on faithfulness/relevancy thresholds with a self-hosted or Bedrock judge, pin `deepeval==4.x`, file the eval spec (dataset version, metrics, judge, thresholds, per-sample scores) as validation evidence ([llm_evaluation_vs_validation_guide.md](../llm_evaluation_vs_validation_guide.md)) — and "the assistant seems fine" becomes an auditable, reproducible claim.
----
+
 
 ## 11. Glossary
 | Term | Definition |
