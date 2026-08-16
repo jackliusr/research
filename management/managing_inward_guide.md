@@ -187,7 +187,7 @@ The five dimensions are not a checklist of five separate hobbies; they operate a
 5. **Values** determine the long-term direction: the manager who knows what matters can absorb short-term misalignment; the manager who doesn't drifts into the cynicism of Section 7.2.
 
 **The quick self-audit (2 minutes, monthly):** score 1–5 on each — *I notice my state before it shows* (awareness); *I choose my responses under pressure* (regulation); *I have energy left at the end of the week* (energy); *I treat setbacks as information* (mindset); *my work fits what I value* (values). Any score ≤ 3 is the dimension to work next month. The audit is not a diagnosis — it is a steering instrument, in the same spirit as the weekly review in Section 9.
----
+
 
 ## 3. Self-Awareness: The Foundation
 
