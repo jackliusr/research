@@ -448,7 +448,7 @@ The combined effect: DeFi TVL fell ~80% from its Nov 2021 peak (~$180B → ~$37B
 | 2024–25 | Various (drainers, private keys) | Hundreds of $M ⚠️ | Phishing, key compromise, MEV bots |
 
 Patterns: **bridges dominate the top of the table** (their trust model — validators or signers — is the attack surface), **governance and oracle attacks are rarer but catastrophic**, and the *per-incident* average has shrunk as security tooling matured while the *total* remains material. For an institutional reader: exploit risk is a *feature* of the system, priced into any engagement, and mitigated by diversification, insurance, and regulated access — not eliminated by any of them.
----
+
 
 ## 9. The Regulation
 
