@@ -177,7 +177,6 @@ The genius of the model is the **interlock**: each case is a gate for the next. 
 | **The consulting case for action** | McKinsey-style change practice (framed; cross-ref the consulting guides) | The burning platform, quantified — the strategic case for organizational change |
 
 **The architect's takeaway (framed):** you do not need to pick a framework — you need to know which one your *organization* uses, and map the others onto it. A CACIB-style investment committee may not say "strategic case," but it will ask "why now, why this option, can we afford it, can we deliver it, and who owns the benefits?" — which *is* the Five Case Model wearing a banker's suit. This guide's structure (§3) is framework-agnostic for exactly that reason.
----
 
 ## 3. The Structure
 
