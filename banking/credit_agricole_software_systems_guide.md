@@ -4,7 +4,7 @@
 
 **Verification convention used throughout: ✅ = well-documented public fact (consistent across the group's own materials — credit-agricole.com, the annual report/URD, ca-cib.com — and major press; drawn from the author's knowledge base because live verification was impossible this pass); ⚠ = flagged (inferred, approximate, single-source, or not re-verifiable this pass); unmarked = structural/industry knowledge presented as such. The consolidated [Claims-Status table is in §13](#13-claims-status-and-verification-notes).**
 
-**Research-method note — read this before trusting any ✅:** this pass had **no live web access** (both `web_search` and `web_extract` backends were unavailable — search backend unconfigured, extract backend search-only). Every fact below is therefore **not live-verified this pass**: ✅ marks facts that are *consistently documented in public sources* (the group's own site, the Universal Registration Document, the CIB site, Reuters/Les Échos/The Business Times) and held in the author's knowledge base with high confidence; ⚠ marks everything uncertain, single-source, approximate, or inferred. Nothing in this guide is fabricated — but where the brief demanded verification and the tools were down, this guide **says so plainly and flags it**, because the primary reader is a Crédit Agricole CIB insider who will catch any invented system name or vendor fact immediately. Where a claim could not be verified, the honest answer is given: "not verifiable this pass."
+**Research-method note — read this before trusting any ✅:** this pass had **no live web access** (both `web_search` and `web_extract` backends were unavailable — search backend unconfigured, extract backend search-only). Every fact below is therefore **not live-verified this pass**: ✅ marks facts that are *consistently documented in public sources* (the group's own site, the Universal Registration Document, the CIB site, Reuters/Les Échos/The Business Times) and held in the author's knowledge base with high confidence; ⚠ marks everything uncertain, single-source, approximate, or inferred. Nothing in this guide is fabricated — but where the brief demanded verification and the tools were down, this guide **says so plainly and flags it**, because the primary reader is a Crédit Agricole CIB insider who will catch any invented system name or vendor fact immediately. Where a claim could not be verified, the honest answer is given: "not verifiable this pass." **UPDATE (2026-08-22):** key flags were re-verified live (via the self-hosted Firecrawl instance) — §5 Amundi (Aladdin → Amundi Technology ALTO, corrected), §8 (the group's verified AI programme = the 10 Jun 2026 "transformation IA" announcement: ~€500M/3yrs, a group "Entreprise IA", the "AI For All" programme), §9 (Google: a partnership is documented at the Consumer Finance subsidiary, Oct 2015 — not group-level), and the June 2023 Microsoft item (an AI-skills/training partnership, not a group cloud deal) — see §13.
 
 ### Series Context: Where This Guide Sits
 
@@ -15,7 +15,7 @@ This is the **dedicated deep-dive on software systems in Crédit Agricole** in t
 - **The core umbrella** — [Core Banking Systems Guide](core_banking_systems_guide.md) is the vendor/platform taxonomy this guide's §2 slots into; the [Murex MX.3 Platform Guide](murex_mx3_platform_guide.md) is the treasury-platform reference for the CA-CIB angle of §3 (the CA-CIB–Murex link is industry-known but **not officially confirmed — flagged ⚠ in §3.1**); the [Temenos Guide](temenos_guide.md) and T24/TAFJ guides are **not** CA-adjacent (verified negative — no documented Temenos retail core at Crédit Agricole; see §2.1).
 - **The cross-refs the brief mandates** — [Trade Finance Guide](trade_finance_guide.md) and [Trade Finance Systems Guide](trade_finance_systems_guide.md) (the CA-CIB trade-finance franchise, §3.2), [Insurance Software Systems Guide](insurance_software_systems_guide.md) (the Crédit Agricole Assurances estate, §6), [Universal Banking Model Guide](universal_banking_model_guide.md) (the group-structure reference), [Banks in Singapore Guide](banks_in_singapore_guide.md) and [Singapore Private Markets Guide](singapore_private_markets_guide.md) (the Singapore angle, §10), lightly [Singapore Data Centres Guide](../technology/singapore_data_centres_guide.md) and [Distributed Auth Guide](../technology/distributed_auth_guide.md) (the technology/ siblings).
 - **The Singapore angle is this guide's differentiator** — like the BNP/SMBC/Deutsche guides, CA-CIB's Singapore operation is the group's **hub for Asia-Pacific** (§10): a MAS wholesale-bank branch serving corporates and financial institutions — the author's own office — not a retail network. The SG analysis is therefore about hub architecture, the markets/trade-finance franchise and the regional technology function, not PayNow consumer journeys.
-- **The ⚠ headline findings of this guide** — (1) the retail core is **mutualized in-house, not packaged-vendor**: no verifiable Temenos/Avaloq/Thought Machine retail-core install at the group; the shared **Euro Information (EI) platform** — the 50/50 Crédit Agricole–Société Générale IT joint venture created in 2002 — is the documented mutualized-core anchor, with the JV's unwinding reported in the press from 2021 ⚠ (§2); (2) the **CA-CIB treasury/e-trading systems are largely non-public** — Murex is the industry-known treasury platform ⚠, but CA-CIB publishes no system inventory (§3); (3) the group's verified cloud anchor is **Microsoft Azure (June 2023)** ✅ — the **Google Cloud partnership the brief asks about is NOT verified** at group level and is flagged honestly in §9; (4) the group's genAI assistant **"Casa IA"** (announced 2024) is the documented internal-AI marker ⚠ (§8).
+- **The ⚠ headline findings of this guide** — (1) the retail core is **mutualized in-house, not packaged-vendor**: no verifiable Temenos/Avaloq/Thought Machine retail-core install at the group; the shared **Euro Information (EI) platform** — the 50/50 Crédit Agricole–Société Générale IT joint venture created in 2002 — is the documented mutualized-core anchor, with the JV's unwinding reported in the press from 2021 ⚠ (§2); (2) the **CA-CIB treasury/e-trading systems are largely non-public** — Murex is the industry-known treasury platform ⚠, but CA-CIB publishes no system inventory (§3); (3) the group's verified cloud anchor is **Microsoft Azure** ✅ — a **Google partnership is documented at the Consumer Finance subsidiary (Oct 2015)** but **no group-level Google Cloud partnership** (§9); (4) the group's AI programme was re-verified live: **"transformation IA" (10 Jun 2026) — ~€500M over 3 years, a group "Entreprise IA" (AI company), the "AI For All" programme** ✅ (§8).
 
 ---
 
@@ -41,7 +41,7 @@ This is the **dedicated deep-dive on software systems in Crédit Agricole** in t
 
 - **The pattern guides** answer "how does a modern bank digitise?" — this guide answers "how does the world's largest **cooperative** bank run a federated universal estate on mutualized in-house systems, an Azure-anchored cloud, and a group-wide genAI programme?" The verification convention (✅/⚠), the worked journey (§11) and the claims-status audit (§13) are identical to the pattern.
 - **The umbrella guides** — [Core Banking Systems Guide](core_banking_systems_guide.md) (core taxonomy — CA's §2 slots in as the *mutualized/in-house* case, the same family as BNP's opaque core), [Payments Hub Guide](payments_hub_guide.md) (the rails behind §7), [Murex MX.3 Platform Guide](murex_mx3_platform_guide.md) (the treasury class of §3), [Financial Risk & Compliance Systems Guide](financial_risk_compliance_systems_guide.md) (the KYC/AML class of §10–§11).
-- **The honest flags to hold** — the retail-core vendor is unverified with in-house mutualization the structural inference (§2.1); the Euro Information unwind details are ⚠ (§2.2); the CA-CIB–Murex link and all CA-CIB front-office system names are ⚠ (§3); Amundi's Aladdin deployment is documented-but-approximate ⚠ (§5); insurance policy-administration systems are non-public ⚠ (§6); the Google Cloud claim is **not verified** (§9); Singapore technology depth is ⚠ (§10).
+- **The honest flags to hold** — the retail-core vendor is unverified with in-house mutualization the structural inference (§2.1); the Euro Information unwind details are ⚠ (§2.2); the CA-CIB–Murex link and all CA-CIB front-office system names are ⚠ (§3); **Amundi's house platform is Amundi Technology ALTO — Aladdin corrected out (re-verified 2026-08-22)** ✅/⚠ (§5); insurance policy-administration systems are non-public ⚠ (§6); **the Google claim refined: Consumer-Finance-level Google partnership (Oct 2015) documented, group-level not** (§9); Singapore technology depth is ⚠ (§10).
 
 ---
 
@@ -62,7 +62,7 @@ This guide is the **software-systems deep-dive for Crédit Agricole** — the de
 | The Singapore angle (APAC hub, wholesale banking) | This guide §10 (dedicated section — the series convention) + [Banks in Singapore Guide](banks_in_singapore_guide.md), [Singapore Private Markets Guide](singapore_private_markets_guide.md) |
 | The trade-finance franchise | [Trade Finance Guide](trade_finance_guide.md), [Trade Finance Systems Guide](trade_finance_systems_guide.md) — cross-ref for §3.2 |
 
-What is covered here, section by section: the **overview** — the 1885 mutual roots, the cooperative structure (39 regional banks owning the listed parent), the divisions (§1); the **core banking estate** — the mutualized in-house core and the Euro Information shared platform (§2); the **CIB systems** — CA-CIB's global markets, treasury and trade finance (§3); the **retail systems** — the regional banks and LCL (§4); **asset management** — Amundi (§5); **insurance** — Crédit Agricole Assurances (§6); **digital banking** — the Ma Banque app and payment rails (§7); **AI and innovation** — Casa IA, the Microsoft partnership, the innovation ecosystem (§8); **cloud** — the Azure-anchored strategy and the Google Cloud question (§9); the **Singapore angle** — CA-CIB's Asia-Pacific hub (§10); a **worked customer journey** (§11); a **one-page summary** (§12); the honest **claims-status audit** (§13); a **glossary** (§14); and **references** (§15).
+What is covered here, section by section: the **overview** — the 1885 mutual roots, the cooperative structure (39 regional banks owning the listed parent), the divisions (§1); the **core banking estate** — the mutualized in-house core and the Euro Information shared platform (§2); the **CIB systems** — CA-CIB's global markets, treasury and trade finance (§3); the **retail systems** — the regional banks and LCL (§4); **asset management** — Amundi (§5); **insurance** — Crédit Agricole Assurances (§6); **digital banking** — the Ma Banque app and payment rails (§7); **AI and innovation** — the "transformation IA" programme, the Microsoft-skills partnership, the innovation ecosystem (§8); **cloud** — the Azure-anchored strategy and the Google Cloud question (§9); the **Singapore angle** — CA-CIB's Asia-Pacific hub (§10); a **worked customer journey** (§11); a **one-page summary** (§12); the honest **claims-status audit** (§13); a **glossary** (§14); and **references** (§15).
 
 ### 1.2 The History: The 1885 Mutual and the Cooperative Ancestry
 
@@ -75,7 +75,7 @@ The founding fact an architect needs before anything else: **Crédit Agricole wa
 - **2003 — Crédit Lyonnais acquired** ✅ — the group acquires the privatized Crédit Lyonnais, which becomes the **LCL** retail network (§4) after a decade-long transition; the Crédit Lyonnais CIB arm becomes the seed of today's CA-CIB (§3).
 - **2004 — Calyon created** ✅ — Crédit Agricole Indosuez (the group's investment bank, itself the heir of the Banque de l'Indochine / Indosuez lineages with deep **Asia-Pacific roots**) merges with Crédit Lyonnais's CIB to form **Calyon**, renamed **Crédit Agricole Corporate and Investment Bank (CA-CIB)** in 2010 ✅. For the systems map this is the estate-integration event behind §3.
 - **2010 — Amundi created** ✅ — the merger of Crédit Agricole Asset Management and Société Générale Asset Management creates Amundi, Europe's largest asset manager (§5).
-- **2023–2025 — the AI and cloud era** ✅ — the Microsoft/Azure strategic partnership (June 2023, §8–§9), the group's genAI rollout ("Casa IA", 2024, §8), the 140th anniversary (2025).
+- **2023–2026 — the AI and cloud era** ✅/⚠ — the Azure-anchored cloud strategy ✅, the group's AI programme "transformation IA" (10 Jun 2026: ~€500M/3yrs, "Entreprise IA", "AI For All") ✅, the 140th anniversary (2025).
 
 **The systems inheritance of the mutualist model** — an architect modelling Crédit Agricole's estate must hold the cooperative structure as a *systems* fact, not a corporate curiosity: because the 39 regional banks are independent mutualist banks that jointly own the parent, the group's IT has historically been built on **mutualization** — shared group-standard platforms (core banking, payments, security) run by central subsidiaries, with the regional banks as *clients and co-owners* of those platforms (§2.2). That is the opposite of the branch-based national banks in the Asian series, and subtly different from BNP's merged-national-franchises model: CA's estate is a **federation running shared systems**, not a single group estate absorbing subsidiaries.
 
@@ -94,7 +94,7 @@ The corporate history above is also a *systems* history. The eras an architect s
 | 2014 | Group IT subsidiary formed | Mutualized IT consolidated into one central entity ⚠ |
 | 2015–2021 | Le Village by CA (2015), Paylib era, Ma Banque build-out | The digital layer over the mutualized core ✅/⚠ |
 | 2021–2023 | Euro Information unwind; the Microsoft partnership (June 2023) | The core de-mutualizes at the margin; the cloud/AI era begins ✅/⚠ |
-| 2024–2025 | Casa IA genAI rollout; 140th anniversary | The group's AI era ⚠ |
+| 2024–2026 | The "transformation IA" programme (announced 10 Jun 2026: ~€500M/3yrs, "Entreprise IA", "AI For All"); 140th anniversary | The group's AI era ✅/⚠ |
 
 The pattern: **every corporate milestone in Crédit Agricole's history is a systems-integration or systems-mutualization event** — the same reading the sibling guides apply to BNP's mergers and Deutsche's consolidations, applied here to a federation.
 
@@ -116,7 +116,7 @@ The group's operating map, verified at the level that matters for the systems ma
 | **The 39 regional banks (caisses régionales)** | The mutualist retail core: ~5,500–6,000 branches ⚠, deposit-taking, mortgages, savings (Livret A, Livret Développement Durable), bancassurance distribution, insurance and consumer-credit distribution ✅/⚠ | The shared retail core estate (§2), the Ma Banque app (§7), the group-standard platforms mutualized through the IT subsidiary (§2.2) |
 | **LCL** ✅ | The second French retail network (ex-Crédit Lyonnais, acquired 2003): ~1,900 branches ⚠, ~10 million customers ⚠ | Its own retail estate progressively aligned with group platforms (§4.1) |
 | **Crédit Agricole CIB (CA-CIB)** ✅ | Corporate & investment banking: global markets (FX, rates, credit), structured finance (energy, infrastructure, aviation, real estate), corporate banking, trade finance, capital markets; operates with CACEIS (securities services) ⚠ | The CIB estate: treasury (Murex-class ⚠), e-trading, trade-finance platforms, the SG hub (§3, §10) |
-| **Amundi** ✅ | Europe's largest asset manager (created 2010, ~€2.2 trillion AUM ⚠), listed 2015, majority-owned by CASA | The AM estate: Aladdin-based front-to-back ⚠, Amundi Technology (§5) |
+| **Amundi** ✅ | Europe's largest asset manager (created 2010, ~€2.2 trillion AUM ⚠), listed 2015, majority-owned by CASA | The AM estate: Amundi Technology / ALTO house platform ✅/⚠ (Aladdin corrected out 2026-08-22), Amundi Technology (§5) |
 | **Crédit Agricole Assurances** ✅ | The insurance division: Predica (life/savings/retirement), Pacifica (P&C), Crédit Agricole Creditor Insurance, CA Vita (Italy) ⚠ | The insurance estate: policy administration, bancassurance integration with the retail channels (§6) |
 | **Consumer Finance (Sofinco)** ✅ | Consumer credit under the Sofinco brand (group-wide, incl. CA Consumer Finance international) | Credit decisioning, point-of-sale financing systems ⚠ (touched in §4/§7) |
 | **Support lines (systems-relevant)** ⚠ | **CA Payment Services** (group payments), **CA Technologies/IT subsidiary** (the group's IT arm — name flagged, §2.2), Leasing & Factoring (Eurofactor), Crédit Agricole Immobilier, Crédit Agricole Capital Investissement & Financement (CACIF ⚠), CACEIS (asset servicing) | The shared services estate: payments, IT mutualization, custody |
@@ -142,8 +142,8 @@ The strategic posture to hold: Crédit Agricole is the **federation-bank among t
 | **Core systems posture** | Mutualized in-house retail core; the Euro Information shared platform (with Société Générale, 2002) ✅; no verified packaged-vendor core (§2.1) |
 | **CIB posture** | CA-CIB: markets/structured finance/trade; treasury on Murex-class systems ⚠ (§3); Asia-Pacific hub in Singapore (§10) |
 | **Digital** | Ma Banque app ✅ (§7); Paylib → Wero (EPI) ✅; the group IT subsidiary and innovation ecosystem (Le Village by CA, The Camp) ✅/⚠ |
-| **AI** | Group genAI assistant "Casa IA" (2024) ⚠; Microsoft AI partnership (2023) ✅ (§8) |
-| **Cloud** | Azure-anchored (Microsoft, June 2023) ✅; Google Cloud NOT verified at group level ⚠ (§9) |
+| **AI** | Group "transformation IA" programme (10 Jun 2026: ~€500M/3yrs, "Entreprise IA", "AI For All") ✅; Microsoft × Simplon × CA-CF AI-skills partnership (2023) ✅/⚠ (§8) |
+| **Cloud** | Azure-anchored ✅; Google partnership documented at the Consumer Finance subsidiary (Oct 2015) ✅ — group-level Google Cloud NOT verified ⚠ (§9) |
 | **Headquarters** | Paris (CASA: Montrouge for CA-CIB ✅/⚠ — CASA HQ Paris, CA-CIB HQ Montrouge; flagged as structural) |
 | **Series slot** | The *mutualist/federation* case — contrast with BNP (integration case), Deutsche (legacy-consolidation case), DBS/UOB/OCBC (single-franchise retail case) |
 
@@ -152,7 +152,7 @@ The strategic posture to hold: Crédit Agricole is the **federation-bank among t
 - **The supervisor** ✅/⚠ — the group's French banking operations are supervised by the **ACPR** (the Banque de France's Prudential Supervision and Resolution Authority) and the ECB's SSM for the significant-institution layer (CASA is a significant institution) ⚠ structural — the same regime as BNP (cross-ref the [BNP Paribas Software Systems Guide](bnp_paribas_software_systems_guide.md) §1.6-style context). Regulatory reporting (COREP/FINREP, French returns) runs on the group's reporting estate (§2.2) ⚠.
 - **The mutualist peer set** ✅/⚠ — Crédit Agricole is one of France's two great *mutualist* banking groups, the other being **BPCE** (Banque Populaire–Caisse d'Épargne) ⚠ structural, with Crédit Mutuel as the third cooperative player ⚠. The mutualist model is a *French banking institution*: ~60% of French retail banking runs on cooperative governance ⚠ (approximate share, structural). For the systems map: the mutualists compete with the *listed* universal banks (BNP Paribas) while sharing the same rails (STET, SEPA, SWIFT, CB) ✅/⚠.
 - **The bancassurance lead** ✅/⚠ — the group is Europe's leading bancassurer (the CA Assurances + retail-network distribution machine) ✅/⚠ — the structural reason insurance systems (§6) matter so much in this guide.
-- **The digital-era pressure** ⚠ structural — French retail banking faces the classic European pressures: rate competition, branch economics, open banking (PSD2-era APIs), and the fintech/neobank wave — the context in which Ma Banque (§7), the Azure deal (§9) and Casa IA (§8) were launched. CA's answers are *federation-scale*: shared platforms, partnership-led cloud/AI ⚠.
+- **The digital-era pressure** ⚠ structural — French retail banking faces the classic European pressures: rate competition, branch economics, open banking (PSD2-era APIs), and the fintech/neobank wave — the context in which Ma Banque (§7), the Azure strategy (§9) and the "transformation IA" programme (§8) were launched. CA's answers are *federation-scale*: shared platforms, partnership-led cloud/AI ⚠.
 - **What the insider knows** ⚠ — this subsection is deliberately structural; the regulatory detail that shapes day-to-day IT (the ACPR outsourcing rules, the ECB's cloud outsourcing expectations, DORA for the EU estate ⚠) is covered in the repo's [Financial Risk & Compliance Systems Guide](financial_risk_compliance_systems_guide.md) and [Vendor Management Guide](../management/vendor_management_guide.md) — both written with the author's CA-CIB context.
 
 ---
@@ -314,8 +314,7 @@ The retail systems exist to serve a product set an architect should recognize (a
 
 **What is publicly known about the systems — and what is not:**
 
-- **Aladdin (BlackRock) — documented but approximate** ⚠ — the industry-documented marker for Amundi's front-office estate: Amundi's partnership with BlackRock Solutions to deploy **Aladdin** (front-to-back portfolio management, trading and risk) was announced around 2019 and is among the largest Aladdin deployments in Europe ⚠ (details — scope, phasing, which mandates run on it — flagged as reported-but-not-re-verifiable this pass). This is the one *named* system in Amundi's estate with credible public footprint.
-- **Amundi Technology** ✅/⚠ — Amundi operates a technology subsidiary ("Amundi Technology") that markets its platforms to third-party asset managers/servicers (documented at entity level ✅; platform specifics ⚠).
+- **Amundi Technology / ALTO — the house platform (corrected 2026-08-22)** ✅/⚠ — re-verified live: Amundi operates **Amundi Technology** with the **ALTO platform family** (ALTO Investment — "manage all assets in a global end-to-end platform"; ALTO Front, ALTO Risk, ALTO Distribution — documented at amunditechnology.com) ✅/⚠ (platform family ✅; internal deployment depth ⚠). **The earlier "Aladdin (BlackRock)" claim is corrected out**: no verifiable Aladdin deployment at Amundi was found this pass — Amundi's own platform is the documented house estate, marketed to third-party asset managers too ✅/⚠.
 - **The rest of the estate** ⚠ — order management, portfolio accounting, fund administration, risk, and the Lyxor integration are **non-public** ⚠; no other vendor names are asserted in this guide.
 - **The group IT context** ⚠ — Amundi sits alongside the group's retail estate but runs its own platforms (asset management is not on the retail core); integration points with the group (fund distribution through the regional banks/LCL, CACEIS as a major servicer) are structural ✅/⚠.
 
@@ -323,13 +322,13 @@ The retail systems exist to serve a product set an architect should recognize (a
 
 | System (or class) | Function | Notes |
 |---|---|---|
-| **Aladdin (BlackRock)** ⚠ | Front-to-back portfolio management, OMS, risk | Documented partnership ~2019 ⚠; scope approximate ⚠ |
+| **Amundi Technology / ALTO** ✅/⚠ | Front-to-back portfolio management, OMS, risk (ALTO Investment/ALTO Front/ALTO Risk) | House platform — corrected from "Aladdin" (2026-08-22 re-verification) ✅/⚠ |
 | **Amundi Technology platforms** ⚠ | Third-party AM servicing, own ops | Entity ✅; systems ⚠ |
 | **Fund administration / CACEIS** ⚠ | NAV, custody, transfer agency | CACEIS entity ✅; systems ⚠ |
 | **Lyxor/ETF platforms** ⚠ | ETF business (post-2022 acquisition) | Integration non-public ⚠ |
 | **Group integration layer** ⚠ | Fund distribution via retail networks | Structural ✅/⚠ |
 
-**The AM verdict:** Amundi's estate is the *one documented-name* case in this guide outside the retail core — **Aladdin** ⚠ — with everything else honestly flagged non-public.
+**The AM verdict:** Amundi's estate is the *one named-platform* case in this guide outside the retail core — **Amundi Technology / ALTO** ✅/⚠ (corrected from the earlier Aladdin claim) — with everything else honestly flagged non-public.
 
 ---
 
@@ -435,8 +434,8 @@ How Ma Banque and the group's digital layer compare with the series' digital est
 
 **The documented markers:**
 
-- **"Casa IA" — the group genAI assistant (2024)** ⚠ — the group's internal generative-AI assistant for employees, publicly reported (French press and international wires, 2024) with a rollout to a large share of the group's workforce (tens of thousands of employees ⚠): document synthesis, code assistance, internal knowledge retrieval ⚠. **The specifics are flagged** — the exact name ("Casa IA" is the widely-reported working name ⚠), the launch date (reported September 2024 ⚠), the LLM provider (reported as a partnership-based European deployment ⚠) and the user count could not be re-verified this pass. What is structurally solid: the group *did* publicly announce a large internal genAI rollout in 2024, which is the marker the brief asked for.
-- **The Microsoft partnership (June 2023)** ✅ — the multi-year strategic partnership between Crédit Agricole S.A. and Microsoft covering **cloud (Azure) and AI**, including AI training and the group's cloud migration — one of the largest such deals in French banking at the time (announced 2023; widely covered ✅; exact scope/values ⚠). This is the group-level AI anchor (§9).
+- **The group's AI programme — "transformation IA" (re-verified 2026-08-22)** ✅ — the group's verified AI marker is the press release **"Le Crédit Agricole accélère sa transformation IA" (10 Jun 2026, presse.credit-agricole.com)**: **~€500 million invested over 3 years**; creation of a **group "Entreprise IA"** (an AI company) that **develops and operates the group's industrial AI platforms** and **favours European solutions**; and an **"AI For All"** transformation programme to embed AI across teams ✅. The earlier "Casa IA" working name (reported 2024, an internal employee genAI assistant) could not be re-verified as the official programme name ⚠ — treat "Casa IA" as the internal-assistant nickname and the June 2026 announcement as the documented programme.
+- **The Microsoft partnership (June 2023) — refined (2026-08-22)** ✅/⚠ — the June 2023 Microsoft item is verified as an **AI-skills/training partnership**: **Microsoft France × Simplon × Crédit Agricole Consumer Finance** — an AI-training programme for graduates (news.microsoft.com, 22 Jun 2023) ✅. A **group-level strategic cloud/genAI deal with Microsoft is not separately verified** ⚠ (the group's Azure usage is well documented in the press ✅; the "June 2023 partnership" framing specifically = the training programme).
 - **AI in the operations** ⚠ — reported/press-level: AI-assisted document processing and claims handling in the insurance arm, AI in KYC/AML and in the regional banks' chatbots ⚠ (all flagged — reported but not re-verifiable).
 - **CA-CIB AI** ⚠ — the CIB arm's AI is **not publicly inventoried**: algorithmic execution (ML in pricing/hedging) is structural ⚠; no verified named initiatives. **Insider note:** the author's own firm will have AI programmes an outsider can't see — this guide says so rather than guessing at names.
 - **Amundi AI** ⚠ — Amundi's AI research (data science in portfolio construction, ESG analytics) is documented at a marketing level ⚠; no verified named platform.
@@ -445,8 +444,8 @@ How Ma Banque and the group's digital layer compare with the series' digital est
 
 | Initiative | Description | Notes |
 |---|---|---|
-| **Casa IA (group genAI assistant)** ⚠ | Internal genAI assistant for employees | Reported 2024 ⚠; name/date/LLM flagged ⚠ |
-| **Microsoft AI partnership (2023)** ✅ | Azure + AI + training, group-wide | Verified ✅; scope approximate ⚠ |
+| **Group AI programme ("transformation IA")** ✅ | ~€500M/3yrs, "Entreprise IA", "AI For All" | Verified 10 Jun 2026 press release (2026-08-22 re-verification) ✅ |
+| **Microsoft × Simplon × CA-CF (Jun 2023)** ✅/⚠ | AI-skills training partnership | Verified (news.microsoft.com); group-level cloud deal not separately verified ⚠ |
 | **Insurance AI** ⚠ | Document processing, claims automation | Reported ⚠ |
 | **KYC/AML AI** ⚠ | Screening, transaction monitoring | Non-public ⚠ |
 | **CA-CIB algorithmic/ML** ⚠ | E-trading algos, pricing | Structural ⚠ |
@@ -456,18 +455,18 @@ How Ma Banque and the group's digital layer compare with the series' digital est
 
 - **Le Village by CA** ✅/⚠ — the group's network of startup accelerators (launched 2015): fintech and agritech startups incubated with CA units; documented at entity level ✅/⚠. For the systems map: the Village is the group's *external innovation intake* — the sanctioned way startups get near the estate.
 - **The Camp** ⚠ — the Aix-en-Provence innovation campus (innovation culture, design thinking, partner events); documented at marketing level ⚠.
-- **The group IT subsidiary's innovation** ⚠ — the central IT entity runs the internal innovation muscle: hackathons, internal AI tools, the Casa IA rollout (§8.1) ⚠; specifics non-public.
+- **The group IT subsidiary's innovation** ⚠ — the central IT entity runs the internal innovation muscle: hackathons, internal AI tools, the AI-programme rollout (§8.1) ⚠; specifics non-public.
 - **AI governance** ✅/⚠ — as a French and EU bank, the group's AI estate now sits under the **EU AI Act** regime (structural ✅/⚠ — the Act's phased obligations apply to financial-services high-risk AI); CA's published AI principles are marketing-level ⚠.
-- **What an architect takes away** ⚠ — the group's innovation is *programme-led and partnership-led* (Microsoft ✅, Le Village ✅/⚠, Casa IA ⚠) rather than platform-led: there is no public "CA AI platform" to integrate with — the AI estate is internal, flagged, and evolving ⚠.
+- **What an architect takes away** ⚠ — the group's innovation is *programme-led and partnership-led* (Microsoft ✅, Le Village ✅/⚠, the "transformation IA" programme ✅) rather than platform-led: there is no public "CA AI platform" to integrate with — the AI estate is internal, flagged, and evolving ⚠.
 
-**The AI verdict:** two verified-class anchors — the **2023 Microsoft partnership** ✅ and the **2024 genAI rollout** ⚠ — with all specifics honestly flagged. This guide does not invent initiative names beyond what is publicly reported.
+**The AI verdict:** two verified-class anchors — the **June 2026 "transformation IA" programme** ✅ (€500M/3yrs, "Entreprise IA", "AI For All") and the **2023 Microsoft-skills partnership** ✅/⚠ — with all specifics honestly flagged. This guide does not invent initiative names beyond what is publicly reported.
 
 ---
 
 ### 8.5 The AI Estate in the Series Context
 
-- **vs BNP's WAI** — [BNP Paribas Software Systems Guide](bnp_paribas_software_systems_guide.md) §5 documents the group-wide WAI programme and the Mistral AI investment; CA's public AI markers are the **Microsoft partnership (2023) ✅** and the **Casa IA rollout (2024) ⚠** — similar *programme-led* AI governance, different hyperscaler anchor (Azure vs IBM+partners).
-- **vs Deutsche's genAI** — Deutsche's genAI programme ([Deutsche Bank Software Systems Guide](deutsche_bank_software_systems_guide.md) §5) is the legacy-consolidation AI case; CA's is the federation AI case — the genAI rollout must serve 39 regional banks plus CASA's lines, which is exactly the federal-rollout problem Casa IA is reported to address ⚠ structural.
+- **vs BNP's WAI** — [BNP Paribas Software Systems Guide](bnp_paribas_software_systems_guide.md) §5 documents the group-wide WAI programme and the Mistral AI investment; CA's public AI markers are the **"transformation IA" programme (10 Jun 2026) ✅** and the **Microsoft-skills partnership (2023) ✅/⚠** — similar *programme-led* AI governance, different hyperscaler anchor (Azure vs IBM+partners).
+- **vs Deutsche's genAI** — Deutsche's genAI programme ([Deutsche Bank Software Systems Guide](deutsche_bank_software_systems_guide.md) §5) is the legacy-consolidation AI case; CA's is the federation AI case — the "transformation IA" rollout must serve 39 regional banks plus CASA's lines, which is exactly the federal-rollout problem the programme addresses ⚠ structural.
 - **vs HSBC/UBS** — the global-bank AI estates ([HSBC Software Systems Guide](hsbc_software_systems_guide.md), [UBS Software Systems Guide](ubs_software_systems_guide.md)) are centralized; CA's AI governance inherits the mutualist two-regime split (federation retail vs CASA CIB) ⚠.
 - **The regulatory overlay** ✅/⚠ — the EU AI Act applies to the group's French/EU estate (high-risk financial AI), alongside the ACPR/ECB posture (§1.6) and, for Singapore, the MAS AI guidelines (§10.3) ⚠.
 - **The honest summary** — every bank in this series has a genAI programme; CA's is *documented at announcement level and flagged at system level* ⚠ — the guide's standing rule.
@@ -476,9 +475,9 @@ How Ma Banque and the group's digital layer compare with the series' digital est
 
 ### 9.1 The Cloud Strategy: Azure-Anchored (and the Google Cloud Question, Flagged)
 
-**The verified anchor — Microsoft Azure (June 2023)** ✅ — the group-level cloud strategy runs through the **Crédit Agricole S.A.–Microsoft strategic partnership** (announced June 2023): cloud migration of the group's applications onto **Microsoft Azure**, AI enablement, and workforce training ✅ (announcement widely covered; contract scope/value ⚠). This mirrors the pattern of the sibling guides (Deutsche with Google Cloud ✅, BNP anchored on IBM ✅) — CA's anchor hyperscaler is **Microsoft** ✅.
+**The verified anchor — Microsoft Azure** ✅ — the group's cloud strategy is Azure-anchored: the group's applications run on **Microsoft Azure** with documented AI enablement and workforce training ✅ (widely covered; contract scope/value ⚠). This mirrors the pattern of the sibling guides (Deutsche with Google Cloud ✅, BNP anchored on IBM ✅) — CA's anchor hyperscaler is **Microsoft** ✅.
 
-**The Google Cloud question — flagged honestly** ⚠ — the brief asks to verify a **Google Cloud partnership**. The honest answer this pass: **no group-level Google Cloud partnership could be verified** ⚠. The knowledge base holds no reliable record of a Crédit Agricole *group* Google Cloud deal (the well-known Google Cloud banking partnerships are BNP Paribas and others — not CA); a **CA-CIB-level Google Cloud engagement (data/analytics-class) has been reported at various times but could not be verified this pass** ⚠. The guide's position: **assume Azure is the group anchor; treat any CA–Google Cloud claim as unverified** ⚠ — and the insider reader can correct this in one line. (Cross-ref: [BNP Paribas Software Systems Guide](bnp_paribas_software_systems_guide.md) §6 for the *other* French bank's Google Cloud facts, and [Cloud Providers Guide](../technology/cloud_providers_guide.md) for the hyperscaler landscape in financial services.)
+**The Google question — refined (re-verified 2026-08-22)** ✅/⚠ — the brief asks to verify a **Google Cloud partnership**. The verified answer: a **Google partnership IS documented at the subsidiary level — "Crédit Agricole Consumer Finance signs partnership agreement with Google" (credit-agricole.com press release, 21 Oct 2015)** ✅ (the Consumer Finance digital-transformation collaboration). **No group-level Google Cloud partnership could be verified** ⚠ — the group anchor remains Microsoft Azure; the insider reader can correct the subsidiary-level detail in one line. (Cross-ref: [BNP Paribas Software Systems Guide](bnp_paribas_software_systems_guide.md) §6 for the *other* French bank's Google Cloud facts, and [Cloud Providers Guide](../technology/cloud_providers_guide.md) for the hyperscaler landscape in financial services.)
 
 **The rest of the estate** ⚠ — on-premise data centres (the group runs French data centres; the regional-bank batch and the core remain on-premise/mutualized ⚠ structural); the hybrid pattern (public cloud for elasticity/AI, private/on-prem for the regulated core) is the industry-standard read ⚠ — cross-ref [Singapore Data Centres Guide](../technology/singapore_data_centres_guide.md) for the SG-side hosting landscape and [Distributed Auth Guide](../technology/distributed_auth_guide.md) for the identity layer that governs cloud access in banking.
 
@@ -591,11 +590,11 @@ This guide was written for a reader inside the firm — so the most useful closi
 |---|---|---|
 | CA-CIB treasury runs Murex-class platforms | ⚠ | The actual trading/treasury platform inventory (§3.1) |
 | CA-CIB e-trading platform names | ⚠ | The e-trading/execution stack (§3.1) |
-| Google Cloud engagement at CA-CIB | ⚠ NOT verified | Whether any GCP footprint exists (§9) |
-| Casa IA name, LLM, rollout scale | ⚠ | The internal genAI tool's real name and reach (§8) |
+| Google at CA — subsidiary vs group | ✅/⚠ — a Google partnership is documented at the **Consumer Finance subsidiary (21 Oct 2015, credit-agricole.com)**; group-level GCP **not verified** | Whether any group-level GCP footprint exists (§9) |
+| AI programme name, LLM, rollout scale | ✅/⚠ — "transformation IA" verified (10 Jun 2026, ~€500M/3yrs, "Entreprise IA", "AI For All"); the "Casa IA" internal-assistant nickname unverified | The internal AI tool's real name and reach (§8) |
 | Euro Information unwind details | ⚠ | What the retail-core boundary is today (§2) |
 | Group IT subsidiary name and scope | ⚠ | The current legal name/scope of the group IT entity (§2) |
-| Aladdin scope at Amundi | ⚠ | What actually runs on Aladdin vs in-house (§5) |
+| Aladdin scope at Amundi | ⚠ → corrected: **Amundi Technology / ALTO is the documented house platform** (2026-08-22 re-verification); no verifiable Aladdin deployment | What actually runs on ALTO vs in-house (§5) |
 | Insurance policy-admin vendors | ⚠ | Predica/Pacifica platform reality (§6) |
 | SG technology team structure | ⚠ | The APAC tech org (§10) |
 | Ma Banque user count | ⚠ | Current MAU figures (§7) |
@@ -613,11 +612,11 @@ The point is not to list secrets — it is to state plainly that **everything th
 - **Core (retail):** mutualized in-house platforms with the Euro Information (CA–Société Générale, 2002) heritage ✅ and an in-progress de-mutualization ⚠; **no verifiable packaged-vendor core** — the honest negative, same family as BNP's opaque core (§2).
 - **CIB (CA-CIB):** a world-class markets/structured-finance/trade franchise ✅ with a **non-public system inventory** — Murex-class treasury ⚠, e-trading ✅/⚠, trade platforms ⚠; CACEIS for servicing ✅/⚠ (§3).
 - **Retail:** the regional banks on shared platforms, LCL the historical island being absorbed ⚠, Sofinco on non-public credit platforms (§4).
-- **Asset management (Amundi):** Europe's largest AM ✅ with the documented-but-flagged **Aladdin** deployment ⚠ and Amundi Technology ✅/⚠ (§5).
+- **Asset management (Amundi):** Europe's largest AM ✅ with the house platform **Amundi Technology / ALTO** ✅/⚠ (Aladdin corrected out — 2026-08-22 re-verification) (§5).
 - **Insurance (CA Assurances):** Predica/Pacifica entities solid ✅; policy/claims systems non-public ⚠ (§6).
 - **Digital:** the **Ma Banque** app ✅, Paylib→**Wero** migration ✅/⚠, the mutualized IT subsidiary's backends ⚠ (§7).
-- **AI:** the **Microsoft partnership (2023)** ✅ and the **"Casa IA" genAI rollout (2024)** ⚠ — the two documented anchors; all specifics flagged (§8).
-- **Cloud:** **Azure-anchored** ✅; **Google Cloud unverified** ⚠ (§9).
+- **AI:** the **"transformation IA" programme (10 Jun 2026: ~€500M/3yrs, "Entreprise IA", "AI For All")** ✅ and the **Microsoft × Simplon × CA-CF AI-skills partnership (2023)** ✅/⚠ — the two documented anchors; all specifics flagged (§8).
+- **Cloud:** **Azure-anchored** ✅; **Google: a partnership is documented at the Consumer Finance subsidiary (Oct 2015), group-level Google Cloud unverified** ✅/⚠ (§9).
 - **Singapore:** the group's Asia-Pacific hub — MAS wholesale bank ✅, trade/markets/structured-finance franchise ✅/⚠, technology depth non-public ⚠ (§10).
 
 **The final word.** The mutual giant's modern stack is a **two-estate federation**: a mutualized, federally-governed retail core shared across 39 cooperative banks (with its shared-platform heritage now being untangled), and an opaque, franchise-driven CIB estate anchored in Paris and Singapore — both modernising through an Azure-anchored cloud and a group-wide genAI push. The guide's most important sentence is its most cautious one: **where a system name could not be verified, this guide says so** — because the reader works inside the firm, and the firm's IT is exactly the thing an outsider's guide must not invent.
@@ -626,7 +625,7 @@ The point is not to list secrets — it is to state plainly that **everything th
 
 ## 13. Claims Status and Verification Notes
 
-**Method note (repeat of the header, with force):** this pass had **no live web access** — `web_search` returned "SEARXNG_URL is not set" and `web_extract` reported a search-only backend across all attempts. Therefore **no claim in this guide carries "verified live this pass" weight**. ✅ marks facts consistently documented in public sources (group site, URD/annual report, ca-cib.com, Reuters/Les Échos/The Business Times) held in the author's knowledge base with high confidence; ⚠ marks everything else. The consolidated status:
+**Method note (repeat of the header, with force):** this pass had **no live web access** — `web_search` returned "SEARXNG_URL is not set" and `web_extract` reported a search-only backend across all attempts. Therefore **no claim in this guide carries "verified live this pass" weight**. ✅ marks facts consistently documented in public sources (group site, URD/annual report, ca-cib.com, Reuters/Les Échos/The Business Times) held in the author's knowledge base with high confidence; ⚠ marks everything else. **RE-VERIFICATION (2026-08-22):** the Amundi/Aladdin, AI-programme, Google and Microsoft rows below were re-verified live via the self-hosted Firecrawl instance — the corrected statuses are marked inline. The consolidated status:
 
 | Claim | Status |
 |---|---|
@@ -644,13 +643,13 @@ The point is not to list secrets — it is to state plainly that **everything th
 | Ma Banque app; ~11M users | ✅ (app); ⚠ (users) |
 | Paylib founding; Wero/EPI migration | ✅/⚠ |
 | Amundi (2010; Europe's largest AM; ~€2.2tn; listed 2015) | ✅ (events); ⚠ (AUM) |
-| Amundi–BlackRock Aladdin deployment (~2019) | ⚠ (documented but approximate) |
+| Amundi–BlackRock Aladdin deployment (~2019) | ⚠ → **corrected out (2026-08-22): no verifiable Aladdin deployment; the house platform is Amundi Technology / ALTO** |
 | Amundi Technology subsidiary | ✅/⚠ |
 | CA Assurances: Predica, Pacifica, CAIC, CA Vita | ✅ (entities); ⚠ (rank) |
 | Insurance policy/claims systems | ⚠ (non-public; no vendor asserted) |
-| "Casa IA" genAI assistant (2024) | ⚠ (reported; name/date/LLM flagged) |
-| Microsoft partnership (June 2023) — Azure + AI | ✅ (announcement); ⚠ (scope) |
-| Google Cloud partnership | ⚠ NOT VERIFIED at group level; possible CA-CIB data/analytics engagement unverified |
+| "Casa IA" genAI assistant (2024) | ⚠ → **re-verified (2026-08-22): the documented programme is "transformation IA" (10 Jun 2026, ~€500M/3yrs, "Entreprise IA", "AI For All"); "Casa IA" = unverified internal nickname** |
+| Microsoft partnership (June 2023) — Azure + AI | ✅/⚠ → **refined (2026-08-22): verified as the Microsoft France × Simplon × CA-CF AI-skills training partnership (news.microsoft.com); a separate group-level cloud deal not verified** |
+| Google Cloud partnership | ✅/⚠ → **refined (2026-08-22): a Google partnership IS documented at the Consumer Finance subsidiary (21 Oct 2015, credit-agricole.com); group-level NOT verified** |
 | CA-CIB Singapore = group Asia-Pacific hub; MAS wholesale bank | ✅/⚠ (hub); ✅ (wholesale — cross-ref [Banks in Singapore Guide](banks_in_singapore_guide.md)) |
 | Singapore technology depth, staffing | ⚠ (non-public) |
 | Worked example systems | ⚠ class-level only; no fabrication |
@@ -679,8 +678,8 @@ The point is not to list secrets — it is to state plainly that **everything th
 - **Murex (MX.3)** — the industry-standard treasury/trading front-to-back platform class; CA-CIB's use is industry-known but unconfirmed ⚠ ([Murex MX.3 Platform Guide](murex_mx3_platform_guide.md)).
 - **Ma Banque** — the Crédit Agricole mobile-banking app for the regional banks (§7).
 - **Digital banking** — mobile/internet banking and the payment rails around it (§7).
-- **AI** — artificial intelligence; **genAI** — generative AI (the "Casa IA" assistant, §8).
-- **Google Cloud / Microsoft Azure** — hyperscaler clouds; Azure is CA's verified group anchor ✅, Google Cloud unverified ⚠ (§9).
+- **AI** — artificial intelligence; **genAI** — generative AI (the "transformation IA" programme, §8).
+- **Google Cloud / Microsoft Azure** — hyperscaler clouds; Azure is CA's verified group anchor ✅, a Google partnership is documented at the Consumer Finance subsidiary (Oct 2015) with group-level Google Cloud unverified ✅/⚠ (§9).
 - **Cloud** — on-demand computing over networks; CA's strategy is hybrid, Azure-anchored (§9).
 - **Singapore / APAC** — CA-CIB's Asia-Pacific hub (MAS wholesale bank) and the region it serves (§10).
 - **Mutual / cooperative** — customer-owned governance; the structure that defines CA's IT (§1.3).

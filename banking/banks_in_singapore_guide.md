@@ -5,7 +5,7 @@
 > **Author:** Jack Liu Shurui — Solution Architect at Crédit Agricole CIB, Singapore
 > **Context:** Banking Domain / Market Landscape — Singapore Banking: Market Overview (Scale, Financial-Centre Position), Local Banks (DBS, OCBC, UOB — the Big Three), Foreign Banks (Full / Wholesale / Offshore Tiers, the QFB), Digital Banks (Trust, GXS, MariBank, ANEXT, Green Link), MAS Framework (Banking Act), Payments Rails (PayNow, FAST), Market Structure, the ABS, Worked Example, One-Page Summary
 > **Repository:** [github.com/jackliusr/research](https://github.com/jackliusr/research)
-> **Primary Sources:** mas.gov.sg (Banking Act, licensing framework, foreign-bank tiers, digital-bank licences, payment schemes), abs.org.sg (Association of Banks in Singapore), the banks' own sites and disclosures, press (The Business Times, CNA, Straits Times). NOTE: this pass had **no live web access** (search/extract backends unavailable) — every fact below is either cross-verified against this repository's own primary-sourced deep-dives (cited inline) or flagged ⚠ as unverified-this-pass.
+> **Primary Sources:** mas.gov.sg (Banking Act, licensing framework, foreign-bank tiers, digital-bank licences, payment schemes), abs.org.sg (Association of Banks in Singapore), the banks' own sites and disclosures, press (The Business Times, CNA, Straits Times). NOTE: this pass had **no live web access** (search/extract backends unavailable) — every fact below is either cross-verified against this repository's own primary-sourced deep-dives (cited inline) or flagged ⚠ as unverified-this-pass. **UPDATE (2026-08-22):** the key market-level flags were re-verified live against MAS/data.gov.sg/BIS/ST/CNA via the self-hosted Firecrawl instance — see §1.5 for the re-verification ledger.
 > **Last Updated:** August 2026
 > **Companion guides (sibling, same folder):** [DBS Bank](dbs_bank_guide.md), [DBS Software Systems](dbs_software_systems_guide.md), [OCBC Software Systems](ocbc_software_systems_guide.md), [UOB Software Systems](uob_software_systems_guide.md), [Standard Chartered](standard_chartered_guide.md), [HSBC Software Systems](hsbc_software_systems_guide.md), [Deutsche Bank Software Systems](deutsche_bank_software_systems_guide.md), [BNP Paribas Software Systems](bnp_paribas_software_systems_guide.md), [UBS Software Systems](ubs_software_systems_guide.md), [SMBC Software Systems](smbc_software_systems_guide.md), [Trust Bank](trust_bank_guide.md), [GXS Bank](gxs_bank_guide.md), [MariBank](maribank_guide.md), [Green Link Digital Bank](green_link_digital_bank_guide.md), [Financial Infrastructure](financial_infrastructure_guide.md), [Core Banking Systems](core_banking_systems_guide.md), [Universal Banking Model](universal_banking_model_guide.md), [Trade Finance](trade_finance_guide.md), [Trade Finance Systems](trade_finance_systems_guide.md), [Risk Management Models](risk_management_models_guide.md), [Financial Risk & Compliance Systems](financial_risk_compliance_systems_guide.md), [Singapore Private Markets](singapore_private_markets_guide.md)
 > **Companion guides (technology/, prefix `../technology/`):** [Singapore Data Centres](../technology/singapore_data_centres_guide.md), [Singapore SaaS Companies](../technology/singapore_saas_companies_guide.md), [Distributed Auth](../technology/distributed_auth_guide.md)
@@ -88,9 +88,9 @@ This guide is the **landscape umbrella** for the repository's deep per-bank prof
 
 **The market in numbers** (all ⚠ unless noted — approximate, from the repository's flagged reporting):
 
-- **~160 commercial banks**, of which roughly **25–30 full banks** (6 local ✅-structural, ~20+ foreign incl. the ~10 QFBs ⚠) and **~120–130 wholesale banks** ⚠; plus **~45 merchant banks** ⚠ and **five digital banks** ✅.
+- **196 MAS-licensed financial institutions across seven licence categories** (2026 — the three local banking groups, ~96 wholesale banks, 27 representative offices, plus full banks, merchant banks, offshore banks and finance companies) ✅ (MAS Financial Institutions Directory; industry listing); **five digital banks** ✅.
 - **~200+ Payment Services Act licence holders** (payment service providers — wallets, remittance, crypto) ⚠ — the non-bank layer that plugs into the rails.
-- **Three D-SIBs** (DBS, OCBC, UOB) ⚠-structural, each with a full universal-bank estate (see the software-systems guides).
+- **Seven D-SIBs** — the big three (DBS, OCBC, UOB) **plus four other banks** (the inaugural MAS list, 30 Apr 2015, included Citi, Maybank, Standard Chartered and HSBC among them) ✅ — each with a full universal-bank estate (see the software-systems guides).
 - **Deposit insurance at S$100,000** per depositor per bank under the SDIC scheme ✅ (DFB members included ✅).
 - **Two national instant-payment schemes** (FAST 2014, PayNow 2017 — both ✅), one high-value settlement system (MEPS+ ⚠-structural), one unified merchant QR standard (SGQR 2018 ⚠).
 
@@ -105,28 +105,28 @@ This guide is the **landscape umbrella** for the repository's deep per-bank prof
 | 1999 | QFB status introduced; first QFBs named (⚠) |
 | 2014 | FAST real-time rail launched ✅ |
 | 2017 | PayNow launched (July, founding banks incl. DBS) ✅ |
-| 2018 | SGQR; PayNow Corporate (⚠) |
+| 2018 | SGQR — world's first unified payment QR (17 Sep 2018, ~19,000 codes replaced) ✅; PayNow Corporate ✅ |
 | 2019 | Payment Services Act; MAS opens the digital bank framework (June) ✅ |
 | Dec 2020 | Four digital bank licences awarded (GXS, MariBank, ANEXT, GLDB) ✅; Trust's full bank licence granted separately ✅ |
 | 2021–22 | Trust (Sep 2022), GXS (Aug 2022), ANEXT (2 Jun 2022), GLDB (3 Jun 2022) launch ✅ |
 | 2021–23 | PayNow cross-border links to PromptPay, UPI, DuitNow ✅ |
 | 2023–24 | DBS outage saga: MAS capital add-on + six-month pause ✅ |
-| 2026 | Digital banks ~2–3M customers aggregate (⚠); Trust absorbs StanChart SG consumer book (⚠) |
+| 2026 | Digital banks ~2–3M customers aggregate (⚠); Trust takes over selected StanChart credit-card and personal-loan customers (from Sep 2025, per CNA/BT) ✅ |
 
 **Scale drivers to hold in mind:**
 
-1. **Wealth.** Singapore manages **S$6.7 trillion in assets under management (2025)** ⚠ (per [singapore_private_markets_guide.md](singapore_private_markets_guide.md), flagged) and hosts **2,000+ single-family offices by end-2024 (+43% YoY)** ✅ (verified there). Bank wealth franchises (DBS ~S$400B+ AUM, OCBC ~S$270B incl. Bank of Singapore, UOB ~S$180B — all ⚠ flagged) ride this.
-2. **Trade and treasury.** Singapore is a top-tier global FX centre (top 3 globally, after London and New York ⚠) and a regional treasury/transaction-banking hub — the reason wholesale licences outnumber full licences several times over.
+1. **Wealth.** Singapore manages **S$6.07 trillion in assets under management (2024 MAS Asset Management Survey, released 16 Jul 2025; +12.2% YoY, exceeding S$6T)** ✅ and hosts **2,000+ single-family offices by end-2024 (+43% YoY)** ✅ (verified there). Bank wealth franchises (DBS ~S$400B+ AUM, OCBC ~S$270B incl. Bank of Singapore, UOB ~S$180B — all ⚠ flagged) ride this.
+2. **Trade and treasury.** Singapore is a top-tier global FX centre — **confirmed the world's #3 FX trading centre after London and New York, with daily turnover ~US$1.5 trillion in April 2025** (BIS Triennial Survey) ✅ — and a regional treasury/transaction-banking hub — the reason wholesale licences outnumber full licences several times over.
 3. **Digital adoption.** FAST (2014) and PayNow (2017) made Singapore one of the first markets where instant payment by phone number is the default; the digital banks (2020 licences) plus the big three's app-first strategies make this one of the most digitised banking markets in the world ✅ (structural, well documented).
 
 ### 1.3 The Financial-Centre Position
 
-Singapore's banking market cannot be read in isolation: it is the banking layer of a **global financial centre** that consistently ranks **in the top 3–4 of the Global Financial Centres Index (GFCI)** ⚠ (typically trading places with Hong Kong for the #3/#4 spot behind New York and London — widely reported; not re-verified this pass). The centre's pillars, cross-referenced to the repository:
+Singapore's banking market cannot be read in isolation: it is the banking layer of a **global financial centre** that consistently ranks **in the top 3–4 of the Global Financial Centres Index (GFCI)** ✅/⚠ (GFCI 37 published 20 Mar 2025; New York #1, London #2, with Singapore and Hong Kong trading the #3/#4 spots — the exact rank per edition ⚠). The centre's pillars, cross-referenced to the repository:
 
 | Pillar | Evidence | Cross-ref |
 |---|---|---|
 | **Sovereign capital** | Temasek (~S$518B portfolio ⚠) and GIC (~US$800B+, flagged estimate) anchor the city as a capital-exporting and capital-allocating hub | [Singapore Private Markets](singapore_private_markets_guide.md) |
-| **Wealth management** | S$6.7T AUM (⚠), 2,000+ SFOs ✅, the big three's wealth franchises, global private banks (UBS, HSBC, Citi, BNP Paribas, Deutsche Bank) | §2, §3; [Singapore Private Markets](singapore_private_markets_guide.md) |
+| **Wealth management** | S$6.07T AUM (2024 MAS survey) ✅, 2,000+ SFOs ✅, the big three's wealth franchises, global private banks (UBS, HSBC, Citi, BNP Paribas, Deutsche Bank) | §2, §3; [Singapore Private Markets](singapore_private_markets_guide.md) |
 | **Wholesale banking** | 100+ wholesale-licensed foreign banks running corporate, treasury, trade and markets businesses | §3 |
 | **Payments & fintech** | FAST/PayNow rails, the 2019 Payment Services Act, MAS's Project Guardian / Project Orchid tokenisation agenda | §6; [DBS Bank](dbs_bank_guide.md) §4.4 |
 | **Infrastructure** | Data-centre hub status (cross-ref), tech-talent base underpinning the banks' digital estates | [Singapore Data Centres](../technology/singapore_data_centres_guide.md), [Singapore SaaS Companies](../technology/singapore_saas_companies_guide.md) |
@@ -146,13 +146,13 @@ The strategic read: Singapore deliberately runs a **"banking as a national indus
 | **Regulator** | MAS — integrated central bank + financial regulator since 1971; Banking Act licensing; global benchmark for seriousness and innovation |
 | **Payments** | FAST (2014) real-time rail, PayNow (2017) proxy overlay — instant payments by default; cross-border links to UPI/PromptPay/DuitNow |
 | **Market structure** | Big-three share of domestic banking ~60%+ ⚠ (flagged; see §7); one of the world's most concentrated and most profitable banking markets |
-| **Industry body** | ABS — the Association of Banks in Singapore (est. 1973 ⚠) — operates FAST/PayNow schemes, sets industry standards, coordinates with MAS |
+| **Industry body** | ABS — the Association of Banks in Singapore (registered 3 Oct 1973, NLB) ✅ — operates FAST/PayNow schemes, sets industry standards, coordinates with MAS |
 | **What it means for a foreign bank** | Entry via licence tier design: wholesale branch for corporate/treasury, full bank for retail, QFB for scale retail, digital framework for a new-model bank (§9) |
 
 ### 1.5 Verification Notes for This Section
 
-- ✅ **Verified (via repo cross-reference):** big-three scale figures from [dbs_bank_guide.md](dbs_bank_guide.md) §7.1 (DBS headline numbers), OCBC/UOB facts from their guides; SFO count; digital-bank licence facts (see §4).
-- ⚠ **Flagged (could not re-verify this pass — no live web):** population, bank counts (~160/~45), GFCI rank, FX-centre rank, AUM figures, GDP, Temasek/GIC portfolio sizes, big-three assets/profit beyond DBS's verified numbers. All are consistent with the repository's own flagged reporting; treat as approximate, verify against MAS statistics and the banks' annual reports before citing.
+- ✅ **Verified (live, via the local Firecrawl instance — 2026-08-22 re-verification pass):** 196 MAS-licensed institutions across seven licence categories; seven D-SIBs (big three + four, inaugural list 30 Apr 2015); S$6.07T AUM (2024 MAS survey, +12.2%); FX centre #3 with ~US$1.5T daily (April 2025 BIS Triennial); population 6.11M (Jun 2025); ABS registered 3 Oct 1973; SGQR 17 Sep 2018; Trust's StanChart customer transfer (from Sep 2025).
+- ⚠ **Still flagged (not re-verified this pass):** big-three market share ~60%+, QFB exact count, Temasek/GIC portfolio sizes, GDP, the big three's wealth-AUM splits, merchant-bank exact count, GFCI exact per-edition rank.
 
 ---
 
@@ -655,7 +655,7 @@ Per the repository's honesty convention: this guide was written in a pass with *
 | # | Claim (from the task brief) | Status | Evidence / note |
 |---|---|---|---|
 | 1 | The SG banking market — the scale | ⚠-✅ | Scale figures cross-verified from [dbs_bank_guide.md](dbs_bank_guide.md) §7.1 (DBS S$11.4B profit, ROE 18.0% ✅; OCBC/UOB ⚠) and [ocbc_software_systems_guide.md](ocbc_software_systems_guide.md); bank counts (~160/~45) ⚠ not re-verified |
-| 2 | The financial-centre position | ⚠ | GFCI top-3/4, FX #3, S$6.7T AUM — flagged; SFO count (2,000+, +43%) ✅ via [singapore_private_markets_guide.md](singapore_private_markets_guide.md) |
+| 2 | The financial-centre position | ✅/⚠ | GFCI top-3/4, FX #3 (US$1.5T, Apr 2025 BIS) ✅, S$6.07T AUM (2024 MAS survey) ✅ — re-verified 2026-08-22; SFO count (2,000+, +43%) ✅ via [singapore_private_markets_guide.md](singapore_private_markets_guide.md) |
 | 3 | The big three — DBS, UOB, OCBC | ✅ | All three profiles cross-verified from their repo guides (founding dates, leaders, scale) |
 | 4 | Foreign-bank tiers — full, wholesale, offshore | ⚠ | Tier structure is standard MAS framework but re-verified only via repo references (S$1.5B/S$100M capital per [green_link_digital_bank_guide.md](green_link_digital_bank_guide.md) §3.1); single-branch rule, S$250k wholesale threshold, offshore phase-out all flagged |
 | 5 | The QFB — qualifying full bank | ⚠ | QFB concept and 25-place-of-business limit are standard MAS terms; the 1999 introduction year, "first QFB" claim, and the ten-bank list are compiled from secondary sources — **verify against MAS before citing** |
