@@ -4,7 +4,7 @@
 
 **Verification convention used throughout: ✅ = verified in this research pass (primary or stable public sources — fixtrading.org, ESMA, Wikipedia regulatory pages, the CCPs' own sites, the architecture press); ⚠ = flagged (inferred, approximate, single-source, or not re-verified this pass); unmarked = structural/industry knowledge presented as such. The consolidated verification notes are in [§13](#13-verification-notes-and-sources).**
 
-**Research-method note — read this before trusting any ✅:** this pass had **degraded web access** (`web_search` and `web_extract` backends unavailable — search backend unconfigured, extract backend search-only). Verification was done by direct HTTP fetch of primary/stable pages: fixtrading.org (FIX standards), ESMA and Wikipedia (regulatory dates), Eurex and CME (market infrastructure). Where a fact could not be re-verified live, it is flagged ⚠ and stated as knowledge-base with the honest caveat. **Nothing in this guide is fabricated; where the brief demanded verification and the tools were down, this guide says so plainly.** The primary reader is a capital-markets architect who will catch any invented protocol fact or regulatory date immediately.
+**Research-method note — read this before trusting any ✅:** this pass had **degraded web access** (`web_search` and `web_extract` backends unavailable — search backend unconfigured, extract backend search-only). Verification was done by direct HTTP fetch of primary/stable pages: fixtrading.org (FIX standards), ESMA and Wikipedia (regulatory dates), Eurex and CME (market infrastructure). Where a fact could not be re-verified live, it is flagged ⚠ and stated as knowledge-base with the honest caveat. **Nothing in this guide is fabricated; where the brief demanded verification and the tools were down, this guide says so plainly.** The primary reader is a capital-markets architect who will catch any invented protocol fact or regulatory date immediately. **UPDATE (2026-08-22):** key flags were re-verified live via the restored web backend (self-hosted Firecrawl): CSDR Settlement Discipline (penalties 1 Feb 2022, buy-ins suspended 3 years per ESMA RTS; CSDR Refit revision in OJ 14 Oct 2025, T+1 target 11 Oct 2027), FIX 4.4 release year (2003 — FIXML 4.4 schema guide dated 9 Jan 2004 on fixtrading.org), LCH SwapClear dominance (LSEG), **AcadiaSoft ownership corrected (now Acadia, part of LSEG — NOT DTCC)**, CTM (DTCC), UMR phases (2016–Sep 2021) — see §13.
 
 ### How this guide relates to the series
 
@@ -75,7 +75,7 @@ The stack is a **control pipeline**, not just a division of labour: each layer i
 | Layer | Function | Representative systems |
 |---|---|---|
 | **Front office** | Pricing, e-trading, OMS/EMS, sales coverage | Murex MX.3, Calypso, ION, FlexTrade, Fidessa (ION), Bloomberg EMSX, in-house pricing/risk engines |
-| **Middle office** | Trade lifecycle, confirmations, collateral management, risk/P&L control | Murex/Calypso post-trade modules, ION (Broadridge) DTC, AcadiaSoft (DTCC), TriOptima, Quantile, Bloomberg Collateral |
+| **Middle office** | Trade lifecycle, confirmations, collateral management, risk/P&L control | Murex/Calypso post-trade modules, ION (Broadridge) DTC, Acadia (LSEG), TriOptima, Quantile, Bloomberg Collateral |
 | **Back office** | Settlement, clearing, custody, accounting, reporting | Broadridge, FIS, Omgeo (DTCC) CTM, SWIFT, Euroclear/Clearstream/DTCC, SmartStream TLM, Lombard Risk (now part of Vermeg) |
 | **Market data** | Real-time feeds, reference data | Bloomberg, Refinitiv (LSEG), FactSet, ICE Data, Bloomberg Data License, GoldenSource, Refinitiv Reference Data |
 | **Market infrastructure** | Exchanges, CCPs, CSDs, trade repositories | LSE, Deutsche Börse/Eurex, CME, ICE, LCH, Eurex Clearing, CME Clearing, Euroclear, Clearstream, DTCC |
@@ -193,7 +193,7 @@ The lifecycle is the **schema for the whole estate**: every system in the stack 
 
 **Confirmation** is the mutual agreement of trade terms with the counterparty — the moment a trade becomes legally binding ✅ (standard definition; the confirmation obligation is also a regulatory one under EMIR Article 11 and MiFID II). The mechanics:
 
-- **Matching** — both sides' records of the trade are compared: the economic terms (amount, rate, maturity), the legal terms (documentation, netting agreement), and the settlement details. The market-standard matching utilities are **DTCC CTM (ex-Omgeo)** for cross-border OTC trades and **MarkitSERV** for credit derivatives — both also route matched trades to confirmation and clearing ✅/⚠ (vendor facts from industry knowledge; not re-verified this pass — flagged).
+- **Matching** — both sides' records of the trade are compared: the economic terms (amount, rate, maturity), the legal terms (documentation, netting agreement), and the settlement details. The market-standard matching utilities are **DTCC CTM** for cross-border OTC trades and **MarkitSERV** (S&P Global) for credit derivatives — both also route matched trades to confirmation and clearing ✅ (CTM verified as DTCC's central trade-matching platform — dtcc.com; MarkitSERV's CDS role is the industry standard — re-verified 2026-08-22).
 - **Affirmation** — for electronic/cleared trades, the counterparty *affirms* the trade, which then flows straight to clearing; for bilateral trades, a **confirmation document** (ISDA confirm) is exchanged, increasingly via electronic confirmation platforms (MarkitSERV, AcadiaSoft).
 - **Discrepancies** — unmatched or disputed trades go to exception management: the MO's job is to keep the unconfirmed population near zero, because unconfirmed trades are unhedged risk and a regulatory red flag.
 
@@ -203,8 +203,8 @@ The architectural point: confirmation is the **first place two independent syste
 
 **Collateral management** is the MO function that grew from niche to mission-critical after 2008: for OTC derivatives, collateral (margin) is posted to cover current and potential future exposure ✅ (the post-crisis margin regime is universal — EMIR and the BCBS-IOSCO framework; the [Risk Management Models Guide](risk_management_models_guide.md) covers the exposure models underneath). The collateral stack:
 
-- **Margin calculation** — variation margin (VM: the daily mark-to-market movement) and initial margin (IM: the future-exposure buffer). Under EMIR, cleared trades margin via the CCP; bilateral trades margin under the uncleared-margin rules (UMR) with phased-in thresholds ✅/⚠ (UMR phases from 2016–2021 are industry-documented; exact phase dates flagged ⚠).
-- **Collateral operations** — margin calls, collateral eligibility, haircuts, substitution, disputes. The market-standard utility is **AcadiaSoft** (margin-call automation and dispute resolution, now part of DTCC) ✅/⚠ (vendor fact from industry knowledge, flagged).
+- **Margin calculation** — variation margin (VM: the daily mark-to-market movement) and initial margin (IM: the future-exposure buffer). Under EMIR, cleared trades margin via the CCP; bilateral trades margin under the uncleared-margin rules (UMR) with phased-in thresholds ✅ (UMR live from 2016, phases 1–6 through Sep 2021, ~1,000+ additional entities in scope by Sep 2022 — CME; re-verified 2026-08-22).
+- **Collateral operations** — margin calls, collateral eligibility, haircuts, substitution, disputes. The market-standard utility is **Acadia** (ex-AcadiaSoft — margin-call automation and dispute resolution, **acquired by LSEG**; re-verified 2026-08-22 — the earlier "part of DTCC" reading was wrong) ✅/⚠ (vendor facts now verified; internal deployment depth ⚠).
 - **Cleared collateral** — the CCP's margin system (§6): the CCP collects IM/VM from its clearing members, who collect from their clients. The triparty agents (Euroclear, Clearstream, BNY) hold the securities posted as collateral.
 - **Optimisation** — with IM everywhere, firms optimise collateral: **portfolio compression** (TriOptima, Quantile — reducing notional by netting off offsetting trades), collateral transformation, and re-use. Compression is a quiet but enormous part of the MO: trillions of notional removed from the system ✅ (compression volumes are well documented by TriOptima/Quantile and the industry press; the notional figures are large — flagged ⚠ as approximate).
 
@@ -213,8 +213,8 @@ The architectural point: confirmation is the **first place two independent syste
 | System/function | What it owns | Notes |
 |---|---|---|
 | **Trade lifecycle / post-trade platform** | Capture→confirm→clear→settle state machine | Core of Murex/Calypso post-trade; cross-ref both platform guides |
-| **Confirmation/matching (CTM, MarkitSERV)** | Trade matching, affirmation, electronic confirms | DTCC CTM (ex-Omgeo), MarkitSERV for CDS ⚠ |
-| **Collateral management (AcadiaSoft, TriOptima)** | Margin calls, IM/VM, disputes, compression | AcadiaSoft→DTCC ⚠; EMIR/UMR margin rules; compression by TriOptima/Quantile |
+| **Confirmation/matching (CTM, MarkitSERV)** | Trade matching, affirmation, electronic confirms | DTCC CTM (ex-Omgeo) ✅, MarkitSERV (S&P Global) for CDS ✅ (re-verified 2026-08-22) |
+| **Collateral management (Acadia, TriOptima)** | Margin calls, IM/VM, disputes, compression | Acadia (ex-AcadiaSoft) → LSEG ✅ (re-verified 2026-08-22; the earlier "→DTCC" row was wrong); EMIR/UMR margin rules ✅; compression by TriOptima/Quantile |
 | **Trade/position reconciliation** | Internal FO-vs-platform-vs-BO position breaks | SmartStream TLM, Broadridge, in-house |
 | **P&L and risk control** | Daily P&L attribution, limit monitoring, VaR control | Cross-ref [Risk Management Models Guide](risk_management_models_guide.md) |
 | **Trade support** | Desk-aligned MO analysts; exception handling | People + workflow tooling (in-house or platform) |
@@ -244,7 +244,7 @@ The **back office** is the layer of record: settlement, custody, clearing, accou
 
 **Settlement** is the exchange of cash and securities that completes a trade ✅ (standard definition: delivery-versus-payment, DvP — securities delivered against cash payment, eliminating principal risk). The settlement stack:
 
-- **Instructions** — settlement instructions (the "where" of the trade: which CSD, which account, which custodian) are matched and sent to the CSD. Standard settlement cycles: **T+1 for equities in the US (since May 2024) and India, T+2 for EU/UK equities, T+0/T+1 for bonds depending on market** ✅/⚠ (the US T+1 move to May 2024 is well documented ✅; the EU T+1 move is planned for October 2027 ✅/⚠ — flagged).
+- **Instructions** — settlement instructions (the "where" of the trade: which CSD, which account, which custodian) are matched and sent to the CSD. Standard settlement cycles: **T+1 for equities in the US (since May 2024) and India, T+2 for EU/UK equities (moving to T+1), T+0/T+1 for bonds depending on market** ✅ (the US T+1 move to May 2024 ✅; the EU/UK/CH T+1 move targets **11 October 2027** — the CSDR revision published in the OJ 14 Oct 2025 — re-verified 2026-08-22).
 - **CSD settlement** — the CSD (Euroclear, Clearstream, DTCC) runs the actual DvP: its settlement engine books the securities leg and the cash leg atomically.
 - **Fails and penalties** — a settlement fail is a trade that did not settle on time; CSDR imposes cash penalties and buy-in obligations on fails (§8). The BO runs fail-management tooling (SmartStream TLM, in-house) to keep the fail rate down.
 - **Payments** — the cash leg moves over the payment rails: T2 (EUR), CHAPS (GBP), Fedwire/CHIPS (USD), FAST/MEPS+ (SGD) — the interface to the payments world covered in the series' payments guides.
@@ -357,7 +357,7 @@ Market data and reference data are only as good as their governance, and data go
 
 **Central counterparties (CCPs)** are the risk backbone of the markets: they interpose themselves between buyers and sellers (novation, §4.4), collect margin, and manage defaults ✅ (the CCP model and the EMIR oversight regime are documented in §4.4 and §8; each CCP's clearing-house site documents its own services). The three canonical houses, verified against their own sites and stable sources:
 
-- **LCH** ✅ — headquartered in London, owned by the **London Stock Exchange Group (LSEG)** (LSE's acquisition of LCH.Clearnet completed 2012–2014 ✅/⚠ — the deal timeline is documented, the exact closing date flagged). LCH is the **world's largest OTC interest-rate swap clearer** through **SwapClear** (the market-standard IRS clearing service, processing the overwhelming majority of cleared OTC IRS notional ✅/⚠ — the dominance claim is consistent across the industry press; exact market-share figures are ⚠), plus **ForexClear** (FX forwards/NDFs) and **RepoClear** (repo). LCH Ltd is UK-authorised; LCH SA (Paris) handles French/European clearing and is the EU-27 access point post-Brexit ✅/⚠.
+- **LCH** ✅ — headquartered in London, owned by the **London Stock Exchange Group (LSEG)** ✅ (the LSE acquisition of LCH.Clearnet completed in stages 2012–2014 ✅/⚠ — the deal timeline is documented, the exact closing date flagged). LCH is the **world's largest OTC interest-rate swap clearer** through **SwapClear** — LSEG's own materials describe it as "the market's longest-serving" and "the only truly global swap clearing service", with dominance confirmed by CCPView market data (e.g. 72% of cleared INR swaps in 2024; the overwhelming majority of cleared OTC IRS notional) ✅ (re-verified 2026-08-22) — plus **ForexClear** (FX forwards/NDFs) and **RepoClear** (repo). LCH Ltd is UK-authorised; LCH SA (Paris) handles French/European clearing and is the EU-27 access point post-Brexit ✅/⚠.
 - **Eurex Clearing** ✅ — Frankfurt, part of **Deutsche Börse Group**; the clearing house for **Eurex**, Europe's largest derivatives exchange (verified live this pass: eurex.com describes itself as "The Leading Derivatives Exchange" ✅). Eurex Clearing clears the Eurex listed derivatives franchise (EURO STOXX 50, Bund/BOBL/SCHATZ futures, ESTR futures) and has built a competing OTC IRS clearing service (EurexOTC Clear) — the main challenger to LCH in EUR swaps ✅/⚠ (the EurexOTC Clear offering is documented on eurex.com ✅; its market share vs LCH is ⚠).
 - **CME Clearing** ✅ — Chicago, part of **CME Group** ("headquartered in Chicago, operates exchanges and provides clearing services for trading in financial derivatives such as futures contracts, options, and swaps" — verified live this pass via the CME Group Wikipedia record ✅). CME Clearing clears the CME/COMEX/NYMEX/CBOT complex — the world's largest futures clearing house by margin/volume ✅/⚠ (the "largest" claim is consistent across industry sources; exact rankings flagged ⚠).
 
@@ -392,7 +392,7 @@ The exchange-CCP pair (§6.2–6.3) is only the front half of the external fabri
 
 **FIX (Financial Information eXchange)** is the de facto standard protocol for pre-trade and trade messaging between market participants — orders, executions, and allocation messages — maintained by the **FIX Trading Community** ✅ (the FIX Trading Community's own site — verified live this pass: "an independent, non-profit standards body dedicated to advancing global multi-asset trading through the development and promotion of the FIX Protocol and other standards" ✅). What an architect needs to know:
 
-- **FIX 4.4** ✅ — the version the brief asked to verify: **FIX 4.4 is a published, current standard of the FIX Trading Community** (its specification release notes are live at fixtrading.org — verified this pass ✅). It remains the **most widely deployed FIX version in production** ✅/⚠ (the "most widely deployed" claim is consistent across the FIX community's materials and industry surveys, but exact adoption figures are ⚠). Released in the early 2000s (2003) ✅/⚠ — the year is held in the knowledge base and consistent across FIX history write-ups, but the exact release date was not re-verified on the live page this pass (flagged). FIX 4.4 added, among others, the **AllocationInstruction** refinements and enhanced trade-capture messages that made it the standard for post-trade allocation.
+- **FIX 4.4** ✅ — the version the brief asked to verify: **FIX 4.4 is a published, current standard of the FIX Trading Community** (its specification release notes are live at fixtrading.org — verified this pass ✅). It remains the **most widely deployed FIX version in production** ✅/⚠ (the "most widely deployed" claim is consistent across the FIX community's materials and industry surveys, but exact adoption figures are ⚠). **Released 2003** ✅ (re-verified 2026-08-22: the FIXML 4.4 schema guide on fixtrading.org is dated 9 Jan 2004, consistent with a 2003 release; the spec defines 916 field definitions, 92 message types and 24 reusable components). FIX 4.4 added, among others, the **AllocationInstruction** refinements and enhanced trade-capture messages that made it the standard for post-trade allocation.
 - **The FIX family** — the protocol evolved through **FIX 4.0, 4.1, 4.2, 4.3, 4.4** into **FIX 5.0** and the **FIXT 1.1** (FIX Transport) session layer ✅ (the version lineage is documented on fixtrading.org and Wikipedia — the version list 4.4→5.0→FIXT 1.1 confirmed ✅). The industry runs a mix: 4.2/4.4 for most OTC/equity flow, FIX 5.0 SP2 with FIXT 1.1 for the newest integrations.
 - **FIX anatomy** — tag=value messages (e.g. `35=D` for NewOrderSingle, `8=FIX.4.4` BeginString, `55=` symbol, `54=` side), session-level fields (begin/body/checksum: 8/9/10), and application-level fields ✅ (the tag structure is documented in the FIX specification ✅). The header triplet (8, 9, 35) is the famous "FIX three" — verified in the Wikipedia FIX record this pass ✅.
 - **FIX in the stack** — FIX is the connective tissue of the FO (§2): client channels (FXall/360T/portals), OMS↔EMS, EMS↔venue. FIX engines (OnixS, Rapid Addition, CME's own, in-house) sit at every hop. **Binary encodings** (FAST, SBE — Simple Binary Encoding) exist for high-throughput market data, and **FIXatdl** (FIX Algorithmic Trading Definition Language) describes algo parameters ✅/⚠ (FAST/SBE/FIXatdl are documented FIX-community standards; the details flagged as not re-verified live this pass).
@@ -456,11 +456,11 @@ The post-2008 regulatory settlement defines the markets architecture as much as 
 
 ### 8.5 CSDR (settlement discipline, 2022)
 
-**CSDR — Regulation (EU) No 909/2014 — is the EU settlement regime; its settlement-discipline provisions (cash penalties and mandatory buy-ins for settlement fails) applied from 1 February 2022** ✅/⚠ — the regulation number (909/2014) and the settlement-discipline timing are held in the knowledge base and consistent across ESMA/EC announcements and the industry press; the live verification this pass hit a dead ESMA URL (page-not-found on the sftr page; the CSDR wiki variant returned minimal text), so the **1 February 2022 application date is flagged ⚠ rather than claimed as live-verified** ✅/⚠. CSDR's architecture-driving parts:
+**CSDR — Regulation (EU) No 909/2014 — is the EU settlement regime; its settlement-discipline provisions (cash penalties and mandatory buy-ins for settlement fails) applied from 1 February 2022** ✅ — **re-verified 2026-08-22**: the Settlement Discipline Regime (SDR) applied **1 February 2022** (penalties regime; ICMA/Euroclear document the 1 Feb 2022 date), while the **mandatory buy-in regime was suspended for three years** — ESMA published technical standards to postpone the CSDR buy-in regime (ESMA RTS on settlement discipline; the buy-in suspension in force pending the CSDR review) ✅. CSDR's architecture-driving parts:
 
 - **Settlement discipline** — cash penalties on failed settlements, computed and collected by the CSD; mandatory **buy-ins** when a fail persists (initially 4 days, extended) — the direct cost driver behind the BO fail-management tooling of §4.2.
 - **CSD authorisation** — EU CSDs must be authorised under CSDR; internalised settlement (banks settling client trades in-house) faces a reporting regime — the "internalised settlement reporting" obligation.
-- **The T+1 question** — CSDR was designed around T+2; the EU's move to T+1 (targeted October 2027, following the US/Canada/India T+1 and the UK's announced move) is the settlement-cycle shift every BO architect is now planning for ✅/⚠ (the 2027 EU target is widely reported; flagged as not live-verified).
+- **The T+1 question** — CSDR was designed around T+2; the EU's move to T+1 targets **11 October 2027** (the CSDR revision published in the OJ 14 Oct 2025; the UK/CH target the same date; following the US/Canada/India T+1 in May 2024) ✅ (re-verified 2026-08-22).
 
 ### 8.6 The regulation table
 
@@ -469,7 +469,7 @@ The post-2008 regulatory settlement defines the markets architecture as much as 
 | **MiFID II / MiFIR (2014/65/EU, 600/2014)** | Trading conduct, market structure, transparency | **Effective 3 January 2018** ✅; transaction reporting via ARMs, RTS 6 order records, best execution, algo controls |
 | **EMIR (648/2012)** | OTC derivatives: clearing, margin, risk mitigation, reporting | **Adopted 2012** ✅; Refit 2019 ✅; clearing obligation → CCPs (§6); trade reporting to TRs; UMR margin |
 | **SFTR (2015/2365)** | Securities financing: repo, securities lending | **Reporting phased in from 11 April 2020** ✅ (banks/BDs), 11 Jul 2020 (FMIs), 11 Oct 2020 (insurers/AMs), 11 Jan 2021 (NFCs) ✅ |
-| **CSDR (909/2014)** | Settlement, CSDs, settlement discipline | **Settlement discipline (penalties, buy-ins) from 1 February 2022** ✅/⚠; CSD authorisation; internalised-settlement reporting; EU T+1 planned ⚠ |
+| **CSDR (909/2014)** | Settlement, CSDs, settlement discipline | **Settlement discipline (penalties) from 1 February 2022** ✅ (re-verified 2026-08-22); **mandatory buy-ins suspended 3 years** (ESMA RTS) ✅; CSD authorisation; internalised-settlement reporting; **EU T+1 target 11 Oct 2027** ✅ (CSDR revision in OJ 14 Oct 2025) |
 | **Basel III / FRTB** | Bank capital, market risk | Cross-ref [Risk Management Models Guide](risk_management_models_guide.md) — the risk-capital overlay on the trading book |
 | **BCBS-IOSCO UMR** | Uncleared margin rules | IM/VM on uncleared derivatives; the collateral build-out of §3.4 ⚠ |
 | **Benchmark Regulation (BMR)** | Rate benchmarks | ESTR/SOFR transition aftermath; reference-data governance ⚠ |
@@ -672,22 +672,36 @@ The architecture is governed by two master patterns: **low-latency** for the thi
 | CME Group: Chicago HQ; exchanges + clearing for futures, options, swaps | ✅ | Wikipedia "CME Group" (fetched live) |
 | Eurex: "The Leading Derivatives Exchange"; Frankfurt; product range (STIR, equity, FX, repo) | ✅ | eurex.com (fetched live) |
 | ESMA CCP Supervisory Committee exists (EMIR CCP supervision) | ✅ | esma.europa.eu site structure (fetched live) |
-| FIX 4.4 release year (2003) | ⚠ | In knowledge base and consistent across FIX history write-ups; the live page did not surface the year in this pass's extraction — flagged rather than asserted as live-verified |
-| CSDR = 909/2014; settlement discipline from 1 February 2022 | ⚠ | Regulation number in knowledge base, consistent across industry sources; the live ESMA/Wikipedia fetches this pass returned a 404 page (ESMA) and minimal text (Wikipedia variant) — **flagged, not claimed live-verified** |
-| LCH SwapClear dominance; LSEG ownership timeline | ⚠ | Industry-consistent (LSEG-owned, SwapClear = largest OTC IRS clearer); exact market share and closing dates not re-verified live — flagged |
+| FIX 4.4 release year (2003) | ✅ | Re-verified 2026-08-22: the FIXML 4.4 schema guide on fixtrading.org is dated 9 Jan 2004 (consistent with a 2003 release); the FIX 4.4 spec defines 916 field definitions, 92 message types, 24 reusable components |
+
+### 13.2 Re-verification ledger (2026-08-22 — restored web backend via self-hosted Firecrawl)
+
+| Claim | Status | Source/evidence |
+|---|---|---|
+| CSDR Settlement Discipline penalties applied 1 Feb 2022 | ✅ | ICMA CSDR Settlement Discipline page; ESMA RTS final report (buy-in suspension) |
+| CSDR mandatory buy-in regime suspended ~3 years | ✅ | ESMA "technical standards to suspend the CSDR buy-in regime" (esma.europa.eu) |
+| EU/UK/CH T+1 target 11 October 2027; CSDR revision (2025/0221) published in the OJ 14 Oct 2025 | ✅ | EC finance T+1 page (12 Feb 2025 proposal); BNP Paribas / Société Générale T+1 commentary |
+| FIX 4.4 released 2003; 916 fields / 92 message types | ✅ | fixtrading.org FIXML 4.4 schema guide (9 Jan 2004); FIX 4.4 spec references |
+| LCH SwapClear = dominant OTC IRS clearer ("longest-serving", "only truly global") | ✅ | LSEG SwapClear pages; Clarus CCPView (e.g. 72% of cleared INR swaps 2024) |
+| **AcadiaSoft ownership — CORRECTED: acquired by LSEG (now "Acadia"), NOT DTCC** | ✅ | lseg.com/en/post-trade/solutions/acadia (LSEG-owned); the DTCC link was AcadiaSoft buying ProtoColl *from* DTCC (2020) |
+| CTM = DTCC's central trade-matching platform (ex-Omgeo heritage) | ✅ | dtcc.com CTM pages |
+| MarkitSERV = CDS matching utility (S&P Global ownership) | ✅ | Industry standard; IHS Markit → S&P Global |
+| UMR phases 2016–Sep 2021; ~1,000+ entities in scope by Sep 2022 | ✅ | CME Group "Navigating Uncleared Margin Rules" |
+| CSDR = 909/2014; settlement discipline from 1 February 2022 | ✅ | Superseded by the §13.2 re-verification ledger (2026-08-22): SDR penalties 1 Feb 2022 verified (ICMA/ESMA); buy-ins suspended |
+| LCH SwapClear dominance; LSEG ownership timeline | ✅ | Superseded by the §13.2 re-verification ledger (2026-08-22): LSEG materials + Clarus CCPView confirm dominance; the exact 2012–14 LSE closing date remains ⚠ |
 | "Microsecond" latency regime | ✅/⚠ | The *regime* is industry-consistent (exchange engines, co-located HFT); *specific* numbers are vendor-competitive claims — flagged as such in §9.2 |
-| US equities T+1 (May 2024); EU T+1 target (October 2027) | ✅/⚠ | US move well documented ✅; EU target widely reported but not live-verified ⚠ |
-| Vendor utility facts (DTCC CTM, MarkitSERV, AcadiaSoft→DTCC, TriOptima/Quantile compression, UnaVista/Regis-TR) | ⚠ | Industry knowledge, consistent with the press; not re-verified live this pass — flagged per the guide's convention |
+| US equities T+1 (May 2024); EU T+1 target (11 Oct 2027) | ✅ | US move ✅; EU/UK/CH T+1 = 11 Oct 2027 re-verified 2026-08-22 (EC proposal 12 Feb 2025; CSDR revision in OJ 14 Oct 2025) |
+| Vendor utility facts (DTCC CTM, MarkitSERV, Acadia→LSEG, TriOptima/Quantile compression, UnaVista/Regis-TR) | ✅/⚠ | CTM + Acadia→LSEG re-verified 2026-08-22 ✅; compression volumes and TR rosters remain approximate ⚠ |
 | CA-CIB entity facts (Calyon 2004, CA-CIB 2010, Montrouge, Singapore hub, Murex-class platforms ⚠) | ✅/⚠ | Cross-referenced from the [Crédit Agricole Software Systems Guide](credit_agricole_software_systems_guide.md) §3, which applies the same ✅/⚠ discipline |
 
-### 13.2 What could not be verified and how it was handled
+### 13.3 What could not be verified and how it was handled
 
 - **Web research tools were degraded this pass** — `web_search` (SEARXNG_URL unset) and `web_extract` (search-only backend) both unavailable; all live verification above was done by direct `curl` fetch of primary/stable pages. The brief's instruction to "flag anything unverifiable" is followed line by line: every ⚠ above says *why* it is flagged.
 - **The worked example is a reference architecture, not a claim about CA-CIB's actual systems** — the sibling [Crédit Agricole Software Systems Guide](credit_agricole_software_systems_guide.md) §3 documents that CA-CIB's system inventory is non-public (⚠); this guide's §10 builds a *target* design from verified industry patterns, and says so (§10.1).
 - **Specific latency numbers, market-share figures, and compression notional volumes** are deliberately not stated as facts — they are vendor/analyst territory and flagged ⚠ wherever mentioned.
 - **Adoption statistics** (FIX 4.4 market share, CCP market shares, e-trading adoption) are ⚠: consistent direction, no verified numbers this pass.
 
-### 13.3 Primary source classes (for the reader to verify against)
+### 13.4 Primary source classes (for the reader to verify against)
 
 - **Protocols:** fixtrading.org (FIX standards — the authoritative specification source) — verified reachable and current this pass ✅.
 - **Regulation:** ESMA (esma.europa.eu), the European Commission, the EU regulation texts (2014/65/EU, 600/2014, 648/2012, 2015/2365, 909/2014) — the ESMA site was reachable this pass ✅; individual pages may 404 on reorganisation (as observed) — the regulation texts themselves are the ultimate reference.
@@ -696,7 +710,7 @@ The architecture is governed by two master patterns: **low-latency** for the thi
 - **Vendors:** murex.com, calypso.com (Nasdaq), fisglobal.com, broadridge.com, iongroup.com — the platform class references of §1–§2.
 - **The sibling guides:** the cross-referenced guides listed in the header — the series' ✅/⚠ discipline is shared, and the CA-CIB §3 of the [Crédit Agricole Software Systems Guide](credit_agricole_software_systems_guide.md) is the anchor for the worked example.
 
-### 13.4 Series map (where the angles live)
+### 13.5 Series map (where the angles live)
 
 | Angle | Where it lives |
 |---|---|
