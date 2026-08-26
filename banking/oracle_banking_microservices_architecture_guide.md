@@ -226,6 +226,122 @@ OBMA's architecture rests on a consistent set of principles:
 | **Product-factory** | Products are data (definitions + parameters), enabling configuration over coding. |
 | **Oracle-native** | Deep integration with Oracle Database, OCI services, and the broader Oracle Financial Services ecosystem. |
 
+
+```mermaid
+flowchart TB
+
+    %% =========================
+    %% Branch and Teller
+    %% =========================
+    subgraph LR["Branch and Teller"]
+        direction LR
+        CS["Cash Services"]
+        CUS["Customer Services"]
+        PS["Payment Services"]
+        TDS["Term Deposit Services"]
+        BCS["Branch Common Services"]
+        TS["Transaction Services"]
+        PRS["Projection Services"]
+        HA["Host Adapter"]
+        MLA["Machine Learning Adapter"]
+    end
+
+    %% =========================
+    %% Functional Foundation
+    %% =========================
+    subgraph FF["Functional Foundation"]
+        direction LR
+
+        subgraph FF1[" "]
+            Checklist["Checklist"]
+            Comments["Comments"]
+            Priority["Priority"]
+            ProcessCodes["Process Codes"]
+            Queues["Queues"]
+            Overrides["Overrides"]
+            ChargeCalc["Charge Calc"]
+            AdditionalAttributes["Additional Attributes"]
+            ScreenClass["Screen Class"]
+            Languages["Languages"]
+        end
+
+        subgraph FF2[" "]
+            TypeTypes["Type of Types"]
+            BICHistory["BIC History"]
+            TxnCodes["Txn. Codes"]
+            Sources["Sources"]
+            PrimaryConfigSync["Primary Config Sync"]
+            CoreChart["Core Chart of Accounts"]
+            CoreCustomer["Core Customer"]
+            CoreAccount["Core Account"]
+            CoreMultiCity["Core Multi-city Adapter"]
+            CoreFacilities["Core Facilities"]
+        end
+
+        subgraph FF3[" "]
+            CoreVirtualAccount["Core Virtual Account"]
+            Branch["Branch"]
+            Bank["Bank"]
+            Currency["Currency"]
+            CurrencyRates["Currency Rates"]
+            CurrencyHolidays["Currency Holidays"]
+            Country["Country"]
+            Dates["Dates"]
+            LocalHolidays["Local Holidays"]
+            Hosts["Hosts"]
+        end
+    end
+
+    %% =========================
+    %% Platform Foundation
+    %% =========================
+    subgraph PF["Platform Foundation"]
+        direction LR
+        subgraph PF1[" "]
+            Config["Config"]
+            APIGateway["API Gateway"]
+            UsersAuth["Users (Authn)"]
+            Alerts["Alerts"]
+            BatchServer["Batch Server"]
+            Orchestrator["Orchestrator"]
+            ServicesChassis["Services Chassis"]
+            TxnController["Txn. Controller"]
+            Logging["Logging"]
+            Advices["Advices"]
+        end
+
+        subgraph PF2[" "]
+            Audit["Audit"]
+            Cache["Cache"]
+            AINLPNLP["AI-ML NLP Processing"]
+            AINLPAnnotator["AI-ML NLP Annotator"]
+            RoutingMapping["Routing & Mapping Hub"]
+            Transport["Transport"]
+            ServiceDiscovery["Service Discovery"]
+            SMSRBAC["SMS (RBAC)"]
+            EventHub["Event Hub"]
+            Feeds["Feeds"]
+        end
+
+        subgraph PF3[" "]
+            UIChassis["UI Chassis"]
+            DataSegments["Data Segments"]
+            Tracing["Tracing"]
+            Reports["Reports"]
+            Metrics["Metrics"]
+            AINLPMgmt["AI-ML NLP Model Mgmt"]
+            AINLPTagMaint["AI-ML NLP Tag Maint"]
+            DocumentMgmt["Document Mgmt Services"]
+            PrimarySyncAdapter["Primary Sync Adapter"]
+            Conductor["Conductor"]
+        end
+    end
+
+    %% Layer relationship
+    LR --> FF
+    FF --> PF
+```
+
 ### 4.2 Microservices on OCI: The Platform Stack
 
 OBMA services run on a standard OCI platform stack:
