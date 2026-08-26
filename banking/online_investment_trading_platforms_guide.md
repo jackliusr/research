@@ -259,7 +259,7 @@ The software surfaces are what a user actually meets. The verified surfaces acro
 *thinkorswim's Schwab inheritance is a well-documented consequence of the 2019–2020 acquisition (flagged ⚠ as not independently re-verified this pass); the rest of the surfaces are verified from the brokers' own materials and Wikipedia.*
 
 The architectural lesson for a bank: every serious platform runs **two surfaces for two intents** — a simple investing surface (SaxoInvestor, Schwab.com) and a powerful trading surface (SaxoTrader, TWS, thinkorswim) — plus a mobile surface that increasingly *is* the product (Robinhood, moomoo, Tiger). Cymbal's investor journey should be designed as surfaces for intents, not as one app.
----
+
 
 ## 4. The Singapore Roster
 
