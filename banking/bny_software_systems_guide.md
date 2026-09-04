@@ -209,7 +209,7 @@ The **cash-liquidity-solutions** slug appears both in the custody-solutions tree
 | Liquidity portal branding | "LiquidityDirect"-type name | ⚠ unverified in this pass |
 
 The disclosure pattern is the book's §1.2 pattern again: the *business* is public (fee line, segment, marketing tree), the *machinery* is not. For a bank whose payments business is institutional and balance-sheet-light relative to its custody franchise, the interesting systems questions — how custodial cash sweeps into money funds, how tri-party cash is moved, how the USD clearing is plumbed — sit in the ⚠ zone and are collected in [§12](#12-what-could-not-be-verified).
----
+
 
 ## 4. Markets, Clearance and Collateral Platforms
 
@@ -253,7 +253,7 @@ The sitemap carries a **collateral-management/** tree (3 URLs) explicitly hostin
 | Clearing memberships | FICC/DTCC relationships and settlement memberships | ⚠ not disclosed in sources used |
 
 Collateral is where BNY's systems load is arguably heaviest: tri-party collateral management is a real-time, high-volume operational business (every US tri-party repo trade requires the collateral to be valued, allocated and moved intraday), and the Global Collateral Management Platform is the rare BNY system that is both *named in public* and *genuinely load-bearing* — yet its internals (⚠) are exactly what BNY does not publish. The honest position: platform name ✅, architecture ⚠, engine identity in [§12](#12-what-could-not-be-verified).
----
+
 
 ## 5. Wealth, Pershing and the Broker-Dealer Estate
 
@@ -332,7 +332,7 @@ The closest the series gets to a BNY modernization anchor is **Eagle Investment 
 ### 6.4 What a Systems Guide Can Say Honestly
 
 For readers who need to reason about BNY's core estate, the defensible statements are: (1) the *scale* of the operational load is verified from AUC/A and fee volumes ✅; (2) the *class* of systems required to carry that load is industry-standard structural knowledge, cross-referenced to the sibling mechanics guides ⚠; and (3) the *identities* of the systems are not public and must be treated as unknown, not guessed ⚠. That is the same honesty discipline the [Citibank guide](citibank_software_systems_guide.md) applies to Citi's engine layer, applied to an estate that discloses even less about its core.
----
+
 
 ## 7. Data and AI
 
@@ -372,7 +372,7 @@ BNY's public AI posture in the sources used is theme-level: the earnings release
 | Market-data consumption | Mechanics per sibling guide; BNY specifics | ⚠ [Market Data Consumption Guide](market_data_consumption_guide.md) cross-ref |
 
 The summary sentence for §7 is the book's refrain with a data twist: at BNY the *data products sold to clients* are public (the page tree), the *data machinery* that produces them is not, and the AI estate is real at the theme level (⚠) with no verified public name. A future research pass with access to BNY press releases and product documentation could move items out of §12; this pass did not have that budget.
----
+
 
 ## 8. Risk, Financial Crime and the Regulatory Context
 
