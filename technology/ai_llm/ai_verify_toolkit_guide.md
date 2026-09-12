@@ -8,11 +8,11 @@
 
 **DEDUP NOTE.**
 
-- **`technology/ai_llm/ai_verify_framework_guide.md`** — the *concurrent companion* (governance monograph: origin, principles, the Foundation, international alignment, Project Moohan). It owns governance/policy/landscape and covers the toolkit only at overview level. **This guide owns the technical practitioner layer: how the toolkit installs, configures, runs and is extended.** That sibling had **not yet landed on disk** when this was written; it is cross-referenced by path as a concurrent companion. Read the two together — the sibling explains *why* the tests exist, this guide explains *how* to run them.
+- **`technology/ai_verify_guide.md`** — the *governance companion* (the AI Verify framework: origin and mandate, the 11 principles, the AI Verify Foundation, the international alignment, Project Moonshot). It owns governance/policy/landscape and covers the toolkit only at framework level (§3.2/§3.3, §5). **This guide owns the technical practitioner layer: how the toolkit installs, configures, runs and is extended.** Read the two together — the governance companion explains *why* the tests exist, this guide explains *how* to run them.
 - **`technology/ai_verify_guide.md`** (706 lines) — the older broad-brush treatment. **This guide supersedes its technical sections at depth**: where the older guide names a toolbox, this one names the algorithms, inputs and metrics.
 - **`technology/ai_llm/llm_evaluation_frameworks_guide.md`** — the general LLM eval-tooling landscape (DeepEval, RAGAS and peers). It owns that comparison; AI Verify's stock toolboxes target traditional supervised learning over tabular and image data, so the two are adjacent, not competing.
 - **MLOps / model-registry material under `technology/`** (`openshift_ai_alternatives_guide.md`, `on_prem_llm_deployment_guide.md`, `enterprise_data_platforms_guide.md`, `cloud_providers_guide.md`, `technology/architecture/`) — condensed cross-reference only, in Section 8.
-- **Project Moohan (`moonshot`)** is a *different product* (LLM evaluation and red-teaming), owned by the framework sibling; it appears once, in Section 10. `moonshot-cicd` is unrelated to toolkit CI.
+- **Project Moonshot (`moonshot`)** is a *different product* (LLM evaluation and red-teaming) in the same organisation, owned by the governance companion; it appears once, in Section 10. `moonshot-cicd` is unrelated to toolkit CI.
 
 ### Table of Contents
 
@@ -714,7 +714,7 @@ One line: **if your AI estate is tabular/image supervised learning, your governa
 - **Prefer the default virtual-env pipeline** unless you specifically need sandboxing; then move to `docker_build` + `docker_run` with a private registry. **Split fast and slow tests** across per-commit and nightly CI (Section 8.4).
 - **Read `common/schemas`** before authoring a plugin; it is the real specification.
 
-One mention, as promised: **Project Moohan** ("Moonshot") — the LLM evaluation and red-teaming tool in the same organisation — is a *different product*, covers the generative-AI case this toolkit does not, and is owned by the concurrent governance companion `technology/ai_llm/ai_verify_framework_guide.md`. Do not mix the two in a single assurance story; they produce different evidence about different systems.
+One mention, as promised: **Project Moonshot** — the LLM evaluation and red-teaming tool in the same organisation — is a *different product*, covers the generative-AI case this toolkit does not, and is owned by the governance companion `technology/ai_verify_guide.md`. Do not mix the two in a single assurance story; they produce different evidence about different systems.
 
 ---
 
@@ -844,7 +844,7 @@ Used for what it is designed for, the toolkit does something no other open-sourc
 | `https://aiverifyfoundation.sg/downloads/AI_Verify_Sample_Report.pdf` | Report structure, process-check split, robustness and SHAP pages |
 | `https://github.com/aiverify-foundation/aivt-integration-testing` and `.../aiverify-developer-tools` | Runtime tiers; plugin templates, v2.x branch guidance |
 
-Companion material in this repository, cross-referenced and not re-derived: `technology/ai_llm/ai_verify_framework_guide.md` (concurrent governance companion), `technology/ai_verify_guide.md` (superseded at the technical layer by this guide), `technology/ai_llm/llm_evaluation_frameworks_guide.md` (general eval-tooling landscape), and the MLOps/model-registry material under `technology/`.
+Companion material in this repository, cross-referenced and not re-derived: `technology/ai_verify_guide.md` (the governance companion — the framework/policy view), `technology/ai_llm/llm_evaluation_frameworks_guide.md` (general eval-tooling landscape), and the MLOps/model-registry material under `technology/`.
 
 ---
 
