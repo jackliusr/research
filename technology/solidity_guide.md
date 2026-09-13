@@ -595,6 +595,21 @@ Documented targets, checked at compile time: arithmetic underflow and overflow (
 
 And the AI-era pointer: Argot's July 2026 roadmap records the team analysed **"Around 30 security reports"** in H1 2026 and that **"LLMs getting better resulted in an order of magnitude increase in the amount of vulnerability reports that the team had to investigate and react to,"** triggering "a general overhaul of the internal security procedures." That is a primary-source finding about *incoming reports*, not generated contracts — §8.4 returns to it.
 
+**A second worked example — the spill-slot collision across mutual recursion (both posts read at the primary source).** The transient-storage bug is not the only recent one, and the pair matters because both sit in the **IR pipeline** the ecosystem is being pushed toward (§3.3).
+
+| Attribute | Verified detail |
+|---|---|
+| Reported | **2026-07-30**, by **Ng Sze Hon**, through the Ethereum Foundation's bug bounty programme |
+| Severity | **Low/medium** on the team's internal scale |
+| Affected | **0.7.2 – 0.8.36**, **only with the IR pipeline** (`--via-ir` / `settings.viaIR`). The flag is not on by default, and contracts without mutual recursion are not affected |
+| Fixed in | **0.8.37**; disclosed **2026-09-10** |
+| Mechanism | The IR pipeline's **stack-to-memory mover** (the "stack limit evader") relocates locals to fixed **spill slots**; with **mutual recursion** in the call graph, variables of two different functions can receive the *same* slot although both are live — one is silently overwritten and the contract computes and stores a value the source never assigns. Recursion is detected on the compiled **Yul**, so mutually recursive functions inside **inline assembly** count as well |
+| Optimiser nuance | On **0.8.21 and later** the relocation runs as a distinct stage **regardless of `--optimize`**, so disabling the optimiser does not avoid it; on **0.7.2–0.8.20** it required `--via-ir` *and* `--optimize`. Only the settings used for the **deployed** contract matter, not test/CI settings |
+| Blast radius | A **Sourcify** rescan recompiled roughly **319,000** verified contracts with compilers built with and without the fix: **no bytecode differences**, so **no deployed contract is known to be affected** |
+| Upgrade note | The fix changes only the reserved region's size and the assigned slots — it does **not** make previously-compiling contracts fail with "Stack too deep" (unlike the fix below) |
+| Related, distinct bug | **"Unsound Spill In Mutual Recursion Bug"** — found internally on **2026-05-11**, severity **medium**, affects **0.7.2–0.8.35**, fixed in **0.8.36** (post dated **2026-07-09**). A Sourcify scan of roughly **207,000** via-IR contracts found about **272** (≈0.1 %) with a function the analysis misclassifies, none of which spill inside it. The September bug is **present even in versions carrying that fix** |
+| Review rule | For a via-IR contract containing mutual recursion — in Solidity **or** inline assembly — **no source-level check rules the bug out**; the team's own advice is to upgrade, and to treat already-deployed candidates as potentially affected. It is the clearest illustration of §5.7's rule: **the compiler version is inside the audit boundary** |
+
 ---
 
 ## 6. The Tooling and Analysis Ecosystem
@@ -996,7 +1011,10 @@ Every factual research claim in this guide, with its verdict (**✅ verified** a
 | 61 | Argot project roster = Act, Ethdebug, Fe, Hevm, Solidity, Sourcify | ✅ | `argot.org` homepage |
 | 62 | `hevm` is the symbolic-execution engine **used by Echidna**; the Solidity team uses it to differentially fuzz SSA-CFG | ✅ | Argot roadmap |
 | 63 | `--optimize-runs` accepts up to `UINT64_MAX` as of 0.8.36 | ✅ | `Changelog.md` 0.8.36 |
-| 64 | GitHub issue **#11690** is titled "Release version 1.0.0" and proposes renaming the current release | ✅ existence; the issue is a proposal, **not** a roadmap commitment |
+| 64 | GitHub issue **#11690** is titled "Release version 1.0.0" and proposes renaming the current release | ✅ existence; the issue is a proposal, **not** a roadmap commitment | GitHub issue text |
+| 65 | **Spill slot collision across mutual recursion**: reported **2026-07-30** by **Ng Sze Hon** via the EF bounty programme; severity **low/medium**; affects **0.7.2–0.8.36, IR pipeline only**; fixed in **0.8.37 (2026-09-10)**; optimizer-independent from 0.8.21; **no deployed contract known to be affected** after a Sourcify rescan of ~**319,000** contracts | ✅ | soliditylang.org security post, 10 Sep 2026 |
+| 66 | **Unsound spill in mutual recursion**: found internally **2026-05-11**; severity **medium**; affects **0.7.2–0.8.35**; fixed in **0.8.36**; ~**272** of ~**207,000** Sourcify via-IR contracts carry a misclassified function, none affected | ✅ | soliditylang.org security post, 9 Jul 2026 |
+| 67 | The September spill bug is **present even in versions carrying the 0.8.36 fix**, and the two are described as closely related but distinct | ✅ | 10 Sep 2026 post (relation section) + 9 Jul 2026 post |
 
 ---
 
@@ -1035,7 +1053,7 @@ Every factual research claim in this guide, with its verdict (**✅ verified** a
 - **Docs pages that failed to fetch this pass** — notably `internals/layout_in_storage.html`, `security-considerations.html` and the docs index. The storage-layout rules in §5.2 are stated from long-stable documented behaviour and cross-checked against changelog entries that *were* read (`storageLayout` artefact, configurable storage layout, ERC-7201 builtin), but the layout page itself was **not re-read**. Treat §5.2 as ⚠ on sourcing, ✅ on substance.
 - **The exact release that introduced `transient` state variables.** Narrowed to "Cancun-era, present by 0.8.28" via the affect range of the 2026 bug (0.8.28–0.8.33), but the introducing release was not pinned.
 - **The changelog's full middle** (roughly 0.8.1–0.8.29) was paged rather than read exhaustively; individual patch-release features in that range may be under-reported here.
-- **Whether any *other* high-severity compiler bug besides the transient-storage collision affected 2026 0.8.x releases.** Only that one security post was read; `bugs.html` and `bugs_by_version.json` were identified but **not fetched**, so the full advisory list is not reflected here.
+- **Whether *other* compiler bugs besides the three read this pass affected 2026 0.8.x releases.** Three security posts were read directly — the 2026-02-18 transient-storage clearing helper collision, the 2026-07-09 unsound-spill-in-mutual-recursion bug, and the 2026-09-10 spill-slot collision (§5.7) — together with the 0.8.37 release post. The blog's own listing shows further Sept 2026 security-alert posts (including one titled "Misordered Named Parameters in require with Custom Errors Bug" and one titled "Memory Byte Array Element Delete Clears Whole Word Bug") that were **not read**. `docs/bugs.html` and `docs/bugs_by_version.json` were identified as the machine-readable advisory home but **not fetched**, so the **full** advisory list for the 0.8.x line is not reflected here. The monitoring rule in §5.7 (watch `bugs_by_version.json` and the blog's security-alerts category) is therefore stated but not exercised exhaustively.
 - **The Etherscan-specific verification procedure.** Not read; the guide describes the general reproducibility requirement that applies to it.
 
 **Repository/process items named but not fetched**
