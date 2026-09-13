@@ -746,7 +746,7 @@ A working dictionary for *this* guide: the terms that carry a specific meaning i
 
 - **AAP (Red Hat Ansible Automation Platform):** Red Hat's commercial **subscription** platform; bundles the automation controller, automation hub, Event-Driven Ansible and automation mesh into one governed product. The successor line to Ansible Tower.
 - **AWX:** the **open-source upstream** controller (Apache-2.0) from which Tower was built and from which AAP's controller descends. Now the **community** controller, frozen since July 2024.
-- **Ansible Tower:** Ansible, Inc.'s **commercial** controller product (2014–2021); never the open-source one. Renamed into AAP's automation controller in 2021.
+- **Ansible Tower:** Ansible, Inc.'s **commercial** controller product (the commercial line; **renamed** into the controller in 2021 — §11 item 6 records that the *start* year is not verified); never the open-source one.
 - **ansible-core:** the **engine** — the CLI, the playbook/role execution model, the bundled modules and the plugin framework. GPL-3.0-or-later. The free thing this guide is about.
 - **ansible (the community package):** the PyPI `ansible` distribution bundling `ansible-core` plus the ~100 community collections. Convenient, but not the engine itself.
 - **ansible-navigator:** the CLI that runs playbooks **inside an execution environment** rather than on your workstation; the platform-era replacement for bare `ansible-playbook` in governed pipelines.
@@ -802,7 +802,7 @@ Decoding rule: whenever you read "**Tower**" in a vendor or internal document, t
 | --- | --- | --- | --- |
 | **Ansible Tower** | Ansible, Inc.'s **commercial** controller (built from the AWX upstream) | **automation controller**, inside AAP 2.x | "Tower" was never the open-source product; the OSS upstream was AWX |
 | **AWX** | The **open-source upstream controller** (Apache-2.0) | Still **AWX** — the community controller, now **frozen** (24.6.1, Jul 2024) | Same lineage, not the same product: no vendor support, no content curation, no upgrade path |
-| **Ansible Tower** (in 2019–2021 packaging) | The commercial controller as a **component of AAP 1.x** | **automation controller** in AAP 2.x | This is the "Tower you bought", before the 2.0 architecture split |
+| **Ansible Tower** (late-1.x-era packaging) | The commercial controller as a **component of AAP 1.x** | **automation controller** in AAP 2.x | This is the "Tower you bought", before the 2.0 architecture split; the AAP 1.x date range is itself unverified (§11 item 7) |
 | **Red Hat Ansible Automation Platform 2.0** (2021) | The re-launch that split the monolith into **controller + hub + EEs + mesh** | **AAP 2.x** (2.5 → 2.6 → 2.7) | Its controller launched as **automation controller 4.0 — "the improved and renamed Ansible Tower"** (Red Hat announcement, Oct 2021) |
 | `tower-cli`, `awx` | The **CLI and API identifiers** of the Tower/AWX era | **`awx`** endpoints and modules; **`ansible.controller`** and legacy **`ansible.tower`** collections | These identifiers survive in current code — the fastest way to date a document you have been handed |
 | **Red Hat Ansible Automation Platform** | The **subscription brand** for the whole governed stack | Same | You buy the platform, not the product, and it is measured in estate size |
