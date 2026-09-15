@@ -1,6 +1,6 @@
 # The FINOS Common Domain Model (CDM): A Comprehensive Guide
 
-> **Author:** Jack Liu Shurui — Solution Architect at Cymbal Bank, Singapore
+> **Author:** Jack Liu Shurui, Solution Architect
 > **Context:** Capital Markets / Banking Technology — Post-Trade Data Standards, Derivatives Lifecycle Modelling, Regulatory Reporting (DRR), Semantic Interoperability, Collateral, Tokenisation, Open-Source Governance (FINOS / Linux Foundation)
 > **Repository:** [github.com/jackliusr/research](https://github.com/jackliusr/research)
 > **Last Updated:** September 2026
