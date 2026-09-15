@@ -755,7 +755,8 @@ The bank's plan, stated as a gate sequence rather than a wish list:
 
 - **Start with the free terminal (Stage 0), at zero cost commitment** — evaluate the analytics before any procurement. This is genuinely free and requires no justification beyond a read-only key.
 - **Proceed to independent repricing (Stage 1) as a hard gate.** If the surface does not reconcile within the stated tolerance against a second source, stop. Nothing else matters if the pricing does not survive this test.
-- **Adopt the DDH robot only after shadow mode, and only with scoped credentials, exchange-side limits and a tested bank-side kill switch.**; **Adopt the structured-product pricer only with model documentation in hand.** If the vendor will not provide documentation adequate for the bank's model-risk process, the bank should not use the vendor's price as the basis of a client-facing note.
+- **Adopt the DDH robot only after shadow mode, and only with scoped credentials, exchange-side limits and a tested bank-side kill switch.**
+- **Adopt the structured-product pricer only with model documentation in hand.** If the vendor will not provide documentation adequate for the bank's model-risk process, the bank should not use the vendor's price as the basis of a client-facing note.
 - **Do not adopt the market-making robot.** A 200+ parameter market-making engine operated by two analysts on a bank's balance sheet is a risk the desk is not staffed to carry.
 - **Never use the vendor's surface as the bank's independent price.** The second source is mandatory, not optional, and it is the control that keeps the whole arrangement honest.
 
