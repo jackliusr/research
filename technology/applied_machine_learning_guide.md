@@ -377,7 +377,7 @@ Every model has a baseline it must beat, and the baseline is the *incumbent*, no
 | **Simple model** | Logistic/linear regression on a small engineered set | Establishes *modelling* value |
 | **Tuned simple model** | The above, with hyperparameters and features tuned | Establishes that complexity is needed for *gain*, not for competence |
 
-Comparisons must be on identical splits, identical metrics, and (crucially) with confidence intervals (§8.4). A headline accuracy of 94% against a 93% base rate is a rounding error, not a model. The MLOps sibling treats "baseline as minimum bar" as a lifecycle gate in [MLOps Lifecycle Frameworks](mlops_lifecycle_frameworks_guide.md) §4.4; here it is a modelling obligation.
+Comparisons must be on identical splits, identical metrics, and (crucially) with confidence intervals (§8.4). A headline accuracy of 94% against a 93% base rate is a rounding error, not a model. The MLOps sibling treats "baseline as minimum bar" as a lifecycle gate in [MLOps Lifecycle Frameworks](mlops_lifecycle_frameworks_guide.md) §4.4; here it is a modelling obligation. The canonical applied statement of the discipline is Martin Zinkevich's *Rules of Machine Learning: Best Practices for ML Engineering* (Google Developers) — Rule #1, "Don't be afraid to launch a product without machine learning"; Rule #2, "First, design and implement metrics"; and Rule #4, "Keep the first model simple and get the infrastructure right" (rules quoted as published).
 
 ### 7.2 What the Evidence Actually Says About "Best Algorithms"
 
@@ -466,6 +466,8 @@ If you try twenty configurations and report the best, the reported number is bia
 | **Calibration curve / ECE** | Reliability of the probability | Probabilities are consumed directly | Binned metrics are noisy |
 
 **The right question is never "which metric?" but "what decision does this number feed, and what does that decision cost when it is wrong?"** For Cymbal Bank, an attrition model that ranks customers for a retention offer is judged by incremental value at the contacted population; a card scorecard is judged by its rank ordering and its regulatory fairness behaviour; a fraud detector is judged at a fixed alert capacity, where precision at capacity is the operative metric and AUC is a convenience.
+
+**On the ROC-versus-PR question specifically**, the verified citation is Saito & Rehmsmeier, "The Precision-Recall Plot Is More Informative than the ROC Plot When Evaluating Binary Classifiers on Imbalanced Datasets" (*PLOS ONE* 10(3):e0118432, 2015; DOI 10.1371/journal.pone.0118432) — note the scope: it is a claim about *imbalanced* datasets, not a general licence to abandon ROC-AUC, and it does not remove PR-AUC's cross-dataset comparability problem.
 
 ### 8.5 Uncertainty: Report Intervals or Report Nothing
 
@@ -933,6 +935,8 @@ Every substantive claim in this guide, with its status and the quality of the so
 | Purged k-fold, purging and embargo | **Verified as named book techniques** | López de Prado, *Advances in Financial Machine Learning*, Wiley 2018. The names are the book's; the underlying concern is the one formalised above |
 | Data-related failure cascades dominate high-stakes AI deployment problems | **Verified, qualitative** | Sambasivan et al., CHI 2021. Qualitative research on failure patterns — *not* a quantified attribution of accuracy gains |
 | A handful of classifier families dominate real-world tabular problems | **Verified** | Fernández-Delgado et al., *JMLR* 15(90):3133–3181, 2014; Caruana & Niculescu-Mizil, ICML 2006 |
+| PR curves are the more informative summary than ROC on imbalanced data | **Verified, scope-limited** | Saito & Rehmsmeier, *PLOS ONE* 10(3):e0118432, 2015. Peer-reviewed; scoped to imbalanced datasets |
+| Start simple, build the infrastructure, design the metric | **Verified as practitioner guidance** | Zinkevich, "Rules of Machine Learning: Best Practices for ML Engineering", Google Developers (rules quoted as published). A canonical practitioner guide, not peer-reviewed research |
 | US model risk management guidance was replaced in April 2026 | **Verified** | OCC Bulletin 2026-13, "Model Risk Management: Revised Guidance", 17 April 2026, issued jointly by the OCC, Federal Reserve Board and FDIC; rescinds OCC 2011-12, 1997-24, 2021-19 and the MRM booklet; generative and agentic AI are out of scope; explicitly not enforceable standards; most relevant above $30bn in assets. Read on occ.gov |
 | The CFPB's 2023 adverse-action circular is no longer current | **Verified** | Published at 89 FR 27361 (17 Apr 2024); withdrawn by "Interpretive Rules, Policy Statements, and Advisory Opinions; Withdrawal", 90 FR 20084 (12 May 2025). Verified in the Federal Register |
 | Creditworthiness assessment is high-risk under the EU AI Act | **Verified** | Regulation (EU) 2024/1689, Article 6(2) with Annex III(5)(b), which carves out fraud detection |
