@@ -552,7 +552,56 @@ Key elements: **ServiceTask** states call remote methods; **CompensateState** de
 - **Compensation idempotency** is again the developer's responsibility: compensations may be retried after engine crashes and must tolerate double execution.
 - The engine also supports **forward recovery / retry** of failed steps and custom retry policies per state — an operational lever the other modes lack.
 
-### 6.4 SAGA vs. the Other Modes
+### 6.4 The Isolation Budget: What a Saga Gives Up (verified — the original paper)
+
+The saga's real cost is not the compensations. It is isolation — and the paper that defined the pattern says so in its own words.
+
+The canonical source is **Garcia-Molina & Salem, "Sagas", ACM SIGMOD 1987** (Princeton; proceedings pp. 249–259). Note what it is *for*: the paper is about the **long-lived transaction (LLT)** — the transaction that *"holds on to database resources for relatively long periods of time, significantly delaying the termination of shorter and more common transactions."* A saga is *"a LLT [that] can be written as a sequence of transactions that can be interleaved with other transactions,"* guaranteeing that *"either all the transactions in a saga are successfully completed or compensating transactions are run to amend a partial execution."* The paper's own motivating examples are a **bank's** monthly statement run and an insurance claims process — the pattern's ancestry is banking, not e-commerce.
+
+Three of its statements deserve to be in mind whenever a saga is proposed:
+
+1. **The saga layer performs no concurrency control.** The paper splits the *saga execution component* (SEC, which sequences the saga) from the *transaction execution component* (TEC, which runs each local transaction), and states that *"the SEC needs no concurrency control because the transactions it controls can be interleaved with other transactions."* Isolation is not delegated elsewhere in the stack — it is **given up**.
+2. **Partial results are visible, and nobody is notified.** *"Other transactions might see the effects of a partial saga execution. When a compensating transaction C_j is run, no effort is made to notify or abort transactions that might have seen the results of T_j before they were compensated for by C_j."* A reader — another service, a report, a customer's screen — that acted on an intermediate state is not corrected by the saga.
+3. **Compensation is semantic, not rollback.** A compensating transaction *"undoes, from a semantic point of view, any of the actions performed by T_i, but does not necessarily return the database to the state that existed when the execution of T_i began."* That one sentence separates a saga from a rollback, and it makes compensation design a **business** decision rather than a technical one. In banking terms: a reversed payment is a *new* transaction — its own value date, its own audit trail, its own customer-visible effect. It is not as if the first one never happened, and the general ledger will show both.
+
+So the honest statement of the guarantee: **atomicity (all-or-compensated), consistency and durability — explicitly not isolation.** §6.5 and §6.6 are what the practitioner does about that.
+
+### 6.5 The Anomalies and the Countermeasures (⚠ practitioner literature — *not* the 1987 paper)
+
+**Attribution note, stated deliberately.** The anomalies and countermeasures below are **not** from Garcia-Molina & Salem. The 1987 paper identifies the *absence* of isolation (§6.4) but neither catalogues the resulting anomalies nor names fixes for them. Those names come from the **practitioner literature** — most influentially **Chris Richardson, *Microservices Patterns* (Manning), Chapter 4 "Managing transactions with sagas", §4.3 "Handling the lack of isolation"**. That section exists and is titled as such (verified — the chapter's own summary lists *"using countermeasures to deal with the lack of isolation"*, and the pattern page at [microservices.io/patterns/data/saga.html](https://microservices.io/patterns/data/saga.html) describes *"countermeasures, which are design techniques that implement isolation"* while pointing to that book section for them). **The section body is inside the book**, so the list below is recorded as ⚠ **book-sourced, not page-verified** — these are established practitioner names, but they should not be quoted back as a cited definition without the book in hand.
+
+**The anomalies:**
+
+- **Lost update** — a saga step's write is overwritten by a concurrent transaction that read the pre-saga value; the later compensation then reverses a change that has already been superseded, compounding the damage.
+- **Dirty read** — a reader observes an intermediate state that a later compensation will undo. In Seata's AT mode this is not hypothetical but the **documented default** (see §4.3: *"the default isolation level of the global transaction is read uncommitted"*).
+- **Fuzzy / non-repeatable read** — two reads of the same data within one saga see different values because another saga committed between them.
+
+**The countermeasure families** (⚠ same attribution):
+
+- **Semantic lock** — a saga-level flag on the record (`PENDING`, funds `FROZEN`) so the intermediate state is *visible and actionable* rather than silently wrong. The most common fix, and the one that forces the intermediate state into the business model.
+- **Commutative updates** — design the step so order does not matter (increment/decrement rather than set-to-value), letting concurrent sagas interleave without a lock.
+- **Version file / reread value** — remember the version read at the start, then either verify it before writing (optimistic) or re-read and re-apply on the newer value.
+- **Pessimistic view** — reserve the resource up front so the saga's own steps cannot interleave. This is what TCC's Try phase buys (§5).
+
+**The rule that matters more than the list:** the countermeasures are **design work on the steps, not configuration on the engine**. Seata's SAGA mode makes the *flow* declarative and crash-safe — a persisted state machine that resumes after a crash — and does nothing to make that flow **isolated**. No engine setting, in any framework, prevents a lost update unless the step itself is written to prevent it. That is why the original paper treats step design as the hard problem and compensation as the easy one (§6.6).
+
+### 6.6 Backward and Forward Recovery, and the Step That Cannot Be Undone (verified — the original paper)
+
+**1. The two recovery strategies.** *"When a failure interrupts a saga, there are two choices: compensate for the executed transactions (backward recovery), or execute the missing transactions (forward recovery). … For backward recovery the system needs compensating transactions, for forward recovery it needs save-points."* Seata's per-state retry policies (§6.3) are forward recovery; the `CompensateState` chain is backward recovery.
+
+**2. The recovery lever worth knowing.** *"If save-points are automatically taken at the beginning of every transaction, then pure forward recovery is feasible. If we in addition prohibit the use of abort-saga commands, then it becomes unnecessary to ever perform backward recovery"* — under the paper's own stated assumption that *"every sub-transaction in the saga will eventually succeed if it is retried enough times."* In other words: **if every step is retryable, you may not need compensations at all.** For a bank that is a real trade — accepting the obligation to make every step idempotent and eventually successful, in exchange for never having to write a compensation.
+
+**3. The non-compensatable step.** The paper is blunt: *"Designing compensating transactions for LLTs is a difficult problem in general. (For instance, if a transaction fires a missile, it may not be possible to undo this action.)"* It then gives the **banking** workaround the industry still uses: *"It may even be possible to compensate for actions that are harder to undo, like sending a letter or printing a check. For example, to compensate for the letter, send a second letter explaining the problem. To compensate for the check, send a stop-payment message to the bank."*
+
+That paragraph is the most useful thing in the paper for a payments architect, because it names the design question: **which of my steps is the missile?** The irreversible outward action — the payment instruction released to a clearing system, the SWIFT message sent, the advice issued to the customer, the file transmitted to a regulator — cannot be compensated by rolling back a row. It can only be compensated by a *follow-up action*: a business process with its own failure modes, its own latency and (in a regulated firm) its own reconciliation obligation. Bank sagas are designed around locating these steps and placing them **as late in the chain as possible**, after every step that can fail cleanly.
+
+**4. How to choose the steps.** The paper's method: *"To identify potential sub-transactions within a LLT, one must search for natural divisions of the work being performed"* — where the LLT models real-world actions, *"each of these actions is a candidate for a saga transaction."* Its examples (a graduation's clearance checks; a cost-of-living raise split by plant location) show the principle: divisions track **business actions**, not database tables. A saga boundary drawn along table lines instead of business-step lines is how a flow ends up with steps that cannot be compensated cleanly.
+
+### 6.7 The Process Manager (the catalogue name for the orchestrator)
+
+The *orchestrated* saga — a coordinator driving the steps (§3, §6.2) — is a named pattern in the enterprise-integration catalogue: **Process Manager**, in the Message Routing group of **Hohpe & Woolf, *Enterprise Integration Patterns* (2003)**, where it sits alongside Routing Slip, Scatter-Gather and Message Broker (verified in the catalogue at [enterpriseintegrationpatterns.com](https://www.enterpriseintegrationpatterns.com/patterns/messaging/ProcessManager.html)). It is the vocabulary to reach for when the discussion is about the *messaging* architecture rather than the *transaction* mechanism: Seata's SAGA state machine is a Process Manager with a transaction log, Temporal is a durable Process Manager (§11), and [legacy_integration_patterns_guide.md](legacy_integration_patterns_guide.md) §5 is where the surrounding pattern catalogue lives.
+
+### 6.8 SAGA vs. the Other Modes
 
 | Dimension | **SAGA** | AT | TCC |
 |---|---|---|---|
