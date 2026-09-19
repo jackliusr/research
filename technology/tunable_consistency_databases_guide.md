@@ -12,6 +12,7 @@
 > - [`distributed_systems_engineering_guide.md`](distributed_systems_engineering_guide.md) — the theory this guide assumes: §4.2 CAP and its misreading, §4.4 PACELC, §4.5 the other impossibilities, §5 the consistency spectrum, §6.6 quorum arithmetic, §7 replication and partitioning. **Read §5 and §6.6 first if the vocabulary below is unfamiliar.**
 > - [`nosql_data_modelling_guide.md`](nosql_data_modelling_guide.md) — data models and modelling; this guide is deliberately *not* about modelling.
 > - [`cockroachdb_guide.md`](cockroachdb_guide.md) — the database that refuses the knob; used here as the contrast case (§11).
+> - [`yugabytedb_guide.md`](yugabytedb_guide.md) — the second knob-refuser: strong by default, with follower reads as a one-way staleness bound (§11.3 is this guide's reading of its consistency surface; that guide is the product deep-dive).
 > - [`polardb_vs_oceanbase_guide.md`](polardb_vs_oceanbase_guide.md) and [`oracle_sharding_guide.md`](oracle_sharding_guide.md) — the sharded-relational neighbours with their own, narrower, consistency surface.
 > - [`chaos_engineering_guide.md`](chaos_engineering_guide.md) and [`deterministic_engineering_guide.md`](deterministic_engineering_guide.md) — how to test that the knob does what you think (§15 cross-references these rather than re-deriving the technique).
 > - [`../banking/kafka_guide.md`](../banking/kafka_guide.md) and the event-streaming guides — log semantics and delivery guarantees, a different axis from read/write consistency.
