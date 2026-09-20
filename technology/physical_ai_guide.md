@@ -3,7 +3,7 @@
 > **Author:** Jack Liu Shurui — Solution Architect at Cymbal Bank, Singapore
 > **Context:** Technology Research — Physical AI, Embodied AI, Robotics, Humanoids, Autonomous Vehicles, World Models, Simulation
 > **Repository:** [github.com/jackliusr/research](https://github.com/jackliusr/research)
-> **Last Updated:** August 2026
+> **Last Updated:** September 2026
 
 ---
 
@@ -19,21 +19,24 @@
 8. [Autonomous Vehicles and Drones](#8-autonomous-vehicles-and-drones)
 9. [Hardware and Platforms](#9-hardware-and-platforms)
 10. [Industry Applications](#10-industry-applications)
-11. [Worked Example — A Warehouse Picking Robot](#11-worked-example--a-warehouse-picking-robot)
-12. [Summary — Physical AI in One Page](#12-summary--physical-ai-in-one-page)
-13. [Glossary](#13-glossary)
-14. [Claims Status, References and Further Reading](#14-claims-status-references-and-further-reading)
+11. [Safety, Standards and Liability — What It Takes to Operate Legally](#11-safety-standards-and-liability--what-it-takes-to-operate-legally)
+12. [The Data Problem — Why Action Data Is the Binding Constraint](#12-the-data-problem--why-action-data-is-the-binding-constraint)
+13. [The Honest State of the Field — What Runs at Scale, What Is a Demo](#13-the-honest-state-of-the-field--what-runs-at-scale-what-is-a-demo)
+14. [Worked Example — A Warehouse Picking Robot](#14-worked-example--a-warehouse-picking-robot)
+15. [Summary — Physical AI in One Page](#15-summary--physical-ai-in-one-page)
+16. [Glossary](#16-glossary)
+17. [Claims Status, References and Further Reading](#17-claims-status-references-and-further-reading)
 
 ### How to Read This Guide
 
 This is the dedicated deep-dive on **Physical AI** — the branch of artificial intelligence whose systems *perceive, reason about, and act in the physical world* — in the `technology/` frontier-AI / embodied-AI series. It is the umbrella guide for the embodied-AI domain: robots, humanoids, autonomous vehicles, and drones, plus the models (world models, vision-language-action policies) and the simulation machinery that train them. Several sibling guides carry adjacent depth and are cross-referenced inline:
 
 - **The software-agent contrast** — [autonomous_agents_guide.md](ai_llm/autonomous_agents_guide.md) is the umbrella for *software* agents (LLM + tools + loop, acting through APIs in digital environments). Physical AI is its mirror image: the same perception–reasoning–action loop, but the environment is the physical world and the "tools" are actuators. Read its §1.2 (the LLM-based agent definition) and §4 (control and safety) side by side with §1.4 and §2 of this guide. [llm_agent_use_cases.md](ai_llm/llm_agent_use_cases.md) covers the digital-agent use-case landscape.
-- **The sensing** — [remote_sensing_technologies_guide.md](remote_sensing_technologies_guide.md) is the physics-level reference for the perception sensors Physical AI rides on: its §3.1 (optical), §3.4 (SAR radar), §3.6 (LiDAR) and §3.7 (sensor comparison) ground the sensor table in §3 of this guide. [maritime_domain_awareness_guide.md](maritime_domain_awareness_guide.md) shows the same sensors + fusion discipline applied to autonomous vessels — its §2 (sensors), §4 (fusion and analysis) and §9 (worked example) are the maritime twin of this guide's §3 and §11. [ips_rtls_guide.md](ips_rtls_guide.md) covers indoor RF positioning (the warehouse-robot localisation problem in §11). [event_stream_processing_guide.md](event_stream_processing_guide.md) §3–§4 and [complex_event_processing_guide.md](complex_event_processing_guide.md) §3 cover the real-time streaming/CEP plumbing that sensor pipelines sit on.
+- **The sensing** — [remote_sensing_technologies_guide.md](remote_sensing_technologies_guide.md) is the physics-level reference for the perception sensors Physical AI rides on: its §3.1 (optical), §3.4 (SAR radar), §3.6 (LiDAR) and §3.7 (sensor comparison) ground the sensor table in §3 of this guide. [maritime_domain_awareness_guide.md](maritime_domain_awareness_guide.md) shows the same sensors + fusion discipline applied to autonomous vessels — its §2 (sensors), §4 (fusion and analysis) and §9 (worked example) are the maritime twin of this guide's §3 and §14. [ips_rtls_guide.md](ips_rtls_guide.md) covers indoor RF positioning (the warehouse-robot localisation problem in §14). [event_stream_processing_guide.md](event_stream_processing_guide.md) §3–§4 and [complex_event_processing_guide.md](complex_event_processing_guide.md) §3 cover the real-time streaming/CEP plumbing that sensor pipelines sit on.
 - **The compute** — [gpu_optimization_guide.md](gpu_optimization_guide.md) §1.5 (Tensor Cores) and §1.6 (data-center GPU lineup) cover the training hardware summarised in §9 of this guide.
 - **The learning** — [reinforcement_learning_algorithms_guide.md](reinforcement_learning_algorithms_guide.md) is the algorithm-level reference for the RL half of robot learning (§7.3).
 
-**Note on verification.** This guide was researched in August 2026. Claims are marked **Verified** (confirmed against vendor, research-paper, or reputable industry sources during research), **Reported** (widely reported but not independently confirmed), or hedged/flagged inline where sources diverge — the full claims-status table is in §14.1. Physical AI is moving at foundation-model speed; re-verify product status, shipment numbers, and market figures before procurement or investment decisions.
+**Note on verification.** This guide was researched in August 2026 and patched in September 2026 (§11–§12 and §17.1). Claims are marked **Verified** (confirmed against vendor, research-paper, or reputable industry sources during research), **Reported** (widely reported but not independently confirmed), or hedged/flagged inline where sources diverge — the full claims-status table is in §17.1. Physical AI is moving at foundation-model speed; re-verify product status, shipment numbers, and market figures before procurement or investment decisions.
 
 ---
 
@@ -109,7 +112,7 @@ Every Physical AI system — a self-driving car, a humanoid, a warehouse picker 
 
 1. **Perception** — turning raw sensor streams into a usable world state: where objects are, what they are, how the body is moving (§3).
 2. **Reasoning** — deciding what to do next: predicting the future (world models, §4), choosing actions under a goal (policies — VLA models, §6, or RL/classical planners, §7.3).
-3. **Action** — executing the decision: motion planning, control at high frequency, actuation of motors and grippers (§11.4).
+3. **Action** — executing the decision: motion planning, control at high frequency, actuation of motors and grippers (§14.4).
 
 The loop is what makes it AI rather than automation: perception is *reactive* (the robot sees the box shift and re-grasps), reasoning is *predictive* (it anticipates the shelf), and action is *corrective* (it re-plans when the world disagrees).
 
@@ -132,7 +135,7 @@ The decision layer has three increasingly AI-heavy components:
 
 1. **World models** (§4) — learned predictors of how the scene evolves: "if I push this box, it slides that way." Used for planning (imagine-then-choose) and for generating training data in simulation.
 2. **Foundation models** — vision-language models that ground instructions in the scene ("pick the *red* mug") and, as VLA models (§6), emit actions directly. This is the layer where the LLM revolution physically materialised.
-3. **Policies** — the mapping from state to action. Three flavours coexist: **learned** (RL or imitation-trained neural policies, §7.3), **VLA** (foundation-model policies, §6), and **classical** (model-predictive control, sampling-based motion planners — still the safety backbone in production, §11.4).
+3. **Policies** — the mapping from state to action. Three flavours coexist: **learned** (RL or imitation-trained neural policies, §7.3), **VLA** (foundation-model policies, §6), and **classical** (model-predictive control, sampling-based motion planners — still the safety backbone in production, §14.4).
 
 The trend (verified, 2024–2026) is that the boundary between these is dissolving: VLA models increasingly *contain* the world model and the policy in one neural net, with classical planners kept as the safety wrapper underneath.
 
@@ -141,7 +144,7 @@ The trend (verified, 2024–2026) is that the boundary between these is dissolvi
 The output side of the loop: **planning** (choose a trajectory that avoids obstacles and satisfies the goal), **control** (convert the trajectory into motor commands at high frequency — PID, MPC, impedance control), and **actuation** (motors, hydraulic actuators, grippers, thrusters — the body). Two defining constraints:
 
 - **Latency** — a humanoid balancing or a car braking cannot wait for a cloud round-trip; the perception–action loop runs on the *edge* at 10–100+ Hz (§9.1). This is why Jetson-class devices exist.
-- **Safety** — physical consequence means every action layer carries hard limits: joint torque caps, velocity ceilings, emergency stops, and control authorities that outrank the learned policy (§11.7).
+- **Safety** — physical consequence means every action layer carries hard limits: joint torque caps, velocity ceilings, emergency stops, and control authorities that outrank the learned policy (§14.7).
 
 ### 2.5 The Stack Diagram
 
@@ -187,7 +190,7 @@ Fusion happens at three levels, in increasing sophistication:
 2. **Feature/object level** — each sensor runs its own detector; tracks are associated and merged (Kalman-filter or deep-tracking fusion).
 3. **Decision level** — independent per-sensor decisions vote or are arbitrated by a higher-level reasoner.
 
-The 2024–2026 trend (emerging) is **end-to-end learned fusion**: one neural network consumes all raw sensor streams and outputs the world state directly, displacing hand-built pipelines — at the cost of explainability, which matters where safety certification is required (§11.7).
+The 2024–2026 trend (emerging) is **end-to-end learned fusion**: one neural network consumes all raw sensor streams and outputs the world state directly, displacing hand-built pipelines — at the cost of explainability, which matters where safety certification is required (§14.7).
 
 ### 3.2 Perception Models
 
@@ -251,7 +254,7 @@ World models plug into the §2 stack in three roles:
 2. **Simulation / data generation** — world models synthesise the training data (§5.4) and serve as infinitely re-rollable test environments, complementing physics-based simulators (which are exact but brittle) with learned realism (which is flexible but approximate).
 3. **Representation** — the world model's internal representation is the state the policy reasons over, replacing hand-engineered state vectors.
 
-The honest caveat (verified as an open problem, flagged): learned world models are *not yet* trustworthy enough for safety-critical closed-loop use on their own — they hallucinate physics in edge cases, and production systems still wrap them in physics-based simulators and hard safety layers (§11.7). The research direction — world models accurate enough to *replace* physics simulators — is one of the most active in the field.
+The honest caveat (verified as an open problem, flagged): learned world models are *not yet* trustworthy enough for safety-critical closed-loop use on their own — they hallucinate physics in edge cases, and production systems still wrap them in physics-based simulators and hard safety layers (§14.7). The research direction — world models accurate enough to *replace* physics simulators — is one of the most active in the field.
 
 ### 4.4 The World Model Table
 
@@ -267,7 +270,7 @@ The honest caveat (verified as an open problem, flagged): learned world models a
 
 ### 5.1 Why Simulate
 
-Physical AI cannot be trained the way LLMs are: real-world interaction is slow (a robot grasp takes seconds), expensive (hardware, people, facilities), dangerous (collisions, falls), and hard to label at scale. Simulation answers with **speed, safety, and scale**: a GPU cluster can run a million parallel simulated training episodes overnight, including failures that would destroy hardware or harm people in reality. Verified: simulation-first training is now the industry default — every major player (NVIDIA Isaac, Google DeepMind, Figure, Tesla, and the VLA labs) trains or pre-trains policies in simulation before touching real robots (§11.8).
+Physical AI cannot be trained the way LLMs are: real-world interaction is slow (a robot grasp takes seconds), expensive (hardware, people, facilities), dangerous (collisions, falls), and hard to label at scale. Simulation answers with **speed, safety, and scale**: a GPU cluster can run a million parallel simulated training episodes overnight, including failures that would destroy hardware or harm people in reality. Verified: simulation-first training is now the industry default — every major player (NVIDIA Isaac, Google DeepMind, Figure, Tesla, and the VLA labs) trains or pre-trains policies in simulation before touching real robots (§14.8).
 
 ### 5.2 Sim-to-Real Transfer (sim2real)
 
@@ -351,7 +354,7 @@ Key technique notes (verified): actions are discretised into tokens (RT-2) or ge
 Industrial robotics is Physical AI's most mature domain (verified): millions of industrial robots are deployed worldwide (IFR-reported ~4.2M operational units in 2023 — Reported, flag exact figure), and the 2024–2026 shift is from *programmed* automation to *perceived* automation: robots that see, adapt, and learn rather than replay fixed paths. The two anchor segments:
 
 - **Manufacturing** — welding, painting, assembly, machine tending by 6-axis arms (FANUC, KUKA, ABB, Yaskawa); the classic market, now being retrofitted with vision + AI for flexible small-batch work.
-- **Warehouse / logistics** — the fastest-growing segment (verified): autonomous mobile robots (AMRs) for transport, robotic arms for picking and palletising, and the mega-deployments by Amazon (§10.2). Flag: exact warehouse-robot market sizing is divergent across analysts — see §14.1.
+- **Warehouse / logistics** — the fastest-growing segment (verified): autonomous mobile robots (AMRs) for transport, robotic arms for picking and palletising, and the mega-deployments by Amazon (§10.2). Flag: exact warehouse-robot market sizing is divergent across analysts — see §17.1.
 
 The technical enabler (verified) is the same stack as §2: perception (3D vision + force sensing) makes arms *compliant* (they can insert, assemble, and handle variability), and learning (§7.3) replaces manual path programming.
 
@@ -466,7 +469,7 @@ The commercial platform layer that binds the stack together — all NVIDIA, all 
 - **GR00T** — humanoid foundation models + the GR00T Blueprint (data pipelines: teleop capture → Cosmos augmentation → Isaac Sim training → Jetson Thor deployment — the full NVIDIA "three computers" recipe, verified in NVIDIA's published workflow).
 - **DRIVE** — the automotive twin: DRIVE Orin/Thor hardware + DriveOS + reference AV stacks (§8.2).
 
-For a bank or enterprise architect (context: this guide's author): the platform takeaway is that Physical AI has consolidated around *one* dominant full-stack vendor (NVIDIA) the way digital AI consolidated around the hyperscaler clouds — a single-vendor dependency risk worth modelling (§14.1).
+For a bank or enterprise architect (context: this guide's author): the platform takeaway is that Physical AI has consolidated around *one* dominant full-stack vendor (NVIDIA) the way digital AI consolidated around the hyperscaler clouds — a single-vendor dependency risk worth modelling (§17.1).
 
 ### 9.4 The Hardware Table
 
@@ -482,7 +485,7 @@ For a bank or enterprise architect (context: this guide's author): the platform 
 
 ### 10.1 Manufacturing (verified, with flags)
 
-Manufacturing is Physical AI's *revenue* anchor: automotive plants and electronics factories already run vision-guided robotic lines, and the 2024–2026 shift is **flexible automation** — AI perception lets robots handle mixed-model production (small batches, part variability) that hard-coded automation cannot. Verified anchors: automotive OEMs (BMW's Figure-humanoid pilot at Spartanburg — Reported; Tesla's own-factory Optimus ambitions), electronics (precision assembly, inspection), and heavy industry (welding/painting robots with adaptive vision). Flag: precise "AI-in-manufacturing" adoption percentages are analyst estimates with wide variance (§14.1).
+Manufacturing is Physical AI's *revenue* anchor: automotive plants and electronics factories already run vision-guided robotic lines, and the 2024–2026 shift is **flexible automation** — AI perception lets robots handle mixed-model production (small batches, part variability) that hard-coded automation cannot. Verified anchors: automotive OEMs (BMW's Figure-humanoid pilot at Spartanburg — Reported; Tesla's own-factory Optimus ambitions), electronics (precision assembly, inspection), and heavy industry (welding/painting robots with adaptive vision). Flag: precise "AI-in-manufacturing" adoption percentages are analyst estimates with wide variance (§17.1).
 
 ### 10.2 Warehouse and Logistics (verified)
 
@@ -490,7 +493,7 @@ The most proven commercial deployment of Physical AI at scale:
 
 - **Amazon** (verified): the benchmark case — Amazon has deployed **750,000+ robots** in its fulfillment network (widely reported 2024; the company's own 2025 communications cite **1M+ cumulative robots since 2012** — Reported figures, flag exact count). The fleet spans drive units (the classic Kiva-style pod movers, via the 2012 Kiva acquisition), robotic arms for sorting and picking (Sparrow, Robin, Cardinal), and systems like Sequoia (inventory sortation). Amazon's trajectory — from one robot type to a heterogeneous AI-driven fleet — is the industry's reference story.
 - **Others** (verified): Ocado (highly automated grocery warehouses), Walmart, Alibaba (Cainiao), and the AMR vendors (GreyOrange, Locus, Geek+ — the latter a Chinese AMR leader with global deployments, Reported scale).
-- **The pattern** (opinion): warehouse robotics leads because the environment is *structured* (shelves, barcodes, known products) but the tasks are *varied* (arbitrary items, dynamic orders) — exactly the regime where AI perception + learning beats hard automation, and exactly the regime this guide's worked example (§11) targets.
+- **The pattern** (opinion): warehouse robotics leads because the environment is *structured* (shelves, barcodes, known products) but the tasks are *varied* (arbitrary items, dynamic orders) — exactly the regime where AI perception + learning beats hard automation, and exactly the regime this guide's worked example (§14) targets.
 
 ### 10.3 Healthcare (verified category, specifics flagged)
 
@@ -527,15 +530,229 @@ Flagged/emerging specifics: autonomous-vehicle deployment in Singapore is carefu
 | **Energy / utilities** | Inspection, maintenance, hazardous work | Drone + robot inspection of pipelines/turbines |
 | **Banking / enterprise** | Data-centre ops, physical security, smart premises (emerging) | Facility robots, surveillance CV, cash/logistics automation (opinion) |
 
-## 11. Worked Example — A Warehouse Picking Robot
+## 11. Safety, Standards and Liability — What It Takes to Operate Legally
+
+Sections §2–§9 described how a Physical AI system is built; §10 described where it is deployed. This section covers the layer that decides whether it may be switched on near people at all: the standards ladder, functional safety, the machinery and AI regulation, product liability, and what certification actually demands. The claim to start from is blunt: **a robot that works is not the same as a robot that may legally operate (verified as the structure of industrial robot safety engineering).** Capability and permission are proven by different artefacts, against different standards, for different audiences — demonstration videos count for one, a safety case counts for the other. A learned policy, however good, is an input to a safety case, not a substitute for it.
+
+### 11.1 Two Different Deliverables — the Model and the Safety Case
+
+| | **The capability artefact** (what §3–§9 build) | **The safety artefact** (what this section covers) |
+|---|---|---|
+| Question answered | Can the system do the task? | May the system be operated here, by these people, with this supervision? |
+| Evidence | Benchmarks, success rates, simulation evaluations, field trials | Risk assessment, safety-function specification, validation of the application, technical file |
+| Owner | Robotics / ML engineering | Safety engineering, integrator, notified body or assessor, the operator's HSE function |
+| Governing documents | Papers, vendor documentation, internal test plans | ISO 12100, ISO 13849-1, IEC 61508, ISO 10218, ISO 3691-4, ISO 13482, UL 3300 |
+| Visible when it fails | A dropped part, a missed pick | An incident report, a withdrawn certificate, a liability claim |
+
+The practical consequence for anyone planning a Physical AI deployment: budget for the safety artefact as a first-class workstream with its own engineers, evidence and schedule. In industrial practice it is routinely the longer pole — the reason a successful pilot can sit unmoved for a year while the paperwork and the site validation are completed (§11.5).
+
+### 11.2 The Standards Ladder
+
+Robot safety is a hierarchy: a **type-A** standard gives the general design/risk methodology (ISO 12100), **type-B** standards give the integrity and design rules for safety-related control parts (ISO 13849-1, IEC 61508), and **type-C** standards give the requirements for a specific machine family (ISO 10218 for industrial robots, ISO 3691-4 for driverless trucks) and take precedence for that family. The table below is the current state of the ladder for Physical AI, **verified against the ISO catalogue and UL's standards store in September 2026** — several widely repeated reference points are now out of date, which is why the "superseded" column matters:
+
+| Application | Standard | Title | Status and edition cited |
+|---|---|---|---|
+| Industrial robots (the robot itself) | **ISO 10218-1:2025** | Robotics — Safety requirements — Part 1: Industrial robots | Published; Edition 3, 2025-02. The 2011 edition (ISO 10218-1:2011) is withdrawn |
+| Robot applications and robot cells (integration) | **ISO 10218-2:2025** | Robotics — Safety requirements — Part 2: Industrial robot applications and robot cells | Published in 2025. ISO 10218-2:2011 is withdrawn |
+| Collaborative operation — power and force limiting | **ISO/TS 15066:2016** | Robots and robotic devices — Collaborative robots | Published; at ISO stage 90.92 ("to be revised") as of September 2026. Its biomechanical-threshold content is being re-issued in a new part series (**ISO/AWI 15066-1**, "Collaborative Safety – Physical contact with robots — Part 1: Biomechanical thresholds and data", in development) |
+| Measuring human-robot contact | **ISO/PAS 5672:2023** | Robotics — Collaborative applications — Test methods for measuring forces and pressures in human-robot contacts | Published (the measurement method that makes PFL limits testable) |
+| Autonomous mobile machinery — driverless industrial trucks, AGVs, AMRs | **ISO 3691-4:2023** | Industrial trucks — Safety requirements and verification — Part 4: Driverless industrial trucks and their systems | Published; Edition 2, 2023-06. **ISO 3691-4:2020 is withdrawn** (withdrawal registered 2023-06-12); a further draft (ISO/DIS 3691-4) is in development |
+| Personal-care robots (service robots in contact with people) | **ISO 13482:2014** | Robots and robotic devices — Safety requirements for personal care robots | Published, Edition 1, 2014-02, last reviewed and confirmed in 2020; under revision — the replacement, **ISO/FDIS 13482**, is titled *Robotics — Safety requirements for service robots*, i.e. scoped beyond "personal care" |
+| Service robots (US / North America) | **UL 3300** | Service, Communication, Information, Education and Entertainment (SCIEE) Robots | Active UL Standard; published 14 May 2024, with the listed revision ANSI-approved 14 August 2026 |
+| Indoor mobile platforms (US, adjacent) | **UL 3100** | Automated Mobile Platforms (AMPs) | Active; published 26 May 2021, revision dated 10 June 2026 |
+
+Three notes that matter more than the table itself:
+
+- **Do not cite the superseded editions.** ISO 3691-4:2020 and ISO 10218-1/-2:2011 still appear in current procurement documents, blog posts and even vendor collateral; both are withdrawn. A safety file that leans on a withdrawn standard is a finding waiting to happen.
+- **ISO/TS 15066 is a Technical Specification, not a full International Standard**, and it governs the *power-and-force-limiting* (PFL) concept — the collaborative mode where the robot is allowed to touch a person because the contact force and pressure stay inside biomechanical limits. That is a fundamentally different argument from the other three collaborative modes (safety-rated monitored stop, hand guiding, speed-and-separation monitoring), and it is the one that requires measured force/pressure data (ISO/PAS 5672:2023 is the measurement standard). Widely reported by integrators: the 2025 revision of ISO 10218-1/-2 brings collaborative-operation requirements into the core standard while the biomechanical-limit detail migrates into the 15066-1 series (Reported — confirmed here only in the form that ISO's catalogue shows the 15066-1 project in development and TS 15066:2016 still published).
+- **The standards are type-C and therefore application-scoped.** ISO 10218-1 explicitly excludes, among others, service robots, healthcare robots, medical robots, personal-care robots and any machine lifting or transporting people; ISO 3691-4 excludes trucks on public roads and in public zones (pointing to ISO 13482). A humanoid working in a warehouse aisle, a delivery robot on a public footpath, and a surgical robot are three different standards problems, even if the policy network is identical.
+
+### 11.3 Functional Safety — What It Actually Means for a Learned Policy
+
+Functional safety is the discipline of ensuring that a system *does the right thing when something goes wrong* — and, for Physical AI, it is what converts "the model is 99% accurate" into a statement with engineering meaning. Four pieces:
+
+1. **The risk-assessment methodology comes first.** **ISO 12100:2010** (*Safety of machinery — General principles for design — Risk assessment and risk reduction*; Edition 1, published 2010-11, last confirmed 2022, a revision project ISO/DIS 12100.3 is in development) specifies hazard identification, risk estimation and evaluation across the machine's life cycle, the iterative risk-reduction process, and — importantly for a learned system — the **documentation and verification** of that process. It is the type-A basis on which every type-C robot standard is written, and it is the standard an auditor will ask to see evidence against.
+2. **Integrity is expressed as a level, not as a percentage.** ISO 13849-1:2023 (*Safety of machinery — Safety-related parts of control systems — Part 1*; Edition 4, 2023-04) expresses required integrity as a **performance level (PL "a" through "e")** for safety-related control parts in high-demand/continuous operation — which is what a robot's safety functions are. IEC 61508 (functional safety of electrical/electronic/programmable electronic safety-related systems; Parts 1–7, second edition 2010, with Part 1 as the general-requirements part) expresses it as **safety integrity levels (SIL 1–4)** and is the parent standard for low-demand mode and for sector standards that do not exist. A robot arm's safety-rated monitored stop is specified to a PL or SIL; a VLA policy's accuracy number is not a PL.
+3. **Separate the safety function from the AI component that assists it.** This is the crux of certifying learned components. Write the safety functions first, in the safety file's language — "when a person is detected inside the cell, motion is stopped within X ms"; "the end effector never exceeds Y N of contact force"; "the base never exceeds Z m/s inside the scanning field". Each is a specified behaviour with a required integrity level and a verification method. Only then decide which element implements it. A learned perception model may *assist* a safety function (detecting people, anticipating contact), but the function itself must be implemented by elements whose failure modes are analysable and whose integrity can be argued — and a learned model's failure modes, at the level of a single input, are not yet analysable in that sense (flagged: this is the open methodological question in the field, not a settled technique).
+4. **The central architectural point: in every deployed system the learned policy is wrapped by a non-learned safety layer whose job is to be independently certifiable.** The pattern is uniform across domains (verified as the standard production architecture — the same hierarchy this guide's §2.4 and §14.4 describe): the policy proposes, and a safety-rated layer disposes — dual-channel emergency stops, safety-rated laser scanners or light curtains, hard joint-torque and velocity limits, watchdogs that trip when the policy's outputs fall outside a validated envelope, and a safety-rated stop category chosen by the risk assessment. The design intent is that **the safety argument does not depend on the policy being correct**: if the policy does something absurd, the wrapper bounds the consequence. This is why "we will certify the model" is the wrong answer and "we will certify the wrapper, and bound the model's authority" is the right one — and why the industry's most expensive failures in this space are architectural (a learned component given authority it should not have) rather than statistical.
+
+### 11.4 The Regulatory Layer
+
+Three instruments define the legal frame for Physical AI in Europe, and they interact. All three are **verified and dated** below; where a date could not be established from a primary source, it is flagged rather than estimated.
+
+**1. The EU machinery regime — Regulation (EU) 2023/1230** (on machinery, repealing Directive 2006/42/EC). Adopted **14 June 2023**; it **applies on a mandatory basis from 20 January 2027**. Machinery placed on the EU market before that date must comply with the existing Directive, and manufacturers may already declare conformity with the Regulation where applicable. The Commission's own description states the Regulation "integrates provisions for machinery with safety functions that are AI-powered", adds cyber-safety provisions for compliance-relevant software and safety control systems, and addresses conformity assessment for higher-risk machinery listed in its Annex I. **What it means for software and AI:** the regulated object is the *machine and its safety functions*, not the model — but software that performs a safety function can itself be a safety component, which pulls the software into the essential health-and-safety requirements, the technical file, and (for higher-risk categories) third-party conformity assessment.
+
+**2. The EU AI Act — Regulation (EU) 2024/1689.** The provision that catches Physical AI is **Article 6(1)(a)**: an AI system is high-risk where it "is intended to be used as a safety component of a product … covered by the Union harmonisation legislation listed in Annex I", or is itself such a product. Annex I, Section A is the New Legislative Framework list, and **its machinery entry is now Regulation (EU) 2023/1230** — the Directive 2006/42/EC entry has been deleted by amendment. **The consequence:** a learned safety component of machinery is, by classification, a **high-risk AI system**, and its provider carries the Chapter III obligations — risk-management system, data governance, technical documentation, logging, human oversight, accuracy/robustness/cybersecurity, and conformity assessment — *in addition to* the machinery file. The Commission's own summary lists "AI-based safety components of products" among the high-risk use cases, which is the same point from the regulator's side.
+
+The application timetable is the amended **Article 113** (the 2026 "AI Omnibus" amendment changed the original dates; both the consolidated text and the Commission's page reflect the later dates):
+
+| Date | What applies |
+|---|---|
+| 2 February 2025 | Chapters I–II (prohibitions, definitions) |
+| 2 August 2025 | GPAI-related and governance provisions (Chapter V, VII, XII) |
+| **2 August 2026** | General application of the Regulation |
+| **2 August 2027** | Article 6(1) and its corresponding obligations |
+| **2 December 2027** | AI systems classified high-risk under Article 6(2) / Annex III |
+| **2 August 2028** | AI systems classified high-risk under Article 6(1) / Annex I (the machinery route) |
+
+Flag: the amended timetable is recent and the Annex I route is the last to bite — **verify the current consolidated text before relying on any single date.** This guide does not re-teach the AI Act, its MAS equivalent or the US regime; the repo's dedicated treatment is [ai_genai_banking_compliance_guide.md](../banking/ai_genai_banking_compliance_guide.md) — its §2.1 (EU AI Act), §2.2 (MAS) and §2.3 (US regulators), with §2.6 on the AI Act's overlap with financial regulation. Read that guide for the obligation inventory; the Physical AI-specific addition is only the machinery/safety-component route described above.
+
+**3. The revised product-liability regime — Directive (EU) 2024/2853** (on liability for defective products, repealing Directive 85/374/EEC). Adopted **23 October 2024**; it **extends the product-liability frame to software and AI systems** (software becomes a "product" within scope, with provisions responding to the specific difficulties of proving defect and causation in complex, opaque systems, including disclosure duties and easements on the burden of proof). Verified: the Directive's number, title and adoption date. Flagged: the in-force date (8 December 2024) and the Member-State transposition deadline (9 December 2026) come from secondary legal summaries — a primary-text check of the Official Journal was not possible during this research (see §17.2's source note), so treat those two dates as Reported.
+
+**The unresolved question: who is liable when a learned component causes harm?** The chain around a Physical AI system is long — model provider, robot OEM, integrator, site operator, supervisor — and the instruments above assign duties at different links without a settled map of final liability. A learned component makes that harder, not easier: its behaviour is a distribution rather than a specification, "defect" must be argued against a moving standard of care, and the artefact that caused the harm (a set of weights) is not inspectable in the way a mechanical defect is. Honest status: **flagged as unresolved (verified as unresolved in this research) — this is an open legal question, not a settled rule, and any deployment plan should assume liability will be allocated contractually before it is allocated judicially.**
+
+### 11.5 What Certification Actually Requires in Practice
+
+The safety case is not a certificate; it is a file of arguments and evidence, and certification is the independent assessment of it. In practice it contains:
+
+- **The risk assessment and its verification** (ISO 12100:2010) — hazards across the life cycle, the risk-reduction measures applied, residual risk, and the documented verification of both.
+- **The safety-function specification and its integrity evidence** — required PL/SIL per function, the architecture claimed (Category, diagnostics, common-cause analysis), and **measured** data: force/pressure measurements for PFL (§11.2's ISO/PAS 5672 method), stopping-distance and stopping-time measurements, scanner/curtain validation, and validation of the integrated cell — not model cards or benchmark tables.
+- **Application- and cell-level validation** — the layer ISO 10218-2:2025 governs: layout, safeguarding, the operator's task and interaction, the interfaces between the robot and the rest of the cell, and the instructions for use.
+- **The site, not just the machine** — for mobile machinery, ISO 3691-4 handles operating-zone preparation (its Annex A) as part of the safe operation argument: floor conditions, traffic routes, speed zones, pedestrian interfaces, rules for the fleet.
+- **Human oversight expectations** — who is trained, who can intervene, which tasks are prohibited, how an intervention is logged. This is also the point where the EU AI Act's human-oversight obligation and the machinery requirements converge.
+- **Change control** — and this is the one organisations under-estimate: a retrained policy is a change to a component of the safety argument. It may require re-verification of the functions that rely on it. Certification is therefore not a finished state but a maintained one (assessment, consistent with the repo's change-control discipline in [operational_resilience_framework_guide.md](../banking/operational_resilience_framework_guide.md)).
+
+**The practical difference between a pilot and a certified deployment** is supervision and envelope. A pilot typically runs under reduced speed and payload, an attendant within reach of an emergency stop, a limited operating zone, restricted hours or a monitored area, and a documented deviation from the full scheme; a certified deployment removes those compensations, which means it must demonstrate that the residual risk is acceptable *without* them. That is why pilots do not simply "scale" — the compensating measures are doing real work.
+
+And the sentence to carry into any planning meeting: **certification is per-application and per-site, not per-model (verified as the structure of the type-C standards and the application-level scope of ISO 10218-2).** A safety-rated arm, a certified cell and an assessed site do not transfer: the same robot, the same policy and the same gripper in a second building is a new safety case.
+
+### 11.6 Autonomous-Vehicle-Specific Safety
+
+Road Vehicles get their own ladder, and it is the most mature part of Physical AI's safety regime because the regulatory pressure arrived first:
+
+| Concern | Standard / instrument | Status and date cited |
+|---|---|---|
+| Safety of the intended functionality (behaviour hazards with **no component fault** — the case that functional-safety rules do not cover) | **ISO 21448:2022** — *Road vehicles — Safety of the intended functionality* (SOTIF) | Published, Edition 1, 2022-06 (superseding ISO/PAS 21448:2019); at ISO stage 90.92 ("to be revised"), with ISO/WD 21448 in development |
+| Functional safety of E/E systems in vehicles | ISO 26262 series (ASIL) | Referenced by ISO 21448 as the complementary frame for faults |
+| Test vocabulary, scenario-based evaluation, ODD specification and scenario generation for automated driving | **ISO 34501:2022 · ISO 34502:2022 · ISO 34503:2023 · ISO 34504:2024 · ISO 34505:2025** | All published (the ADS test-scenario series, ISO/TC 22/SC 33) |
+| Low-speed automated driving on predefined routes (the shuttle/pod class) | **ISO 22737:2021** — *Intelligent transport systems — Low-speed automated driving (LSAD) systems for predefined routes* | Published, Edition 1, 2021-07; targets Level 4 operation within a defined ODD |
+| Remote supervision of such vehicles | **ISO 7856:2025** — *ITS — Remote support for low speed automated driving systems (RS-LSADS)* | Published |
+| Ethics in AV safety decisions | **ISO 39003:2023** — *Road traffic safety — Guidance on ethical considerations relating to safety for autonomous vehicles* | Published |
+| Level 3 automated lane keeping (the first binding international rule) | **UN Regulation No. 157** (ALKS), under the 1958 Agreement | Entry into force **22 January 2021** for all Contracting Parties (UN depositary notification C.N.53.2021); **amended in 2022** to raise the maximum operating speed to 130 km/h on motorways and to permit automated lane changes (UNECE) |
+
+Honest notes on this table. **SOTIF is the standard that matters most for learned driving and perception stacks**, because it addresses exactly the failure mode a neural network produces — the system behaves as designed and the design is insufficient for the situation — and it demands an argument about the unknown/unsafe scenario space rather than about component faults. **And the national regimes still diverge:** the UN regulations give the type-approval frame in the EU and other Contracting Parties, the US operates on federal guidance plus a state-by-state patchwork, and Singapore runs controlled trials rather than an unrestricted robotaxi regime (§10.5) — so a vehicle "certified" in one jurisdiction is a vehicle that has cleared one jurisdiction's evidence requirements, not a globally conformant product (flagged).
+
+### 11.7 Cross-References
+
+Rather than re-deriving them here, three repo companions carry the adjacent doctrine: [operational_resilience_framework_guide.md](../banking/operational_resilience_framework_guide.md) owns the RTO/RPO, change-management, incident-escalation and third-party-risk discipline that a robot fleet's operational safety inherits (a fleet that stops safely is a resilience question as much as a control question); [ai_genai_banking_compliance_guide.md](../banking/ai_genai_banking_compliance_guide.md) §2.1–§2.3 own the AI-regulatory obligation inventory (EU AI Act, MAS, US) that a Physical AI provider must satisfy on top of the machinery file; and this guide's §14.7–§14.8 show the resulting engineering practice in one worked deployment.
+
+## 12. The Data Problem — Why Action Data Is the Binding Constraint
+
+If §11 is the layer that gates deployment, this section is the layer that gates capability. The claim is simple and it is the single most important correction to a language-model intuition about Physical AI: **the binding constraint is not model architecture but action data.** Pretraining an LLM is possible because humanity wrote the corpus; pretraining a vision model is possible because humanity photographed the world. Nobody has recorded a corpus of how a gripper should move. Action data has to be *generated*, at roughly the speed of physical time, on hardware that wears out and in environments that must be made safe to collect in — and that asymmetry, not compute, is where the field's progress is throttled (verified as the motivation stated in the field's own dataset work, e.g. the Open X-Embodiment and DROID papers).
+
+### 12.1 Why the Corpus Does Not Exist
+
+- **Language and vision had an accidental dataset.** Text and images are exhaust — produced for other reasons, collected for free. Robotic actions are not exhaust of anything: every demonstration is a deliberate, supervised, hardware-consuming act.
+- **The data is embodiment-specific.** A trajectory recorded on one arm with one gripper does not transfer to another as raw joint commands; it has to be re-projected into a shared representation before it is even comparable. This is why the field's flagship dataset efforts are about *cross-embodiment* aggregation rather than raw volume (§12.3).
+- **Labelling is not the problem; collection is.** A grasp needs no human annotator — the demonstration already carries the action, the timestamp and the proprioception. The cost is the operator, the robot, the safety supervision and the physical hour (verified as the cost structure described in the DROID paper: "substantial investments in hardware and human labour").
+
+### 12.2 Teleoperation and Human Demonstration — the Primary Collection Method
+
+**What it is.** A human operates the robot (or a kinematically matched leader arm / whole-body rig), and the robot records the observation-action stream. ALOHA's contribution was showing that this can be done on low-cost hardware with a custom teleoperation interface, end-to-end imitation learning from real demonstrations, without expensive sensors or precise calibration (verified, arXiv:2304.13705, Apr 2023).
+
+**Why it works.** The demonstration silently encodes everything that is painful to specify: contact-rich manipulation strategy, force modulation, recovery behaviour, the timing of a grasp. Imitation learning then learns it directly. The known failure modes are equally specific, and they are why the method needs algorithm support rather than raw volume: **policy errors compound over time**, and **human demonstrations are non-stationary** (one operator's rhythm is not another's, and the operator's own behaviour drifts). ALOHA's ACT algorithm — learning a generative model over *chunks* of actions rather than single steps — was designed against exactly those two problems (verified from the paper's own framing).
+
+**Cost and throughput, honestly.** The verified numbers are modest and specific: ALOHA learned six difficult real-world tasks with "only 10 minutes of demonstrations", reaching 80–90% success on tasks such as opening a translucent condiment cup and slotting a battery. Mobile ALOHA extended the same approach to mobile manipulation and found that co-training with existing static-arm data, with 50 demonstrations per task, could raise success rates by up to 90% (verified, arXiv:2401.02117, Jan 2024). **Any figure beyond that class — vendor throughput claims about demonstrations per day, "data factories", or cost-per-demonstration — is Reported in this guide and should be treated as vendor or lab marketing until a primary source states the protocol, the operator pool and the acceptance criteria.** No such audited throughput figure was established during this research.
+
+**The operator-skill and consistency problem is structural, not incidental.** Demonstrations have a quality distribution with no ground truth: no one can say what the *optimal* trajectory was. DROID's protocol is the honest answer to this at scale — 76k trajectories collected by 50 data collectors across North America, Asia and Europe over 12 months, in 564 scenes and 84 tasks (verified, arXiv:2403.12945) — which buys the diversity that makes policies generalise, at the price of an irreducible variance across operators and sites, and a documentation and QA burden that scales with the collector pool rather than the trajectory count.
+
+### 12.3 The Openly Released Robot Datasets
+
+| Dataset | Composition (as stated in the primary source) | Release |
+|---|---|---|
+| **Open X-Embodiment** (RT-X, 2023) | Data assembled from **22 different robots**, contributed through a collaboration between **21 institutions**, demonstrating **527 skills / 160,266 tasks**, in standardised formats; trained RT-X models showed positive transfer across platforms | Open cross-embodiment release; the aggregate is the pretraining base for the open VLA class (OpenVLA trained on 970k of its episodes — §6.2) |
+| **DROID** (2024) | **76k demonstration trajectories / 350 hours** of interaction data, **564 scenes**, **84 tasks**, collected by **50 data collectors** in North America, Asia and Europe over **12 months** | Open-sourced in full: dataset, policy-learning code, and a detailed guide for reproducing the hardware setup |
+
+Both are **Verified** from their papers. Two honest caveats about composition and licensing, because this is where secondary commentary routinely over-claims: **Open X-Embodiment is an aggregation** — it standardises many source datasets rather than asserting one licence over them, so per-source terms (and per-source quality) are not uniform, and the paper does not licence the aggregate as a single work; **DROID's paper states the release is open** (dataset, code, hardware guide) but the specific licence terms were not verified from a primary licence file during this research. Flag both: **check the licence of the individual dataset you intend to train on, not the headline licence of the aggregation.** The repository's own data-protection survey ([data_compliance_frameworks.md](data/data_compliance_frameworks.md)) covers the privacy side of data handling; dataset *licensing* is a distinct question that this guide flags rather than resolves.
+
+### 12.4 Simulation, Synthetic Data and Domain Randomisation
+
+The synthetic route closes part of the gap, and §5 already covers the machinery — read this as the data-supply view of the same content:
+
+- **Domain randomisation** is the technique that made sim-only training transfer: randomise the simulator's appearance and dynamics widely enough, and real-world variation looks like one more sample from the training distribution. Its original demonstration transferred a detector trained **purely on simulated RGB images** (no real-image pretraining) to real-world grasping (verified, Tobin et al., arXiv:1703.06907, IROS 2017) — the result that made sim-first training respectable.
+- **Synthetic data generation** in GPU physics simulators (Isaac Sim/Lab and peers, §5.3–§5.4) supplies volume and — more valuable — the failure cases: the gripper that slips, the shelf that wobbles, the pedestrian who steps out. Failures are cheap in sim and catastrophic on hardware.
+- **The honest limits.** Randomisation shifts the burden from appearance to *physics*: rendering can be made photorealistic, but contact dynamics, deformable objects, friction and wear transfer less reliably. Sim evaluation is useful, not authoritative — the SimplerEnv work (arXiv:2405.05941, May 2024) exists precisely to study when evaluating real-world manipulation policies *in simulation* is a valid proxy, and its premise is that this needs validation rather than assumption. Cross-ref §5.2 for the sim-to-real gap itself; the data-supply consequence is that synthetic data substitutes for appearance and coverage, and weakly for the physical facts that the real demonstrations were bought to capture.
+
+### 12.5 The Data Mix — and the "Data Pyramid"
+
+**The emerging recipe** is a mix: a large cross-embodiment pretraining corpus, a large synthetic/simulated component, and a relatively small amount of task-specific real data used to specialise and to close the reality gap. The evidence status of the parts is not equal, and it should be stated separately:
+
+- **Demonstrated in primary sources:** co-training with pre-existing data plus a small task-specific set improves results (Mobile ALOHA: 50 demonstrations per task, up to +90% success with co-training); and cross-embodiment pretraining produces positive transfer rather than interference (Open X-Embodiment / RT-X). Both are verified results, on specific robots and task sets.
+- **Asserted rather than demonstrated:** the **"data pyramid"** framing (internet-scale video at the base, synthetic data in the middle, real robot data at the apex) is vendor and practitioner shorthand. In this research it was **not** located as a published primary term — searches of NVIDIA's blog surfaces returned no primary article using it — so treat the pyramid as **Reported framing, not a verified prescription**.
+- **Genuinely unknown:** *how much* real data a given task needs, and how the mix should shift with task difficulty, gripper, and tolerance for failure. No verified rule-of-thumb exists; published needs range over orders of magnitude depending on task. Any single-number answer circulating in industry material should be read as Reported (and probably as a property of that vendor's task set).
+
+### 12.6 The Evaluation Problem
+
+Measuring progress in Physical AI is harder than in language AI for reasons that are not fixable by better reporting:
+
+- **There is no standard benchmark comparable to language-model evaluation.** Text evaluation is reproducible on any machine: same input, same output, same score. Robot evaluation requires hardware, and results move with the arm, the gripper, the lighting, the table height and the operator's reset discipline. This is why the field's large dataset papers are also arguments about evaluation (verified from those papers' own framing).
+- **The useful benchmarks that exist are simulation-side.** LIBERO (arXiv:2306.03310, 2023) benchmarks knowledge transfer for lifelong robot learning in simulation; SimplerEnv (arXiv:2405.05941, 2024) evaluates real-world policies *in* simulation and studies when that is valid. Both are real contributions and both are proxies: **a headline success rate in simulation is not a claim about a real cell** (flagged — this is the point on which vendor comparisons most often overreach).
+- **Real-robot evaluation remains bespoke.** Comparison across labs and vendors is not currently sound: different tasks, resets, success criteria and hardware. Treat any cross-company success-rate comparison as **contested** unless the protocol, hardware and acceptance criteria are published — and when they are, read them as carefully as the number.
+- **Reproducibility is the field's stated limiting factor**, alongside the data bottleneck: papers repeatedly identify the expense of real-world data collection and the narrowness of environments as the reasons general policies stay weak (verified in DROID's and Open X-Embodiment's framing). That is an argument, made by the field itself, that progress claims need protocol-level evidence — which is exactly the standard §11 applies to the safety side.
+
+The two new sections meet at one sentence: **the same data that is scarce is the data that would be needed to prove the safety case.** That is the worked example's last engineering problem (§14.8).
+
+## 13. The Honest State of the Field — What Runs at Scale, What Is a Demo
+
+The three sections before this one (the stack, the safety regime, the data bottleneck) invite a question that hype consistently blurs: **which of this is operating at scale today, and which is a demonstration?** This section is the guide's own assessment, using the anchors already verified in §10 and the two gates established in §11 and §12. It applies one test throughout, and it is the test a buyer, an insurer or an auditor would apply.
+
+### 13.1 The Test
+
+A Physical AI system is **at scale** when all four of the following are true: (1) someone is paid to keep it running, as part of normal operations rather than a programme; (2) the unit economics beat the human alternative including supervision, maintenance and downtime (§14.7 in the worked example's economics list); (3) it operates inside an accepted safety and certification frame for that application and site (§11.5); and (4) the deployment renews — the customer buys more, not fewer. A **demo** is a system where capability is real but one or more of those four is missing. Most disagreement in this field is not about capability; it is about which of those four a vendor's video does not establish.
+
+### 13.2 Demonstrably Working at Scale
+
+| Domain | Why it clears the test | Anchors |
+|---|---|---|
+| **Industrial automation** (fixed cells, machine tending, welding, inspection) | Structured environment, fixed layout, well-established type-C safety standards, decades of integration practice — the safety case is routine rather than novel | ISO 10218 line of standards (§11.2); Singapore among the highest industrial-robot densities (~770 per 10,000 manufacturing workers — Reported, §10.5) |
+| **Warehouse and logistics** (AMRs, sortation, palletising) | Structured flow, measurable throughput economics, mature AMR safety architecture (safety-rated scanners, speed zones) | Amazon 750k+ robots (Reported counts, §10.2); Ocado, Geek+, GreyOrange; ISO 3691-4 / UL 3100 (§11.2) |
+| **Ports and heavy logistics** | Fixed routes, closed operating zones, high labour cost | PSA Singapore's automated terminals and Tuas build-out (verified, §10.5) |
+| **Geofenced driverless mobility** | A defined ODD, a regulatory frame (UN R157 and national type approval), and an operating base that accepts supervision | Waymo and Chinese robotaxi operations (Reported scale — flags as in §10.2/§10.5) |
+| **Drone inspection and agriculture** | Repetitive, hazardous or wide-area tasks where the alternative is a person on a rope or a whole-field spray pass | DJI Agras spraying (dominant commercially); Zipline/Wing delivery (niche, regulated) — §8.3, §10.4 |
+
+The pattern in every row: **the environment is controlled and the safety case is settled.** That is not a coincidence — it is §11 doing the work, and it is why the row that scales fastest (warehouse) is the one whose cells and traffic rules are easiest to certificate.
+
+### 13.3 Real but Pre-Scale
+
+- **Generalist manipulation policies (VLA).** The capability is genuine and improving — RT-2 → π0 → OpenVLA, with cross-embodiment transfer demonstrated (verified, §6.2, §12.3) — but deployment is still mostly per-station fine-tuning with attendant supervision. The data bottleneck of §12 is the reason, not the architecture.
+- **Humanoids in factories.** Pilots, not fleets: Figure's Helix VLA was announced in February 2025 and Figure robots appear in pilot deployments (company announcements, verified as announcements); Tesla's Optimus remains demo-stage (statuses as flagged in §10.1). Unitree's G1 being purchasable (verified) means the *hardware* is commoditising — it says nothing about deployed autonomy.
+- **Surgical and care robotics.** Surgically real and commercially significant (da Vinci's install base — Reported counts, §10.3), but the deployed systems are largely teleoperated or surgeon-directed, with AI in assistive roles. Care and eldercare robotics remain pilot-heavy (§10.3) — and ISO/FDIS 13482's widening from personal-care to service robots (§11.2) is a sign the standards are still catching up to the products.
+- **Autonomous trucks and long-haul.** Substantial programmes, thin public evidence of at-scale driverless freight; the regulatory divergence of §11.6 is the binding constraint.
+
+### 13.4 Demo-Stage, Stated Plainly
+
+Three categories should be read as demonstrations until proven otherwise, however impressive the video:
+
+1. **Household and open-world manipulation.** Random kitchens, random clutter, no fixed cell, no certification path, and a task distribution nobody has bounded. This is where the field's hardest unsolved problems (long-tail failure, §14.7; data scarcity, §12) meet, and where the safety argument has no established frame.
+2. **"General-purpose robot" claims.** Generality on a task suite is not generality in a site. Judge by the deployment preconditions of §14.8 — safety case and data provenance — not by the suite.
+3. **Autonomy claims without the safety artefact.** Any system operating near people that cannot produce its risk assessment, its safety-function specification and its application-level validation (§11.5) is a supervised prototype with an autonomous marketing layer. This is the single most useful filter in the field, and it is free to apply.
+
+### 13.5 Why the Gap Persists
+
+The two gates of §11 and §12 explain the shape of the maturity table better than capability curves do. **Certification is per-application and per-site** (§11.5), so success does not scale by copying a folder — each new site is a new safety case. **Action data is the capability bottleneck** (§12), so improvement is proportional to supervised hardware time, not to GPU supply. Add the economics gate — a robot must beat human pick cost including supervision and maintenance (§14.7) — and the honest picture is a field whose *frontier* moves at foundation-model speed while its *deployments* move at certification-and-data speed. The practical consequence for planning is that the right comparison is not "humanoid vs human" in the abstract but "this cell, this site, this safety file, this unit cost".
+
+### 13.6 How to Read a Physical AI Claim
+
+Six questions, in this order, will classify almost any claim in this field:
+
+1. **Who is paid to keep it running?** (Operations budget, or a programme line?)
+2. **What does it cost per unit of work, including supervision and maintenance?**
+3. **Which safety standard and which certification does it operate under — for which site?** (§11)
+4. **Where did the action data come from, and how much of it was real?** (§12)
+5. **Is the deployment supervised, teleoperated, or scripted — and was the video edited?** (the demo tells you about the ceiling, not the floor)
+6. **Has it renewed?** Scale is a renewal pattern, not a peak capability.
+
+Nothing in this section is an argument that the frontier claims are false. It is an argument that **capability and deployment are two different measurements**, and that a guide which reports the first without the second is doing what the field's worst marketing does.
+
+## 14. Worked Example — A Warehouse Picking Robot
 
 This section walks one concrete Physical AI system end-to-end — a bin-picking mobile robot in a fulfillment warehouse — to show how every layer of §2–§9 composes. It is deliberately modelled on the Amazon/Geek+ class of deployments (§10.2) and the π0/OpenVLA class of policies (§6).
 
-### 11.1 The Scenario
+### 14.1 The Scenario
 
 **Task:** a mobile manipulator — a base with wheels, a 6/7-DoF arm, a two-finger gripper — picks individual products from totes on a shelf and places them into an order bin, following an order list like `["red mug", "USB cable", "box of cereal"]`, at a target of ~10 picks/minute with <1% damage. The shelf layout changes weekly; the product catalogue has thousands of SKUs; lighting and occlusion vary. This is exactly the "structured environment, varied task" regime of §10.2.
 
-### 11.2 Perception — Camera + LiDAR Pipeline
+### 14.2 Perception — Camera + LiDAR Pipeline
 
 The robot's perception stack (§3), fused on an edge module (§9.1):
 
@@ -544,7 +761,7 @@ The robot's perception stack (§3), fused on an edge module (§9.1):
 3. **Geometry** — a depth camera (or LiDAR at range) produces the point cloud; the mask + depth yields each candidate's 6-DoF pose; a learned grasp-quality network scores candidate grasps on the point cloud.
 4. **Output** — a fused scene state: `{object_id, pose, grasp_candidates}` per candidate, timestamped, at ~15–30 Hz — enough for a *reactive* pick loop.
 
-### 11.3 Reasoning — The VLA Policy (Sketch)
+### 14.3 Reasoning — The VLA Policy (Sketch)
 
 The pick decision is a VLA policy (§6) — the order instruction and the camera image go in, an end-effector action comes out, as the pipeline sketch below shows (conceptual; real VLA deployment replaces the middle with a fine-tuned π0/OpenVLA-class network):
 
@@ -564,13 +781,13 @@ def pick_step(image, depth, instruction, joint_state):
 
 The point of the VLA design (verified reasoning): the *language* instruction lets the policy generalise across the catalogue ("the red mug" — even an SKU variant the robot never saw, because the VLM knows red mugs; the RT-2/π0 evidence in §6.2). The *vision* input grounds it in the actual scene. The *action head* produces the physical command. Classical components remain: the motion planner guarantees collision-free paths and joint limits that the neural policy does not.
 
-### 11.4 Action — Grasping and Navigation (Control)
+### 14.4 Action — Grasping and Navigation (Control)
 
 - **Navigation control** — a model-predictive controller tracks the planned path to the pick station at ~1–2 m/s; safety laser scanners stop the base instantly if a human enters the aisle (verified as the standard AMR safety architecture; cross-ref [event_stream_processing_guide.md](event_stream_processing_guide.md) §3 for how the sensor events stream through).
 - **Grasp execution** — the arm's trajectory controller (impedance control, so the arm is compliant — it yields instead of crushing) drives the gripper to the predicted pose; force-torque feedback at the wrist confirms contact; the grasp-quality net's confidence gates whether to attempt or re-scan (closed-loop perception).
 - **Failure handling** — if the pick fails (force signature wrong), the loop re-perceives and retries with a different grasp candidate, up to N attempts, then flags the item for a human — the "escalate, don't crush" rule every warehouse operator requires (opinion, universal practice).
 
-### 11.5 The Pipeline
+### 14.5 The Pipeline
 
 ```mermaid
 flowchart LR
@@ -587,11 +804,11 @@ flowchart LR
     ARM -->|"next observation"| DET
 ```
 
-### 11.6 Deployment — Edge on Jetson
+### 14.6 Deployment — Edge on Jetson
 
 The deployed robot runs the entire loop on-robot (verified as the industry pattern, §9.1): a **Jetson AGX Orin** (or Thor for the VLA-class model) runs Isaac ROS perception nodes (TensorRT-optimised detectors at 15–30 Hz), the fine-tuned VLA (quantized, ~10–20 Hz), and the motion-planning/control stack — no cloud round-trip in the control loop, cloud used only for fleet coordination, model updates, and telemetry. The fleet (dozens to thousands of robots) is managed as distributed edge devices with central retraining: real-world failure cases are logged, mined, and replayed into simulation (the data flywheel of §5).
 
-### 11.7 Challenges — Sim2real, Safety, and the Hard Parts
+### 14.7 Challenges — Sim2real, Safety, and the Hard Parts
 
 Honest problem list (each verified as an open, actively-worked issue in the field):
 
@@ -601,7 +818,11 @@ Honest problem list (each verified as an open, actively-worked issue in the fiel
 - **Data scarcity** — even with sim + world models, the *real* pick data needed for fine-tuning is expensive to collect; the whole §4/§5 machinery exists to feed this bottleneck.
 - **Economics** — a pick robot must beat human pick cost including hardware, maintenance, and supervision; unit economics decide deployment, not AI capability (opinion, but the Amazon economics are the reference).
 
-### 11.8 Lessons — Simulation-First
+### 14.8 The Deployment Preconditions — Safety Case and Data Provenance
+
+Two things stand between this robot and a real aisle, and neither of them is the VLA. **The safety case (§11):** the picking cell would have to be risk-assessed against ISO 12100:2010 and validated as an application under ISO 10218-2:2025 (arm, safeguarding, operator interaction, instructions for use), its safety functions — monitored stop on human entry to the aisle, force-limited contact with the arm, speed-limited base motion in shared space — specified to a required performance level under ISO 13849-1:2023 with *measured* stopping distances and contact forces rather than assumed ones (§11.5), and the base's operating zone and traffic rules prepared under ISO 3691-4:2023. The learned policy keeps its place in the architecture of §11.3: it proposes, the safety-rated layer disposes, and the certification argument never depends on the network being right — with the operational consequence that a retrained policy is a change to be re-verified, not a silent model update (§11.5). **The training data (§12):** the SKU-level fine-tune would come from teleoperated demonstrations collected on the actual station with the actual gripper — the ALOHA/Mobile ALOHA pattern of tens of demonstrations per task class rather than a downloaded corpus (§12.2) — over a generalist base pretrained on a cross-embodiment corpus such as Open X-Embodiment or DROID (§12.3), with simulation supplying volume and, more usefully, the failures (§5, §12.4). The honest conclusion (this part of the example is the least fictional): the data a fleet can afford to collect is also the evidence it needs, which is why the logging-and-replay discipline of §14.6 is a safety requirement before it is an ML convenience.
+
+### 14.9 Lessons — Simulation-First
 
 The worked example's transferable lessons (synthesis, consistent with the verified practice of §5):
 
@@ -611,13 +832,13 @@ The worked example's transferable lessons (synthesis, consistent with the verifi
 4. **Closed-loop perception is the difference** — the robot that re-perceives after a failed grasp outperforms the robot with a better single-shot grasp model (verified pattern across manipulation practice).
 5. **The VLA is a generalist you fine-tune** — start from a pretrained VLA (π0/OpenVLA), fine-tune on the SKU/station mix, never train from scratch.
 
-## 12. Summary — Physical AI in One Page
+## 15. Summary — Physical AI in One Page
 
-### 12.1 The Stack
+### 15.1 The Stack
 
 **Physical AI = perception → reasoning → action, embodied.** Sensors (cameras, LiDAR, radar, IMU, depth) feed fusion and scene understanding; world models and foundation-model policies (VLA) decide; planners, controllers, and actuators act — at 10–100 Hz, on edge hardware (Jetson), with safety layers that outrank the AI. Simulation (Isaac Sim, MuJoCo) and synthetic data make the training loop safe and scalable; world models (Genie, V-JEPA, UniSim, Cosmos) are making simulation and planning increasingly learned.
 
-### 12.2 The Domains
+### 15.2 The Domains
 
 | Domain | Maturity | Signature proof point |
 |---|---|---|
@@ -627,19 +848,19 @@ The worked example's transferable lessons (synthesis, consistent with the verifi
 | Drones | **Commercial niche, regulated** | Zipline/Wing delivery; DJI inspection/agri |
 | Healthcare / agriculture | **Adoption gated by safety/economics** | da Vinci surgery; John Deere autonomy |
 
-### 12.3 The Trends
+### 15.3 The Trends
 
 - **Embodied foundation models** — VLA models (RT-2 → π0 → OpenVLA and beyond) are converging with world models (Cosmos, Genie 3) into single "physical intelligence" networks; the field's GPT moment is the goal NVIDIA's Huang predicted for robotics (Reported quote, §1.2).
 - **Humanoids at the edge of the S-curve** — the hardware is commoditising (Unitree pricing), the software is the moat (VLA + sim-to-real), and factories are the beachhead (§7.2, opinion).
 - **Platform consolidation** — NVIDIA's Isaac/Omniverse/Cosmos/GR00T/Jetson stack is the default full-stack platform; expect the same platform-power dynamics as the cloud era (§9.3, opinion).
 - **Simulation and world models become the training ground** — data scarcity is the binding constraint, and sim + learned world models are the answer (§4–§5).
-- **Safety and regulation are the adoption gate** — ISO standards, AV regulators, and labour economics decide deployment speed more than raw capability (§11.7, opinion).
+- **Safety and regulation are the adoption gate** — ISO standards, AV regulators, and labour economics decide deployment speed more than raw capability (§14.7, opinion).
 
-### 12.4 The Final Word — the AI Steps Into the Physical World
+### 15.4 The Final Word — the AI Steps Into the Physical World
 
 Digital AI learned to *understand* the world through language; Physical AI is learning to *act* in it. The same foundation-model playbook that gave LLMs their capabilities — internet-scale pretraining, fine-tuning, closed loops — is now being applied to bodies: robots that see, predict, and move in the physical world, trained in simulation, deployed on the edge, improved by reality. The stack is real, the deployments are real (millions of warehouse robots, driverless vehicles, commercial drones), and the frontier — humanoids and embodied foundation models — is where the next wave of capability and the next wave of risk both live. For an architect, the practical conclusion is concrete: **the perception–reasoning–action loop, simulation-first training, edge deployment, and safety layering are now a repeatable engineering playbook — and the same discipline that runs a warehouse robot will run the next generation of autonomous machines in every industry.** The AI has stepped out of the chat window and into the physical world.
 
-## 13. Glossary
+## 16. Glossary
 
 **Action** — the output layer of Physical AI: planning, control, and actuation that changes the physical world (§2.4).
 
@@ -739,9 +960,9 @@ Digital AI learned to *understand* the world through language; Physical AI is le
 
 **World model** — a learned predictive model of environment dynamics, used for planning, simulation, and data generation (§4).
 
-## 14. Claims Status, References and Further Reading
+## 17. Claims Status, References and Further Reading
 
-### 14.1 Claims Status
+### 17.1 Claims Status
 
 | Claim | Status | Note |
 |---|---|---|
@@ -758,8 +979,27 @@ Digital AI learned to *understand* the world through language; Physical AI is le
 | AV "Level" classifications and incident statistics | ⚠️ Flagged | Vendor-reported; regulatory investigations ongoing |
 | BotQ production rate (robot/90 min), Unitree shipment targets (10–20k) | ⚠️ Reported | Company/media claims, not independently audited |
 | "Robotics will have its ChatGPT moment" (Huang quote) | ⚠️ Reported | Paraphrased across GTC coverage; exact wording varies |
+| ISO 10218-1/-2:2025 (industrial robots), ISO/TS 15066:2016 (collaborative), ISO 3691-4:2023 (driverless trucks), ISO 13482:2014 (personal care) | ✅ Verified | ISO catalogue entries checked September 2026; titles, editions and statuses as listed in §11.2 |
+| UL 3300 (SCIEE robots), UL 3100 (automated mobile platforms) | ✅ Verified | UL Standards & Engagement store entries — published dates and 2026 revisions |
+| ISO 12100:2010 (risk assessment), ISO 13849-1:2023 (PL), IEC 61508 Parts 1–7 (SIL, 2nd ed. 2010) | ✅ Verified | ISO and IEC catalogue entries; PL and SIL as defined in those standards |
+| Regulation (EU) 2023/1230 (machinery): adopted 14 June 2023, applies 20 January 2027 | ✅ Verified | European Commission machinery page (adoption date, application date, AI-safety-function and cyber provisions) |
+| AI Act Art. 6(1)(a) + Annex I: AI safety components of machinery are high-risk | ✅ Verified | Consolidated AI Act Annex I (machinery entry now Regulation (EU) 2023/1230) and Article 6 text; Commission summary lists AI safety components as high-risk |
+| AI Act application dates (2 Aug 2026 / 2 Aug 2027 / 2 Dec 2027 / 2 Aug 2028) | ⚠️ Reported | Consolidated Article 113 after the 2026 AI Omnibus amendment; verify against the current Official Journal text |
+| Directive (EU) 2024/2853 (product liability): adopted 23 October 2024, software and AI in scope | ✅ Verified | EUR-Lex record (number, title, adoption date) |
+| Directive (EU) 2024/2853 in-force (8 Dec 2024) and transposition (9 Dec 2026) dates | ⚠️ Reported | Secondary legal summaries; primary text unreachable during research (see §17.2 note) |
+| Liability allocation when a learned component causes harm | ⚠️ Flagged | Unresolved: instruments assign duties without a settled final-liability map |
+| ISO 21448:2022 (SOTIF), ISO 22737:2021 (LSAD), ISO 34501–34505 (ADS scenarios), ISO 7856:2025, ISO 39003:2023 | ✅ Verified | ISO catalogue entries and ICS listings checked September 2026 |
+| UN Regulation No. 157 (ALKS): entry into force 22 January 2021 | ✅ Verified | UN depositary notification C.N.53.2021 (treaties.un.org) |
+| UN Regulation No. 157 2022 amendment (130 km/h, automated lane changes) | ⚠️ Reported | UNECE announcement; amendment number and date not verified from the regulation text |
+| Open X-Embodiment (22 robots, 21 institutions, 527 skills / 160,266 tasks); DROID (76k trajectories / 350 hours, 564 scenes, 84 tasks, 50 collectors) | ✅ Verified | arXiv:2310.08864 (v9) and arXiv:2403.12945 abstracts |
+| ALOHA (10 minutes of demonstrations, 80–90% on six tasks); Mobile ALOHA (50 demos per task, co-training up to +90%) | ✅ Verified | arXiv:2304.13705 and arXiv:2401.02117 abstracts |
+| Teleoperation throughput and "data factory" collection-rate claims | ⚠️ Reported | Vendor/lab claims; no primary source stating protocol, operator pool and acceptance criteria was established |
+| Dataset licensing (Open X-Embodiment aggregate, DROID release terms) | ⚠️ Flagged | Per-source terms not uniform; licence files not verified in this research |
+| "Data pyramid" framing for the training-data mix | ⚠️ Reported | Vendor and practitioner shorthand; not located as a published primary term (see §17.2 note) |
+| Simulation-side benchmarks (LIBERO, SimplerEnv) as proxies for real-robot performance | ⚠️ Flagged | Useful proxies; cross-company success-rate comparisons remain contested |
+| Scale-versus-demo classification of Physical AI domains (§13.2–§13.4) | ⚠️ Flagged | This guide's assessment built from the anchors cited in §10 and the two gates of §11–§12; maturity labels move and should be re-checked |
 
-### 14.2 References and Further Reading
+### 17.2 References and Further Reading
 
 **Primary sources (verified during research):**
 
@@ -772,7 +1012,16 @@ Digital AI learned to *understand* the world through language; Physical AI is le
 - MuJoCo — mujoco.org; github.com/google-deepmind/mujoco. Gazebo — gazebosim.org / Open Source Robotics Foundation.
 - Figure AI — Figure 01 launch (2024), Helix announcement (Feb 2025). Tesla — Optimus announcements (2021–2026). Unitree — G1/H1 product pages and announcements.
 - Amazon — aboutamazon.com robotics coverage ("more than 750,000 robots"; 2025: 1M+ deployed since 2012).
-- Waymo, Tesla FSD, Baidu Apollo/萝卜快跑 — official sites and announcements (status flagged in §14.1).
+- Waymo, Tesla FSD, Baidu Apollo/萝卜快跑 — official sites and announcements (status flagged in §17.1).
+
+**Standards, regulation and research sources added with §11–§13 (September 2026):**
+
+- ISO — catalogue entries for ISO 10218-1:2025, ISO 10218-2:2025, ISO/TS 15066:2016, ISO/PAS 5672:2023, ISO/AWI 15066-1, ISO 3691-4:2023 (and the withdrawn 3691-4:2020), ISO 13482:2014 and ISO/FDIS 13482, ISO 12100:2010, ISO 13849-1:2023, ISO 21448:2022, ISO 22737:2021, ISO 34501–34505, ISO 7856:2025, ISO 39003:2023 (iso.org standard pages, the ISO/TC 299 catalogue and the ICS listings; checked September 2026).
+- IEC — IEC 61508-1:2010 (*Functional safety of electrical/electronic/programmable electronic safety-related systems — Part 1: General requirements*, 2nd edition) and the IEC 61508 series (webstore.iec.ch).
+- UL Standards & Engagement — UL 3300 (*Service, Communication, Information, Education and Entertainment Robots — SCIEE Robots*; published 14 May 2024, listed revision ANSI-approved 14 August 2026) and UL 3100 (*Automated Mobile Platforms (AMPs)*; published 26 May 2021, revision dated 10 June 2026) (shopulstandards.com).
+- European Commission — *Machinery* (single-market-economy.ec.europa.eu): Regulation (EU) 2023/1230 adopted 14 June 2023, applying from 20 January 2027, with provisions for AI-powered safety functions and cyber-safety. *AI Act* (digital-strategy.ec.europa.eu): Regulation (EU) 2024/1689, the risk tiers and the high-risk obligations. Consolidated AI Act Articles 6 and 113 and Annex I (artificialintelligenceact.eu).
+- United Nations — depositary notification C.N.53.2021.TREATIES-XI.B.16.157: entry into force of UN Regulation No. 157 (Automated Lane Keeping Systems) on 22 January 2021 (treaties.un.org).
+- Tobin, Fong, Ray, Schneider, Zaremba, Abbeel — *Domain Randomization for Transferring Deep Neural Networks from Simulation to the Real World* (arXiv:1703.06907, IROS 2017). Zhao et al. — *Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware* (ALOHA/ACT, arXiv:2304.13705, Apr 2023). Fu, Zhao, Finn — *Mobile ALOHA* (arXiv:2401.02117, Jan 2024). Open X-Embodiment Collaboration — *Open X-Embodiment: Robotic Learning Datasets and RT-X Models* (arXiv:2310.08864). Khazatsky et al. — *DROID: A Large-Scale In-The-Wild Robot Manipulation Dataset* (arXiv:2403.12945). Li et al. — *Evaluating Real-World Robot Manipulation Policies in Simulation* (SimplerEnv, arXiv:2405.05941). Liu et al. — *LIBERO: Benchmarking Knowledge Transfer for Lifelong Robot Learning* (arXiv:2306.03310).
 
 **Repo companion guides (cross-referenced inline):**
 
@@ -785,7 +1034,14 @@ Digital AI learned to *understand* the world through language; Physical AI is le
 - [reinforcement_learning_algorithms_guide.md](reinforcement_learning_algorithms_guide.md) — the RL algorithms behind §7.3.
 - [event_stream_processing_guide.md](event_stream_processing_guide.md) §3–§4 and [complex_event_processing_guide.md](complex_event_processing_guide.md) §3 — real-time sensor-event plumbing for Physical AI data pipelines.
 
+**Safety, standards and liability companions (banking/, prefix `../banking/`):**
+
+- [ai_genai_banking_compliance_guide.md](../banking/ai_genai_banking_compliance_guide.md) — the AI-regulation obligation inventory this guide cross-references instead of re-teaching: its §2.1 (EU AI Act), §2.2 (MAS), §2.3 (US regulators), §2.6 (overlap with financial regulation).
+- [operational_resilience_framework_guide.md](../banking/operational_resilience_framework_guide.md) — RTO/RPO, change control, incident escalation and third-party risk: the operational-safety and change-management discipline a Physical AI deployment inherits (§11.5, §11.7).
+
 **Repo gaps noted (potential future companions):** no dedicated ROS/robot-middleware guide, no digital-twin guide, no autonomous-driving deep-dive, and no edge-computing guide exist yet in this repo (verified August 2026) — each is a natural follow-up to this guide's §7, §8, and §9.
+
+**Patch note (September 2026) — §11, §12 and §13 added.** The sources for the three new sections are the ISO/IEC catalogues and the UL standards store (standard numbers, editions, statuses), the European Commission's machinery and AI Act pages, the consolidated AI Act text and Annex I, the UN depositary notification for UN Regulation No. 157, and the arXiv primary papers for the dataset, demonstration and benchmark figures. Two primary-source sites could not be retrieved during the research — **EUR-Lex and the UNECE document server** were both unreachable to the research tooling — so the Directive (EU) 2024/2853 in-force/transposition dates and the UN R157 2022 amendment are marked **Reported** rather than Verified, and several web searches returned empty results during the patch window; those are recorded here as tool limitations, **not** as evidence of absence. A search of NVIDIA's own blog surfaces returned no primary article using the "data pyramid" framing, which is why that term is marked Reported. Re-verify every standard status and regulatory date before relying on it for procurement or compliance work.
 
 ---
 
