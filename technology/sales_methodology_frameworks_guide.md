@@ -6,7 +6,7 @@
 > **Repo:** [github.com/jackliusr/research](https://github.com/jackliusr/research)
 > **Series:** Professional Development Guides · **Topic:** Sales Methodology Frameworks
 > **Focus:** B2B/enterprise technology sales, pre-sales & solution architecture, banking & regulated industries (Singapore, EU, global)
-> **Companion Guides:** [Communication & Stakeholder Management](communication_stakeholder_management_skills_guide.md) · [Product Management](product_management_guide.md) · [Enterprise Architecture](architecture/enterprise_architecture_guide.md) · [Solution Architect vs DevOps Career](solution_architect_vs_devops_salary_guide.md) · [Skill Gaps: Enterprise Architect](architecture/skill_gaps_enterprise_architect_guide.md) · [On-Prem LLM Deployment](on_prem_llm_deployment_guide.md) · [LLM Development Risks & Security](llm_development_risks_security_guide.md) · [Container Certificates](container_certificates_guide.md) · [TOGAF](architecture/togaf_guide.md)
+> **Companion Guides:** [Communication & Stakeholder Management](communication_stakeholder_management_skills_guide.md) · [Product Management](product_management_guide.md) · [Enterprise Architecture](architecture/enterprise_architecture_guide.md) · [Solution Architect vs DevOps Career](solution_architect_vs_devops_salary_guide.md) · [Skill Gaps: Enterprise Architect](../personal/skill_gaps_enterprise_architect_guide.md) · [On-Prem LLM Deployment](on_prem_llm_deployment_guide.md) · [LLM Development Risks & Security](llm_development_risks_security_guide.md) · [Container Certificates](container_certificates_guide.md) · [TOGAF](architecture/togaf_guide.md)
 > **Last Updated:** August 2026
 
 ---
@@ -655,7 +655,7 @@ Sales-adjacent roles are the natural commercial growth path for architects who e
 | **Technical account manager (TAM)** | Post-sale: adoption, retention, expansion | Trusted Advisor, LAMP account management |
 | **Field CTO / CTO advisory** | Executive relationships, industry point of view | Challenger insight, Command of the Message |
 
-The through-line: **the further from pure delivery, the more the sales methodologies in this guide become the actual job** — see [Solution Architect vs DevOps Career](solution_architect_vs_devops_salary_guide.md) and [Skill Gaps: Enterprise Architect](architecture/skill_gaps_enterprise_architect_guide.md) for the career-side analysis.
+The through-line: **the further from pure delivery, the more the sales methodologies in this guide become the actual job** — see [Solution Architect vs DevOps Career](solution_architect_vs_devops_salary_guide.md) and [Skill Gaps: Enterprise Architect](../personal/skill_gaps_enterprise_architect_guide.md) for the career-side analysis.
 
 ## 15. Implementation Guidance: Adopting a Sales Methodology
 
@@ -804,7 +804,7 @@ An architect who masters these is no longer a resource attached to the sale — 
 8. Konrath, J. — *SNAP Selling* (2010). Peterson, E. & Riesterer, T. — *Conversations That Win the Complex Sale* (Corporate Visions, 2011).
 9. Gartner — buyer-journey and committee research (sellers' ~17% share of buyer time; 6–10 stakeholders), as published 2017–2019.
 10. MAS — Technology Risk Management Notice 644; Outsourcing Notice 658 (replacing Notice 634) — verify current text before relying (see [On-Prem LLM Deployment](on_prem_llm_deployment_guide.md)).
-11. Companion guides: [Communication & Stakeholder Management](communication_stakeholder_management_skills_guide.md) · [Product Management](product_management_guide.md) · [Enterprise Architecture](architecture/enterprise_architecture_guide.md) · [Solution Architect vs DevOps Career](solution_architect_vs_devops_salary_guide.md) · [Skill Gaps: Enterprise Architect](architecture/skill_gaps_enterprise_architect_guide.md) · [On-Prem LLM Deployment](on_prem_llm_deployment_guide.md) · [LLM Development Risks & Security](llm_development_risks_security_guide.md) · [Container Certificates](container_certificates_guide.md) · [Apache Fineract](../banking/apache_fineract_guide.md) · [Oracle Banking Microservices](../banking/oracle_banking_microservices_architecture_guide.md) · [Banking Data Models](../banking/data_models_banking_insurance_guide.md) · [TOGAF](architecture/togaf_guide.md) · [Toastmasters](toastmasters_guide.md)
+11. Companion guides: [Communication & Stakeholder Management](communication_stakeholder_management_skills_guide.md) · [Product Management](product_management_guide.md) · [Enterprise Architecture](architecture/enterprise_architecture_guide.md) · [Solution Architect vs DevOps Career](solution_architect_vs_devops_salary_guide.md) · [Skill Gaps: Enterprise Architect](../personal/skill_gaps_enterprise_architect_guide.md) · [On-Prem LLM Deployment](on_prem_llm_deployment_guide.md) · [LLM Development Risks & Security](llm_development_risks_security_guide.md) · [Container Certificates](container_certificates_guide.md) · [Apache Fineract](../banking/apache_fineract_guide.md) · [Oracle Banking Microservices](../banking/oracle_banking_microservices_architecture_guide.md) · [Banking Data Models](../banking/data_models_banking_insurance_guide.md) · [TOGAF](architecture/togaf_guide.md) · [Toastmasters](toastmasters_guide.md)
 
 ---
 

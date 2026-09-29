@@ -3,7 +3,7 @@
 > **Author:** Jack Liu Shurui, Solution Architect, Cymbal Bank  
 > **Repository:** github.com/jackliusr/research · **Category:** Cloud Technology Series · **Date:** July 2026
 
-> **Companion guides (this guide is the dedicated FinOps deep-dive):** this guide is the **full extension of §14 Cloud Cost Management (FinOps) in [cloud_providers_guide.md](cloud_providers_guide.md)** — cross-ref that section for the provider-native tooling table; the investment-and-TCO discipline in [business_case_development_guide.md](../management/business_case_development_guide.md) (the TCO/NPV machinery FinOps savings feed); the cost-governance axis of [data_architect_skillgaps_guide.md](data_architect_skillgaps_guide.md); and the banking-cost reality in [treasury_alm_guide.md](../banking/treasury_alm_guide.md).
+> **Companion guides (this guide is the dedicated FinOps deep-dive):** this guide is the **full extension of §14 Cloud Cost Management (FinOps) in [cloud_providers_guide.md](cloud_providers_guide.md)** — cross-ref that section for the provider-native tooling table; the investment-and-TCO discipline in [business_case_development_guide.md](../management/business_case_development_guide.md) (the TCO/NPV machinery FinOps savings feed); the cost-governance axis of [data_architect_skillgaps_guide.md](../personal/data_architect_skillgaps_guide.md); and the banking-cost reality in [treasury_alm_guide.md](../banking/treasury_alm_guide.md).
 
 ---
 

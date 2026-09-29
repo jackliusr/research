@@ -6,7 +6,7 @@
 > **Analysis Date:** August 2026
 > **Source Material (the digital profile):** github.com/jackliusr/research (~379 commissioned guides across banking/, technology/, management/, personal/)
 > **Target Role:** Data Architect / Senior Data Architecture roles in banking and enterprise
-> **Sibling guide:** architecture/skill_gaps_enterprise_architect_guide.md (Solution Architect → Enterprise Architect)
+> **Sibling guide:** skill_gaps_enterprise_architect_guide.md (Solution Architect → Enterprise Architect)
 
 ---
 
@@ -627,7 +627,7 @@ Ten questions a data-architect panel can ask after either scenario, with where t
 
 | Term | Primary repo evidence (relative to this file) | Coverage |
 |---|---|---|
-| Data architect | This guide; `architecture/skill_gaps_enterprise_architect_guide.md` | — |
+| Data architect | This guide; `skill_gaps_enterprise_architect_guide.md` | — |
 | Data modeling | `data_model_resource_book_guide.md`, `nosql_data_modelling_guide.md` | DENSE |
 | Dimensional modeling | `data/types_of_dimensions_data_warehousing.md`, `data/crm_data_warehouse_modelling.md` | DENSE |
 | Data vault | `data/data_vault_2_modeling.md`, `data/handling_duplicate_keys_data_warehousing.md` | DENSE |
@@ -666,7 +666,7 @@ Ten questions a data-architect panel can ask after either scenario, with where t
 - **Table-of-contents greps** for 7 key guides to verify section-level coverage (CDC §6 in `data_integration_frameworks_guide.md`; DQ §6 / metadata §7 / MDM §8 / BCBS 239 §12 in `data_governance_guide.md`; GDPR §a / PDPA §b in `data/data_compliance_frameworks.md`).
 - **Targeted keyword greps** (23 topics × whole repo): DAMA/DMBOK, master data, CDC, Snowflake/BigQuery/Redshift, PDPA/GDPR, Zero Trust, Platform Engineering, TCO/business case, data quality, metadata/catalog, Kafka, Flink/Spark, mesh, fabric, lakehouse, vector DB, feature store, RAG, Kimball/Inmon, data vault, lineage, observability.
 - **Filename-pattern scans** for dedicated guides that should exist but don't (`*snowflake*`, `*bigquery*`, `*redshift*`, `*kafka*`, `*flink*`, `*mdm*`, `*quality*`, `*catalog*`, `*zero*trust*`, `*platform*engineering*`, `*business*case*`, `*dmbok*` → all zero hits).
-- **Profile context files** `../personal/jack_liu_profile.md` and `../personal/jackliusr_digital_footprint.md` for role/bio grounding; sibling `architecture/skill_gaps_enterprise_architect_guide.md` for format and prior standing priorities.
+- **Profile context files** `jack_liu_profile.md` and `jackliusr_digital_footprint.md` for role/bio grounding; sibling `skill_gaps_enterprise_architect_guide.md` for format and prior standing priorities.
 
 ### 9.2 What was flagged (honesty notes)
 

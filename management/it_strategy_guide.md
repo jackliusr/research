@@ -7,7 +7,7 @@
 **Part of:** Management & Leadership Series — the IT-side counterpart to [Strategic Management](strategic_management_guide.md)
 **Companion guides:** [Business Case Development](business_case_development_guide.md) · [Vendor Management](vendor_management_guide.md) · [MBA Body of Knowledge](mba_body_of_knowledge_guide.md) · [Organizational Behavior](organizational_behavior_guide.md) · [McKinsey Approach](mckinsey_approach_guide.md) · [Management Consulting Skills](management_consulting_skills_guide.md)
 **Banking context:** [Capital Markets Architecture](../banking/capital_markets_architecture_guide.md) · [Crédit Agricole Software Systems](../banking/credit_agricole_software_systems_guide.md) · [HSBC Software Systems](../banking/hsbc_software_systems_guide.md)
-**Technology context:** [Data Architect Skill Gaps](../technology/data_architect_skillgaps_guide.md) · [FinOps](../technology/finops_guide.md) · [Monolith to Microservices](../technology/monolith_to_microservices_guide.md) · [Enterprise AI Gateway](../technology/enterprise_ai_gateway_guide.md)
+**Technology context:** [Data Architect Skill Gaps](../personal/data_architect_skillgaps_guide.md) · [FinOps](../technology/finops_guide.md) · [Monolith to Microservices](../technology/monolith_to_microservices_guide.md) · [Enterprise AI Gateway](../technology/enterprise_ai_gateway_guide.md)
 **Last Updated:** August 2026
 
 ---
@@ -412,7 +412,7 @@ In banks, DTO-type structures became common from the mid-2010s as incumbent inst
 - **Treating transformation as an IT project.** If the business does not change its processes and the operating model stays untouched, "transformation" delivers new technology on old ways of working — the classic digitised-paperwork failure. This is why the DTO reports to the CEO side, not deep inside IT.
 - **Funding transformation from run-the-bank budget.** When the run budget is squeezed, transformation is the first casualty — the reason top performers ring-fence change funding and protect the factory (Section 5).
 - **Ignoring the organisation.** The change-management half is covered in depth in [Organizational Behavior](organizational_behavior_guide.md); the leadership-development half in the [360 management](360_management_guide.md) and [Managing Up, Down, Sideways](managing_up_down_sideways_guide.md) guides.
-- **Confusing digital with AI.** AI is a (large) ingredient, not the whole dish. The [Enterprise AI Gateway](../technology/enterprise_ai_gateway_guide.md) guide covers the platform reality of AI enablement; the [Data Architect Skill Gaps](../technology/data_architect_skillgaps_guide.md) guide covers the skills the transformation will need.
+- **Confusing digital with AI.** AI is a (large) ingredient, not the whole dish. The [Enterprise AI Gateway](../technology/enterprise_ai_gateway_guide.md) guide covers the platform reality of AI enablement; the [Data Architect Skill Gaps](../personal/data_architect_skillgaps_guide.md) guide covers the skills the transformation will need.
 
 ### 7.5 A Transformation Roadmap in Phases
 
@@ -446,7 +446,7 @@ IT strategy applies the BSC by building an **IT scorecard**: the same four persp
 | **Financial** | IT cost per transaction; IT spend as % of revenue; cost per user; unit cost of a payment/loan/statement; cloud unit economics | Is IT cheap enough *per unit of output*? Efficiency and cost control | [FinOps](../technology/finops_guide.md); [Business Case Development](business_case_development_guide.md) benefit realisation |
 | **Customer / stakeholder** | System availability (99.9x%); MTTR; SLA attainment; internal-customer NPS; regulator/audit findings; time-to-respond to requests | Is IT reliable and responsive for the business and regulators? (The Factory promise, Section 5) | ITIL service management; [Vendor Management](vendor_management_guide.md) SLA governance |
 | **Internal process** | Time-to-market for new products; release frequency; change-failure rate; % of processes digitised; integration latency (data available T+0 vs T+1) | Is the IT *delivery machine* fast and safe? | Agile/DevOps practice; [Monolith to Microservices](../technology/monolith_to_microservices_guide.md) |
-| **Learning & growth** | % of staff on modern skills; attrition of engineers; cloud/AI capability maturity; architecture obsolescence index (% systems on supported versions) | Can the organisation sustain the strategy? The future capability stock | [Data Architect Skill Gaps](../technology/data_architect_skillgaps_guide.md); [Organizational Behavior](organizational_behavior_guide.md) |
+| **Learning & growth** | % of staff on modern skills; attrition of engineers; cloud/AI capability maturity; architecture obsolescence index (% systems on supported versions) | Can the organisation sustain the strategy? The future capability stock | [Data Architect Skill Gaps](../personal/data_architect_skillgaps_guide.md); [Organizational Behavior](organizational_behavior_guide.md) |
 
 ### 8.4 Measuring Value Honestly
 
@@ -555,7 +555,7 @@ To make the discipline concrete, we design an IT strategy for a bank shaped like
 
 **Step 5 — Sourcing (Section 6).** Build what differentiates; buy what doesn't: **build** the client data platform, pricing and risk models, API layer, and AI integration (the competitive potential); **buy** trading platforms (Murex/Calypso-class), market data (Bloomberg/Refinitiv-class), core banking where a package fits; **outsource** data centres, network, service desk, and run the commodity layer in the cloud with FinOps discipline ([FinOps](../technology/finops_guide.md)); every contract carries an exit plan and third-party risk management per [Vendor Management](vendor_management_guide.md) and DORA-class oversight.
 
-**Step 6 — Transformation (Section 7).** Stand up a **DTO** reporting to the CEO/CIO jointly, ring-fenced change funding, and an operating-model change programme (the hard 80%): process redesign for one-client-view, product management capabilities, data engineering skills — the [Organizational Behavior](organizational_behavior_guide.md) and [Data Architect Skill Gaps](../technology/data_architect_skillgaps_guide.md) agendas made explicit. The DTO runs the Turnaround and Strategic quadrants; IT operations run the Factory.
+**Step 6 — Transformation (Section 7).** Stand up a **DTO** reporting to the CEO/CIO jointly, ring-fenced change funding, and an operating-model change programme (the hard 80%): process redesign for one-client-view, product management capabilities, data engineering skills — the [Organizational Behavior](organizational_behavior_guide.md) and [Data Architect Skill Gaps](../personal/data_architect_skillgaps_guide.md) agendas made explicit. The DTO runs the Turnaround and Strategic quadrants; IT operations run the Factory.
 
 **Step 7 — Value (Section 8).** An IT scorecard per the 1992 BSC:
 
@@ -702,7 +702,7 @@ Henderson and Venkatraman said it in 1993: value from IT comes from alignment, a
 - Sourcing/contracts: [vendor_management_guide.md](vendor_management_guide.md)
 - Change/people: [organizational_behavior_guide.md](organizational_behavior_guide.md), [360_management_guide.md](360_management_guide.md), [managing_up_down_sideways_guide.md](managing_up_down_sideways_guide.md)
 - Consulting framing: [mckinsey_approach_guide.md](mckinsey_approach_guide.md), [management_consulting_skills_guide.md](management_consulting_skills_guide.md)
-- Technology layer: [../technology/data_architect_skillgaps_guide.md](../technology/data_architect_skillgaps_guide.md), [../technology/finops_guide.md](../technology/finops_guide.md), [../technology/monolith_to_microservices_guide.md](../technology/monolith_to_microservices_guide.md), [../technology/enterprise_ai_gateway_guide.md](../technology/enterprise_ai_gateway_guide.md)
+- Technology layer: [../technology/data_architect_skillgaps_guide.md](../personal/data_architect_skillgaps_guide.md), [../technology/finops_guide.md](../technology/finops_guide.md), [../technology/monolith_to_microservices_guide.md](../technology/monolith_to_microservices_guide.md), [../technology/enterprise_ai_gateway_guide.md](../technology/enterprise_ai_gateway_guide.md)
 - Banking context: [../banking/capital_markets_architecture_guide.md](../banking/capital_markets_architecture_guide.md), [../banking/credit_agricole_software_systems_guide.md](../banking/credit_agricole_software_systems_guide.md), [../banking/hsbc_software_systems_guide.md](../banking/hsbc_software_systems_guide.md)
 
 ---

@@ -4,7 +4,7 @@
 > **Analysis Date:** September 2026
 > **Source Material:** github.com/jackliusr/research — the personalized role-analysis series (banking/, technology/, management/, personal/) plus primary external sources listed in §15
 > **Target Role:** Senior Data Platform Architect — the role that owns a data platform **as a product**, not the pipelines and not the models
-> **Predecessors in this series:** data_architect_skillgaps_guide.md ; architecture/skill_gaps_enterprise_architect_guide.md
+> **Predecessors in this series:** data_architect_skillgaps_guide.md ; skill_gaps_enterprise_architect_guide.md
 
 **Contents**
 
@@ -31,7 +31,7 @@
 
 ### 1.1 The series convention, and what this guide does that its predecessors do not
 
-This is the third guide in the repository's personalized role-analysis series. It follows the convention set by `data_architect_skillgaps_guide.md` (715 lines, August 2026) and `architecture/skill_gaps_enterprise_architect_guide.md` (316 lines, July 2026): a blockquote header addressed to the subject, a numbered table of contents, an explicit statement of source material, a glossary, a verification record, and a closing note that says where the repository is silent. It is written to be read alongside them, not instead of them.
+This is the third guide in the repository's personalized role-analysis series. It follows the convention set by `data_architect_skillgaps_guide.md` (715 lines, August 2026) and `skill_gaps_enterprise_architect_guide.md` (316 lines, July 2026): a blockquote header addressed to the subject, a numbered table of contents, an explicit statement of source material, a glossary, a verification record, and a closing note that says where the repository is silent. It is written to be read alongside them, not instead of them.
 
 Two things here are genuinely new:
 
@@ -285,7 +285,7 @@ The ladder is genuinely bidirectional at the top: the same seniority that makes 
 | **Data engineering → platform** | Evidence of having built shared primitives (framework, template, contract, ingestion pattern) rather than pipelines only; cost and SLO exposure | Career identity as a pipeline author; no experience of internal consumers; rarely has owned a budget or an SLO | The most common route. Works when the practitioner deliberately moves from "my pipelines" to "the thing other people's pipelines run on" |
 | **Platform engineering / DevOps / SRE → data platform** | Data-domain literacy: storage layout, table formats, query engines, lineage, governance interlock | Understands runtime and reliability deeply, weak on data semantics and the governance/policy layer; may underestimate how different data workloads are from stateless services | Works well where the organisation's platform is already infrastructure-heavy and engineering-led. The fast fix is the modelling and governance material in `data/data_vault_2_modeling.md` and `data_governance_guide.md` |
 | **Analytics engineering / BI → platform** | Systems depth beneath the transformation layer; the operating discipline of an on-call platform | Knows the consumer side intimately (a real advantage) but may lack engine internals and multi-team ownership | Works where the platform's main product is the semantic and transformation layer |
-| **Solution architect → platform architect** | Conversion of programme-by-programme design experience into a persistent, multi-consumer artefact; the seniority delta in §6.2 | Solution work is bounded by a delivery; platform work is not. The blocker is not knowledge, it is the absence of an owned, long-lived, multi-tenant artefact | This is the reader's most plausible route and the one this guide is written for. The predecessor `data_architect_skillgaps_guide.md` supplies the data-domain frame; `architecture/skill_gaps_enterprise_architect_guide.md` supplies the enterprise-influence frame |
+| **Solution architect → platform architect** | Conversion of programme-by-programme design experience into a persistent, multi-consumer artefact; the seniority delta in §6.2 | Solution work is bounded by a delivery; platform work is not. The blocker is not knowledge, it is the absence of an owned, long-lived, multi-tenant artefact | This is the reader's most plausible route and the one this guide is written for. The predecessor `data_architect_skillgaps_guide.md` supplies the data-domain frame; `skill_gaps_enterprise_architect_guide.md` supplies the enterprise-influence frame |
 | **Consulting / system integration → in-house platform** | Trading breadth for depth: one platform, owned for years, with consequences | Adjustment to being accountable after the engagement ends | Works when the consultancy experience included implementation ownership, not only design |
 | **DBA / infrastructure → platform** | Distributed-systems and table-format breadth; the interface/contract layer | Historically narrow engine focus; but engine internals literacy is a genuine and scarce asset | Works in on-prem or hybrid estates where engine behaviour is the binding constraint |
 
@@ -302,7 +302,7 @@ Three honest observations, based on the sources in §15 rather than on encourage
 - **For the search method** — how to find and approach the roles rather than what to put in them — use `../management/reverse_job_search_guide.md`. It owns the method; this guide deliberately does not restate it.
 - **For the first months in the role** — the platform-specific version of onboarding is to inventory the platform's consumers, its published guarantees, and its published misses in the first thirty days, because those three facts determine credibility — see `../management/the_first_90_days_guide.md` for the general structure.
 - **For the domain gap analysis** — `data_architect_skillgaps_guide.md` §3–§5 (gap analysis, ranked list, learning plan) and its §9.3 commission list. Its findings about managed cloud data warehouses, data contracts, and quality/observability (see §3 of this guide) are the platform architect's gaps too, and re-deriving them here would produce a competing ranking rather than a useful one.
-- **For the enterprise-influence gap** — `architecture/skill_gaps_enterprise_architect_guide.md` §3, whose banking-domain depth gaps (risk models, treasury, capital markets) apply unchanged to a platform architect in a regulated firm. Its readiness estimate (65–70%) and the data guide's (70–75%) are both readiness-against-profile numbers; the seniority model in §6 of this guide is what should be used to decide *which level of role* those percentages entitle the reader to apply for.
+- **For the enterprise-influence gap** — `skill_gaps_enterprise_architect_guide.md` §3, whose banking-domain depth gaps (risk models, treasury, capital markets) apply unchanged to a platform architect in a regulated firm. Its readiness estimate (65–70%) and the data guide's (70–75%) are both readiness-against-profile numbers; the seniority model in §6 of this guide is what should be used to decide *which level of role* those percentages entitle the reader to apply for.
 
 ---
 
@@ -707,7 +707,7 @@ Stated plainly, because a guide that hides these is less useful than one that li
 **Within this series (the two predecessors, cited by name rather than re-derived):**
 
 - `data_architect_skillgaps_guide.md` — the first personalised role analysis. Its ten assessment axes (§1), digital-profile heatmap (§2), ranked gap list (§4) and learning plan (§5) are the machinery this guide deliberately does not rebuild. Where this guide names the data architect's objects (§1.3, §2.2) or carries forward its three honest gaps (§3), it points there.
-- `architecture/skill_gaps_enterprise_architect_guide.md` — the second. Its banking-domain gap analysis (§3) applies unchanged to a platform architect in a regulated firm (§8.3), and its enterprise-influence frame is the other half of the boundary in §1.3.
+- `skill_gaps_enterprise_architect_guide.md` — the second. Its banking-domain gap analysis (§3) applies unchanged to a platform architect in a regulated firm (§8.3), and its enterprise-influence frame is the other half of the boundary in §1.3.
 
 **The shelves this guide does not re-derive:**
 

@@ -296,7 +296,7 @@ Four families of method do most of the evidence-producing work. They are complem
 
 A **model audit** is an independent, structured examination of a model and its context against a defined standard or criteria set — the AI analogue of a financial or security audit. It spans:
 
-- **Data lineage and quality** — provenance, licenses, PII, representativeness, label quality (cross-ref the ML-data axis in [data_architect_skillgaps_guide.md](data_architect_skillgaps_guide.md)).
+- **Data lineage and quality** — provenance, licenses, PII, representativeness, label quality (cross-ref the ML-data axis in [data_architect_skillgaps_guide.md](../personal/data_architect_skillgaps_guide.md)).
 - **Development practice** — training methodology, leakage checks, validation discipline, reproducibility.
 - **Performance and robustness evidence** — holdout results, slicing, calibration, sensitivity analysis.
 - **Documentation completeness** — model card, data card, technical documentation (directly reusable for EU AI Act high-risk documentation and ISO 42001 records).
@@ -454,7 +454,7 @@ The independent-validation function stays the same: whoever validated must not h
 
 ### 6.2 BCBS 239-Adjacent Data Governance
 
-Where SR 11-7 governs *models*, **BCBS 239** (Principles for Effective Risk Data Aggregation and Risk Reporting, 2013) governs the *data* under them — and any AI trust assessment rests on the same foundations: data lineage, quality controls, timeliness, and auditability. An AI system fed ungoverned data fails the trust test before any model metric is computed. Practical alignment: the AI inventory and risk register of [§7](#7-the-assessment-process) should reference the same data-asset lineage that BCBS 239 programs maintain, so that a model's data dependencies are traceable to owned, quality-controlled sources (cross-ref the ML-data axis in [data_architect_skillgaps_guide.md](data_architect_skillgaps_guide.md)).
+Where SR 11-7 governs *models*, **BCBS 239** (Principles for Effective Risk Data Aggregation and Risk Reporting, 2013) governs the *data* under them — and any AI trust assessment rests on the same foundations: data lineage, quality controls, timeliness, and auditability. An AI system fed ungoverned data fails the trust test before any model metric is computed. Practical alignment: the AI inventory and risk register of [§7](#7-the-assessment-process) should reference the same data-asset lineage that BCBS 239 programs maintain, so that a model's data dependencies are traceable to owned, quality-controlled sources (cross-ref the ML-data axis in [data_architect_skillgaps_guide.md](../personal/data_architect_skillgaps_guide.md)).
 
 ### 6.3 The Banking Table
 
