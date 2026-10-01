@@ -22,7 +22,8 @@
 10. [The Master Timeline and the Lessons](#10-the-master-timeline-and-the-lessons)
 11. [Summary — RAG Evolution in One Page](#11-summary--rag-evolution-in-one-page)
 12. [Glossary](#12-glossary)
-13. [References and Verification Notes](#13-references-and-verification-notes)
+13. [The 2024+ Paper Table — What the Field Published, Mapped to the Guides](#13-the-2024-paper-table--what-the-field-published-mapped-to-the-guides)
+14. [References and Verification Notes](#14-references-and-verification-notes)
 
 ---
 
@@ -53,7 +54,7 @@ This guide is the **timeline and narrative** of the RAG series. The sibling guid
 - **The 2026+ state** — the informal "RAG 2.0", RAG as a feature, the trends, and the banking lens.
 - **The master timeline** — one table from 2014 to 2026, the paradigm shifts, the constants, and the lessons.
 
-> **Honesty note.** Where a claim is verified (paper, arXiv ID, date), it is stated as fact and listed in §13. Where the record is fuzzy — most notably the informal terms "RAG 2.0" and "agentic RAG" — the guide **flags it explicitly** rather than inventing a canonical citation.
+> **Honesty note.** Where a claim is verified (paper, arXiv ID, date), it is stated as fact and listed in §14. Where the record is fuzzy — most notably the informal terms "RAG 2.0" and "agentic RAG" — the guide **flags it explicitly** rather than inventing a canonical citation.
 
 ### 1.3 How this guide fits the RAG series
 
@@ -691,7 +692,177 @@ For a Solution Architect at a global bank, the timeline compresses into five pra
 
 ---
 
-## 13. References and Verification Notes
+## 13. The 2024+ Paper Table — What the Field Published, Mapped to the Guides
+
+Sections 1–11 tell the story; this section is the **record behind it**. One row per paper: what it is, where it stands, and which guide in this repository already carries the argument it belongs to.
+
+**What this table is.** A map. Every row points at an owner — a section of this guide, or a sibling guide — rather than making its own argument. Where a paper is already analysed elsewhere, the row says so and stops; where nothing covers it yet, it says "not covered" plainly. Nothing here is re-analysed.
+
+**What this table is not.** It is not a census, a ranking, or a trend claim. The field publishes far more than any table holds, and *no count of the field's output, growth rate or trend percentage is asserted anywhere in this section*. The only number asserted is the number of rows: **45 papers** across thirteen groups, capped at five per group. Selection was driven by relevance to the shifts this guide narrates — a paper earns a row when it moved, or first documented, a mechanism this timeline claims. A theme that could not yield two verifiable entries would have been merged into a neighbour; none of the named themes did, though the brief's combined "evaluation, attribution and faithfulness" theme is split across §13.6 and §13.7 for readability.
+
+**How identifiers and venues were verified.** Every arXiv identifier below was resolved at the **arXiv API over HTTPS with a browser User-Agent** (the abstract, first author, submission date and the record's own `comment`/`journal_ref` fields were read from the returned record — not recalled). The **preprint-versus-published distinction is never blurred**: a row is marked *preprint* unless the published venue was confirmed against the **publisher's own record** (ACL Anthology, USENIX proceedings, PMLR). Where a venue appears only in the arXiv `comment` field, the row says so and marks it *unconfirmed* — a claim, not a fact. Six venues were confirmed at the publisher; those are labelled *publisher-confirmed*.
+
+**Cross-reference, not duplication.** §14 (References and Verification Notes) remains the verified source list for the **pre-2024 canon and for six 2024 items already cited there** — Modular RAG (arXiv:2407.21059), *Searching for Best Practices in RAG* (2407.01219), CRAG (2401.15884), Adaptive-RAG (2403.14403), GraphRAG (2404.16130) and RAG-Fusion (2402.03367). Those papers are **not restated here**; §14 owns them, and §4–§7 narrate them. This table begins where that list stops.
+
+**On the "covered by" column.** Coverage was checked by grepping this repository for **distinctive words from each paper's title**, never for the generic word "research" and never on a surname alone — this repository is full of files with `research` in the name and the word in its prose, so generic searches return meaningless hits.
+
+### 13.1 Modular and Pipeline Architectures
+
+| Title | First author | Venue / status | arXiv | Year | What the paper actually shows | Covered by |
+|---|---|---|---|---|---|---|
+| FlashRAG: A Modular Toolkit for Efficient Retrieval-Augmented Generation Research | Jiajie Jin | preprint (2024-05) — arXiv comment *claims* WWW 2025 Resource Track, unconfirmed | 2405.13576 | 2024 | Ships 16 RAG methods and 38 benchmark datasets behind one modular framework with standard metrics and pre-processing scripts, so competing methods can be compared in a shared environment. | not covered |
+| RAG Foundry: A Framework for Enhancing LLMs for Retrieval Augmented Generation | Daniel Fleischer | preprint (2024-08) | 2408.02545 | 2024 | Puts data creation, training, inference and evaluation in a single workflow; augmenting and fine-tuning Llama-3 and Phi-3 across RAG configurations improved results on three knowledge-intensive datasets. | not covered |
+
+**Already verified in §14, not restated:** the canonical *Modular RAG* framing (2407.21059) and the *Best Practices* study (2407.01219) — the two papers that actually define this theme's vocabulary.
+
+### 13.2 Self-Correcting, Adaptive and Self-Reflective Retrieval
+
+| Title | First author | Venue / status | arXiv | Year | What the paper actually shows | Covered by |
+|---|---|---|---|---|---|---|
+| PlanRAG: A Plan-then-Retrieval Augmented Generation for Generative Large Language Models as Decision Makers | Myeonghwa Lee | NAACL 2024 — publisher-confirmed | 2406.12430 | 2024 | Defines Decision QA and builds the DQA benchmark from two strategy games; an LLM-plans-then-retriever-queries loop beats the strongest iterative-RAG baseline by 15.8% (Locating) and 7.4% (Building). | not covered |
+| DR-RAG: Applying Dynamic Document Relevance to Retrieval-Augmented Generation for Question-Answering | Zijian Hei | preprint (2024-06) | 2406.07348 | 2024 | Two-stage retrieval mines relevance by combining partial documents with the query, then a compact classifier decides which documents contribute; the LLM is called once and multi-hop accuracy improves. | not covered |
+| Auto-RAG: Autonomous Retrieval-Augmented Generation for Large Language Models | Tian Yu | preprint (2024-11) | 2411.19443 | 2024 | Fine-tunes an LLM to plan and refine its own retrieval turns in dialogue with the retriever, adjusting the number of iterations to question difficulty and stating the plan in natural language. | not covered |
+
+**Already verified in §14, not restated:** Self-RAG (2310.11511), CRAG (2401.15884) and Adaptive-RAG (2403.14403) — the retrieve/critique/correct/routing lineage narrated in §7.
+
+### 13.3 Agentic and Tool-Using Retrieval
+
+| Title | First author | Venue / status | arXiv | Year | What the paper actually shows | Covered by |
+|---|---|---|---|---|---|---|
+| Search-R1: Training LLMs to Reason and Leverage Search Engines with Reinforcement Learning | Bowen Jin | preprint (2025-03) | 2503.09516 | 2025 | RL-trains interleaved step-by-step reasoning and live search with retrieved-token masking and an outcome-only reward: +41% (Qwen2.5-7B) and +20% (Qwen2.5-3B) over RAG baselines across seven QA datasets. | named in [Agentic Search vs RAG](../agentic_search_vs_rag_guide.md) |
+| Chain-of-Retrieval Augmented Generation (CoRAG) | Liang Wang | preprint (2025-01) — arXiv comment claims NeurIPS 2025, unconfirmed | 2501.14342 | 2025 | Rejection sampling builds intermediate retrieval chains so the model reformulates queries as its state evolves; more than 10 EM points over strong baselines on multi-hop QA and a KILT state of the art. | not covered |
+| WebThinker: Empowering Large Reasoning Models with Deep Research Capability | Xiaoxi Li | preprint (2025-04) — arXiv comment claims NeurIPS 2025, unconfirmed | 2504.21776 | 2025 | A deep-research agent interleaving thinking, web navigation and report drafting, with an RL stage over online DPO preferences; reported gains on GPQA, GAIA, WebWalkerQA, HLE and report generation. | not covered |
+| ReSearch: Learning to Reason with Search for LLMs via Reinforcement Learning | Mingyang Chen | preprint (2025-03) — arXiv comment claims NeurIPS 2025, unconfirmed | 2503.19470 | 2025 | RL-trains search operations as part of the reasoning chain with no supervised reasoning-step data; models trained on one dataset generalise, and reflection and self-correction emerge during training. | not covered |
+
+### 13.4 Graph- and Structure-Aware Retrieval
+
+| Title | First author | Venue / status | arXiv | Year | What the paper actually shows | Covered by |
+|---|---|---|---|---|---|---|
+| Graph Retrieval-Augmented Generation: A Survey | Boci Peng | preprint (2024-08; v2 self-described as "ongoing work") | 2408.08921 | 2024 | Formalises the GraphRAG workflow as graph-based indexing → graph-guided retrieval → graph-enhanced generation, then reviews training methods, tasks, evaluation and industrial use. | the GraphRAG mechanism is analysed in [Advanced RAG Techniques](advanced_rag_techniques_guide.md), [Beyond RAG](beyond_rag_guide.md) and [Vector Databases](vector_databases_guide.md); this survey itself is not covered |
+| LightRAG: Simple and Fast Retrieval-Augmented Generation | Zirui Guo | preprint (2024-10) | 2410.05779 | 2024 | Adds graph structure to indexing and retrieval with a dual-level (low- and high-level) retriever plus an incremental update algorithm for new data; reports accuracy and response-time gains over flat-index baselines. | [Advanced RAG Techniques](advanced_rag_techniques_guide.md), [Beyond RAG](beyond_rag_guide.md) |
+| HippoRAG: Neurobiologically Inspired Long-Term Memory for Large Language Models | Bernal Jiménez Gutiérrez | preprint (2024-05) — arXiv comment claims NeurIPS 2024, unconfirmed | 2405.14831 | 2024 | Uses an LLM-built knowledge graph with Personalized PageRank as a hippocampal index: up to 20% better multi-hop QA, matching iterative retrieval at 10–30× lower cost. | not covered |
+| RAPTOR: Recursive Abstractive Processing for Tree-Organized Retrieval | Parth Sarthi | preprint (2024-01) — widely cited as ICLR 2024, but the arXiv record states no venue | 2401.18059 | 2024 | Recursively embeds, clusters and summarises chunks into a tree and retrieves at several levels of abstraction; +20% absolute on QuALITY when paired with GPT-4. | [Advanced RAG Techniques](advanced_rag_techniques_guide.md), [RAG vs HyDE](rag_vs_hyde_guide.md) |
+
+**Already verified in §14, not restated:** GraphRAG (Edge et al., 2404.16130), whose local-to-global approach owns §6.
+
+### 13.5 Long-Context Versus Retrieval
+
+| Title | First author | Venue / status | arXiv | Year | What the paper actually shows | Covered by |
+|---|---|---|---|---|---|---|
+| Retrieval Head Mechanistically Explains Long-Context Factuality | Wenhao Wu | preprint (2024-04) | 2404.15574 | 2024 | Fewer than 5% of attention heads perform retrieval; they exist already in short-context pretraining, and pruning them (unlike pruning random heads) breaks retrieval and induces hallucination. | not covered |
+| In Defense of RAG in the Era of Long-Context Language Models | Tan Yu | preprint (2024-09) | 2409.01666 | 2024 | Order-preserving retrieval yields an inverted-U: answer quality rises then falls with the number of chunks, and its sweet spot beats feeding a long-context model the whole document at far lower token cost. | the debate is owned by §8.3 and [RAG vs Long-Context LLMs](rag_vs_long_context_llms_guide.md); this paper's OP-RAG result is not covered |
+| Long-Context LLMs Meet RAG: Overcoming Challenges for Long Inputs in RAG | Bowen Jin | preprint (2024-10) | 2410.05983 | 2024 | For many long-context LLMs, quality first improves and then declines as retrieved passages are added; the paper identifies retrieved "hard negatives" as the driver and shows retrieval reordering helps without training. | not covered |
+| NoLiMa: Long-Context Evaluation Beyond Literal Matching | Ali Modarressi | ICML 2025, PMLR v267 pp. 44554–44570 — publisher-confirmed | 2502.05167 | 2025 | Removes literal overlap between needle and haystack: at 32K, 11 of 13 long-context models fall below half their short-context baseline (GPT-4o: 99.3% → 69.7%). | not covered |
+
+### 13.6 Evaluation
+
+| Title | First author | Venue / status | arXiv | Year | What the paper actually shows | Covered by |
+|---|---|---|---|---|---|---|
+| RAGChecker: A Fine-grained Framework for Diagnosing Retrieval-Augmented Generation | Dongyu Ru | preprint (2024-08) — arXiv comment says "Under Review" | 2408.08067 | 2024 | Claim-level diagnostic metrics separating retriever faults from generator faults; meta-evaluation reports stronger correlation with human judgement than prior metrics, applied across 8 RAG systems. | not covered |
+| RAGBench: Explainable Benchmark for Retrieval-Augmented Generation Systems | Robert Friel | preprint (2024-06) | 2407.11005 | 2024 | A 100k-example benchmark over five industry domains plus the TRACe metric set; a fine-tuned RoBERTa model outperformed LLM-based evaluators on the evaluation task itself. | [RAG Benchmarks](rag_benchmarks_guide.md) |
+| Evaluating Retrieval Quality in Retrieval-Augmented Generation (eRAG) | Alireza Salemi | preprint (2024-04) | 2404.13781 | 2024 | Labels each retrieved document by the downstream output it produces; correlates better with end-to-end RAG (Kendall τ +0.168 to +0.494) and uses up to 50× less GPU memory than end-to-end evaluation. | [Advanced RAG Techniques](advanced_rag_techniques_guide.md) (named) |
+| CRUD-RAG: A Comprehensive Chinese Benchmark for Retrieval-Augmented Generation of Large Language Models | Yuanjie Lyu | preprint (2024-01) | 2401.17043 | 2024 | A Chinese benchmark dividing RAG applications into Create/Read/Update/Delete with datasets for each, evaluating the retrieval and knowledge-base components and not only the LLM. | [RAG Benchmarks](rag_benchmarks_guide.md) |
+
+### 13.7 Attribution and Faithfulness
+
+| Title | First author | Venue / status | arXiv | Year | What the paper actually shows | Covered by |
+|---|---|---|---|---|---|---|
+| RAGTruth: A Hallucination Corpus for Developing Trustworthy Retrieval-Augmented Language Models | Cheng Niu | ACL 2024 — publisher-confirmed (arXiv v1 posted 2023-12-31) | 2401.00396 | 2023 | Nearly 18,000 RAG responses annotated at word level for hallucination; the study shows a fine-tuned small model competing with GPT-4-prompted detectors. | [RAG Benchmarks](rag_benchmarks_guide.md), [RAG Conflict Resolution](rag_conflict_resolution_guide.md) |
+| Attribute First, then Generate: Locally-attributable Grounded Text Generation | Aviv Slobodkin | ACL 2024 — publisher-confirmed | 2403.17104 | 2024 | Selects source segments before writing and conditions generation on them, so the segments double as fine-grained citations: citations get shorter, quality holds, and human verification time falls. | not covered |
+| LongCite: Enabling LLMs to Generate Fine-grained Citations in Long-context QA | Jiajie Zhang | preprint (2024-09) | 2409.02897 | 2024 | Adds the LongBench-Cite benchmark and a coarse-to-fine pipeline that builds LongCite-45k; the trained 8B/9B models emit sentence-level citations alongside answers and beat GPT-4o on citation quality. | not covered |
+
+### 13.8 Efficiency, Compression, Caching and Indexing
+
+| Title | First author | Venue / status | arXiv | Year | What the paper actually shows | Covered by |
+|---|---|---|---|---|---|---|
+| RAGCache: Efficient Knowledge Caching for Retrieval-Augmented Generation | Chao Jin | preprint (2024-04) | 2404.12457 | 2024 | Caches retrieved knowledge's intermediate KV states in a knowledge tree across GPU and host memory with a RAG-aware replacement policy and overlapped retrieval: up to 4× lower time-to-first-token and 2.1× throughput over vLLM with Faiss. | not covered |
+| xRAG: Extreme Context Compression for Retrieval-augmented Generation with One Token | Xin Cheng | preprint (2024-05) — arXiv comment claims NeurIPS 2024, unconfirmed | 2405.13792 | 2024 | Treats the dense-retrieval embedding itself as the compressed context, fused into the model through a trainable bridge with retriever and LLM frozen: over 10% average gain on six knowledge-intensive tasks with 3.53× fewer FLOPs. | not covered |
+| MemoRAG: Boosting Long Context Processing with Global Memory-Enhanced Retrieval Augmentation | Hongjin Qian | preprint (2024-09) — arXiv comment claims TheWebConf 2025, unconfirmed | 2409.05591 | 2024 | Two systems: a light long-range model builds global memory and drafts a clue, an expensive model answers from retrieved evidence; the KV-compressed memory is refined by generation-feedback RL. | not covered |
+
+### 13.9 Multimodal Retrieval
+
+| Title | First author | Venue / status | arXiv | Year | What the paper actually shows | Covered by |
+|---|---|---|---|---|---|---|
+| VisRAG: Vision-based Retrieval-augmented Generation on Multi-modality Documents | Shi Yu | preprint (2024-10) | 2410.10594 | 2024 | Embeds document pages as images with a vision-language model instead of parsing them to text, and generates from those embeddings; reports a 20–40% end-to-end gain over text-based RAG. | not covered |
+| ColPali: Efficient Document Retrieval with Vision Language Models | Manuel Faysse | preprint (2024-06) — arXiv comment claims ICLR 2025 conference paper, unconfirmed | 2407.01449 | 2024 | Introduces the ViDoRe benchmark and late-interaction multi-vector embeddings of page images, outperforming OCR-then-text pipelines while dropping the parsing stage entirely. | not covered |
+| M3DocRAG: Multi-modal Retrieval is What You Need for Multi-page Multi-document Understanding | Jaemin Cho | preprint (2024-11) | 2411.04952 | 2024 | Pairs a multi-modal retriever with a multimodal LM for open-domain, multi-page, multi-document DocVQA; adds the M3DocVQA benchmark (3,000+ PDFs) and reports state of the art on MP-DocVQA. | not covered |
+| VideoRAG: Retrieval-Augmented Generation with Extreme Long-Context Videos | Xubin Ren | preprint (2025-02) | 2502.01549 | 2025 | A dual-channel design (graph-based textual grounding plus multi-modal encoding) for very long videos, evaluated on the new LongerVideos benchmark (160+ videos, 134+ hours). | not covered |
+
+### 13.10 Domain-Specific Retrieval
+
+| Title | First author | Venue / status | arXiv | Year | What the paper actually shows | Covered by |
+|---|---|---|---|---|---|---|
+| Benchmarking Retrieval-Augmented Generation for Medicine (MIRAGE / MedRAG) | Guangzhi Xiong | preprint (2024-02) | 2402.13178 | 2024 | 7,663 medical questions across 41 corpus/retriever/LLM combinations and over 1.8T prompt tokens via the MedRAG toolkit: up to 18% accuracy gain over chain-of-thought prompting, with "lost-in-the-middle" effects reappearing in medical RAG. | not covered |
+| Medical Graph RAG (MedGraphRAG): Towards Safe Medical Large Language Model via Graph Retrieval-Augmented Generation | Junde Wu | preprint (2024-08) | 2408.04187 | 2024 | Triple-linked graphs connect documents to credible medical sources and vocabularies, and U-Retrieval combines top-down precise retrieval with bottom-up response refinement; best results on 9 medical QA and 2 fact-checking benchmarks. | not covered |
+| LegalBench-RAG: A Benchmark for Retrieval-Augmented Generation in the Legal Domain | Nicholas Pipitone | preprint (2024-08) | 2408.10343 | 2024 | The first benchmark aimed at the retrieval step in law: 6,858 expert-annotated query–answer pairs over 79M+ characters, scored on minimal relevant snippets rather than document IDs. | not covered |
+| CodeRAG-Bench: Can Retrieval Augment Code Generation? | Zora Zhiruo Wang | preprint (2024-06) | 2406.14497 | 2024 | Three categories of code-generation task against five document sources; high-quality retrieved context does help, but retrievers struggle without lexical overlap and generators underuse additional context. | not covered |
+
+### 13.11 Retrieval Security and Adversarial Robustness
+
+| Title | First author | Venue / status | arXiv | Year | What the paper actually shows | Covered by |
+|---|---|---|---|---|---|---|
+| PoisonedRAG: Knowledge Corruption Attacks to Retrieval-Augmented Generation of Large Language Models | Wei Zou | USENIX Security 2025 — publisher-confirmed | 2402.07867 | 2024 | Casts knowledge corruption as an optimisation problem: five injected texts in a database of millions reach ~90% attack success for an attacker-chosen question and answer, and the tested defences prove insufficient. | not covered |
+| ConfusedPilot: Confused Deputy Risks in RAG-based LLMs | Ayush RoyChowdhury | preprint (2024-08) | 2408.04870 | 2024 | Documents a class of "confused deputy" flaws in enterprise RAG assistants: text embedded in a modified prompt corrupts responses, and a retrieval-caching path leaks secret data. | not covered |
+| The Good and The Bad: Exploring Privacy Issues in Retrieval-Augmented Generation (RAG) | Shenglai Zeng | preprint (2024-02) | 2402.16893 | 2024 | Attack experiments show RAG systems leaking their private retrieval database — and the same study finds RAG can reduce leakage of the LLM's own training data. | not covered |
+| Securing Retrieval-Augmented Generation: A Taxonomy of Attacks, Defenses, and Future Directions | Yuming Xu | preprint (2026-04) | 2604.08304 | 2026 | Organises RAG security with the SLOT taxonomy — attack surface, defence layer, objective (CIA properties) and target (single known query vs claim manipulation across a distribution) — mapped onto a six-stage knowledge-access pipeline. | not covered |
+
+### 13.12 Knowledge Conflict and Grounding
+
+| Title | First author | Venue / status | arXiv | Year | What the paper actually shows | Covered by |
+|---|---|---|---|---|---|---|
+| Knowledge Conflicts for LLMs: A Survey | Rongwu Xu | preprint (2024-03) | 2403.08319 | 2024 | A taxonomy of context-memory, inter-context and intra-memory conflict, with causes, observed model behaviour under each and the available mitigations. | [RAG Conflict Resolution](rag_conflict_resolution_guide.md) |
+| ConflictBank: A Benchmark for Evaluating the Influence of Knowledge Conflicts in LLM | Zhaochen Su | preprint (2024-08) — arXiv comment says "Under Review" | 2408.12076 | 2024 | Evaluates conflicts in retrieved knowledge, conflicts within encoded knowledge and their interplay: 7,453,853 claim–evidence pairs and 553,117 QA pairs across twelve LLM instances. | [RAG Conflict Resolution](rag_conflict_resolution_guide.md) |
+| Astute RAG: Overcoming Imperfect Retrieval Augmentation and Knowledge Conflicts for Large Language Models | Fei Wang | ACL 2025 — publisher-confirmed | 2410.07176 | 2024 | Elicits the model's internal knowledge, consolidates internal and retrieved knowledge source-aware and iteratively, then answers by reliability; the only tested method matching or beating plain LLM use in the worst case. | not covered |
+
+### 13.13 The Landmark Surveys
+
+| Title | First author | Venue / status | arXiv | Year | What the paper actually shows | Covered by |
+|---|---|---|---|---|---|---|
+| A Survey on Knowledge-Oriented Retrieval-Augmented Generation | Mingyue Cheng | preprint (2025-03) — arXiv comment claims ACM TOIS acceptance, unconfirmed | 2503.10677 | 2025 | Organises RAG by retrieval mechanism, generation process and their integration, extending the taxonomy toward multimodal and reasoning-capable systems, and reviews benchmarks and applications. | not covered |
+| Agentic Retrieval-Augmented Generation: A Survey on Agentic RAG | Aditi Singh | preprint (2025-01; revised 2026-04) | 2501.09136 | 2025 | A taxonomy of Agentic RAG along agent cardinality, control structure, autonomy and knowledge representation, with design trade-offs and open challenges in evaluation, memory and governance. | named in [Production-Grade Agentic RAG](production_grade_agentic_rag_guide.md) |
+| Trustworthiness in Retrieval-Augmented Generation Systems: A Survey | Yujia Zhou | preprint (2024-09; revised 2026-05) | 2409.10102 | 2024 | Proposes the Trust-RAG Compass over six dimensions (factuality, robustness, fairness, transparency, accountability, privacy) plus the TRC Bench evaluation of proprietary and open models. | not covered |
+
+### 13.14 Theme Map — Where Each Theme's Argument Already Lives
+
+The table above is an index; this is the same index by **theme**, so a reader can go straight to the guide that argues the point instead of re-deriving it from papers.
+
+| Theme (§13.x) | Owner in this repository | Coverage |
+|---|---|---|
+| Modular and pipeline architectures (13.1) | §6 of this guide; [Advanced RAG Techniques](advanced_rag_techniques_guide.md) | owned |
+| Self-correcting, adaptive, self-reflective retrieval (13.2) | §7.1–7.3 of this guide; [Advanced RAG Techniques](advanced_rag_techniques_guide.md) (Self-RAG, CRAG, Adaptive-RAG deep dives) | owned |
+| Agentic and tool-using retrieval (13.3) | §7 of this guide; [Production-Grade Agentic RAG](production_grade_agentic_rag_guide.md); [Agentic Search vs RAG](../agentic_search_vs_rag_guide.md) | owned |
+| Graph- and structure-aware retrieval (13.4) | §6 of this guide; [Advanced RAG Techniques](advanced_rag_techniques_guide.md); [Vector Databases](vector_databases_guide.md); [Neo4j](../../neo4j_complete_guide.md) | owned |
+| Long-context versus retrieval (13.5) | §8.1–8.3 of this guide; [RAG vs Long-Context LLMs](rag_vs_long_context_llms_guide.md); [Beyond RAG](beyond_rag_guide.md) | owned — but this specific evidence base is not named there |
+| Evaluation (13.6) | §8.5 of this guide; [RAG Evaluation Methodology](rag_evaluation_methodology_guide.md); [RAG Evaluation Tools](rag_evaluation_tools_comparison_guide.md); [RAG Benchmarks](rag_benchmarks_guide.md); [Ragas](ragas_guide.md); [TruLens](trulens_guide.md) | owned |
+| Attribution and faithfulness (13.7) | §8.5 of this guide; [RAG Benchmarks](rag_benchmarks_guide.md); [RAG Conflict Resolution](rag_conflict_resolution_guide.md) | partly owned — no guide owns citation-quality methods as such |
+| Efficiency, compression, caching and indexing (13.8) | §5 of this guide; [RAG Optimization Techniques](rag_optimization_techniques_guide.md); [Vector Databases](vector_databases_guide.md) | partly owned — RAG-specific caching and compression are not treated as a topic |
+| Multimodal retrieval (13.9) | none | gap — the RAG series is text-first; [Vision-Language Models](../vision_language_models.md) covers VLMs, not retrieval over document images or video |
+| Domain-specific retrieval (13.10) | none horizontally; the financial-domain case is mentioned in passing in [GenAI Banking Compliance](../../banking/ai_genai_banking_compliance_guide.md) | gap — verticals (medicine, law, code) appear only here |
+| Retrieval security and adversarial robustness (13.11) | [Prompt Injection](../prompt_injection_guide.md) (§4.2 *RAG and Retrieval*, §8 *Prompt Injection in RAG Systems*); [Adversarial ML Attacks](../../adversarial_ml_attacks_guide.md); [LLM Guard Models](../llm_guard_models_guide.md) | partly owned at topic level; the security papers themselves are not covered |
+| Knowledge conflict and grounding (13.12) | §8 of this guide; [RAG Conflict Resolution](rag_conflict_resolution_guide.md) | owned |
+| The landmark surveys (13.13) | §4–§6 of this guide (the naive/advanced/modular taxonomy originates in the 2023 survey verified in §14); [RAG Benchmarks](rag_benchmarks_guide.md) | owned |
+
+Two entries above are honest gaps rather than pointers: **multimodal retrieval** and **domain-specific benchmarks** have no owner in the RAG series today. They are recorded here so the gap is visible rather than silently implied to be covered.
+
+### 13.15 How These Rows Were Checked — and How to Recheck Them
+
+The procedure, so a later reader can reproduce or falsify any row:
+
+1. **Resolve at the API, never from memory.** Each identifier was requested at the arXiv API over HTTPS with a browser User-Agent (`https://export.arxiv.org/api/query?id_list=…`), and title, first author, submission date, `comment` and `journal_ref` were read from the returned record. Three failure modes were handled deliberately: plain HTTP fails silently, a non-browser User-Agent draws HTTP 406, and rate-limiting (429) presents as an **empty result** — so an empty response was retried with a delay rather than read as "this paper does not exist".
+2. **Check the venue at the source.** A *publisher-confirmed* label means the paper was found on the publisher's own record (ACL Anthology, USENIX proceedings, PMLR) in this pass. Otherwise the row repeats the arXiv `comment` field as a **claim** and says so explicitly.
+3. **Write the finding, not the reputation.** Every "what the paper actually shows" line comes from the abstract retrieved at the API. Where the abstract did not support a claim, the claim is not written — however often the paper is cited for it.
+4. **Check coverage on distinctive title words.** Coverage was tested by grepping the repository for distinctive words from each title. Two greps that look reasonable are traps in this repository: the word `research` (it names files and runs through the prose) and surnames on their own. A case-insensitive search for `ReSearch` matches `research` — a substring false positive that means nothing at all.
+5. **Count only what is counted.** "45 papers" is the number of rows in §13.1–§13.13. It is not an estimate of the field, and no growth or share statistic is asserted anywhere in this section.
+
+### 13.16 What Could Not Be Verified
+
+- **Omitted, not guessed.** A paper titled *"Phantom: General Trigger Attacks on Retrieval Augmented Language Generation"* could not be resolved at the arXiv API by title and is therefore **absent from the tables above**. No identifier, author, year or venue was invented to fill the gap.
+- **Venue stated only by the arXiv `comment` field** (presented as a claim, not confirmed against a publisher record): HippoRAG (NeurIPS 2024), xRAG (NeurIPS 2024), ColPali (ICLR 2025), Chain-of-Retrieval, WebThinker and ReSearch (NeurIPS 2025), FlashRAG and MemoRAG (WWW 2025), the Knowledge-Oriented survey (ACM TOIS). Each is marked *unconfirmed* in its row and is treated as a **preprint** for citation purposes.
+- **Venue confirmed at the publisher's record**: PlanRAG (NAACL 2024 long papers), Attribute First and RAGTruth (ACL 2024 long papers), Astute RAG (ACL 2025 long papers), NoLiMa (ICML 2025, PMLR v267), PoisonedRAG (USENIX Security 2025).
+- **A widely repeated venue that the record does not support**: RAPTOR is usually cited as ICLR 2024, but the arXiv record states no venue. The row labels it a preprint.
+- **Date boundary.** RAGTruth's first arXiv version is dated 2023-12-31 (this is the 2024+ table because the published paper is ACL 2024). Its date is stated in the row rather than rounded to 2024.
+- **No count, no trend.** This section asserts no figure for how many RAG papers exist, how fast the field grows, or what share of it any theme holds. "45 papers" is the number of rows in this table, and nothing more.
+## 14. References and Verification Notes
 
 **Verified primary sources (paper, arXiv ID, date — confirmed via web check, August 2026):**
 
