@@ -3,7 +3,7 @@
 > **Author:** Jack Liu Shurui — Solution Architect at Cymbal Bank, Singapore
 > **Context:** Technology Research — the Singapore-tech / SaaS series; the dedicated deep-dive on **Singapore-born SaaS companies**: the homegrown software-as-a-service landscape, from the ecosystem overview and the flagship scale-ups (PatSnap, Trax) to the fintech SaaS (Tookitaki, Silent Eight), the security SaaS (Horangi), the business SaaS (JustLogin, Sleek, Glints), the funding and valuations, the government support, the regional play, and a worked example — a bank's SaaS vendor evaluation
 > **Repository:** [github.com/jackliusr/research](https://github.com/jackliusr/research)
-> **Primary Sources:** company sites (patsnap.com, traxretail.com, tookitaki.com, silenteight.com, horangi.com, justlogin.com, sleek.com, glints.com), press (Tech in Asia, DealStreetAsia, The Business Times, The Straits Times, TechCrunch, fintechnews.sg, technode.global, Bitdefender press release), SG government sources (IMDA, EDB, EnterpriseSG, SGInnovate, MAS), funding trackers (Crunchbase, Tracxn, PitchBook)
+> **Primary Sources:** company sites (patsnap.com, traxretail.com, tookitaki.com, silenteight.com, horangi.com, justlogin.com, sleek.com, glints.com), press (Tech in Asia, DealStreetAsia, The Business Times, The Straits Times, TechCrunch, fintechnews.sg, technode.global, Bitdefender press release; the Tookitaki deal's first-party releases — Thunes (thunes.com/news/thunes-tookitaki/, 19 Apr 2022) and Tookitaki (tookitaki.com blog)), SG government sources (IMDA, EDB, EnterpriseSG, SGInnovate, MAS), funding trackers (Crunchbase, Tracxn, PitchBook)
 > **Last Updated:** August 2026
 
 ---
@@ -43,13 +43,13 @@ This is the **dedicated deep-dive on Singapore-born SaaS companies** — the hom
 |---|---|
 | Thesis | Singapore as the **regional HQ** — product built for Asia, sold to the world |
 | Flagship scale-ups | **PatSnap** (IP intelligence, founded 2007) and **Trax** (retail analytics, founded 2010) — both unicorns |
-| Fintech SaaS | **Tookitaki** (AML, founded 2012) and **Silent Eight** (AML/CFT, founded 2013) — both acquired (Thunes 2022; Nasdaq reported 2023) |
+| Fintech SaaS | **Tookitaki** (AML, founded November 2014) and **Silent Eight** (AML/CFT, founded 2013) — Tookitaki took a majority-stake investment from Thunes (Apr 2022, over US$20m); Silent Eight acquired by Nasdaq (reported 2023) |
 | Security SaaS | **Horangi** (cloud security, founded 2016) — acquired by Bitdefender, completed June 2023 |
 | Business SaaS | **JustLogin** (HR/payroll), **Sleek** (corporate services, 2017), **Glints** (talent platform, 2013 — flagged: marketplace, not pure SaaS) |
 | Unicorn tally | Trax, PatSnap, Carousell, Carro, Nium among SG-born unicorns; Sea and Grab as the decacorn giants |
 | Government | IMDA (accreditation, PSG), EDB (HQ schemes, EDBi), SGInnovate (deep tech), EnterpriseSG (grants), MAS (fintech sandbox) |
 | Regional play | SEA-first expansion — regulators as product spec (MAS, BSP, AUSTRAC, BNM pre-configurations) |
-| Exit pattern | Local M&A liquidity (Thunes→Tookitaki, Bitdefender→Horangi, Nasdaq→Silent Eight reported) alongside IPO paths |
+| Exit pattern | Local M&A liquidity (Bitdefender→Horangi, Nasdaq→Silent Eight reported) alongside Thunes' majority-stake investment in Tookitaki (2022) and IPO paths |
 
 ---
 
@@ -80,7 +80,7 @@ The standard playbook for a Singapore-born SaaS company has two movements:
 1. **The regional HQ.** Incorporate in Singapore, run the commercial brain there (sales, marketing, finance, compliance), and use Singapore's treaties, talent pool and brand as the launchpad. This is the "HQ play" that EDB's corporate-HQ programmes institutionalise (§7) and that MNC regional offices have practised for decades — Singapore-born startups simply invert it: instead of a foreign vendor setting up a regional HQ in Singapore, a Singapore startup uses the city as *its* HQ to attack the region.
 2. **The product for Asia.** Build the product around Asian realities — Asian regulators (MAS, BSP, AUSTRAC, BNM), Asian retail formats (small-format stores, shelf execution), Asian HR/payroll regimes (CPF, EPF), Asian banking pain points (screening volume, name-matching for Chinese/Indian/Indonesian names). Tookitaki's FinCense ships pre-configured for four APAC regulators (Verified — Crunchbase); Trax's computer vision was tuned on Asian shelf layouts; JustLogin's payroll engine handles CPF natively. The product is the regional HQ's export.
 
-The third, optional movement is **the global exit**: a US$1B+ round (PatSnap, Trax), an IPO filing (PatSnap's 2023 Hong Kong filing — Reported, flagged), or an acquisition by a global platform (Thunes→Tookitaki 2022, Bitdefender→Horangi 2023, Nasdaq→Silent Eight reported 2023). §6 and §8 unpack the money and the geography.
+The third, optional movement is **the global exit**: a US$1B+ round (PatSnap, Trax), an IPO filing (PatSnap's 2023 Hong Kong filing — Reported, flagged), or an acquisition by a global platform (Bitdefender→Horangi 2023, Nasdaq→Silent Eight reported 2023) — while Thunes took a majority stake in Tookitaki (2022), an investment rather than an exit. §6 and §8 unpack the money and the geography.
 
 ### 1.3 The Overview Table — Aspect / Description (Verified unless flagged)
 
@@ -89,7 +89,7 @@ The third, optional movement is **the global exit**: a US$1B+ round (PatSnap, Tr
 | Definition | Software-as-a-service companies founded in Singapore, selling subscription software (often AI-enabled) regionally or globally |
 | Core thesis | Regional HQ + product for Asia → global scale |
 | Flagship scale-ups | PatSnap (IP intelligence), Trax (retail analytics) — both unicorn-status (Verified) |
-| Fintech SaaS | Tookitaki (AML), Silent Eight (AML/CFT) — both exited via acquisition (Verified for Tookitaki; Reported for Silent Eight) |
+| Fintech SaaS | Tookitaki (AML), Silent Eight (AML/CFT) — Tookitaki took a Thunes majority-stake investment (Verified — not an exit); Silent Eight acquisition reported (Reported) |
 | Security SaaS | Horangi (cloud security) — acquired by Bitdefender, 2023 (Verified — corrects the CrowdStrike-2022 assumption in the brief) |
 | Business SaaS | JustLogin (HR/payroll), Sleek (corporate services), Glints (talent — flagged as marketplace) |
 | Funding | US$ tens-of-millions for vertical players; US$1B+ cumulative for Trax; ~US$352M cumulative for PatSnap (tracker figures, flagged) |
@@ -104,10 +104,10 @@ The ecosystem matured in three visible generations. The dates are verified compa
 | Generation | Window | Companies | Character |
 |---|---|---|---|
 | **Gen 1 — the pioneers** | 2007–2010 | PatSnap (2007), Trax (2010) | Deep-tech vertical SaaS built on proprietary data or vision; took a decade to reach unicorn scale (Verified — Straits Times, TechCrunch) |
-| **Gen 2 — the regulators' children** | 2012–2017 | Tookitaki (2012), Silent Eight (2013), Glints (2013), Sleek (2017) | Compliance-aware and services-adjacent; capital-efficient; exit path is acquisition by global platforms (Verified — Thunes 2022, Bitdefender 2023; Nasdaq 2023 reported) |
+| **Gen 2 — the regulators' children** | 2012–2017 | Tookitaki (2014), Silent Eight (2013), Glints (2013), Sleek (2017) | Compliance-aware and services-adjacent; capital-efficient; the strongest exit path is acquisition by a global platform (Verified — Bitdefender 2023; Nasdaq 2023 reported), with Thunes' 2022 Tookitaki stake an investment, not an exit |
 | **Gen 3 — the AI natives** | 2018–present | The current crop of AI-first startups (PatSnap and the RegTech players have re-branded as "AI-native" too) | Building on LLM-era tooling; the state's deep-tech money (SGInnovate, §7) is aimed at these (Reported — programme direction) |
 
-Three observations, all analytical: (1) generation overlap is real — PatSnap launched its AI push long after 2007 and now markets itself as "the AI-native platform for global innovation"; (2) the funding ladder (§6) maps cleanly onto the generations — Gen 1 attracted global mega-rounds, Gen 2 exited via M&A, Gen 3 is still being written; (3) each generation leaned harder on the state — PatSnap started on a university grant, Tookitaki took EnterpriseSG equity, and Gen 3 companies are the target of SGInnovate's deep-tech capital.
+Three observations, all analytical: (1) generation overlap is real — PatSnap launched its AI push long after 2007 and now markets itself as "the AI-native platform for global innovation"; (2) the funding ladder (§6) maps cleanly onto the generations — Gen 1 attracted global mega-rounds, Gen 2 drew M&A deals and strategic investment, Gen 3 is still being written; (3) each generation leaned harder on the state — PatSnap started on a university grant, Tookitaki took EnterpriseSG equity, and Gen 3 companies are the target of SGInnovate's deep-tech capital.
 
 ### 1.5 Adoption — The Honest Caveat (flagged)
 
@@ -196,22 +196,22 @@ The technical note that matters to an architect: both companies are **data-hungr
 
 The fintech SaaS cluster is where Singapore's regulatory depth shows up as product. Both companies in this section sell **anti-money-laundering (AML) software** to banks — a category that exists at all because MAS and peer regulators demand it, and that Singapore vendors are positioned to win because they understand the regulators' expectations and the region's screening problems (Chinese/Indian/Indonesian name-matching, high transaction volumes in regional corridors).
 
-### 3.1 Tookitaki — AML / RegTech, Acquired by Thunes (Verified)
+### 3.1 Tookitaki — AML / RegTech, Majority Stake Taken by Thunes (Verified — an Investment, Not an Acquisition)
 
-**Tookitaki**, founded in Singapore in **2012** (Verified — Crunchbase/Tracxn; Indexed.vc lists 2014 — flagged discrepancy) by **Jeeta Bandopadhyay and Abhishek Chatterjee** (Verified — Crunchbase), builds AI-powered AML and fraud-prevention software for financial institutions. Its flagship platform, **FinCense**, combines AI transaction monitoring with "community intelligence" from 200+ APAC financial institutions and ships pre-configured for the regulators of the region — **MAS, BSP (Philippines), AUSTRAC (Australia) and BNM (Malaysia)** (Verified — Crunchbase).
+**Tookitaki**, founded in Singapore in **November 2014** (Verified — Thunes' own release, 19 April 2022, states Tookitaki "was founded in November 2014"; this supersedes the earlier "2012" tracker figure — see §12) by **Jeeta Bandopadhyay and Abhishek Chatterjee** (Verified — Crunchbase), builds AI-powered AML and fraud-prevention software for financial institutions. Its flagship platform, **FinCense**, combines AI transaction monitoring with "community intelligence" from 200+ APAC financial institutions and ships pre-configured for the regulators of the region — **MAS, BSP (Philippines), AUSTRAC (Australia) and BNM (Malaysia)** (Verified — Crunchbase).
 
 **The arc (Verified unless flagged):**
 
 | Milestone | Detail | Status |
 |---|---|---|
-| Founded | 2012, Singapore (2014 per one tracker) | Verified (year flagged) |
+| Founded | November 2014, Singapore | Verified — Thunes release, 19 Apr 2022 |
 | Product | FinCense — AI transaction monitoring, AML/compliance suite; RegTech | Verified |
 | Funding | ~US$20.4M cumulative (Crunchbase/Tracxn); US$28M per Indexed.vc; largest round US$11.7M Series A, Nov 2019, led by Viola Group | Flagged — tracker figures differ |
 | Government backing | Enterprise Singapore participated in the Series A (March 2019) | Verified — Tracxn |
-| Exit | **Acquired by Thunes, April 2022** — majority/controlling stake, expanding Thunes' compliance and AML capabilities | Verified — Wikipedia (Thunes), InvestHK |
+| Deal | **Majority-stake investment from Thunes, announced 19 April 2022 — over US$20m — NOT an acquisition or exit.** The release states the two businesses "continue to operate independently" | Verified — Thunes release (thunes.com/news/thunes-tookitaki/), Tookitaki blog; InvestHK ("controlling stake") |
 | Customers | 200+ APAC institutions contributing community intelligence | Verified — Crunchbase (vendor figure) |
 
-**Why it matters to the landscape:** Tookitaki is the cleanest example of the "regulator-as-product-spec" thesis — its differentiators are literally the pre-configuration for APAC regulators and a community-intelligence loop of regional banks. Its exit to **Thunes** (a payments-infrastructure company, itself Singapore-linked) also shows the local M&A liquidity that keeps the ecosystem credible: an SG-born AML vendor's exit was another SG-adjacent fintech infrastructure player buying compliance capability.
+**Why it matters to the landscape:** Tookitaki is the cleanest example of the "regulator-as-product-spec" thesis — its differentiators are literally the pre-configuration for APAC regulators and a community-intelligence loop of regional banks. The **Thunes** deal (announced 19 April 2022) is a majority-stake investment of over US$20m by a payments-infrastructure company into an SG-born AML vendor, with both businesses continuing to operate independently — a strategic bet on compliance capability, not an exit. It shows the ecosystem's credibility differently than an exit would: a Singapore-linked infrastructure player chose to invest in, rather than absorb, a local regulator-aware specialist.
 
 ### 3.2 Silent Eight — AML / CFT / Sanctions, Reported Nasdaq Exit (Verified, exit flagged)
 
@@ -229,15 +229,15 @@ The fintech SaaS cluster is where Singapore's regulatory depth shows up as produ
 | Cumulative | ~US$55–61M across trackers | Flagged |
 | Exit | **Reported acquisition by Nasdaq (2023)** — widely reported in industry press but **not independently confirmed in this research pass** | **Reported — flagged** |
 
-**Why it matters to the landscape:** Silent Eight and Tookitaki are direct competitors in the AML/RegTech category and share a shape — Singapore-founded, AI-forward, regulator-aware, acquired by a global platform. That Tookitaki's Thunes deal is verified and Silent Eight's Nasdaq deal is only reported (flagged here) is itself a diligence lesson: *an exit headline is not a closed deal; verify the announcement, the close date and the terms before relying on vendor longevity claims.*
+**Why it matters to the landscape:** Silent Eight and Tookitaki are direct competitors in the AML/RegTech category and share a shape — Singapore-founded, AI-forward, regulator-aware, and the object of a global platform's deal. The shapes differ, though: Tookitaki's deal is a **verified majority-stake investment** (Thunes left the business operating independently — §3.1), while Silent Eight's reported **Nasdaq acquisition** is only reported (flagged here). That asymmetry is itself a diligence lesson: *an exit headline is not a closed deal, and a "deal" is not necessarily an exit — verify the announcement, the structure, the close date and the terms before relying on vendor longevity claims.*
 
 ### 3.3 The Fintech Table
 
 | Company | Focus | Notes |
 |---|---|---|
-| **Tookitaki** | AML & fraud prevention — FinCense AI transaction monitoring | Founded 2012 (Verified); ~US$20–28M raised (flagged); EnterpriseSG in Series A (Verified); **acquired by Thunes, April 2022** (Verified); pre-configured for MAS/BSP/AUSTRAC/BNM (Verified) |
+| **Tookitaki** | AML & fraud prevention — FinCense AI transaction monitoring | Founded November 2014 (Verified — Thunes release); ~US$20–28M raised (flagged); EnterpriseSG in Series A (Verified); **majority-stake investment from Thunes, over US$20m, announced 19 April 2022 — not an acquisition** (Verified); pre-configured for MAS/BSP/AUSTRAC/BNM (Verified) |
 | **Silent Eight** | AML/CFT/sanctions — screening and alert adjudication | Founded 2013 (Verified); US$40M Series B led by TYH Ventures (Verified amount, date flagged); total ~US$55–61M (flagged); **Nasdaq acquisition reported 2023 — flagged, unconfirmed here** |
-| *Category read* | *AML SaaS is Singapore's strongest fintech-SaaS export* | *Demand is regulator-driven (MAS, global FATF standards); SG vendors lead with APAC name-matching and regulator pre-configuration (Verified); both flagship players exited via acquisition rather than IPO (Verified / Reported)* |
+| *Category read* | *AML SaaS is Singapore's strongest fintech-SaaS export* | *Demand is regulator-driven (MAS, global FATF standards); SG vendors lead with APAC name-matching and regulator pre-configuration (Verified); the flagship players drew global-platform deals rather than IPOs — Silent Eight's Nasdaq acquisition (Reported), Tookitaki's Thunes majority-stake investment (Verified)* |
 
 ### 3.4 The AML Category — Why Banks Buy (Verified regulation, analytical framing)
 
@@ -248,7 +248,7 @@ AML compliance is not optional software: it is the operationalised output of law
 3. **The name-matching problem is regional.** Chinese, Indian, Indonesian and Malay names confound exact-match engines — a Singapore vendor's screening algorithms are tuned on this data (analytical; consistent with Tookitaki's community-intelligence design, Verified).
 4. **Regulator pre-configuration is a moat.** Tookitaki shipping pre-configured for MAS, BSP, AUSTRAC and BNM (Verified — Crunchbase) means a bank in four jurisdictions can stand up compliant monitoring faster than with a vendor that treats APAC as an afterthought.
 
-**Why this category matters to the whole ecosystem:** AML is the category where Singapore's regulatory brand and its SaaS exports meet. It is also the category with the clearest bank relevance — which is why §9's worked example leads with an AML alert-adjudication decision. The caveat to carry forward: the category's two flagship vendors both *exited* — the buyer's diligence must treat ownership as a live variable (§9 criterion 3).
+**Why this category matters to the whole ecosystem:** AML is the category where Singapore's regulatory brand and its SaaS exports meet. It is also the category with the clearest bank relevance — which is why §9's worked example leads with an AML alert-adjudication decision. The caveat to carry forward: both flagship vendors now sit inside a global platform's deal — Silent Eight via a reported acquisition, Tookitaki via Thunes' majority stake (an investment, not an exit) — so the buyer's diligence must treat ownership and control as a live variable (§9 criterion 3).
 
 ---
 
@@ -271,7 +271,7 @@ AML compliance is not optional software: it is the operationalised output of law
 
 The CrowdStrike-2022 assumption likely conflates (a) Horangi's cloud-security adjacency to CrowdStrike's franchise and (b) the 2022–23 M&A wave in security. The verified reality: Horangi is **Bitdefender's** entry into the APAC security market, closed in **mid-2023**.
 
-**Why it matters to the landscape:** Horangi is the security-SaaS proof point — a Singapore-born vendor that global security incumbents saw as worth buying for regional coverage. It also completes a pattern: all three of the "specialist" companies in this guide (Tookitaki, Silent Eight, Horangi) reached liquidity through **acquisition by a global platform**, not IPO. For a bank evaluating security vendors, that pattern cuts both ways: acquirer backing can mean more resources, but it can also mean roadmap and pricing decisions move to Bucharest (Bitdefender), Singapore (Thunes) or New York (Nasdaq, reported).
+**Why it matters to the landscape:** Horangi is the security-SaaS proof point — a Singapore-born vendor that global security incumbents saw as worth buying for regional coverage. It is also one of only two clear **acquisitions** among this guide's three "specialist" companies (Horangi, and Silent Eight's Nasdaq deal as reported); the third, Tookitaki, took a **majority-stake investment** from Thunes and continued to operate independently (§3.1), so the "specialists exit by acquisition" pattern is real but weaker than it looks — two acquisitions and one strategic investment, not three exits. For a bank evaluating security vendors, the pattern still cuts both ways: acquirer backing can mean more resources, but it can also mean roadmap and pricing decisions move to Bucharest (Bitdefender) or New York (Nasdaq, reported) — whereas Thunes' investment left Tookitaki's own management in place.
 
 ### 4.2 The Security Table
 
@@ -399,12 +399,12 @@ Funding data for SG SaaS companies is spread across trackers (Crunchbase, Tracxn
 | Signal | What it says | Source basis |
 |---|---|---|
 | **Global mega-rounds went only to the two flagships** | SoftBank Vision Fund 2 (PatSnap, Trax) and BlackRock (Trax) bet on *category leaders*, not on "Singapore SaaS" as a label | Verified — Straits Times, TechCrunch |
-| **The specialists exited through M&A, not IPO** | Tookitaki → Thunes (Verified), Horangi → Bitdefender (Verified), Silent Eight → Nasdaq (Reported): acquirers paid for regulatory capability and regional coverage | Verified/Reported — §3, §4 |
+| **Two specialists exited through M&A; a third took strategic investment, not IPO** | Horangi → Bitdefender (Verified) and Silent Eight → Nasdaq (Reported) are acquisitions; Tookitaki took a Thunes majority-stake investment (Verified, §3.1): buyers and one investor paid for regulatory capability and regional coverage | Verified/Reported — §3, §4 |
 | **Government capital is a permanent layer** | From PatSnap's NUS Enterprise grant to EnterpriseSG's Tookitaki cheque to SGInnovate's deep-tech mandate — state money de-risks the earliest and the riskiest stages | Verified — §7 |
 | **Tracker valuations diverge** | Crunchbase vs Tracxn vs PitchBook disagree on cumulative totals for the same companies (flagged throughout) — for any diligence, pull the *round-level* records, not the headline totals | Flagged — §6.1 |
 | **Private marks are not public comps** | A 2021 US$2.4B tracker mark on Trax says nothing about what the business would clear in an IPO today; the post-2021 restructuring reports (flagged) illustrate the gap between mark and money | Analytical — §2.2 |
 
-The money story of SG SaaS, in one sentence: *government and regional VC build the companies, global mega-rounds crown the category leaders, and global platforms buy the specialists — the ecosystem has genuine liquidity, just not much of it through public markets.*
+The money story of SG SaaS, in one sentence: *government and regional VC build the companies, global mega-rounds crown the category leaders, and global platforms buy or take majority stakes in the specialists — the ecosystem has genuine liquidity, just not much of it through public markets.*
 
 ---
 
@@ -492,7 +492,7 @@ Every company in this guide expanded out of Singapore within its first few years
 |---|---|---|---|
 | PatSnap | Singapore | 50+ countries | Global from year one — IP data is borderless |
 | Trax | Singapore | APAC → Europe/MENA/Americas | Vertical leader expands with FMCG clients |
-| Tookitaki | Singapore | APAC regulators (MAS/BSP/AUSTRAC/BNM) | Regulator-led expansion; exits to Thunes' global network |
+| Tookitaki | Singapore | APAC regulators (MAS/BSP/AUSTRAC/BNM) | Regulator-led expansion; Thunes' majority-stake investment (2022) links it to a global payments network |
 | Silent Eight | Singapore | London, Warsaw, New York hubs | Bank-client-led globalisation |
 | Glints | Singapore | 8 markets incl. ID/VN/PH | Talent marketplace rides regional hiring demand |
 | JustLogin | Singapore | Southeast Asia | SME SaaS, grant-assisted regional sales |
@@ -532,7 +532,7 @@ The criteria are ordered by weight for a regulated financial institution. Each m
 |---|---|---|---|
 | 1 | **Regulatory and data compliance** | MAS licensing/notification requirements (e.g. MAS TRM, Notice 626/644 for outsourced service providers), PDPA, **data residency** — where is the data stored, is in-Singapore hosting contractual? | SG vendors host in-region natively (cross-ref [singapore_data_centres_guide.md](singapore_data_centres_guide.md)); Tookitaki/Silent Eight pre-configure for MAS (Verified §3) |
 | 2 | **Security posture and attestation** | SOC 2 Type II, ISO 27001, penetration-test cadence, CSPM visibility (who watches the vendor's cloud?), incident-response SLAs | Horangi's whole franchise is selling this posture to enterprises (§4); cross-ref [cloud_providers_guide.md](cloud_providers_guide.md) and [htx_ngine_guide.md](htx_ngine_guide.md) for the sovereign-security benchmark |
-| 3 | **Vendor viability and ownership** | Funding runway, ownership changes (acquisitions!), roadmap control post-acquisition, key-person risk | **The core lesson of this guide: the specialist SG vendors exit by acquisition** — Tookitaki→Thunes (Verified), Horangi→Bitdefender (Verified), Silent Eight→Nasdaq (Reported). Ask: *who owns the roadmap now?* |
+| 3 | **Vendor viability and ownership** | Funding runway, ownership changes (acquisitions and majority-stake investments), roadmap control post-deal, key-person risk | **The core lesson of this guide: the specialist SG vendors end up inside a global platform's deal** — Horangi→Bitdefender (Verified acquisition), Silent Eight→Nasdaq (Reported acquisition), Tookitaki→Thunes (Verified majority-stake investment, independence retained). Ask: *who controls the roadmap now — and did the deal transfer control at all?* |
 | 4 | **AI claims and model governance** | What exactly does "AI-powered" mean; training data, model drift, explainability for AML decisions (regulators demand defensible alerts), human-in-the-loop | Cross-ref [enterprise_agentic_platform_architecture_guide.md](enterprise_agentic_platform_architecture_guide.md) and the `ai_llm/` governance guides — treat AI claims as claims (§2.1) |
 | 5 | **Integration and identity** | API surface, event-driven integration with the bank's stack, SSO/SCIM into the bank's IAM, audit trails | Cross-ref [distributed_auth_guide.md](distributed_auth_guide.md) for identity integration; the `banking/` guides (e.g. [../banking/uob_software_systems_guide.md](../banking/uob_software_systems_guide.md)) for the surrounding core-banking landscape |
 | 6 | **Commercial model and total cost** | Subscription vs services mix (Sleek is services+software — price it as such, §5.2), per-alert/per-seat pricing, exit/data-export costs, FinOps discipline | Cross-ref [finops_guide.md](finops_guide.md) for SaaS-cost governance; PSG subsidy only applies to SME procurement, not bank-scale deals (Verified §7) |
@@ -548,7 +548,7 @@ The criteria are ordered by weight for a regulated financial institution. Each m
 ### 9.4 The Lessons (analytical)
 
 1. **"Singapore-born" is a signal, not a guarantee.** It correlates with regulatory awareness, in-region hosting and government vetting — it does not correlate with scale, longevity or roadmap stability.
-2. **Check the ownership file first.** The verified exits (Thunes, Bitdefender; Nasdaq reported) mean the company you evaluate today may be a different company by contract signing. This is the single most important lesson this guide's research surfaced.
+2. **Check the ownership file first.** The verified deals (Bitdefender's Horangi acquisition; Thunes' majority stake in Tookitaki — an investment that kept the company independent; Nasdaq's reported Silent Eight acquisition) mean the company you evaluate today may sit under different control by contract signing. This is the single most important lesson this guide's research surfaced.
 3. **Regulatory alignment is the moat — and it is contractible.** MAS-native pre-configuration is valuable; make the vendor's regulator-update commitment contractual.
 4. **Price the model, not the label.** Marketplace (Glints) and services-wrapped (Sleek) offerings carry different economics than pure subscription SaaS (§5).
 5. **The state's vetting helps small deals, not bank deals.** PSG/accreditation matter for SME procurement; a CIB entity needs SOC 2/ISO 27001, pen-test evidence and escrow regardless of the vendor's government badges (§7).
@@ -596,9 +596,9 @@ The matrix's purpose is the shape of the answer, not the numbers: for both decis
 
 Singapore, the little red dot, has quietly become the most credible SaaS nursery in Southeast Asia. The ecosystem's founding constraint — a six-million-person domestic market — forced its software companies to build for export from day one, and the state built the launchpad: IMDA's accreditation and grant channels, EDB's HQ branding, SGInnovate's deep-tech capital, EnterpriseSG's direct cheques, and MAS's regulator-as-product-spec demand.
 
-The scoreboard after ~15 years: **two SaaS unicorns** (PatSnap in IP intelligence, Trax in retail analytics), **two AML specialists that exited to global platforms** (Tookitaki to Thunes, Silent Eight to Nasdaq as reported), **a security specialist acquired by Bitdefender** (Horangi — correcting the brief's CrowdStrike-2022 assumption), and a **business-SaaS backbone** (JustLogin, Sleek, Glints) that keeps SMEs and the talent pipeline running on government-vetted software.
+The scoreboard after ~15 years: **two SaaS unicorns** (PatSnap in IP intelligence, Trax in retail analytics), **two AML specialists that drew global-platform deals** (Tookitaki a verified majority-stake investment from Thunes; Silent Eight a reported Nasdaq acquisition), **a security specialist acquired by Bitdefender** (Horangi — correcting the brief's CrowdStrike-2022 assumption), and a **business-SaaS backbone** (JustLogin, Sleek, Glints) that keeps SMEs and the talent pipeline running on government-vetted software.
 
-The thesis holds: **regional HQ + product for Asia**. The product ships with Asian regulators, Asian retail shelves, CPF and EPF baked in; the HQ sells it to the world from a stable, treaty-rich, data-centre-rich city. The pattern to watch is the exit: specialist SG SaaS vendors keep reaching liquidity through acquisition by global platforms — great for founders and investors, a due-diligence trigger for buyers.
+The thesis holds: **regional HQ + product for Asia**. The product ships with Asian regulators, Asian retail shelves, CPF and EPF baked in; the HQ sells it to the world from a stable, treaty-rich, data-centre-rich city. The pattern to watch is the deal: specialist SG SaaS vendors keep reaching global platforms — through acquisition (Horangi, and Silent Eight as reported) or, as with Tookitaki, a majority-stake investment — great for founders and investors, a due-diligence trigger for buyers.
 
 For a bank in Singapore, the wave is directly usable: AML SaaS that speaks MAS natively, security vendors that understand regulated buyers, HR SaaS that knows CPF — all hostable in-region and vetted by the same government that regulates you. The discipline is unchanged: verify the ownership, the roadmap, the AI claims and the exit clauses before you sign. The little red dot's SaaS wave is real — surf it with due diligence.
 
@@ -614,7 +614,7 @@ For a bank in Singapore, the wave is directly usable: AML SaaS that speaks MAS n
 | **IP intelligence** | The business of analysing intellectual property — patents, trademarks, R&D data — to inform innovation decisions |
 | **Trax** | Singapore-headquartered retail-analytics SaaS (founded 2010); computer-vision shelf monitoring for FMCG/retail |
 | **Retail analytics** | Measuring and optimising what happens in physical stores — shelf stock, placement, execution — via data and vision |
-| **Tookitaki** | Singapore AML/RegTech (founded 2012); FinCense AI transaction-monitoring platform; acquired by Thunes, April 2022 |
+| **Tookitaki** | Singapore AML/RegTech (founded November 2014); FinCense AI transaction-monitoring platform; took a majority-stake investment from Thunes, announced 19 April 2022 |
 | **AML** | Anti-Money Laundering — the regulatory regime and software category for detecting and reporting money laundering |
 | **Silent Eight** | Singapore AML/CFT/sanctions RegTech (founded 2013); screening and alert adjudication; reported Nasdaq acquisition 2023 (flagged) |
 | **Horangi** | Singapore cloud-security vendor (founded 2016); Warden CSPM, pen testing; acquired by Bitdefender, completed June 2023 |
@@ -645,7 +645,7 @@ For a bank in Singapore, the wave is directly usable: AML SaaS that speaks MAS n
 
 - PatSnap founded 2007; unicorn >US$1B March 2021 with SoftBank Vision Fund 2 + Tencent (Straits Times/Bloomberg); 10,000+ customers in 50+ countries (Crunchbase)
 - Trax founded 2010 by Joel Bar-El and Dror Feldheim; US$640M Series E April 2021 led by SoftBank Vision Fund 2 + BlackRock; total funding ~US$1.02B at that point (TechCrunch); 150+ customers (Wikipedia)
-- Tookitaki founded 2012 (tracker consensus; one tracker says 2014); FinCense; MAS/BSP/AUSTRAC/BNM pre-configuration; EnterpriseSG in Series A; acquired by Thunes April 2022 (Wikipedia/InvestHK)
+- Tookitaki founded November 2014 (Thunes release, 19 Apr 2022 — resolving the earlier "2012" tracker figure); FinCense; MAS/BSP/AUSTRAC/BNM pre-configuration; EnterpriseSG in Series A; majority-stake investment from Thunes, announced 19 April 2022 (thunes.com/news/thunes-tookitaki/; tookitaki.com blog; InvestHK "controlling stake")
 - Silent Eight founded 2013 in Singapore; US$40M Series B led by TYH Ventures (technode.global; date discrepancy flagged)
 - Horangi founded 2016 (PitchBook); **acquired by Bitdefender — completed June 2023** (Bitdefender press release; Tracxn)
 - JustLogin listed on the PSG directory (grants.gobusiness.gov.sg)
@@ -664,7 +664,7 @@ For a bank in Singapore, the wave is directly usable: AML SaaS that speaks MAS n
 - JustLogin founding year (~2001 inferred from "25 years" marketing claim) and funding status
 - Sleek post-seed rounds; Horangi founders and sale process via Barclays
 - S$440M deep-tech package and S$120M AI-for-Science grant figures
-- Tookitaki's founding-year discrepancy (2012 vs 2014)
+- ~~Tookitaki's founding-year discrepancy (2012 vs 2014)~~ — **resolved this pass:** Thunes' own release (19 Apr 2022) states Tookitaki "was founded in November 2014"; the "2012" tracker figure is corrected throughout
 - **Corrected:** the brief's "Horangi — CrowdStrike acquisition 2022" is wrong; verified as Bitdefender, 2023
 
 ### 12.2 References (primary anchors used in this pass)
@@ -673,7 +673,7 @@ For a bank in Singapore, the wave is directly usable: AML SaaS that speaks MAS n
 - TechCrunch — "Singapore-based retail analytics company Trax raises $640M Series E led by SoftBank Vision Fund 2 and BlackRock" (Apr 2021)
 - Business Times — Silent Eight Series B coverage; Carousell US$100M/US$1.1B unicorn coverage
 - Bitdefender — "Bitdefender Completes Acquisition of Horangi Cyber Security" (press release)
-- Wikipedia — Thunes (Tookitaki acquisition, Apr 2022); Trax Retail; Glints (platform)
+- Thunes — "Thunes Takes Majority Stake in AML and Compliance Platform Tookitaki" (thunes.com/news/thunes-tookitaki/, 19 Apr 2022); Tookitaki — "Thunes takes majority stake in the AML and compliance platform Tookitaki" (tookitaki.com blog); Wikipedia — Thunes; Trax Retail; Glints (platform)
 - InvestHK — Thunes Hong Kong client profile (Tookitaki controlling stake, Apr 2022)
 - Crunchbase / Tracxn / PitchBook / Indexed.vc — company profiles and funding rounds (figures flagged)
 - EDB — "Deep Tech: Unlocking New Engines of Growth for Singapore" (Oct 2024)
@@ -698,13 +698,13 @@ For a bank in Singapore, the wave is directly usable: AML SaaS that speaks MAS n
 
 1. **Search backend degradation:** this pass used targeted web search only (the `web_extract` backend was degraded); primary pages (patsnap.com, traxretail.com, etc.) were reached via search-result snippets, so any claim resting solely on a full-page read of a vendor site is marked Reported or flagged.
 2. **Funding figures are tracker-differing:** Crunchbase, Tracxn, PitchBook and Indexed.vc disagree on cumulative totals for the same companies (e.g. Tookitaki US$20.4M vs US$28M). All such figures are flagged directional; round-level press confirmation (Straits Times, TechCrunch, technode.global) was preferred wherever it existed.
-3. **Exit confirmation asymmetry:** Tookitaki→Thunes and Horangi→Bitdefender are confirmed by multiple sources; Silent Eight→Nasdaq is reported but could not be confirmed in this pass — it is flagged Reported and must be re-verified before use.
+3. **Deal confirmation asymmetry:** Horangi→Bitdefender (acquisition) and Thunes' majority-stake investment in Tookitaki are confirmed by first-party releases; Silent Eight→Nasdaq (acquisition) is reported but could not be confirmed in this pass — it is flagged Reported and must be re-verified before use. Note that the earlier "Tookitaki→Thunes acquisition" framing was itself wrong: the primary releases describe an investment, not an exit.
 4. **Adoption data is vendor-reported:** no independent market-share data exists publicly for these categories (§1.5).
 5. **Fast-moving statuses:** Glints' 2024–25 restructuring reports and PatSnap's IPO status are flagged as of August 2026 and will drift.
 
 ---
 
-*End of guide — Singapore-Born SaaS Companies: The Homegrown SaaS Landscape Deep-Dive. Researched August 2026; funding figures flagged as directional; the Horangi acquirer correction (Bitdefender, not CrowdStrike) is the most important verification note in this pass.*
+*End of guide — Singapore-Born SaaS Companies: The Homegrown SaaS Landscape Deep-Dive. Researched August 2026; funding figures flagged as directional; the pass's two key verification notes are the Horangi acquirer correction (Bitdefender, not CrowdStrike) and the Tookitaki deal correction (a Thunes majority-stake investment, not an acquisition; founded November 2014, not 2012).*
 
 
 
