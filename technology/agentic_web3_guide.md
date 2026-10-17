@@ -714,7 +714,7 @@ The five entries above are the whole of the unverified list, and their common sh
 - **Revert** — the environment refusing an action; legible on-chain, unlike an agent's well-formed mistake. §7.2.
 - **Session key** — a narrow, time- and/or limit-bounded authority an agent acts through; expressed on-chain as a module (ERC-7579). §4.2, §4.3.
 - **Settlement** — the irreversible on-chain change of state that completes an action. §1.1, §3.2.
-- **Standing authority** — any pre-granted permission that lets an agent act while the principal is not watching. §4.2.
+- **Standing authority** — any pre-granted permission that lets an agent act while the principal is not watching; the load-bearing object of §4. §4.2.
 - **UserOperation** — the ERC-4337 pseudo-transaction object. §4.3.
 - **x402** — the HTTP-native payment standard (`402 Payment Required`), stewarded by the Linux Foundation's x402 Foundation. §6.1.
 - **Accountable principal** — the named person or entity that bears responsibility for an agent's actions; the thing this guide's thesis says is missing inside the transaction. §7.3, §9.5.
@@ -727,7 +727,6 @@ The five entries above are the whole of the unverified list, and their common sh
 - **Proof of control** — cryptographic evidence that a party holds the key to an address; what ERC-8004 requires to change `agentWallet`, and what an on-chain agent identity proves (and no more). §4.1, §5.4.
 - **Session key / module** — a narrow, bounded authority installed into a smart account; the on-chain form of a limited mandate. §4.2, §4.3.
 - **Smart account** — a contract account that can be programmed with modules, as opposed to a bare EOA; the ERC-7579 object. §4.3.
-- **Standing authority** — any pre-granted permission that lets an agent act while the principal is not watching; the load-bearing object of §4. §4.2.
 - **Transferable NFT** — the ERC-721 property inherited by ERC-8004's Identity Registry: an agent's ownership can move, which complicates the accountability question. §5.2, §7.3.
 - **x402 Foundation** — the Linux Foundation body, operationally launched 14 July 2026, that stewards x402 under vendor-neutral governance. §6.1.
 
