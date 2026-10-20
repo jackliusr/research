@@ -357,6 +357,7 @@ What that means at the device, specifically, in this guide's terms:
 - The certificate does not know whether the device in the rack is the device in the certificate - a swap during a repair, a refurbished unit, a spare that was never re-initialised. That is section 11.
 
 **And the reverse is also true, which is the part the sceptics miss:** a deployment can be excellent and the module still matters, because the module is the part that holds the key when every process control has failed. The certificate is a floor, not a roof - and a floor is worth having.
+
 ## 5. The Device Interfaces
 
 ### 5.1 What an Interface to a Device Actually Exposes
@@ -719,6 +720,7 @@ Four shifts, and they are the substance of any cloud-HSM design review.
 Three further facts from the announcement: it is "created in alignment with the recently published PCI HSM v5 requirements"; it is intended as "a single source for requirements covering key management operations" with an "assess-once-use-many" modular approach; and its initial focus is keys securing PIN and P2PE data, with a KMO Assessors programme and Listings "Coming Soon" as of the page read ✅.
 
 **Why this is the most consequential regulatory development in this guide's subject area, stated plainly:** until now, the approval regime assessed the **device** (PTS HSM) and the **institution's PIN controls** (PCI PIN), and the cloud model sat awkwardly between them - the device was approved, the operator was not the entity being assessed, and the tenant's evidence chain had a gap where the provider's operations should be. KMO closes that gap by assessing **key management operations** as a subject in its own right, including when those operations are performed remotely or as a service. Section 10.4 places it in the regulatory stack; section 15 records that I could not read the requirement document itself.
+
 ## 9. The Operations
 
 ### 9.1 Availability and Clustering
@@ -919,6 +921,7 @@ The hardware refresh was the small number. The ceremony rewrite, the rehearsal, 
 **And that is the finding to carry into a business case.** The device is a capital purchase with a depreciation schedule. The refusal is an operating expense with no end date, and the organisation that funds the first and not the second has bought a device it cannot operate - which is failure mode one, arriving quietly, in a rack nobody owns.
 
 **Ending on the thesis:** Cymbal Bank's migration was slower, more expensive and more annoying than the plan, and every minute of that was the product working. The question the review should have asked at the start was not "what does the new device cost" but **"who holds the refusal, and can we assemble them on a Sunday"** - which is the same question as section 8's cloud tenancy, asked about a room instead of a contract.
+
 ## 13. The Anti-Patterns
 
 Nine, each stated as the thing you will hear in a design review, and each with the mechanism that makes it wrong and the guardrail that prevents it. They are the failure modes of section 11 seen from the other direction - the decision that creates the failure, rather than the failure itself.
@@ -1071,4 +1074,4 @@ And the thesis, tested and found to hold with two honest complications. The refu
 
 Test the restore. Measure the ceremony. Read the certificate's version field. And keep asking the only question that survives every architecture in this guide: who holds the refusal, and can you assemble them on a Sunday?
 
-**an HSM is the only component in the estate whose job is to be unhelpful.**
+**An HSM is the only component in the estate whose job is to be unhelpful.**
