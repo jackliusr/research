@@ -149,7 +149,7 @@ The structural precedent for this guide's shape and voice is [Open-Source Insura
 
 ### 1.5 Why This Guide Exists at All
 
-The measurement is worth stating plainly, because it explains the shape of what follows. This repository holds 683 tracked files. The three open-source payment projects are owned deeply: Apache Fineract is anchored across roughly 25 files, Mojaloop across 9, and the Open Bank Project has its own 619-line guide. The *category* was unowned.
+The measurement is worth stating plainly, because it explains the shape of what follows. This repository held 682 markdown files before this guide was added, by a tracked-file count on 2026-10-29. The three open-source payment projects are owned deeply: Apache Fineract is anchored across roughly 25 files, Mojaloop across 9, and the Open Bank Project has its own 619-line guide. The *category* was unowned.
 
 Measured on 2026-10-29 across every markdown file in the repository:
 
@@ -197,6 +197,7 @@ There is a real exception, and it is worth stating precisely rather than dismiss
 **Case three: a central switch that a central bank or scheme operator runs.** Here the boundary moves the furthest, and again in a specific way. When a central bank operates an open-source switch, the *operator* is the institution that already owns the settlement account and the rulebook -- so the software is genuinely the missing piece, and adopting it is the difference between a scheme existing and not existing. That is the Mojaloop model, and it is why Mojaloop adoption is a scheme decision rather than a bank procurement decision ([Mojaloop Guide](mojaloop_guide.md) Sec. 2, Sec. 17). It is also why a commercial bank adopting the same software does not become a scheme: for the bank, the switch is a participant-side or infrastructure-side component, and the scheme membership still has to be granted.
 
 The pattern across all three cases: **the boundary moves where the adopter already holds the institutional asset.** A central bank that owns settlement and the rulebook gains the most from open-source switch software; a bank that owns neither gains least from pretending it does. Open source amplifies an institutional position; it does not create one.
+
 ## 3. The Landscape by Category
 
 ### 3.1 The Five Categories
@@ -287,6 +288,7 @@ The most expensive mistakes in this space are category mistakes, and they are ma
 | "We need to cut per-transaction PSP fees" | Renegotiation, plus possibly routing | Orchestration (commercial) | Confused with licence cost: the fee is a scheme/acquirer charge, not a software licence |
 | "We need an open-source Stripe" | Probably three categories at once | Orchestration + ledger + rail access | The most common single confusion: "Stripe" is a company spanning four categories, so no single project can be its equivalent |
 | "We are joining a national instant payment scheme -- which OSS do we install?" | Scheme onboarding, then integration | Rail (as participant) | Confused with procurement: the membership is granted, and the software is the smaller half of the work |
+
 ## 4. The Three Foundation Projects, Situated
 
 Each of these three projects has its own guide in this series. What follows is deliberately not a summary of those guides: it is a placement exercise. For each project, the questions are (a) which of the five categories does it actually occupy, (b) what does its existence prove about the thesis, and (c) what does it explicitly not hand the adopter. Where a sentence would read identically in the project's own guide, it has been removed -- follow the section pointers for architecture, API, and deployment.
@@ -342,6 +344,7 @@ Read as a set rather than individually, the three projects make the thesis concr
 The pattern: **in every case the project supplied exactly the layer that is not regulated, and the adopter supplied exactly the layer that is.** Fineract did not become a bank. Mojaloop did not become a central bank. OBP did not become a custodian of anything. Each one is a well-built answer to "who writes this code", and none is an answer to "who is allowed to do this".
 
 That is also why the three projects *can* be Apache-2.0 or AGPL-3.0 without destabilising anything: the licences govern code, and the regulated permissions were never in the code to begin with. The next two sections move to the two categories where the repository had nothing, and where the licence question bites hardest because the software sits closest to the money.
+
 ## 5. The Orchestration Layer
 
 ### 5.1 What an Orchestrator Actually Does
@@ -472,6 +475,7 @@ Why the confusion persists: "ledger" sells. A billing product described as a bil
 | Formance | `formancehq/ledger` | **None declared** (`license: null`, no root file, no README statement) | 2026-10-29T21:02Z | v2.4.17 (2026-10-28) | Ledger-first, programmable |
 
 All four are new material in this repository: Kill Bill, Lago and Blnk had zero prior mentions; Formance had three lines in an unrelated vendor-testimonial table in [Antithesis Guide](../technology/antithesis_guide.md) Sec. 14. None of the four is a substitute for a bank's core posting engine, and for three of the four the licence file is either a live constraint (AGPL) or a live gap (missing or undeclared). That is not a coincidence: this is the layer where vendors experiment with licensing precisely because the software is close enough to the money to be worth paying for.
+
 ## 7. The Licence Question
 
 This repository has never had a licence analysis of payment software. It has licence *facts* scattered through project guides -- Apache-2.0 for Fineract, Apache-2.0 for Mojaloop, AGPL-3.0 for OBP -- but no place where the licence question is treated as the decision it is. This section is that place.
@@ -603,6 +607,7 @@ Two observations about this table. First, none of it is unusual: it is the same 
 The sentence needs to be stated without decoration, because it is the most commonly skipped fact in open-source business cases: **no open-source licence gives you an SLA.** Apache-2.0 is distributed "AS IS", without warranties or conditions of any kind. So is MIT. So is AGPL-3.0. The licence grants permissions; it does not create obligations on the part of anyone to fix, respond, or continue.
 
 Everything that looks like an SLA in the open-source world is a separate commercial instrument: a support contract from the vendor, a retainer with an SI, or the bank's own staff. That is not a defect of open source; it is what open source is. But it does mean that the correct comparison in a business case is not "vendor licence plus vendor SLA" versus "zero", it is "vendor licence plus vendor SLA" versus "support contract or SI retainer plus the platform team", and the second number is not small (Sec. 9.2).
+
 ## 9. The Commercial Comparison
 
 ### 9.1 What You Actually Pay For
@@ -816,6 +821,7 @@ The part of payments that no software supplies is the part where money actually 
 Five of the six failures share one root: **a decision was made about software when the constraint was institutional.** The billing-engine-as-rail, the unscoped card data, and the unpatched fork are all cases where the software was available and the institutional asset, obligation, or capability was not. The sixth -- the licence surprise -- is the same error in legal form: the licence was read as a property of the code when it is a property of the deployment.
 
 The guardrail that catches all six is the same discipline this guide applies throughout: name the category, name the accountable institution, read the licence at the date of use, and measure the health of the thing you depend on. None of that is novel. What is novel, in most banks, is doing it for open-source payment software at all.
+
 ## 13. The Cymbal Bank Worked Example
 
 *Cymbal Bank is a fictional institution used throughout this series for illustration. The projects named are real and their licence and repository facts are the dated ones measured in this guide; the bank, its scheme, its volumes, and its decisions are invented, and no claim is made that any real institution has made the same choices.*
@@ -937,7 +943,7 @@ Every licence, archive flag, last-push timestamp and release below was read on *
 | `interledger/open-payments` (protocol specification) is Apache-2.0; last push 2026-10-29T16:06Z | ✅ | GitHub REST API, 2026-10-29 |
 | `btcpayserver/btcpayserver` is MIT; last push 2026-10-29T14:35Z; latest release v2.4.7 (2026-10-29) | ✅ | GitHub REST API, 2026-10-29 |
 | `hyperledger-firefly/firefly` is Apache-2.0, last push 2026-10-23; `hyperledger/fabric` is Apache-2.0, last push 2026-10-26 | ✅ | GitHub REST API, 2026-10-29 |
-| Repository measurement: 683 tracked files; `\bHyperswitch\b` 0 files, `\bKill ?Bill\b` 0, `\bLago\b` 0, `\bBlnk\b` 0, `\bFormance\b` 1 file (3 lines, vendor-testimonial table in [Antithesis Guide](../technology/antithesis_guide.md) Sec. 14); 13 files contain a paragraph with "open source", "licence" and "payment", all incidental | ✅ | Full-text scan of every markdown file in the repository, 2026-10-29 |
+| Repository measurement: 682 markdown files before this guide was added; `\bHyperswitch\b` 0 files, `\bKill ?Bill\b` 0, `\bLago\b` 0, `\bBlnk\b` 0, `\bFormance\b` 1 file (3 lines, vendor-testimonial table in [Antithesis Guide](../technology/antithesis_guide.md) Sec. 14); 13 files contain a paragraph with "open source", "licence" and "payment", all incidental | ✅ | Full-text scan of every markdown file in the repository, 2026-10-29 |
 | Apache-2.0 grants an express patent licence with a retaliation clause and grants no trademark rights; MIT is silent on patents and trademarks; AGPL-3.0/GPL-3.0 grant a patent licence and no trademark rights; AGPL-3.0's network-service obligation attaches to offering the modified work to users over a network | ✅ | Licence texts as published by the respective stewards |
 | No open-source licence provides a warranty or an SLA; Apache-2.0 and MIT distribute "AS IS" | ✅ | Apache-2.0 Secs. 7-8; MIT text |
 | Fineract is governed by an Apache Software Foundation PMC; Mojaloop by the Mojaloop Foundation, which took over from the Gates Foundation Level One lineage | ✅ | Cross-ref [Apache Fineract Guide](apache_fineract_guide.md) Sec. 1.3; [Mojaloop Guide](mojaloop_guide.md) Sec. 1.2, Sec. 20 |
