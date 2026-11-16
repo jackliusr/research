@@ -90,7 +90,7 @@ Nine terms carry the whole subject. They are defined here once, at the level of 
 ### 1.4 What This Guide Is Not
 
 It is not a product selection guide, and it deliberately contains no ranking. Section 4 explains each family's design centre - the problem it was built to solve and the platform it grew up on - because that is what determines fit, and because "which is best" is not a question that has an answer independent of the estate, the skills, the storage, and the change-control regime. It is also not an installation guide: no command syntax appears here that was not read at a vendor source, and where syntax would be version-fragile the guide describes the operation instead.
----
+
 
 ## 2. What Clusterware Actually Does: The Four Jobs
 
@@ -269,7 +269,7 @@ The mechanisms differ; the trade-off does not.
 - **IBM PowerHA** and **Veritas InfoScale** both place arbitration in shared storage and fencing in a combination of storage-level and node-level actions. Their specific idioms are described at class level in section 6 and flagged in section 15, because their documentation hosts could not be reached this pass.
 
 **What no product can offer** is a tie-break with no loser. Every mechanism in this section is a way of choosing which half stops. The choice can be made well or badly, tested or untested, documented or implicit - but it cannot be avoided, and a cluster whose configuration implies it was never made is a cluster that made it by accident.
----
+
 
 ## 4. The Product Families, Structurally
 
@@ -487,7 +487,7 @@ The decision-making structure is worth understanding because it states the patte
 **What a reader should remember.** WSFC is the family that treats quorum as a *menu of topologies* rather than as a fixed mechanism, because Windows clusters are deployed in every shape. Its CSV design also blurs the layer boundary this guide draws elsewhere: with CSV, multiple nodes have concurrent write access to the same volume, with coordination rather than exclusive ownership - a different concurrency model from the single-writer assumption that Oracle's and Veritas's fencing idioms assume.
 
 **Not fully verified this pass:** the internal resource-hosting process architecture (the Resource Hosting Subsystem that loads resource DLLs) and the current default values for heartbeat and threshold parameters. Neither appears in this guide as a specific number or name.
----
+
 
 ## 7. Why a Bank Runs This
 
@@ -618,7 +618,7 @@ Cluster logs are the least popular artefact in infrastructure. They are verbose,
 The consequence is specific and predictable: when the cluster behaves unexpectedly, the institution cannot distinguish "the cluster made a wrong decision" from "the cluster made a right decision about a system that was already broken". That distinction is the entire content of the post-incident review, and without the skill it is resolved by whichever narrative is most comfortable - usually "the cluster failed", which is the one explanation that leads to no corrective action.
 
 Mitigations that actually work are unglamorous: writing the design intent down next to the configuration, keeping the decision parameters in a register, rehearsing log reading against a known-bad case rather than a known-good one, and treating the fence test as a knowledge-transfer exercise rather than a compliance box. Section 11 formalises the last of these.
----
+
 
 ## 10. What Containers Did and Did Not Replace
 
@@ -754,7 +754,7 @@ An institution that can produce those four for its tier-0 clusters has answered 
 If the tie-break is a policy decision with a data-loss consequence either way, then the institution has made a risk acceptance - and risk acceptances must be approved at the right level, recorded, and revisited. A cluster configured conservatively (no-quorum-policy set to continue, fence disabled for a "critical" window) is an accepted risk of data corruption. Most institutions have made that acceptance without knowing they made it, because the setting was a default, a workaround, or a legacy choice.
 
 **Naming the acceptance is the single most valuable thing a reviewer can do to a bank's cluster estate.** It converts an invisible configuration into a governed decision, which is what the thesis claims clusterware is for.
----
+
 
 ## 13. The Failure Modes
 
