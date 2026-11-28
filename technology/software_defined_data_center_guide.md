@@ -60,9 +60,17 @@ grep -rliE '<pattern>' --include='*.md' . | wc -l
 | `vSphere` | 14 |
 | `private cloud` | 45 |
 
+One note on reproducing this table. The greps were run **before** this file existed, which is why the concept row is a true zero rather than a one. Re-running them now returns exactly one more file in every row: this guide, which of course mentions all of these terms. The correct control for a reader checking the claim is to exclude it, or to compare against the vendor shelf directly:
+
+```
+grep -rliE 'software.defined data cent|\bSDDC\b' --include='*.md' . | grep -v software_defined_data_center_guide
+```
+
+That command returning nothing is the claim in one line. If it returns files, the gap has been filled since and this paragraph is out of date - which is the only honest way to write a measurement into a document that changes the thing it measures.
+
 Read the shape of that table, not the individual cells. **Absolute zero** files mention the concept or its acronym. **Near-zero** mention its components (two for NSX, three for vSAN, five for the phrase "software-defined networking or storage or compute"). And **forty-five** mention the label that replaced it. The repository is not ignorant of the technology; it is fluent in everything except the idea that binds the technology together, and it is fluent in the marketing category that displaced the idea.
 
-Meanwhile the two adjacent shelves are already full. The physical layer is owned: [data_center_guide.md](data_center_guide.md) runs to 706 lines, 13 numbered sections, all facilities, none about software. The virtualisation shelf is owned: the head-to-heads run to 737 lines and (for the CloudStack comparison) 1,088 lines. But those guides **assume** the concept rather than explain it. A reader who wants to know what "software-defined" actually means, what it hides, what it cannot hide, and why the resulting estate fails the way it fails, has nowhere to go.
+Meanwhile the two adjacent shelves are already full. The physical layer is owned: [data_center_guide.md](data_center_guide.md) runs to 706 lines, 14 numbered sections, all facilities, none about software. The virtualisation shelf is owned: the head-to-heads run to 737 lines and (for the CloudStack comparison) 1,088 lines. But those guides **assume** the concept rather than explain it. A reader who wants to know what "software-defined" actually means, what it hides, what it cannot hide, and why the resulting estate fails the way it fails, has nowhere to go.
 
 So this guide owns the abstraction layer and nothing else. That is a narrow claim, and the narrowness is the point: the concept is not explained by adding another product review to a shelf of product reviews.
 
